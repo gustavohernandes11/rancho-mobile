@@ -1,6 +1,6 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs, useNavigation } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Tabs } from "expo-router";
+import { useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
 
@@ -11,27 +11,7 @@ function TabBarIcon(props: {
 	return <FontAwesome size={18} style={{ marginBottom: -3 }} {...props} />;
 }
 
-const GoBackButton = ({ onGoBack }: { onGoBack: () => void }) => {
-	return (
-		<Pressable onPress={onGoBack}>
-			{({ pressed }) => (
-				<FontAwesome
-					name="arrow-left"
-					size={14}
-					color={"#FFF"}
-					style={{
-						padding: 8,
-						marginLeft: 8,
-						opacity: pressed ? 0.5 : 1,
-					}}
-				/>
-			)}
-		</Pressable>
-	);
-};
-
 export default function TabLayout() {
-	const navigation = useNavigation();
 	const colorScheme = useColorScheme();
 	return (
 		<Tabs
@@ -71,9 +51,6 @@ export default function TabLayout() {
 				options={{
 					tabBarShowLabel: false,
 					headerTitle: "Adicionar",
-					headerLeft: () => (
-						<GoBackButton onGoBack={navigation.goBack} />
-					),
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="plus" color={color} />
 					),
@@ -84,9 +61,6 @@ export default function TabLayout() {
 				options={{
 					tabBarShowLabel: false,
 					headerTitle: "Rebanho",
-					headerLeft: () => (
-						<GoBackButton onGoBack={navigation.goBack} />
-					),
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="list" color={color} />
 					),
@@ -97,9 +71,6 @@ export default function TabLayout() {
 				options={{
 					tabBarShowLabel: false,
 					headerTitle: "Configurações",
-					headerLeft: () => (
-						<GoBackButton onGoBack={navigation.goBack} />
-					),
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="cogs" color={color} />
 					),
