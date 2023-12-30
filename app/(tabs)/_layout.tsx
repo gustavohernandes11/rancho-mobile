@@ -1,60 +1,78 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Link, Tabs } from "expo-router";
+import { Tabs, useNavigation } from "expo-router";
 import { Pressable, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
 function TabBarIcon(props: {
 	name: React.ComponentProps<typeof FontAwesome>["name"];
 	color: string;
 }) {
-	return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+	return <FontAwesome size={18} style={{ marginBottom: -3 }} {...props} />;
 }
 
-export default function TabLayout() {
-	const colorScheme = useColorScheme();
+const GoBackButton = ({ onGoBack }: { onGoBack: () => void }) => {
+	return (
+		<Pressable onPress={onGoBack}>
+			{({ pressed }) => (
+				<FontAwesome
+					name="arrow-left"
+					size={14}
+					color={"#FFF"}
+					style={{
+						padding: 8,
+						marginLeft: 8,
+						opacity: pressed ? 0.5 : 1,
+					}}
+				/>
+			)}
+		</Pressable>
+	);
+};
 
+export default function TabLayout() {
+	const navigation = useNavigation();
+	const colorScheme = useColorScheme();
 	return (
 		<Tabs
 			screenOptions={{
-				tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+				tabBarActiveTintColor: "white",
+				tabBarInactiveTintColor:
+					Colors[colorScheme ?? "light"].lightGrey,
+				headerTintColor: "white",
+				tabBarStyle: {
+					borderTopLeftRadius: 8,
+					borderTopRightRadius: 8,
+				},
+				headerStyle: {
+					backgroundColor: Colors[colorScheme ?? "light"].green,
+					borderBottomLeftRadius: 8,
+					borderBottomRightRadius: 8,
+				},
+				tabBarActiveBackgroundColor:
+					Colors[colorScheme ?? "light"].darkGreen,
+				tabBarInactiveBackgroundColor:
+					Colors[colorScheme ?? "light"].green,
 			}}
 		>
 			<Tabs.Screen
 				name="index"
 				options={{
-					title: "Início",
+					title: "",
+					headerTitle: "Início",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="home" color={color} />
-					),
-					headerRight: () => (
-						<Link href="/modal" asChild>
-							<Pressable>
-								{({ pressed }) => (
-									<FontAwesome
-										name="info"
-										size={25}
-										color={
-											Colors[colorScheme ?? "light"].text
-										}
-										style={{
-											marginRight: 15,
-											opacity: pressed ? 0.5 : 1,
-										}}
-									/>
-								)}
-							</Pressable>
-						</Link>
 					),
 				}}
 			/>
 			<Tabs.Screen
 				name="add"
 				options={{
-					title: "Adicionar",
+					title: "",
+					headerTitle: "Adicionar",
+					headerLeft: () => (
+						<GoBackButton onGoBack={navigation.goBack} />
+					),
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="plus" color={color} />
 					),
@@ -63,7 +81,11 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="list"
 				options={{
-					title: "Rebanho",
+					title: "",
+					headerTitle: "Rebanho",
+					headerLeft: () => (
+						<GoBackButton onGoBack={navigation.goBack} />
+					),
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="list" color={color} />
 					),
@@ -72,7 +94,11 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="config"
 				options={{
-					title: "Configurações",
+					title: "",
+					headerTitle: "Configurações",
+					headerLeft: () => (
+						<GoBackButton onGoBack={navigation.goBack} />
+					),
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="cogs" color={color} />
 					),
