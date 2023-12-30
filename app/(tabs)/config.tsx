@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
+
 import { Text, View } from "../../components/Themed";
 
-export default function TabOneScreen() {
+export default function TabConfigScreen() {
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Home</Text>
+			<Text style={styles.title}>Configuração</Text>
 		</View>
 	);
 }
@@ -18,10 +19,5 @@ const styles = StyleSheet.create({
 	title: {
 		fontSize: 20,
 		fontWeight: "bold",
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: "80%",
 	},
 });
