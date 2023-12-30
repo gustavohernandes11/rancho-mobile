@@ -41,13 +41,14 @@ export default function TabLayout() {
 					Colors[colorScheme ?? "light"].lightGrey,
 				headerTintColor: "white",
 				tabBarStyle: {
-					borderTopLeftRadius: 8,
-					borderTopRightRadius: 8,
+					borderTopLeftRadius: 4,
+					borderTopRightRadius: 4,
+					overflow: "hidden",
 				},
 				headerStyle: {
 					backgroundColor: Colors[colorScheme ?? "light"].green,
-					borderBottomLeftRadius: 8,
-					borderBottomRightRadius: 8,
+					borderBottomLeftRadius: 4,
+					borderBottomRightRadius: 4,
 				},
 				tabBarActiveBackgroundColor:
 					Colors[colorScheme ?? "light"].darkGreen,
@@ -58,7 +59,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="index"
 				options={{
-					title: "",
+					tabBarShowLabel: false,
 					headerTitle: "Início",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="home" color={color} />
@@ -68,7 +69,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="add"
 				options={{
-					title: "",
+					tabBarShowLabel: false,
 					headerTitle: "Adicionar",
 					headerLeft: () => (
 						<GoBackButton onGoBack={navigation.goBack} />
@@ -81,7 +82,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="list"
 				options={{
-					title: "",
+					tabBarShowLabel: false,
 					headerTitle: "Rebanho",
 					headerLeft: () => (
 						<GoBackButton onGoBack={navigation.goBack} />
@@ -94,7 +95,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="config"
 				options={{
-					title: "",
+					tabBarShowLabel: false,
 					headerTitle: "Configurações",
 					headerLeft: () => (
 						<GoBackButton onGoBack={navigation.goBack} />

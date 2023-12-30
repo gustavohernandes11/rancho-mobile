@@ -5,7 +5,7 @@ import { Text, View } from "../../components/Themed";
 export default function TabAddAnimalsScreen() {
 	return (
 		<View style={styles.container}>
-			<Text style={styles.title}>Adiconar</Text>
+			<Text style={styles.title}>Adicionar</Text>
 		</View>
 	);
 }
