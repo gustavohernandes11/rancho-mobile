@@ -26,7 +26,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="index"
 				options={{
-					title: "Home",
+					title: "Início",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="home" color={color} />
 					),
@@ -52,9 +52,27 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
+				name="add"
+				options={{
+					title: "Adicionar",
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="plus" color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="list"
+				options={{
+					title: "Rebanho",
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="list" color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
 				name="config"
 				options={{
-					title: "Config",
+					title: "Configurações",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="cogs" color={color} />
 					),
