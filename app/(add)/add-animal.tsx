@@ -1,6 +1,5 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { Stack } from "expo-router";
-import { Text, View } from "../../components/Themed";
 
 export default function AddAnimalScreen() {
 	return (

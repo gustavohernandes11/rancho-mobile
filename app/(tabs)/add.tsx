@@ -1,17 +1,20 @@
-import { Button, StyleSheet } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
-import { Text, View } from "../../components/Themed";
 import { Link } from "expo-router";
+import { StyledButton } from "../../components/StyledButton";
 
 export default function TabAddAnimalsScreen() {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.title}>Adicionar</Text>
 			<Link href="/add-animal" asChild>
-				<Button color="green" title="Adicionar animal" />
+				<StyledButton type="danger" title="Adicionar animal" />
 			</Link>
 			<Link href="/add-batch" asChild>
-				<Button color="green" title="Adicionar lote" />
+				<StyledButton type="light" title="Adicionar lote" />
+			</Link>
+			<Link href="/add-batch" asChild>
+				<StyledButton type="primary" title="Adicionar lote" />
 			</Link>
 		</View>
 	);

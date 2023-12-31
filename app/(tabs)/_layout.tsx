@@ -16,24 +16,21 @@ export default function TabLayout() {
 	return (
 		<Tabs
 			screenOptions={{
-				tabBarActiveTintColor: "white",
-				tabBarInactiveTintColor:
-					Colors[colorScheme ?? "light"].lightGrey,
-				headerTintColor: "white",
+				tabBarActiveTintColor: Colors.white,
+				tabBarInactiveTintColor: Colors.gray,
+				headerTintColor: Colors.white,
 				tabBarStyle: {
 					borderTopLeftRadius: 4,
 					borderTopRightRadius: 4,
 					overflow: "hidden",
 				},
 				headerStyle: {
-					backgroundColor: Colors[colorScheme ?? "light"].green,
+					backgroundColor: Colors.green,
 					borderBottomLeftRadius: 4,
 					borderBottomRightRadius: 4,
 				},
-				tabBarActiveBackgroundColor:
-					Colors[colorScheme ?? "light"].darkGreen,
-				tabBarInactiveBackgroundColor:
-					Colors[colorScheme ?? "light"].green,
+				tabBarActiveBackgroundColor: Colors.darkGreen,
+				tabBarInactiveBackgroundColor: Colors.green,
 			}}
 		>
 			<Tabs.Screen
