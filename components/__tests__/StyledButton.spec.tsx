@@ -1,5 +1,4 @@
-import { render, screen } from "@testing-library/react-native";
-import "@testing-library/jest-native/extend-expect";
+import { render, screen } from "./setupTests";
 
 import { StyledButton } from "../StyledButton";
 import Colors from "../../constants/Colors";
