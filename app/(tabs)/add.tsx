@@ -1,13 +1,12 @@
-import { StyleSheet, Text } from "react-native";
-
 import { Link } from "expo-router";
 import { StyledButton } from "../../components/StyledButton";
 import { ContainerView } from "../../components/ContainerView";
+import { Heading } from "../../components/Heading";
 
 export default function TabAddAnimalsScreen() {
 	return (
 		<ContainerView>
-			<Text>Adicionar</Text>
+			<Heading>Adicionar</Heading>
 			<Link href="/add-animal" asChild>
 				<StyledButton type="danger" title="Adicionar animal" />
 			</Link>

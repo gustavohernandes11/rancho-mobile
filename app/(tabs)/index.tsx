@@ -1,10 +1,10 @@
-import { Text } from "react-native";
 import { ContainerView } from "../../components/ContainerView";
+import { Heading } from "../../components/Heading";
 
 export default function TabOneScreen() {
 	return (
 		<ContainerView>
-			<Text>Home</Text>
+			<Heading>Home</Heading>
 		</ContainerView>
 	);
 }

@@ -1,10 +1,10 @@
-import { Text } from "react-native";
 import { ContainerView } from "../../components/ContainerView";
+import { Heading } from "../../components/Heading";
 
 export default function TabListAnimalsScreen() {
 	return (
 		<ContainerView>
-			<Text>Listar</Text>
+			<Heading>Listar</Heading>
 		</ContainerView>
 	);
 }

@@ -1,10 +1,10 @@
-import { Text } from "react-native";
 import { ContainerView } from "../../components/ContainerView";
+import { Heading } from "../../components/Heading";
 
 export default function TabConfigScreen() {
 	return (
 		<ContainerView>
-			<Text>Configuração</Text>
+			<Heading>Configuração</Heading>
 		</ContainerView>
 	);
 }
