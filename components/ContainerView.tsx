@@ -2,12 +2,12 @@ import React from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
 import Colors from "../constants/Colors";
 
-interface ContainerType {
+interface ContainerViewType {
 	flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
 	children?: React.ReactNode;
 }
 
-export const Container: React.FC<ContainerType & ViewProps> = ({
+export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 	children,
 	flexDirection,
 	...props

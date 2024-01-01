@@ -1,24 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text } from "react-native";
 import { Stack } from "expo-router";
+import { ContainerView } from "../../components/ContainerView";
 
 export default function AddBatchScreen() {
 	return (
-		<View style={styles.container}>
+		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Adicionar lote" }} />
 
-			<Text style={styles.title}>Adicionar lote</Text>
-		</View>
+			<Text>Adicionar lote</Text>
+		</ContainerView>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-});

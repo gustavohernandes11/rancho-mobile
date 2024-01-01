@@ -1,13 +1,13 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text } from "react-native";
 
 import { Link } from "expo-router";
 import { StyledButton } from "../../components/StyledButton";
-import { Container } from "../../components/Container";
+import { ContainerView } from "../../components/ContainerView";
 
 export default function TabAddAnimalsScreen() {
 	return (
-		<Container>
-			<Text style={styles.title}>Adicionar</Text>
+		<ContainerView>
+			<Text>Adicionar</Text>
 			<Link href="/add-animal" asChild>
 				<StyledButton type="danger" title="Adicionar animal" />
 			</Link>
@@ -17,13 +17,6 @@ export default function TabAddAnimalsScreen() {
 			<Link href="/add-batch" asChild>
 				<StyledButton type="primary" title="Adicionar lote" />
 			</Link>
-		</Container>
+		</ContainerView>
 	);
 }
-
-const styles = StyleSheet.create({
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-});
