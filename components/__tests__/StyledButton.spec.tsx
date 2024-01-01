@@ -1,27 +1,23 @@
 import { render, screen } from "./setupTests";
 
-import { StyledButton } from "../StyledButton";
+import { Button } from "../Button";
 import Colors from "../../constants/Colors";
 
-describe("StyledButton", () => {
+describe("Button", () => {
 	it("should render the component", () => {
-		render(<StyledButton title="any-button-title" />);
+		render(<Button title="any-button-title" />);
 		const sut = screen.getByText("any-button-title");
 		expect(sut).toBeTruthy();
 	});
 	it("should render the text title", () => {
-		render(<StyledButton title="any-button-title" />);
+		render(<Button title="any-button-title" />);
 		const sut = screen.getByText("any-button-title");
 		expect(sut).toHaveTextContent("any-button-title");
 	});
 	describe("Type", () => {
 		it("should render a green background when type primary", () => {
 			const { getByTestId } = render(
-				<StyledButton
-					testID="button-id"
-					type="primary"
-					title="any-title"
-				/>
+				<Button testID="button-id" type="primary" title="any-title" />
 			);
 
 			expect(getByTestId("button-id")).toHaveStyle({
@@ -30,7 +26,7 @@ describe("StyledButton", () => {
 		});
 		it("should render a white text when type danger", () => {
 			const { getByText } = render(
-				<StyledButton type="primary" title="any-title" />
+				<Button type="primary" title="any-title" />
 			);
 
 			expect(getByText("any-title")).toHaveStyle({
@@ -41,12 +37,12 @@ describe("StyledButton", () => {
 		it("should render a gray background and border when type light or danger", () => {
 			const { getByTestId } = render(
 				<>
-					<StyledButton
+					<Button
 						testID="button-light-id"
 						type="light"
 						title="any-title"
 					/>
-					<StyledButton
+					<Button
 						testID="button-danger-id"
 						type="light"
 						title="any-title"
@@ -65,7 +61,7 @@ describe("StyledButton", () => {
 		});
 		it("should render a red text when type danger", () => {
 			const { getByText } = render(
-				<StyledButton type="danger" title="any-title" />
+				<Button type="danger" title="any-title" />
 			);
 
 			expect(getByText("any-title")).toHaveStyle({

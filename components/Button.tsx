@@ -8,13 +8,13 @@ import {
 import Colors from "../constants/Colors";
 
 type ButtonTypes = "primary" | "light" | "danger";
-type StyledButtonProps = {
+type CustomButtonProps = {
 	title: string;
 	onPress?: () => any;
 	type?: ButtonTypes;
 } & TouchableHighlightProps;
 
-export const StyledButton: React.FC<StyledButtonProps> = ({
+export const Button: React.FC<CustomButtonProps> = ({
 	title,
 	onPress,
 	type = "primary",

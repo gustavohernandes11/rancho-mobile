@@ -2,11 +2,12 @@ import { render, screen } from "./setupTests";
 
 import { Heading } from "../Heading";
 
-describe("StyledButton", () => {
+describe("Heading", () => {
 	it("should render the text", () => {
 		render(<Heading>FOO</Heading>);
 		const sut = screen.getByRole("text");
 		expect(sut).toHaveTextContent("FOO");
+		expect(sut).toBeOnTheScreen();
 	});
 	it("should set the fontSize on 14 when size is small", () => {
 		render(<Heading size="small">FOO</Heading>);

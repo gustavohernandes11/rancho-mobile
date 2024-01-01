@@ -3,11 +3,11 @@ import { render, screen } from "./setupTests";
 import { ContainerView } from "../ContainerView";
 import { Text } from "react-native";
 
-describe("StyledButton", () => {
+describe("ContainerView", () => {
 	it("should render the component", () => {
 		render(<ContainerView testID="container" />);
 		const sut = screen.getByTestId("container");
-		expect(sut).toBeTruthy();
+		expect(sut).toBeOnTheScreen();
 	});
 	it("should render the children", () => {
 		render(
