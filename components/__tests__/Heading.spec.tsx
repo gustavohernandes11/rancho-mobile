@@ -8,4 +8,14 @@ describe("StyledButton", () => {
 		const sut = screen.getByRole("text");
 		expect(sut).toHaveTextContent("FOO");
 	});
+	it("should set the fontSize on 14 when size is small", () => {
+		render(<Heading size="small">FOO</Heading>);
+		const sut = screen.getByRole("text");
+		expect(sut).toHaveStyle({ fontSize: 14 });
+	});
+	it("should set the fontSize on 16 when no size is provided", () => {
+		render(<Heading>FOO</Heading>);
+		const sut = screen.getByRole("text");
+		expect(sut).toHaveStyle({ fontSize: 16 });
+	});
 });
