@@ -14,7 +14,7 @@ export const Heading: React.FC<TextProps & HeadingProps> = ({
 	...props
 }: HeadingProps) => {
 	const getFontSize = (size: HeadingSizes) => {
-		if (size === "medium") return 16;
+		if (size === "medium") return 20;
 		else if (size === "small") return 14;
 	};
 

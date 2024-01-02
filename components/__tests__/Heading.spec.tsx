@@ -14,9 +14,9 @@ describe("Heading", () => {
 		const sut = screen.getByRole("text");
 		expect(sut).toHaveStyle({ fontSize: 14 });
 	});
-	it("should set the fontSize on 16 when no size is provided", () => {
+	it("should set the fontSize on 20 when no size is provided", () => {
 		render(<Heading>FOO</Heading>);
 		const sut = screen.getByRole("text");
-		expect(sut).toHaveStyle({ fontSize: 16 });
+		expect(sut).toHaveStyle({ fontSize: 20 });
 	});
 });
