@@ -11,21 +11,28 @@ import Colors from "../constants/Colors";
 interface InputProps {
 	label?: string;
 	error?: string;
+	textArea?: boolean;
 }
 
 export const Input: React.FC<InputProps & TextInputProps> = ({
 	label,
 	error,
+	textArea,
 	...props
 }) => {
-	const getBorderColor = (error?: string) =>
-		error ? Colors.red : Colors.border;
+	const getBorderColor = () => (error ? Colors.red : Colors.border);
+	const hasTextAreaStyle = () => (textArea ? styles.textArea : {});
 
 	return (
 		<View style={styles.inputContainer}>
 			{label && <Text style={styles.label}>{label}</Text>}
 			<TextInput
-				style={[styles.input, { borderColor: getBorderColor(error) }]}
+				numberOfLines={textArea ? 5 : 1}
+				style={[
+					styles.input,
+					{ borderColor: getBorderColor() },
+					hasTextAreaStyle(),
+				]}
 				{...props}
 			/>
 			{error && <Text style={styles.error}>{error}</Text>}
@@ -45,6 +52,9 @@ const styles = StyleSheet.create({
 		borderColor: Colors.border,
 		padding: 8,
 		marginVertical: 4,
+	},
+	textArea: {
+		textAlignVertical: "top",
 	},
 	label: {
 		fontSize: 14,
