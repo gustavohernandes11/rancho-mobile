@@ -20,7 +20,8 @@ export const Button: React.FC<CustomButtonProps> = ({
 	type = "primary",
 	...props
 }) => {
-	const onPressedColor = Colors.darkGreen;
+	const getOnPressedColor = (type: ButtonTypes) =>
+		type === "primary" ? Colors.darkGreen : Colors.darkSurface;
 
 	const getTextColor = (type: ButtonTypes) => {
 		if (type === "danger") return Colors.red;
@@ -36,7 +37,7 @@ export const Button: React.FC<CustomButtonProps> = ({
 
 	return (
 		<TouchableHighlight
-			underlayColor={onPressedColor}
+			underlayColor={getOnPressedColor(type)}
 			style={[
 				styles.button,
 				{
