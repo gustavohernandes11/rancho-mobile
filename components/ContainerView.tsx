@@ -22,7 +22,6 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: Colors.white,
-		direction: "ltr",
 		padding: 8,
 		flex: 1,
 		justifyContent: "flex-start",
