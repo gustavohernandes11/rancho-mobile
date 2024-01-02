@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
 		marginVertical: 8,
 	},
 	input: {
+		minWidth: "48.8%",
 		borderRadius: 4,
 		backgroundColor: Colors.gray,
 		borderWidth: 1,
