@@ -4,15 +4,12 @@ import SelectDropdown from "react-native-select-dropdown";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
+import { Item } from "../types/Item";
 
 const dropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
 );
 
-export type Item = {
-	option: string;
-	value: string;
-};
 interface SelectProps {
 	items: Item[];
 	onSelect: (selectedItem: Item, index: number) => void;
@@ -41,10 +38,10 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 				data={items}
 				onSelect={onSelect}
 				buttonTextAfterSelection={(selectedItem) => {
-					return selectedItem.option;
+					return selectedItem.key;
 				}}
 				rowTextForSelection={(item: Item) => {
-					return item.option;
+					return item.key;
 				}}
 				{...props}
 			/>
