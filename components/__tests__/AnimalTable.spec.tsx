@@ -10,7 +10,7 @@ describe("AnimalTable", () => {
 		{ id: 3, name: "Name 3", gender: "M" },
 		{ id: 4, name: "Name 4", gender: "F" },
 	];
-	it("should render the all the animals", () => {
+	it("should render all the animals", () => {
 		render(<AnimalTable animals={mockedAnimals} />);
 		expect(screen.getByText("Name 1")).toBeOnTheScreen();
 		expect(screen.getByText("Name 2")).toBeOnTheScreen();

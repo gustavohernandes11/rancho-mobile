@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
 		borderRadius: 4,
 	},
 	button: {
+		width: "auto",
 		borderRadius: 4,
 		backgroundColor: Colors.gray,
 		borderWidth: 1,
