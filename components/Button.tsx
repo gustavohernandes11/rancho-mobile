@@ -5,8 +5,11 @@ import {
 	TouchableHighlightProps,
 	Text,
 } from "react-native";
-import Colors from "../constants/Colors";
 import { ButtonTypes } from "../types/ButtonTypes";
+import { getOnPressedColor } from "../utils/getOnPressedColor";
+import { getButtonTextColor } from "../utils/getButtonTextColor";
+import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
+import { getButtonBorderColor } from "../utils/getButtonBorderColor";
 
 type CustomButtonProps = {
 	title: string;
@@ -20,35 +23,20 @@ export const Button: React.FC<CustomButtonProps> = ({
 	type = "primary",
 	...props
 }) => {
-	const getOnPressedColor = () =>
-		type === "primary" ? Colors.darkGreen : Colors.darkSurface;
-
-	const getTextColor = () => {
-		if (type === "danger") return Colors.red;
-		else if (type === "primary") return Colors.white;
-		else return Colors.text;
-	};
-
-	const getBackgroundColor = () =>
-		type === "primary" ? Colors.green : Colors.gray;
-
-	const getBorderColor = () =>
-		type === "primary" ? "transparent" : Colors.border;
-
 	return (
 		<TouchableHighlight
-			underlayColor={getOnPressedColor()}
+			underlayColor={getOnPressedColor(type)}
 			style={[
 				styles.button,
 				{
-					backgroundColor: getBackgroundColor(),
-					borderColor: getBorderColor(),
+					backgroundColor: getButtonBackgroundColor(type),
+					borderColor: getButtonBorderColor(type),
 				},
 			]}
 			onPress={onPress}
 			{...props}
 		>
-			<Text style={[styles.text, { color: getTextColor() }]}>
+			<Text style={[styles.text, { color: getButtonTextColor(type) }]}>
 				{title}
 			</Text>
 		</TouchableHighlight>
