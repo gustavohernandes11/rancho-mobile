@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, ViewProps } from "react-native";
 import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { Item } from "../types/Item";
+import { getInputBorderColor } from "../utils/getInputBorderColor";
 
 const dropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
@@ -23,14 +24,16 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 	error,
 	...props
 }) => {
-	const getBorderColor = () => (error ? Colors.red : Colors.border);
 	return (
 		<View>
 			{label && <Text style={styles.label}>{label}</Text>}
 			<SelectDropdown
 				renderDropdownIcon={dropdownIcon}
 				buttonTextStyle={styles.text}
-				buttonStyle={[styles.button, { borderColor: getBorderColor() }]}
+				buttonStyle={[
+					styles.button,
+					{ borderColor: getInputBorderColor(!!error) },
+				]}
 				rowStyle={styles.row}
 				rowTextStyle={styles.text}
 				dropdownStyle={styles.dropdown}

@@ -7,6 +7,7 @@ import {
 	View,
 } from "react-native";
 import Colors from "../constants/Colors";
+import { getInputBorderColor } from "../utils/getInputBorderColor";
 
 interface InputProps {
 	label?: string;
@@ -20,7 +21,6 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 	textArea,
 	...props
 }) => {
-	const getBorderColor = () => (error ? Colors.red : Colors.border);
 	const hasTextAreaStyle = () => (textArea ? styles.textArea : {});
 
 	return (
@@ -30,7 +30,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				numberOfLines={textArea ? 5 : 1}
 				style={[
 					styles.input,
-					{ borderColor: getBorderColor() },
+					{ borderColor: getInputBorderColor(!!error) },
 					hasTextAreaStyle(),
 				]}
 				{...props}
