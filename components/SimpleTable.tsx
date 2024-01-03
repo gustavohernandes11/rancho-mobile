@@ -21,8 +21,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 
 const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
 	<View style={[styles.row, { backgroundColor: getRowColor(index) }]}>
-		<Text>{item.key}</Text>
-		<Text>{item.value}</Text>
+		<Text style={styles.text}>{item.key}</Text>
+		<Text style={styles.text}>{item.value}</Text>
 	</View>
 );
 
@@ -34,5 +34,8 @@ const styles = StyleSheet.create({
 		paddingVertical: 16,
 		paddingHorizontal: 8,
 		justifyContent: "space-between",
+	},
+	text: {
+		color: Colors.darkGray,
 	},
 });
