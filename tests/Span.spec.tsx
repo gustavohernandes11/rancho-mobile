@@ -12,13 +12,13 @@ describe("Span", () => {
 	it("should render the children components", () => {
 		render(
 			<Span testID="span">
-				<Text>Child 1</Text>
-				<Text>Child 2</Text>
+				<Text>child-1</Text>
+				<Text>child-2</Text>
 			</Span>
 		);
 		const sut = screen.getByTestId("span");
 		expect(sut).not.toBeEmptyElement();
-		expect(sut).toHaveTextContent("Child 1");
-		expect(sut).toHaveTextContent("Child 2");
+		expect(sut).toHaveTextContent("child-1");
+		expect(sut).toHaveTextContent("child-2");
 	});
 });

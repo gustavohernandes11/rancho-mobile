@@ -1,11 +1,12 @@
 import { render, screen } from "../utils/setupTests";
 
-import { Item, Select } from "../components/Select";
+import { Select } from "../components/Select";
+import { Item } from "../types/Item";
 
 describe("Select", () => {
 	const mockItems: Item[] = [
-		{ option: "First option", value: "1" },
-		{ option: "Second option", value: "2" },
+		{ key: "first-option", value: "1" },
+		{ key: "second-option", value: "2" },
 	];
 	const mockOnSelect = jest.fn();
 
