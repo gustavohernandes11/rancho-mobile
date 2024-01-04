@@ -2,6 +2,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
 import Colors from "../../constants/Colors";
+import Fonts from "../../constants/Fonts";
 
 function TabBarIcon(props: {
 	name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -14,6 +15,7 @@ export default function TabLayout() {
 	return (
 		<Tabs
 			screenOptions={{
+				title: "Rancho",
 				tabBarActiveTintColor: Colors.white,
 				tabBarInactiveTintColor: Colors.gray,
 				headerTintColor: Colors.white,
@@ -27,6 +29,10 @@ export default function TabLayout() {
 					borderBottomLeftRadius: 4,
 					borderBottomRightRadius: 4,
 				},
+				headerTitleStyle: {
+					fontWeight: "bold",
+					fontFamily: Fonts.primaryFamily,
+				},
 				tabBarActiveBackgroundColor: Colors.darkGreen,
 				tabBarInactiveBackgroundColor: Colors.green,
 			}}
@@ -35,7 +41,6 @@ export default function TabLayout() {
 				name="index"
 				options={{
 					tabBarShowLabel: false,
-					headerTitle: "Início",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="home" color={color} />
 					),
@@ -45,7 +50,6 @@ export default function TabLayout() {
 				name="add"
 				options={{
 					tabBarShowLabel: false,
-					headerTitle: "Adicionar",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="plus" color={color} />
 					),
@@ -55,7 +59,6 @@ export default function TabLayout() {
 				name="list"
 				options={{
 					tabBarShowLabel: false,
-					headerTitle: "Rebanho",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="list" color={color} />
 					),
@@ -65,7 +68,6 @@ export default function TabLayout() {
 				name="config"
 				options={{
 					tabBarShowLabel: false,
-					headerTitle: "Configurações",
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="cogs" color={color} />
 					),
