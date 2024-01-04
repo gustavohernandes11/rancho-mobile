@@ -4,7 +4,6 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import { getRowColor } from "../utils/getRowColor";
 import { RowProps } from "../types/RowProps";
-import { Span } from "./Span";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "./IconButton";
 
@@ -13,9 +12,8 @@ interface AnimalTableProps {
 }
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => (
-	<ScrollView showsVerticalScrollIndicator={true}>
+	<ScrollView showsVerticalScrollIndicator={true} style={styles.container}>
 		<FlatList
-			style={styles.table}
 			data={animals}
 			ListHeaderComponent={Header}
 			keyExtractor={(item: Animal) => item.id.toString()}
@@ -31,10 +29,10 @@ const Row: React.FC<RowProps<Animal>> = ({ item, index }) => (
 			{item.gender === "F" ? "Fêmea" : "Macho"}
 		</Text>
 		<View style={[styles.ceil]}>
-			<Span flexWrap="nowrap">
+			<View style={styles.buttonSpan}>
 				<IconButton type="danger" icon="trash" />
 				<IconButton icon="expand" />
-			</Span>
+			</View>
 		</View>
 	</View>
 );
@@ -51,10 +49,10 @@ const Header: React.FC = () => {
 const styles = StyleSheet.create({
 	container: {
 		borderRadius: 4,
-		overflowX: "scroll",
-	},
-	table: {
 		marginVertical: 8,
+		overflowX: "scroll",
+		borderWidth: 1,
+		borderColor: Colors.border,
 	},
 	row: {
 		flexDirection: "row",
@@ -64,6 +62,11 @@ const styles = StyleSheet.create({
 		padding: 8,
 		borderWidth: 1,
 		borderColor: Colors.border,
+	},
+	buttonSpan: {
+		gap: 8,
+		flexWrap: "nowrap",
+		flexDirection: "row",
 	},
 	header: {
 		backgroundColor: Colors.gray,

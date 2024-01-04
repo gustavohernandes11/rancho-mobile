@@ -33,10 +33,10 @@ const styles = StyleSheet.create({
 		flexDirection: "row",
 		borderRadius: 4,
 		backgroundColor: Colors.gray,
-		borderWidth: 1,
+		borderWidth: 2,
 		borderColor: Colors.border,
 		padding: 8,
-		marginVertical: 4,
+		marginVertical: 8,
 	},
 	right: {
 		flex: 1,

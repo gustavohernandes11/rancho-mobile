@@ -55,7 +55,8 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 
 const styles = StyleSheet.create({
 	inputContainer: {
-		marginVertical: 8,
+		flex: 1,
+		marginBottom: 4,
 	},
 	dropdown: {
 		borderRadius: 4,

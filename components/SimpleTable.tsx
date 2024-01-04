@@ -10,7 +10,7 @@ interface SimpleTableProps {
 }
 
 export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
-	<View>
+	<View style={styles.tableContainer}>
 		<FlatList
 			data={data}
 			renderItem={(props: RowProps<Item>) => <Row {...props} />}
@@ -27,6 +27,12 @@ const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
 );
 
 const styles = StyleSheet.create({
+	tableContainer: {
+		borderRadius: 4,
+		marginVertical: 8,
+		borderWidth: 1,
+		borderColor: Colors.border,
+	},
 	row: {
 		flexDirection: "row",
 		borderWidth: 1,

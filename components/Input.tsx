@@ -27,6 +27,8 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 		<View style={styles.inputContainer}>
 			{label && <Text style={styles.label}>{label}</Text>}
 			<TextInput
+				placeholderTextColor={Colors.darkGray}
+				cursorColor={Colors.darkGray}
 				numberOfLines={textArea ? 5 : 1}
 				style={[
 					styles.input,
@@ -43,7 +45,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 const styles = StyleSheet.create({
 	inputContainer: {
 		flex: 1,
-		marginVertical: 12,
+		marginBottom: 4,
 	},
 	input: {
 		borderRadius: 4,
@@ -51,7 +53,6 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: Colors.border,
 		padding: 8,
-		marginVertical: 4,
 	},
 	textArea: {
 		textAlignVertical: "top",
