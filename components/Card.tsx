@@ -1,5 +1,12 @@
 import React from "react";
-import { Image, ImageURISource, StyleSheet, Text, View } from "react-native";
+import {
+	Image,
+	ImageURISource,
+	Pressable,
+	StyleSheet,
+	Text,
+	View,
+} from "react-native";
 import Colors from "../constants/Colors";
 import { Link, LinkProps } from "expo-router";
 import Fonts from "../constants/Fonts";
@@ -25,13 +32,13 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 		<Link
 			href={href}
 			style={[styles.card, { backgroundColor: Colors[color] }]}
-			{...props}
 			asChild
+			{...props}
 		>
-			<View>
+			<Pressable>
 				<Text style={styles.title}>{title}</Text>
 				<Image style={styles.image} source={iconSource} alt={alt} />
-			</View>
+			</Pressable>
 		</Link>
 	);
 };
