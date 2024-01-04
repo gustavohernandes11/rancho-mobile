@@ -6,7 +6,7 @@ export default function AddAnimalScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Adicionar animal" }} />
-			<Heading>Adicionar animal</Heading>
+			<Heading size="small">Adicionar animal</Heading>
 		</ContainerView>
 	);
 }

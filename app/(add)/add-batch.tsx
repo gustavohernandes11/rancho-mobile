@@ -6,7 +6,7 @@ export default function AddBatchScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Adicionar lote" }} />
-			<Heading>Adicionar lote</Heading>
+			<Heading size="small">Adicionar lote</Heading>
 		</ContainerView>
 	);
 }

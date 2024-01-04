@@ -16,7 +16,7 @@ export const Heading: React.FC<TextProps & HeadingProps> = ({
 }: HeadingProps) => {
 	const getFontSize = (size: HeadingSizes) => {
 		if (size === "medium") return 20;
-		else if (size === "small") return 14;
+		else if (size === "small") return 16;
 	};
 
 	return (
@@ -31,9 +31,8 @@ export const Heading: React.FC<TextProps & HeadingProps> = ({
 
 const styles = StyleSheet.create({
 	heading: {
-		fontSize: 20,
 		color: Colors.text,
-		marginVertical: 16,
+		marginVertical: 8,
 		fontFamily: Fonts.primaryFamily,
 	},
 });
