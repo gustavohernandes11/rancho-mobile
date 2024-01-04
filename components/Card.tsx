@@ -2,6 +2,7 @@ import React from "react";
 import { Image, ImageURISource, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import { Link, LinkProps } from "expo-router";
+import Fonts from "../constants/Fonts";
 
 type ColorOptions = "green" | "blue" | "purple";
 interface CardProps {
@@ -54,8 +55,8 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 	title: {
-		fontSize: 14,
-		color: Colors.white,
+		fontFamily: Fonts.primaryFamily,
 		flexShrink: 1,
+		color: Colors.white,
 	},
 });

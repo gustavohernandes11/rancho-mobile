@@ -10,6 +10,7 @@ import { getOnPressedColor } from "../utils/getOnPressedColor";
 import { getButtonTextColor } from "../utils/getButtonTextColor";
 import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
 import { getButtonBorderColor } from "../utils/getButtonBorderColor";
+import Fonts from "../constants/Fonts";
 
 type CustomButtonProps = {
 	title: string;
@@ -52,5 +53,6 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		fontSize: 14,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

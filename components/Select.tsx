@@ -6,6 +6,7 @@ import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { Item } from "../types/Item";
 import { getInputBorderColor } from "../utils/getInputBorderColor";
+import Fonts from "../constants/Fonts";
 
 const dropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
@@ -80,13 +81,16 @@ const styles = StyleSheet.create({
 	text: {
 		fontSize: 14,
 		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
 	},
 	label: {
 		fontSize: 14,
 		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
 	},
 	error: {
 		fontSize: 12,
 		color: Colors.red,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

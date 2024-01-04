@@ -4,6 +4,7 @@ import { Item } from "../types/Item";
 import Colors from "../constants/Colors";
 import { RowProps } from "../types/RowProps";
 import { getRowColor } from "../utils/getRowColor";
+import Fonts from "../constants/Fonts";
 
 interface SimpleTableProps {
 	data: Item[];
@@ -43,5 +44,6 @@ const styles = StyleSheet.create({
 	},
 	text: {
 		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

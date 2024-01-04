@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { getInputBorderColor } from "../utils/getInputBorderColor";
+import Fonts from "../constants/Fonts";
 
 interface InputProps {
 	label?: string;
@@ -53,6 +54,7 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: Colors.border,
 		padding: 8,
+		fontFamily: Fonts.primaryFamily,
 	},
 	textArea: {
 		textAlignVertical: "top",
@@ -60,9 +62,11 @@ const styles = StyleSheet.create({
 	label: {
 		fontSize: 14,
 		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
 	},
 	error: {
 		fontSize: 12,
 		color: Colors.red,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

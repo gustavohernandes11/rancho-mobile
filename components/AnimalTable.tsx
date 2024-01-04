@@ -6,6 +6,7 @@ import { getRowColor } from "../utils/getRowColor";
 import { RowProps } from "../types/RowProps";
 import { ScrollView } from "react-native-gesture-handler";
 import { IconButton } from "./IconButton";
+import Fonts from "../constants/Fonts";
 
 interface AnimalTableProps {
 	animals: Animal[];
@@ -74,8 +75,8 @@ const styles = StyleSheet.create({
 		borderTopLeftRadius: 4,
 		borderTopRightRadius: 4,
 	},
-
 	bodyText: {
 		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

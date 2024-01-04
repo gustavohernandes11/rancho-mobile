@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, TextProps } from "react-native";
 import Colors from "../constants/Colors";
+import Fonts from "../constants/Fonts";
 
 type HeadingSizes = "medium" | "small";
 interface HeadingProps {
@@ -33,5 +34,6 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		color: Colors.text,
 		marginVertical: 16,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

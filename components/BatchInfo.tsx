@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { Batch } from "../types/Batch";
 import Colors from "../constants/Colors";
+import Fonts from "../constants/Fonts";
 
 interface BatchInfoProps {
 	batch: Batch;
@@ -50,9 +51,11 @@ const styles = StyleSheet.create({
 	},
 	title: {
 		fontSize: 14,
+		fontFamily: Fonts.primaryFamily,
 	},
 	description: {
 		fontSize: 12,
 		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
 	},
 });

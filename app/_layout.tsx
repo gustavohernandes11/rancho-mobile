@@ -25,6 +25,7 @@ SplashScreen.preventAutoHideAsync();
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
 		SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+		OpenSans: require("../assets/fonts/OpenSans-VariableFont_wdth,wght.ttf"),
 		...FontAwesome.font,
 	});
 
@@ -42,7 +43,6 @@ export default function RootLayout() {
 	if (!loaded) {
 		return null;
 	}
-
 	return <RootLayoutNav />;
 }
 
