@@ -1,6 +1,6 @@
-import { render, screen } from "./setupTests";
+import { render, screen } from "../utils/setupTests";
 
-import { BatchInfo } from "../BatchInfo";
+import { BatchInfo } from "../components/BatchInfo";
 
 describe("BatchInfo", () => {
 	const mockedBatch = {

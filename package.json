@@ -14,8 +14,7 @@
 	"jest": {
 		"preset": "jest-expo",
 		"testPathIgnorePatterns": [
-			"/node_modules/",
-			"setupTests"
+			"/node_modules/"
 		]
 	},
 	"dependencies": {

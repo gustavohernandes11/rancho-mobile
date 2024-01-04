@@ -1,6 +1,6 @@
-import { render, screen } from "./setupTests";
+import { render, screen } from "../utils/setupTests";
 
-import { Item, Select } from "../Select";
+import { Item, Select } from "../components/Select";
 
 describe("Select", () => {
 	const mockItems: Item[] = [

@@ -1,7 +1,7 @@
-import { render, screen } from "./setupTests";
+import { render, screen } from "../utils/setupTests";
 
-import { SimpleTable } from "../SimpleTable";
-import { Item } from "../../types/Item";
+import { SimpleTable } from "../components/SimpleTable";
+import { Item } from "../types/Item";
 
 describe("SimpleTable", () => {
 	const mockItems: Item[] = [

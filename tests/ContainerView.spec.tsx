@@ -1,6 +1,6 @@
-import { render, screen } from "./setupTests";
+import { render, screen } from "../utils/setupTests";
 
-import { ContainerView } from "../ContainerView";
+import { ContainerView } from "../components/ContainerView";
 import { Text } from "react-native";
 
 describe("ContainerView", () => {

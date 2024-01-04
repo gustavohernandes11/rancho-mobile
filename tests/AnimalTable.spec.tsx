@@ -1,7 +1,7 @@
-import { render, screen } from "./setupTests";
+import { render, screen } from "../utils/setupTests";
 
-import { AnimalTable } from "../AnimalTable";
-import { Animal } from "../../types/Animal";
+import { AnimalTable } from "../components/AnimalTable";
+import { Animal } from "../types/Animal";
 
 describe("AnimalTable", () => {
 	const mockedAnimals: Animal[] = [
