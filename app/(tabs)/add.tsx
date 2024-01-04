@@ -8,7 +8,7 @@ export default function TabAddAnimalsScreen() {
 	return (
 		<ContainerView>
 			<Heading>Adicionar</Heading>
-			<Span>
+			<Span flexWrap="wrap">
 				<Link href="/add-animal" asChild>
 					<Button type="danger" title="Adicionar animal" />
 				</Link>

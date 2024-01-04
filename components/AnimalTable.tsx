@@ -4,9 +4,9 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import Colors from "../constants/Colors";
 import { getRowColor } from "../utils/getRowColor";
 import { RowProps } from "../types/RowProps";
-import { Button } from "./Button";
 import { Span } from "./Span";
 import { ScrollView } from "react-native-gesture-handler";
+import { IconButton } from "./IconButton";
 
 interface AnimalTableProps {
 	animals: Animal[];
@@ -31,7 +31,10 @@ const Row: React.FC<RowProps<Animal>> = ({ item, index }) => (
 			{item.gender === "F" ? "Fêmea" : "Macho"}
 		</Text>
 		<View style={[styles.ceil]}>
-			<Span flexWrap="nowrap"></Span>
+			<Span flexWrap="nowrap">
+				<IconButton type="danger" icon="trash" />
+				<IconButton icon="expand" />
+			</Span>
 		</View>
 	</View>
 );

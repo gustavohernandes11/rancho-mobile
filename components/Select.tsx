@@ -25,7 +25,7 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 	...props
 }) => {
 	return (
-		<View>
+		<View style={styles.inputContainer}>
 			{label && <Text style={styles.label}>{label}</Text>}
 			<SelectDropdown
 				renderDropdownIcon={dropdownIcon}
@@ -54,6 +54,9 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 };
 
 const styles = StyleSheet.create({
+	inputContainer: {
+		marginVertical: 8,
+	},
 	dropdown: {
 		borderRadius: 4,
 	},

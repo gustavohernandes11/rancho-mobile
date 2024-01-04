@@ -42,10 +42,10 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 
 const styles = StyleSheet.create({
 	inputContainer: {
-		marginVertical: 8,
+		flex: 1,
+		marginVertical: 12,
 	},
 	input: {
-		minWidth: "48.8%",
 		borderRadius: 4,
 		backgroundColor: Colors.gray,
 		borderWidth: 1,
