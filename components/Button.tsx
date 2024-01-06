@@ -1,22 +1,16 @@
 import React from "react";
-import {
-	TouchableHighlight,
-	StyleSheet,
-	TouchableHighlightProps,
-	Text,
-} from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { ButtonTypes } from "../types/ButtonTypes";
-import { getOnPressedColor } from "../utils/getOnPressedColor";
 import { getButtonTextColor } from "../utils/getButtonTextColor";
 import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
 import { getButtonBorderColor } from "../utils/getButtonBorderColor";
 import Fonts from "../constants/Fonts";
+import { ButtonProps, Button as PaperButton } from "react-native-paper";
 
 type CustomButtonProps = {
 	title: string;
-	onPress?: () => any;
 	type?: ButtonTypes;
-} & TouchableHighlightProps;
+} & Omit<ButtonProps, "children">;
 
 export const Button: React.FC<CustomButtonProps> = ({
 	title,
@@ -25,8 +19,7 @@ export const Button: React.FC<CustomButtonProps> = ({
 	...props
 }) => {
 	return (
-		<TouchableHighlight
-			underlayColor={getOnPressedColor(type)}
+		<PaperButton
 			style={[
 				styles.button,
 				{
@@ -40,15 +33,13 @@ export const Button: React.FC<CustomButtonProps> = ({
 			<Text style={[styles.text, { color: getButtonTextColor(type) }]}>
 				{title}
 			</Text>
-		</TouchableHighlight>
+		</PaperButton>
 	);
 };
 
 const styles = StyleSheet.create({
 	button: {
 		borderWidth: 1,
-		paddingHorizontal: 16,
-		paddingVertical: 12,
 		borderRadius: 4,
 	},
 	text: {

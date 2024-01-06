@@ -15,4 +15,5 @@ export default {
 	green: "#56A763",
 	border: "#D9D9D9",
 	white: "#FFF",
+	black: "#000",
 };
