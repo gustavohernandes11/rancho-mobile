@@ -1,44 +1,37 @@
 import React from "react";
-import {
-	StyleSheet,
-	Text,
-	TextInput,
-	TextInputProps,
-	View,
-} from "react-native";
+import { StyleSheet, View } from "react-native";
 import Colors from "../constants/Colors";
 import { getInputBorderColor } from "../utils/getInputBorderColor";
-import Fonts from "../constants/Fonts";
+
+import { TextInput, TextInputProps, HelperText } from "react-native-paper";
 
 interface InputProps {
-	label?: string;
-	error?: string;
-	textArea?: boolean;
+	errorText?: string;
 }
 
 export const Input: React.FC<InputProps & TextInputProps> = ({
 	label,
-	error,
-	textArea,
+	errorText,
 	...props
 }) => {
-	const hasTextAreaStyle = () => (textArea ? styles.textArea : {});
-
 	return (
 		<View style={styles.inputContainer}>
-			{label && <Text style={styles.label}>{label}</Text>}
 			<TextInput
+				mode="outlined"
+				outlineStyle={{ borderColor: getInputBorderColor(!!errorText) }}
+				outlineColor={Colors.border}
+				activeOutlineColor={Colors.black}
+				textColor={Colors.darkGray}
+				label={label}
 				placeholderTextColor={Colors.darkGray}
 				cursorColor={Colors.darkGray}
-				numberOfLines={textArea ? 5 : 1}
-				style={[
-					styles.input,
-					{ borderColor: getInputBorderColor(!!error) },
-					hasTextAreaStyle(),
-				]}
+				error={!!errorText}
+				style={[styles.input]}
 				{...props}
 			/>
-			{error && <Text style={styles.error}>{error}</Text>}
+			<HelperText type="error" visible={!!errorText}>
+				{errorText}
+			</HelperText>
 		</View>
 	);
 };
@@ -46,27 +39,9 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 const styles = StyleSheet.create({
 	inputContainer: {
 		flex: 1,
-		marginBottom: 4,
 	},
 	input: {
 		borderRadius: 4,
 		backgroundColor: Colors.gray,
-		borderWidth: 1,
-		borderColor: Colors.border,
-		padding: 8,
-		fontFamily: Fonts.primaryFamily,
-	},
-	textArea: {
-		textAlignVertical: "top",
-	},
-	label: {
-		fontSize: 14,
-		color: Colors.darkGray,
-		fontFamily: Fonts.primaryFamily,
-	},
-	error: {
-		fontSize: 12,
-		color: Colors.red,
-		fontFamily: Fonts.primaryFamily,
 	},
 });
