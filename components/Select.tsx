@@ -17,10 +17,12 @@ interface SelectProps {
 	onSelect: (selectedItem: Item, index: number) => void;
 	error?: string;
 	label?: string;
+	defaultButtonText?: string;
 }
 export const Select: React.FC<SelectProps & ViewProps> = ({
 	items,
 	onSelect,
+	defaultButtonText,
 	label,
 	error,
 	...props
@@ -38,7 +40,7 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 				rowStyle={styles.row}
 				rowTextStyle={styles.text}
 				dropdownStyle={styles.dropdown}
-				defaultButtonText="Selecione uma opção"
+				defaultButtonText={defaultButtonText || "Selecione uma opção"}
 				data={items}
 				onSelect={onSelect}
 				buttonTextAfterSelection={(selectedItem) => {

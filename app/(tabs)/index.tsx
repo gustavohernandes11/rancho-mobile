@@ -2,6 +2,7 @@ import { Card } from "../../components/Card";
 import { ContainerView } from "../../components/ContainerView";
 import { Heading } from "../../components/Heading";
 import { Span } from "../../components/Span";
+import { Input } from "../../components/Input";
 
 export default function TabOneScreen() {
 	return (
