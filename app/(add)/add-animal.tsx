@@ -1,20 +1,29 @@
 import { Stack } from "expo-router";
 import { ContainerView } from "../../components/ContainerView";
-import { Heading } from "../../components/Heading";
-import DateTimePicker from "react-native-ui-datepicker";
 
 import { Input } from "../../components/Input";
 import {} from "react-native-paper";
 import { Select } from "../../components/Select";
 import { Span } from "../../components/Span";
+import { DatePicker } from "../../components/DatePicker";
+import { Button } from "../../components/Button";
 
 export default function AddAnimalScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Adicionar animal" }} />
-			<Heading size="small">Adicionar animal</Heading>
 			<Span>
-				<Input label="Name*" />
+				<Input label="Nome*" />
+			</Span>
+			<Span>
+				<DatePicker
+					inputMode="start"
+					locale="pt"
+					saveLabel="Salvar"
+					onChange={() => {}}
+					value={new Date()}
+					label="Date de nascimento"
+				/>
 			</Span>
 			<Select
 				defaultButtonText="Selecione um lote"
@@ -37,7 +46,7 @@ export default function AddAnimalScreen() {
 				defaultButtonText="Selecione um animal"
 				items={[]}
 				onSelect={() => {}}
-				label="Paternidadae"
+				label="Paternidade"
 			/>
 			<Select
 				defaultButtonText="Selecione um animal"
@@ -48,7 +57,10 @@ export default function AddAnimalScreen() {
 			<Span>
 				<Input label="Observação" multiline={true} />
 			</Span>
-			<DateTimePicker />
+			<Span justifyContent="flex-end">
+				<Button type="light" title="Cancelar" />
+				<Button title="Salvar" />
+			</Span>
 		</ContainerView>
 	);
 }
