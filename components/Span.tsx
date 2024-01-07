@@ -4,6 +4,13 @@ import { FlexAlignType, StyleSheet, View, ViewProps } from "react-native";
 interface SpanProps {
 	children?: React.ReactNode;
 	alignItems?: FlexAlignType;
+	justifyContent?:
+		| "flex-start"
+		| "flex-end"
+		| "center"
+		| "space-between"
+		| "space-around"
+		| "space-evenly";
 	padding?: number;
 	paddingVertical?: number;
 	paddingHorizontal?: number;
@@ -13,6 +20,7 @@ interface SpanProps {
 export const Span: React.FC<SpanProps & ViewProps> = ({
 	children,
 	alignItems = "flex-end",
+	justifyContent,
 	paddingVertical,
 	paddingHorizontal,
 	padding,
@@ -25,6 +33,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 				styles.span,
 				{
 					alignItems,
+					justifyContent,
 					padding,
 					paddingVertical,
 					paddingHorizontal,
