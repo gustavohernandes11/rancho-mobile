@@ -6935,6 +6935,13 @@ react-native-select-dropdown@^3.4.0:
   resolved "https://registry.yarnpkg.com/react-native-select-dropdown/-/react-native-select-dropdown-3.4.0.tgz#3ce31dc2e5ffa1abf4c47e3297bf0da7144f1ea3"
   integrity sha512-9xK1z4tYpwMxp3hsM0y1+xfqq/JoMh+l7sBsJ81b2eikFwT6ZbndFBqupQXrsQ1akce9hgC/10Nkzj0LjVjeXQ==
 
+react-native-ui-datepicker@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/react-native-ui-datepicker/-/react-native-ui-datepicker-1.0.11.tgz#781163b6ae6fc731c7ec122cc0f1a591bcdd2ca3"
+  integrity sha512-IZEd5GRq2vSF1ZcoGQXUxyk9dgh+yqJ6PKC3UrEsDKhEFcQp9m7wAqACpHvEXFh/Y7HmDlNXXTJKz7NXeLmFuQ==
+  dependencies:
+    uninstall "^0.0.0"
+
 react-native-web@~0.19.6:
   version "0.19.10"
   resolved "https://registry.yarnpkg.com/react-native-web/-/react-native-web-0.19.10.tgz#5f7205f8909c0889bc89c9fde7c6e287defa7c63"
@@ -8073,6 +8080,11 @@ unicode-property-aliases-ecmascript@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/unicode-property-aliases-ecmascript/-/unicode-property-aliases-ecmascript-2.1.0.tgz#43d41e3be698bd493ef911077c9b131f827e8ccd"
   integrity sha512-6t3foTQI9qne+OZoVQB/8x8rk2k1eVy1gRXhV3oFQ5T6R1dqQ1xtin3XqSlx3+ATBkliTaR/hHyJBm+LVPNM8w==
+
+uninstall@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/uninstall/-/uninstall-0.0.0.tgz#103e6e37e9c52ec857542cd259023d71c7a3fb2b"
+  integrity sha512-pjP/0+A4gsbDVa8XH/S2GZdT9NPJW8NFMy3GI7HnsWG+NAmFSSj3QidNosXBI9cPtxxNExEDdhKFO6sli8K3mA==
 
 unique-filename@^1.1.1:
   version "1.1.1"
