@@ -2,6 +2,7 @@ import { render, screen } from "../utils/setupTests";
 
 import { AnimalTable } from "../components/AnimalTable";
 import { Animal } from "../types/Animal";
+jest.useFakeTimers();
 
 describe("AnimalTable", () => {
 	const mockedAnimals: Animal[] = [
