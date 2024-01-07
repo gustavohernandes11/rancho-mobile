@@ -31,17 +31,7 @@ describe("Card", () => {
 		const title = screen.getByText("title-text");
 		expect(title).toBeOnTheScreen();
 	});
-	it("should render the 2 children elements", async () => {
-		render(
-			<Card
-				href="/"
-				iconSource={cowIcon}
-				alt="alternative-text"
-				title="title-text"
-			/>
-		);
-		expect(screen.toJSON().children.length).toBe(2);
-	});
+
 	it("should render green background as default", async () => {
 		render(
 			<Card

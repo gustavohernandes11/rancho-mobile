@@ -1,14 +1,10 @@
 import React from "react";
-import {
-	Image,
-	ImageURISource,
-	Pressable,
-	StyleSheet,
-	Text,
-} from "react-native";
+import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { Link, LinkProps } from "expo-router";
 import Fonts from "../constants/Fonts";
+import { TouchableRipple } from "react-native-paper";
+import { Span } from "./Span";
 
 type ColorOptions = "green" | "blue" | "purple";
 interface CardProps {
@@ -34,10 +30,16 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 			asChild
 			{...props}
 		>
-			<Pressable>
-				<Text style={styles.title}>{title}</Text>
-				<Image style={styles.image} source={iconSource} alt={alt} />
-			</Pressable>
+			<TouchableRipple>
+				<Span
+					alignItems="center"
+					justifyContent="center"
+					flexWrap="nowrap"
+				>
+					<Text style={styles.title}>{title}</Text>
+					<Image style={styles.image} source={iconSource} alt={alt} />
+				</Span>
+			</TouchableRipple>
 		</Link>
 	);
 };
