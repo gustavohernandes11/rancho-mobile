@@ -23,6 +23,7 @@ export const DatePicker: React.FC<DatePickerProps & DatePickerInputProps> = ({
 				{label}
 			</HelperText>
 			<DatePickerInput
+				iconColor={Colors.darkGray}
 				mode="outlined"
 				outlineStyle={{
 					borderColor: getInputBorderColor(!!errorText),

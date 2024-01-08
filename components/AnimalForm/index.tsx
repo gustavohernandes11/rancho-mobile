@@ -5,7 +5,7 @@ import { Select } from "../Select";
 import { Span } from "../Span";
 import { Button } from "../Button";
 import { FormikValues, useFormik } from "formik";
-import { AddAnimal, Animal } from "../../types/Animal";
+import { Animal } from "../../types/Animal";
 import { defaultValues } from "./defaultValues";
 import { Text, View } from "react-native";
 import { validationSchema } from "./validation.schema";
@@ -15,12 +15,14 @@ import { filterPossiblePaternity } from "./filterPossiblePaternity";
 import { serializeBatchesToKeyValue } from "./serializeBatchesToKeyValue";
 import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
 import { filterPossibleMaternity } from "./filterPossibleMaternity";
+import { getFormattedGender } from "../../utils/getFormattedGender";
+import moment from "moment";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
 
 interface AnimalFormProps {
-	initialValues?: AddAnimal;
+	initialValues?: Animal;
 }
 export const AnimalForm: React.FC<AnimalFormProps> = ({
 	initialValues = defaultValues,
@@ -28,7 +30,11 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 	const storageService = createStorageService();
 	const formik = useFormik({
 		initialValues,
-		onSubmit: (values) => storageService.insertAnimal(values),
+		onSubmit: (values) => {
+			initialValues.id
+				? storageService.updateAnimal(values)
+				: storageService.insertAnimal(values);
+		},
 		validationSchema,
 	});
 	const [batches, setBatches] = useState<Batch[]>();
@@ -47,12 +53,26 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 	return (
 		<View>
 			<Text>{JSON.stringify(formik.values)}</Text>
-			<Span>
+			<Span alignItems="baseline">
 				<Input
 					label="Nome*"
 					value={formik.values.name}
 					onChangeText={(text) => formik.setFieldValue("name", text)}
 					errorText={getFieldError("name", formik)}
+				/>
+				<Select
+					label="Gênero*"
+					items={[
+						{ key: "♀ Fêmea", value: "F" },
+						{ key: "♂ Macho", value: "M" },
+					]}
+					defaultButtonText={
+						getFormattedGender(formik.values.gender) || ""
+					}
+					errorText={getFieldError("gender", formik)}
+					onSelect={(option) =>
+						formik.setFieldValue("gender", option.value)
+					}
 				/>
 			</Span>
 			<Span>
@@ -61,10 +81,18 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					locale="pt"
 					saveLabel="Salvar"
 					errorText={getFieldError("birthdate", formik)}
-					onChange={(date) =>
-						formik.setFieldValue("birthdate", date!.toISOString())
+					onChange={(date) => {
+						if (moment.isDate(date))
+							formik.setFieldValue(
+								"birthdate",
+								date!.toISOString()
+							);
+					}}
+					value={
+						formik.values.birthdate
+							? new Date(formik.values.birthdate)
+							: undefined
 					}
-					value={new Date(formik.values.birthdate as string)}
 					label="Date de nascimento"
 				/>
 			</Span>
@@ -88,58 +116,48 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					errorText={getFieldError("code", formik)}
 					keyboardType="numeric"
 				/>
+			</Span>
+			<Span>
 				<Select
-					label="Gênero*"
-					items={[
-						{ key: "Fêmea", value: "F" },
-						{ key: "Macho", value: "M" },
-					]}
-					defaultButtonText={formik.initialValues.gender}
-					errorText={getFieldError("gender", formik)}
-					onSelect={(option) =>
-						formik.setFieldValue("gender", option.value)
+					defaultButtonText={
+						animals?.find((a) => a.id === initialValues.paternityId)
+							?.name || "Selecione um animal"
 					}
+					items={
+						serializeAnimalsToKeyValue(
+							filterPossiblePaternity(
+								animals!,
+								formik.values.birthdate
+							)
+						) || []
+					}
+					errorText={getFieldError("paternityId", formik)}
+					onSelect={(option) =>
+						formik.setFieldValue("paternityId", option.value)
+					}
+					label="Paternidade"
+				/>
+				<Select
+					defaultButtonText={
+						animals?.find((a) => a.id === initialValues.maternityId)
+							?.name || "Selecione um animal"
+					}
+					items={
+						serializeAnimalsToKeyValue(
+							filterPossibleMaternity(
+								animals!,
+								formik.values.birthdate
+							)
+						) || []
+					}
+					errorText={getFieldError("maternityId", formik)}
+					defaultValue={formik.initialValues.maternityId}
+					onSelect={(option) =>
+						formik.setFieldValue("maternityId", option.value)
+					}
+					label="Maternidade"
 				/>
 			</Span>
-			<Select
-				defaultButtonText={
-					animals?.find((a) => a.id === initialValues.paternityId)
-						?.name || "Selecione um animal"
-				}
-				items={
-					serializeAnimalsToKeyValue(
-						filterPossiblePaternity(
-							animals!,
-							formik.values.birthdate
-						)
-					) || []
-				}
-				errorText={getFieldError("paternityId", formik)}
-				onSelect={(option) =>
-					formik.setFieldValue("paternityId", option.value)
-				}
-				label="Paternidade"
-			/>
-			<Select
-				defaultButtonText={
-					animals?.find((a) => a.id === initialValues.maternityId)
-						?.name || "Selecione um animal"
-				}
-				items={
-					serializeAnimalsToKeyValue(
-						filterPossibleMaternity(
-							animals!,
-							formik.values.birthdate
-						)
-					) || []
-				}
-				errorText={getFieldError("maternityId", formik)}
-				defaultValue={formik.initialValues.maternityId}
-				onSelect={(option) =>
-					formik.setFieldValue("maternityId", option.value)
-				}
-				label="Maternidade"
-			/>
 			<Span>
 				<Input
 					label="Observação"

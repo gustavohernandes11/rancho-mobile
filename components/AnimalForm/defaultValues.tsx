@@ -1,10 +1,11 @@
-import { AddAnimal } from "../../types/Animal";
+import { Animal } from "../../types/Animal";
 
-export const defaultValues: AddAnimal = {
+export const defaultValues: Animal = {
+	id: "",
 	name: "",
 	gender: "F",
 	batchId: "",
-	birthdate: new Date().toISOString(),
+	birthdate: "",
 	code: "",
 	maternityId: "",
 	paternityId: "",
