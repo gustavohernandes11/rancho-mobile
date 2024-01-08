@@ -1,5 +1,5 @@
 export type Animal = {
-	id: string | number;
+	id: string;
 	name: string;
 	gender: "F" | "M";
 	birthdate?: string;

@@ -10,6 +10,7 @@ import { ButtonProps, Button as PaperButton } from "react-native-paper";
 type CustomButtonProps = {
 	title: string;
 	type?: ButtonTypes;
+	onPress?: () => any;
 } & Omit<ButtonProps, "children">;
 
 export const Button: React.FC<CustomButtonProps> = ({

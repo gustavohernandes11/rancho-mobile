@@ -15,8 +15,9 @@ const dropdownIcon = () => (
 interface SelectProps {
 	items: Item[];
 	onSelect: (selectedItem: Item, index: number) => void;
-	error?: string;
+	errorText?: string;
 	label?: string;
+	defaultValue?: string;
 	defaultButtonText?: string;
 }
 export const Select: React.FC<SelectProps & ViewProps> = ({
@@ -24,7 +25,7 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 	onSelect,
 	defaultButtonText,
 	label,
-	error,
+	errorText,
 	...props
 }) => {
 	return (
@@ -35,7 +36,7 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 				buttonTextStyle={styles.text}
 				buttonStyle={[
 					styles.button,
-					{ borderColor: getInputBorderColor(!!error) },
+					{ borderColor: getInputBorderColor(!!errorText) },
 				]}
 				rowStyle={styles.row}
 				rowTextStyle={styles.text}
@@ -51,7 +52,7 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 				}}
 				{...props}
 			/>
-			{error && <Text style={styles.error}>{error}</Text>}
+			{errorText && <Text style={styles.errorText}>{errorText}</Text>}
 		</View>
 	);
 };
@@ -90,7 +91,7 @@ const styles = StyleSheet.create({
 		color: Colors.darkGray,
 		fontFamily: Fonts.primaryFamily,
 	},
-	error: {
+	errorText: {
 		fontSize: 12,
 		color: Colors.red,
 		fontFamily: Fonts.primaryFamily,

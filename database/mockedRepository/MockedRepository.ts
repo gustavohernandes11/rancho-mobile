@@ -13,7 +13,9 @@ export class MockedRepository implements DatabaseRepository {
 		return Promise.resolve(true);
 	}
 	loadAnimal(id: string): Promise<Animal> {
-		return Promise.resolve(mockedAnimals[0]);
+		return Promise.resolve(
+			mockedAnimals.find((x) => x.id === id) || mockedAnimals[0]
+		);
 	}
 	listAnimals(): Promise<Animal[]> {
 		return Promise.resolve(mockedAnimals);
