@@ -52,7 +52,6 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 
 	return (
 		<View>
-			<Text>{JSON.stringify(formik.values)}</Text>
 			<Span alignItems="baseline">
 				<Input
 					label="Nome*"
