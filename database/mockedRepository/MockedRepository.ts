@@ -24,7 +24,9 @@ export class MockedRepository implements DatabaseRepository {
 		return Promise.resolve(mockedAnimals.filter((x) => x.batchId === id));
 	}
 	loadBatchInfo(id: string): Promise<Batch> {
-		return Promise.resolve(mockedBatches[0]);
+		return Promise.resolve(
+			mockedBatches.find((b) => b.id === id) || mockedBatches[0]
+		);
 	}
 	listAllBatchesInfo(): Promise<Batch[]> {
 		return Promise.resolve(mockedBatches);
