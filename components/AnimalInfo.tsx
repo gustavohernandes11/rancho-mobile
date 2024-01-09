@@ -1,28 +1,30 @@
 import React from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
-import { Batch } from "../types/Batch";
+import { Animal } from "../types/Animal";
 import Colors from "../constants/Colors";
-import Fonts from "../constants/Fonts";
+import { getGenderIcon } from "../utils/getGenderIcon";
+import { getFormattedAge } from "../utils/getFormattedAge";
+import { sharedStyles } from "../styles/shared";
 
-interface BatchInfoProps {
-	batch: Batch;
+interface AnimalInfoProps {
+	animal: Animal;
 }
-const getGrammaticalFlexion = (count: number) =>
-	count === 1 ? "animal" : "animais";
 
-export const BatchInfo: React.FC<BatchInfoProps & ViewProps> = ({
-	batch,
+export const AnimalInfo: React.FC<AnimalInfoProps & ViewProps> = ({
+	animal,
 	...props
 }) => {
 	return (
 		<View style={styles.container} {...props}>
 			<View style={styles.left}>
-				<Text style={styles.title}>{batch.name}</Text>
-				<Text style={styles.description}>{batch.description}</Text>
+				<Text style={styles.title}>
+					{getGenderIcon(animal.gender)}
+					{" " + animal.name}
+				</Text>
 			</View>
 			<View style={styles.right}>
 				<Text style={styles.description}>
-					{batch.count + " " + getGrammaticalFlexion(batch.count)}
+					{animal.birthdate && getFormattedAge(animal.birthdate)}
 				</Text>
 			</View>
 		</View>
@@ -32,17 +34,17 @@ export const BatchInfo: React.FC<BatchInfoProps & ViewProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: "row",
+		alignItems: "center",
 		borderRadius: 4,
 		backgroundColor: Colors.lightGray,
 		borderWidth: 2,
 		borderColor: Colors.border,
 		padding: 16,
-		marginVertical: 4,
 	},
 	right: {
+		flex: 1,
 		alignItems: "flex-end",
 		justifyContent: "center",
-		width: "25%",
 	},
 	left: {
 		flex: 1,
@@ -50,12 +52,12 @@ const styles = StyleSheet.create({
 		gap: 4,
 	},
 	title: {
-		fontSize: 14,
-		fontFamily: Fonts.primaryFamily,
+		...sharedStyles.text,
+		color: Colors.text,
 	},
 	description: {
+		...sharedStyles.text,
 		fontSize: 12,
-		color: Colors.darkGray,
-		fontFamily: Fonts.primaryFamily,
+		textAlign: "right",
 	},
 });
