@@ -25,6 +25,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				mode="outlined"
 				outlineStyle={{
 					borderColor: getInputBorderColor(!!errorText),
+					borderWidth: 2,
 				}}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		fontSize: 14,
 		fontFamily: Fonts.primaryFamily,
-		backgroundColor: Colors.gray,
+		backgroundColor: Colors.lightGray,
 	},
 	label: {
 		...sharedStyles.text,

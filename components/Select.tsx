@@ -69,15 +69,15 @@ const styles = StyleSheet.create({
 	button: {
 		width: "auto",
 		borderRadius: 4,
-		backgroundColor: Colors.gray,
-		borderWidth: 1,
+		backgroundColor: Colors.lightGray,
+		borderWidth: 2,
 		borderColor: Colors.border,
 		padding: 8,
 		marginVertical: 4,
 	},
 	row: {
 		borderRadius: 4,
-		backgroundColor: Colors.gray,
+		backgroundColor: Colors.lightGray,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		padding: 8,

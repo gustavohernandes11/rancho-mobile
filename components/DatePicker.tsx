@@ -28,6 +28,7 @@ export const DatePicker: React.FC<DatePickerProps & DatePickerInputProps> = ({
 				mode="outlined"
 				outlineStyle={{
 					borderColor: getInputBorderColor(!!errorText),
+					borderWidth: 2,
 				}}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
