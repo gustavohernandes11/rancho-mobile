@@ -8,6 +8,7 @@ import { defaultValues } from "./defaultValues";
 import { View } from "react-native";
 import { validationSchema } from "./validation.schema";
 import { createStorageService } from "../../database/createStorageServiceFactory";
+import { router, useNavigation } from "expo-router";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
@@ -19,6 +20,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
 	const storageService = createStorageService();
+	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => {
@@ -54,9 +56,15 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 				<Button
 					type="light"
 					title="Cancelar"
-					onPress={() => formik.resetForm()}
+					onPress={() => navigation.goBack()}
 				/>
-				<Button title="Salvar" onPress={() => formik.submitForm()} />
+				<Button
+					title="Salvar"
+					onPress={() => {
+						formik.submitForm();
+						router.replace("/(screens)/batches/");
+					}}
+				/>
 			</Span>
 		</View>
 	);

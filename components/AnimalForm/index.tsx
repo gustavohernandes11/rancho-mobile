@@ -17,6 +17,7 @@ import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
 import { filterPossibleMaternity } from "./filterPossibleMaternity";
 import { getFormattedGender } from "../../utils/getFormattedGender";
 import moment from "moment";
+import { useNavigation } from "expo-router";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
@@ -28,6 +29,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 	initialValues = defaultValues,
 }) => {
 	const storageService = createStorageService();
+	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => {
@@ -172,7 +174,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 				<Button
 					type="light"
 					title="Cancelar"
-					onPress={() => formik.resetForm()}
+					onPress={() => navigation.goBack()}
 				/>
 				<Button title="Salvar" onPress={() => formik.submitForm()} />
 			</Span>
