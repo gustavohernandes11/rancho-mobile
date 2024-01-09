@@ -4,8 +4,8 @@ import { ButtonTypes } from "../types/ButtonTypes";
 import { getButtonTextColor } from "../utils/getButtonTextColor";
 import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
 import { getButtonBorderColor } from "../utils/getButtonBorderColor";
-import Fonts from "../constants/Fonts";
 import { ButtonProps, Button as PaperButton } from "react-native-paper";
+import { sharedStyles } from "../styles/shared";
 
 type CustomButtonProps = {
 	title: string;
@@ -31,7 +31,9 @@ export const Button: React.FC<CustomButtonProps> = ({
 			onPress={onPress}
 			{...props}
 		>
-			<Text style={[styles.text, { color: getButtonTextColor(type) }]}>
+			<Text
+				style={[sharedStyles.text, { color: getButtonTextColor(type) }]}
+			>
 				{title}
 			</Text>
 		</PaperButton>
@@ -42,9 +44,5 @@ const styles = StyleSheet.create({
 	button: {
 		borderWidth: 1,
 		borderRadius: 4,
-	},
-	text: {
-		fontSize: 14,
-		fontFamily: Fonts.primaryFamily,
 	},
 });

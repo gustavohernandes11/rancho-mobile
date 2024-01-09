@@ -7,6 +7,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Item } from "../types/Item";
 import { getInputBorderColor } from "../utils/getInputBorderColor";
 import Fonts from "../constants/Fonts";
+import { sharedStyles } from "../styles/shared";
 
 const dropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
@@ -30,16 +31,16 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 }) => {
 	return (
 		<View style={styles.inputContainer}>
-			{label && <Text style={styles.label}>{label}</Text>}
+			{label && <Text style={sharedStyles.text}>{label}</Text>}
 			<SelectDropdown
 				renderDropdownIcon={dropdownIcon}
-				buttonTextStyle={styles.text}
+				buttonTextStyle={sharedStyles.text}
 				buttonStyle={[
 					styles.button,
 					{ borderColor: getInputBorderColor(!!errorText) },
 				]}
 				rowStyle={styles.row}
-				rowTextStyle={styles.text}
+				rowTextStyle={sharedStyles.text}
 				dropdownStyle={styles.dropdown}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
 				data={items}
@@ -52,7 +53,7 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 				}}
 				{...props}
 			/>
-			{errorText && <Text style={styles.errorText}>{errorText}</Text>}
+			{errorText && <Text style={styles.error}>{errorText}</Text>}
 		</View>
 	);
 };
@@ -81,17 +82,7 @@ const styles = StyleSheet.create({
 		borderColor: Colors.border,
 		padding: 8,
 	},
-	text: {
-		fontSize: 14,
-		color: Colors.darkGray,
-		fontFamily: Fonts.primaryFamily,
-	},
-	label: {
-		fontSize: 14,
-		color: Colors.darkGray,
-		fontFamily: Fonts.primaryFamily,
-	},
-	errorText: {
+	error: {
 		fontSize: 12,
 		color: Colors.red,
 		fontFamily: Fonts.primaryFamily,

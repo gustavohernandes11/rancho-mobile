@@ -2,9 +2,9 @@ import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import Colors from "../constants/Colors";
 import { Link, LinkProps } from "expo-router";
-import Fonts from "../constants/Fonts";
 import { TouchableRipple } from "react-native-paper";
 import { Span } from "./Span";
+import { sharedStyles } from "../styles/shared";
 
 type ColorOptions = "green" | "blue" | "purple";
 interface CardProps {
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
 		resizeMode: "contain",
 	},
 	title: {
-		fontFamily: Fonts.primaryFamily,
+		...sharedStyles.text,
 		flexShrink: 1,
 		color: Colors.white,
 	},

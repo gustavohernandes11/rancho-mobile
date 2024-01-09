@@ -4,7 +4,7 @@ import { Item } from "../types/Item";
 import Colors from "../constants/Colors";
 import { RowProps } from "../types/RowProps";
 import { getRowColor } from "../utils/getRowColor";
-import Fonts from "../constants/Fonts";
+import { sharedStyles } from "../styles/shared";
 
 interface SimpleTableProps {
 	data: Item[];
@@ -22,8 +22,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 
 const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
 	<View style={[styles.row, { backgroundColor: getRowColor(index) }]}>
-		<Text style={styles.text}>{item.key}</Text>
-		<Text style={styles.text}>{item.value}</Text>
+		<Text style={sharedStyles.text}>{item.key}</Text>
+		<Text style={sharedStyles.text}>{item.value}</Text>
 	</View>
 );
 
@@ -42,9 +42,5 @@ const styles = StyleSheet.create({
 		paddingHorizontal: 8,
 		justifyContent: "space-between",
 		gap: 8,
-	},
-	text: {
-		color: Colors.darkGray,
-		fontFamily: Fonts.primaryFamily,
 	},
 });

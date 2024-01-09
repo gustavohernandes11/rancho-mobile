@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Animal } from "../types/Animal";
 
 import { DataTable, TouchableRipple } from "react-native-paper";
-import { Href, Link } from "expo-router";
+import { Link } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import { getFormattedAge } from "../utils/getFormattedAge";

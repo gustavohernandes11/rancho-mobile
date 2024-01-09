@@ -7,6 +7,7 @@ import { HelperText } from "react-native-paper";
 import Fonts from "../constants/Fonts";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
+import { sharedStyles } from "../styles/shared";
 
 interface DatePickerProps {
 	errorText?: string;
@@ -54,9 +55,7 @@ const styles = StyleSheet.create({
 		backgroundColor: Colors.gray,
 	},
 	label: {
-		fontSize: 14,
-		color: Colors.darkGray,
-		fontFamily: Fonts.primaryFamily,
+		...sharedStyles.text,
 		paddingLeft: 0,
 	},
 });
