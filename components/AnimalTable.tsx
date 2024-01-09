@@ -3,24 +3,16 @@ import { Animal } from "../types/Animal";
 
 import { DataTable, TouchableRipple } from "react-native-paper";
 import { Link } from "expo-router";
-import { FontAwesome } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
 import { getFormattedAge } from "../utils/getFormattedAge";
 import { createStorageService } from "../database/createStorageServiceFactory";
 import { Batch } from "../types/Batch";
+import { getGenderIcon } from "../utils/getGenderIcon";
 
 interface AnimalTableProps {
 	animals: Animal[];
 }
-
 export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 	const storageService = createStorageService();
-	const getGenderIcon = (gender: "F" | "M") =>
-		gender === "M" ? (
-			<FontAwesome color={Colors.blue} name="mars" />
-		) : (
-			<FontAwesome color={Colors.red} name="venus" />
-		);
 
 	const [batches, setBatches] = useState<Batch[]>();
 
