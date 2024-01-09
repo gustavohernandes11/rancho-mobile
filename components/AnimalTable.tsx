@@ -17,9 +17,9 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 	const storageService = createStorageService();
 	const getGenderIcon = (gender: "F" | "M") =>
 		gender === "M" ? (
-			<FontAwesome color={Colors.red} name="mars" />
+			<FontAwesome color={Colors.blue} name="mars" />
 		) : (
-			<FontAwesome color={Colors.blue} name="venus" />
+			<FontAwesome color={Colors.red} name="venus" />
 		);
 
 	const [batches, setBatches] = useState<Batch[]>();
