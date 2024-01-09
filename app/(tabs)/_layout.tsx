@@ -46,7 +46,7 @@ export default function TabLayout() {
 					),
 				}}
 			/>
-			<Tabs.Screen
+			{/* <Tabs.Screen
 				name="add"
 				options={{
 					tabBarShowLabel: false,
@@ -63,7 +63,7 @@ export default function TabLayout() {
 						<TabBarIcon name="list" color={color} />
 					),
 				}}
-			/>
+			/> */}
 			<Tabs.Screen
 				name="config"
 				options={{

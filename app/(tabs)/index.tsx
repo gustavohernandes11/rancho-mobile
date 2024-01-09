@@ -10,40 +10,40 @@ export default function TabOneScreen() {
 
 			<Span flexWrap="wrap">
 				<Card
-					href="/add-animal"
+					href="/animals/add"
 					alt="alt"
 					iconSource={require("../../assets/images/CowIcon.png")}
 					title="Adicionar animal"
 				/>
 				<Card
-					href="/view-animals"
+					href="/animals"
 					alt="alt"
 					iconSource={require("../../assets/images/CowIcon.png")}
 					title="Rebanho"
 				/>
 				<Card
-					href="/add-batch"
+					href="/batches/add"
 					alt="alt"
 					iconSource={require("../../assets/images/FenceIcon.png")}
 					title="Adicionar lote"
 					color="blue"
 				/>
 				<Card
-					href="/view-batches"
+					href="/batches"
 					alt="alt"
 					iconSource={require("../../assets/images/FenceIcon.png")}
 					title="Ver lotes"
 					color="blue"
 				/>
 				<Card
-					href="/add-production"
+					href="/production/add"
 					alt="alt"
 					iconSource={require("../../assets/images/GallonIcon.png")}
 					title="Adicionar produção"
 					color="purple"
 				/>
 				<Card
-					href="/view-production"
+					href="/production"
 					alt="alt"
 					iconSource={require("../../assets/images/GallonIcon.png")}
 					title="Ver produção"

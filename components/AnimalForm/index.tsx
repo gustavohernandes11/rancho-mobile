@@ -7,7 +7,7 @@ import { Button } from "../Button";
 import { FormikValues, useFormik } from "formik";
 import { Animal } from "../../types/Animal";
 import { defaultValues } from "./defaultValues";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import { validationSchema } from "./validation.schema";
 import { createStorageService } from "../../database/createStorageServiceFactory";
 import { Batch } from "../../types/Batch";

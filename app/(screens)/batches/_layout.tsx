@@ -1,13 +1,11 @@
 import { Stack } from "expo-router";
 import { SplashScreen } from "expo-router";
-import Colors from "../../constants/Colors";
-import Fonts from "../../constants/Fonts";
-
-export { ErrorBoundary } from "expo-router";
+import Colors from "../../../constants/Colors";
+import Fonts from "../../../constants/Fonts";
 
 SplashScreen.preventAutoHideAsync();
 
-export default function FormPagesLayout() {
+export default function CommonPagesLayout() {
 	return (
 		<Stack
 			screenOptions={{

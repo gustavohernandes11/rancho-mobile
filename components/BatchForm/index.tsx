@@ -34,10 +34,9 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 			<Span>
 				<Input
 					label="Nome*"
-					defaultValue={formik.initialValues.name}
+					value={formik.values.name}
 					onChangeText={(text) => formik.setFieldValue("name", text)}
 					errorText={getFieldError("name", formik)}
-					value={formik.values.name}
 				/>
 			</Span>
 			<Span>
