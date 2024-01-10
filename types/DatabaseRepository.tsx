@@ -12,4 +12,6 @@ export interface DatabaseRepository {
 	clearDatabase(): Promise<boolean>;
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal>;
 	updateBatch(updateData: UpdateBatch): Promise<Batch>;
+	deleteAnimal(id: string): Promise<boolean>;
+	deleteBatch(id: string): Promise<boolean>;
 }

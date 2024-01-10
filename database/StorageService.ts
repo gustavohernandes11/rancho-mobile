@@ -12,6 +12,13 @@ export class StorageService implements DatabaseRepository {
 	async insertBatch(batch: AddBatch): Promise<boolean> {
 		return this.dbRepository.insertBatch(batch);
 	}
+	async deleteAnimal(id: string): Promise<boolean> {
+		return this.dbRepository.deleteAnimal(id);
+	}
+
+	async deleteBatch(id: string): Promise<boolean> {
+		return this.dbRepository.deleteBatch(id);
+	}
 
 	async loadAnimal(id: string): Promise<Animal> {
 		return this.dbRepository.loadAnimal(id);
