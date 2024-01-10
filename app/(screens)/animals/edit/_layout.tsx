@@ -1,7 +1,7 @@
 import { Stack } from "expo-router";
-import Colors from "../../../constants/Colors";
-import Fonts from "../../../constants/Fonts";
-import { GoBackButton } from "../../../components/GoBackButton";
+import Colors from "../../../../constants/Colors";
+import Fonts from "../../../../constants/Fonts";
+import { GoBackButton } from "../../../../components/GoBackButton";
 
 export default function CommonPagesLayout() {
 	return (
@@ -17,8 +17,6 @@ export default function CommonPagesLayout() {
 				},
 				headerLeft: () => <GoBackButton />,
 			}}
-		>
-			<Stack.Screen name="edit" options={{ headerShown: false }} />
-		</Stack>
+		/>
 	);
 }

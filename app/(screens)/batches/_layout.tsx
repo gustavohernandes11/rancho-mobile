@@ -1,5 +1,5 @@
-import { Stack } from "expo-router";
-import { SplashScreen } from "expo-router";
+import { SplashScreen, Stack } from "expo-router";
+import { GoBackButton } from "../../../components/GoBackButton";
 import Colors from "../../../constants/Colors";
 import Fonts from "../../../constants/Fonts";
 
@@ -17,6 +17,7 @@ export default function CommonPagesLayout() {
 					fontWeight: "bold",
 					fontFamily: Fonts.primaryFamily,
 				},
+				headerLeft: () => <GoBackButton />,
 			}}
 		/>
 	);
