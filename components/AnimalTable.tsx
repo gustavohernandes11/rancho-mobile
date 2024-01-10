@@ -11,9 +11,8 @@ import { getGenderIcon } from "../utils/getGenderIcon";
 interface AnimalTableProps {
 	animals: Animal[];
 }
+const storageService = createStorageService();
 export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
-	const storageService = createStorageService();
-
 	const [batches, setBatches] = useState<Batch[]>();
 
 	useEffect(() => {

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ViewProps, ScrollView } from "react-native";
+import { StyleSheet, ViewProps, ScrollView, View } from "react-native";
 import Colors from "../constants/Colors";
 
 interface ContainerViewType {
@@ -14,7 +14,7 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 }) => {
 	return (
 		<ScrollView style={[styles.container, { flexDirection }]} {...props}>
-			{children}
+			<View style={styles.inner}>{children}</View>
 		</ScrollView>
 	);
 };
@@ -22,7 +22,11 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		backgroundColor: Colors.white,
-		padding: 8,
+
 		flex: 1,
+	},
+	inner: {
+		paddingHorizontal: 8,
+		paddingVertical: 16,
 	},
 });

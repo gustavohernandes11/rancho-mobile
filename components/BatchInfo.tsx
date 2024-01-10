@@ -39,7 +39,6 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderColor: Colors.border,
 		padding: 16,
-		marginVertical: 4,
 	},
 	right: {
 		alignItems: "flex-end",

@@ -18,9 +18,11 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 }) => {
 	return (
 		<View style={styles.inputContainer}>
-			<HelperText style={styles.label} type="info">
-				{label}
-			</HelperText>
+			{label && (
+				<HelperText style={sharedStyles.label} type="info">
+					{label}
+				</HelperText>
+			)}
 			<TextInput
 				mode="outlined"
 				outlineStyle={{
@@ -37,9 +39,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				style={[styles.input, { height: multiline ? 80 : 50 }]}
 				{...props}
 			/>
-			<HelperText type="error" visible={!!errorText}>
-				{errorText}
-			</HelperText>
+			{errorText && <HelperText type="error">{errorText}</HelperText>}
 		</View>
 	);
 };
@@ -54,9 +54,5 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		fontFamily: Fonts.primaryFamily,
 		backgroundColor: Colors.lightGray,
-	},
-	label: {
-		...sharedStyles.text,
-		paddingLeft: 0,
 	},
 });

@@ -10,13 +10,13 @@ import { HelperText } from "react-native-paper";
 import { SimpleTable } from "../../../components/SimpleTable";
 import { Item } from "../../../types/Item";
 
+const storageService = createStorageService();
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [animals, setBatches] = useState<Animal[]>();
 	const [batch, setBatch] = useState<Batch>();
 
 	useEffect(() => {
-		const storageService = createStorageService();
 		const fetchData = async () => {
 			const animals = await storageService.loadBatchAnimals(id);
 			setBatches(animals);

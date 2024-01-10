@@ -1,13 +1,14 @@
 import React from "react";
 import SelectDropdown from "react-native-select-dropdown";
 
-import { StyleSheet, Text, View, ViewProps } from "react-native";
-import Colors from "../constants/Colors";
 import { FontAwesome } from "@expo/vector-icons";
-import { Item } from "../types/Item";
-import { getInputBorderColor } from "../utils/getInputBorderColor";
+import { StyleSheet, Text, View, ViewProps } from "react-native";
+import { HelperText } from "react-native-paper";
+import Colors from "../constants/Colors";
 import Fonts from "../constants/Fonts";
 import { sharedStyles } from "../styles/shared";
+import { Item } from "../types/Item";
+import { getInputBorderColor } from "../utils/getInputBorderColor";
 
 const dropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
@@ -31,7 +32,13 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 }) => {
 	return (
 		<View style={styles.inputContainer}>
-			{label && <Text style={sharedStyles.text}>{label}</Text>}
+			<HelperText
+				style={sharedStyles.label}
+				visible={!!label}
+				type="info"
+			>
+				{label}
+			</HelperText>
 			<SelectDropdown
 				renderDropdownIcon={dropdownIcon}
 				buttonTextStyle={sharedStyles.text}
@@ -45,12 +52,8 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
 				data={items}
 				onSelect={onSelect}
-				buttonTextAfterSelection={(selectedItem) => {
-					return selectedItem.key;
-				}}
-				rowTextForSelection={(item: Item) => {
-					return item.key;
-				}}
+				buttonTextAfterSelection={(selectedItem) => selectedItem.key}
+				rowTextForSelection={(item: Item) => item.key}
 				{...props}
 			/>
 			{errorText && <Text style={styles.error}>{errorText}</Text>}
@@ -61,7 +64,6 @@ export const Select: React.FC<SelectProps & ViewProps> = ({
 const styles = StyleSheet.create({
 	inputContainer: {
 		flex: 1,
-		marginBottom: 4,
 	},
 	dropdown: {
 		borderRadius: 4,
@@ -73,7 +75,6 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		borderColor: Colors.border,
 		padding: 8,
-		marginVertical: 4,
 	},
 	row: {
 		borderRadius: 4,

@@ -8,4 +8,10 @@ export const sharedStyles = StyleSheet.create({
 		color: Colors.darkGray,
 		fontFamily: Fonts.primaryFamily,
 	},
+	label: {
+		fontSize: 14,
+		color: Colors.darkGray,
+		fontFamily: Fonts.primaryFamily,
+		paddingLeft: 0,
+	},
 });

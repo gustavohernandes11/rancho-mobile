@@ -7,7 +7,7 @@ import { Button } from "../Button";
 import { FormikValues, useFormik } from "formik";
 import { Animal } from "../../types/Animal";
 import { defaultValues } from "./defaultValues";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { validationSchema } from "./validation.schema";
 import { createStorageService } from "../../database/createStorageServiceFactory";
 import { Batch } from "../../types/Batch";
@@ -17,7 +17,7 @@ import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
 import { filterPossibleMaternity } from "./filterPossibleMaternity";
 import { getFormattedGender } from "../../utils/getFormattedGender";
 import moment from "moment";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
@@ -25,17 +25,29 @@ const getFieldError = (field: string, formik: FormikValues) =>
 interface AnimalFormProps {
 	initialValues?: Animal;
 }
+const storageService = createStorageService();
 export const AnimalForm: React.FC<AnimalFormProps> = ({
 	initialValues = defaultValues,
 }) => {
-	const storageService = createStorageService();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => {
 			initialValues.id
-				? storageService.updateAnimal(values)
-				: storageService.insertAnimal(values);
+				? storageService
+						.updateAnimal(values)
+						.then(() => {
+							Alert.alert("UPDATE");
+							router.replace("/(screens)/animals/");
+						})
+						.catch((error) => Alert.alert("Error", error))
+				: storageService
+						.insertAnimal(values)
+						.then(() => {
+							Alert.alert("INSERIDO");
+							router.replace("/(screens)/animals/");
+						})
+						.catch((error) => Alert.alert("Error", error));
 		},
 		validationSchema,
 	});
@@ -54,7 +66,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 
 	return (
 		<View>
-			<Span alignItems="baseline">
+			<Span alignItems="flex-start">
 				<Input
 					label="Nome*"
 					value={formik.values.name}
@@ -170,13 +182,13 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					multiline={true}
 				/>
 			</Span>
-			<Span justifyContent="flex-end">
+			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Button
 					type="light"
 					title="Cancelar"
-					onPress={() => navigation.goBack()}
+					onPress={navigation.goBack}
 				/>
-				<Button title="Salvar" onPress={() => formik.submitForm()} />
+				<Button title="Salvar" onPress={formik.submitForm} />
 			</Span>
 		</View>
 	);

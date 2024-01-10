@@ -20,9 +20,11 @@ export const DatePicker: React.FC<DatePickerProps & DatePickerInputProps> = ({
 }) => {
 	return (
 		<View style={styles.inputContainer}>
-			<HelperText style={styles.label} type="info">
-				{label}
-			</HelperText>
+			{label && (
+				<HelperText style={styles.label} type="info">
+					{label}
+				</HelperText>
+			)}
 			<DatePickerInput
 				iconColor={Colors.darkGray}
 				mode="outlined"
@@ -37,9 +39,11 @@ export const DatePicker: React.FC<DatePickerProps & DatePickerInputProps> = ({
 				style={styles.input}
 				{...props}
 			/>
-			<HelperText type="error" visible={!!errorText}>
-				{errorText}
-			</HelperText>
+			{errorText && (
+				<HelperText type="error" visible={!!errorText}>
+					{errorText}
+				</HelperText>
+			)}
 		</View>
 	);
 };
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
 		height: 50,
 		fontSize: 14,
 		fontFamily: Fonts.primaryFamily,
-		backgroundColor: Colors.gray,
+		backgroundColor: Colors.lightGray,
 	},
 	label: {
 		...sharedStyles.text,
