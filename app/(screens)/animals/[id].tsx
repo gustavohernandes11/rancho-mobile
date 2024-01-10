@@ -16,6 +16,7 @@ import { Batch } from "../../../types/Batch";
 import { Item } from "../../../types/Item";
 import { getFormattedAge } from "../../../utils/getFormattedAge";
 import { getFormattedGender } from "../../../utils/getFormattedGender";
+import { SubTitle } from "../../../components/SubTitle";
 
 const storageService = createStorageService();
 export default function ViewAnimalDetailsScreen() {
@@ -51,9 +52,7 @@ export default function ViewAnimalDetailsScreen() {
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Detalhes do animal" }} />
 			<Heading>{animal?.name}</Heading>
-			<HelperText style={{ padding: 0, marginBottom: 8 }} type="info">
-				{`Detalhes do animal "${animal?.name}"`}
-			</HelperText>
+			<SubTitle>{`Detalhes do animal "${animal?.name}"`}</SubTitle>
 			<Heading size="small">Informações gerais</Heading>
 			<SimpleTable data={serializeAnimalToKeyValue(animal)} />
 			<Heading size="small">Lote</Heading>

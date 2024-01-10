@@ -15,6 +15,7 @@ interface SpanProps {
 	paddingVertical?: number;
 	paddingHorizontal?: number;
 	flexWrap?: "wrap" | "nowrap";
+	marginVertical?: number;
 }
 
 export const Span: React.FC<SpanProps & ViewProps> = ({
@@ -24,6 +25,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 	paddingVertical,
 	paddingHorizontal,
 	padding,
+	marginVertical,
 	flexWrap,
 	...props
 }) => {
@@ -38,6 +40,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 					paddingVertical,
 					paddingHorizontal,
 					flexWrap,
+					marginVertical,
 				},
 			]}
 			{...props}
