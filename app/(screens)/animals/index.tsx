@@ -9,8 +9,8 @@ import { Button } from "../../../components/Button";
 import { Heading } from "../../../components/Heading";
 import { HelperText } from "react-native-paper";
 
+const storageService = createStorageService();
 export default function ViewAnimalsScreen() {
-	const storageService = createStorageService();
 	const [animals, setAnimals] = useState<Animal[]>();
 
 	useEffect(() => {
@@ -23,17 +23,19 @@ export default function ViewAnimalsScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Rebanho" }} />
-			<Heading>Todos seus animais</Heading>
-			<HelperText
-				style={{ padding: 0, marginBottom: 8 }}
-				type="info"
-			>{`Total: ${animals?.length}`}</HelperText>
+			<Span justifyContent="space-between">
+				<Heading>Todos seus animais</Heading>
+				<HelperText
+					style={{ padding: 0, marginBottom: 8 }}
+					type="info"
+				>{`Total: ${animals?.length}`}</HelperText>
+			</Span>
 			<HelperText style={{ padding: 0, marginBottom: 8 }} type="info">
 				Clique sobre o animal para ver mais detalhes
 			</HelperText>
 
 			<AnimalTable animals={animals || []} />
-			<Span justifyContent="flex-end">
+			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Link href="/(screens)/animals/add" asChild>
 					<Button title="Adicionar novo animal" />
 				</Link>
