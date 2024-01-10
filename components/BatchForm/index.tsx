@@ -5,7 +5,7 @@ import { Button } from "../Button";
 import { FormikValues, useFormik } from "formik";
 import { Batch } from "../../types/Batch";
 import { defaultValues } from "./defaultValues";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { validationSchema } from "./validation.schema";
 import { createStorageService } from "../../database/createStorageServiceFactory";
 import { router, useNavigation } from "expo-router";
@@ -16,17 +16,27 @@ const getFieldError = (field: string, formik: FormikValues) =>
 interface BatchFormProps {
 	initialValues?: Batch;
 }
+const storageService = createStorageService();
 export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
-	const storageService = createStorageService();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => {
 			initialValues.id
-				? storageService.updateBatch(values)
-				: storageService.insertBatch(values);
+				? storageService
+						.updateBatch(values)
+						.then(() => {
+							router.replace("/(screens)/batches/");
+						})
+						.catch((error) => Alert.alert("Error", error))
+				: storageService
+						.insertBatch(values)
+						.then(() => {
+							router.replace("/(screens)/batches/");
+						})
+						.catch((error) => Alert.alert("Error", error));
 		},
 		validationSchema,
 	});
@@ -52,19 +62,13 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					multiline={true}
 				/>
 			</Span>
-			<Span justifyContent="flex-end">
+			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Button
 					type="light"
 					title="Cancelar"
-					onPress={() => navigation.goBack()}
+					onPress={navigation.goBack}
 				/>
-				<Button
-					title="Salvar"
-					onPress={() => {
-						formik.submitForm();
-						router.replace("/(screens)/batches/");
-					}}
-				/>
+				<Button title="Salvar" onPress={formik.submitForm} />
 			</Span>
 		</View>
 	);
