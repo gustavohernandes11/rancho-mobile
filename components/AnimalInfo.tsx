@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, ViewProps } from "react-native";
+import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
 import { Animal } from "../types/Animal";
 import Colors from "../constants/Colors";
 import { getGenderIcon } from "../utils/getGenderIcon";
@@ -15,7 +15,7 @@ export const AnimalInfo: React.FC<AnimalInfoProps & ViewProps> = ({
 	...props
 }) => {
 	return (
-		<View style={styles.container} {...props}>
+		<Pressable style={styles.container} {...props}>
 			<View style={styles.left}>
 				<Text style={styles.title}>
 					{getGenderIcon(animal.gender)}
@@ -27,7 +27,7 @@ export const AnimalInfo: React.FC<AnimalInfoProps & ViewProps> = ({
 					{animal.birthdate && getFormattedAge(animal.birthdate)}
 				</Text>
 			</View>
-		</View>
+		</Pressable>
 	);
 };
 

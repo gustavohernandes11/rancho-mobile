@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, ViewProps } from "react-native";
+import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
 import { Batch } from "../types/Batch";
 import Colors from "../constants/Colors";
 import Fonts from "../constants/Fonts";
@@ -15,17 +15,19 @@ export const BatchInfo: React.FC<BatchInfoProps & ViewProps> = ({
 	...props
 }) => {
 	return (
-		<View style={styles.container} {...props}>
+		<Pressable style={styles.container} {...props}>
 			<View style={styles.left}>
 				<Text style={styles.title}>{batch.name}</Text>
-				<Text style={styles.description}>{batch.description}</Text>
+				{batch.description && (
+					<Text style={styles.description}>{batch.description}</Text>
+				)}
 			</View>
 			<View style={styles.right}>
 				<Text style={styles.description}>
 					{batch.count + " " + getGrammaticalFlexion(batch.count)}
 				</Text>
 			</View>
-		</View>
+		</Pressable>
 	);
 };
 
