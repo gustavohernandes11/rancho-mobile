@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { Item } from "../types/Item";
 import Colors from "../constants/Colors";
 import { RowProps } from "../types/RowProps";
@@ -11,13 +11,20 @@ interface SimpleTableProps {
 }
 
 export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
-	<View style={styles.tableContainer}>
-		<FlatList
-			data={data}
-			renderItem={(props: RowProps<Item>) => <Row {...props} />}
-			{...props}
-		/>
-	</View>
+	<ScrollView horizontal={false}>
+		<ScrollView
+			horizontal={true}
+			contentContainerStyle={{ width: "100%", height: "100%" }}
+		>
+			<FlatList
+				style={styles.tableContainer}
+				data={data}
+				keyExtractor={(item: Item) => item.key}
+				renderItem={(props: RowProps<Item>) => <Row {...props} />}
+				{...props}
+			/>
+		</ScrollView>
+	</ScrollView>
 );
 
 const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
@@ -30,7 +37,6 @@ const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
 const styles = StyleSheet.create({
 	tableContainer: {
 		borderRadius: 4,
-		marginVertical: 8,
 		borderWidth: 1,
 		borderColor: Colors.border,
 	},
