@@ -7,6 +7,7 @@ import { Batch } from "../../types/Batch";
 import { AnimalRow } from "./AnimalRow";
 import { SelectedHeader } from "./SelectedHeader";
 import { useFocusEffect } from "expo-router";
+import { sharedStyles } from "../../styles/shared";
 
 interface AnimalTableProps {
 	animals: Animal[];
@@ -58,13 +59,19 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 			)}
 			<DataTable>
 				<DataTable.Header>
-					<DataTable.Title>Nome</DataTable.Title>
-					<DataTable.Title>Lote</DataTable.Title>
-					<DataTable.Title>Idade</DataTable.Title>
+					<DataTable.Title textStyle={sharedStyles.text}>
+						Nome
+					</DataTable.Title>
+					<DataTable.Title textStyle={sharedStyles.text}>
+						Lote
+					</DataTable.Title>
+					<DataTable.Title textStyle={sharedStyles.text}>
+						Idade
+					</DataTable.Title>
 					{isEditMode && (
 						<DataTable.Title
 							style={{ flex: 1 / 3 }}
-							textStyle={{ flexShrink: 1 }}
+							textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
 						>
 							{" "}
 						</DataTable.Title>

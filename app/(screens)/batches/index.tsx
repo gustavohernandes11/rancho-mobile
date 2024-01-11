@@ -29,12 +29,14 @@ export default function ViewBatchesScreen() {
 			</Span>
 			<SubTitle>Clique sobre o lote para ver mais detalhes</SubTitle>
 
-			{batches?.map((b) => (
-				<Span marginVertical={4} key={b.id}>
-					<Link href={`/(screens)/batches/${b.id}`} asChild>
-						<BatchInfo batch={b} key={b.id} />
-					</Link>
-				</Span>
+			{batches?.map((batch) => (
+				<Link
+					href={`/(screens)/batches/${batch.id}`}
+					key={batch.id}
+					asChild
+				>
+					<BatchInfo batch={batch} key={batch.id} />
+				</Link>
 			))}
 			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Link href={"/(screens)/batches/add"} asChild>

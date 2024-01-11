@@ -1,16 +1,13 @@
 import React from "react";
-import { StyleSheet } from "react-native";
-import { HelperText, HelperTextProps } from "react-native-paper";
+import { StyleSheet, Text } from "react-native";
+import { TextProps } from "react-native-paper";
 import Colors from "../constants/Colors";
 
-export const SubTitle: React.FC<Omit<HelperTextProps, "type">> = ({
-	children,
-	...props
-}) => {
+export const SubTitle: React.FC<TextProps<any>> = ({ children, ...props }) => {
 	return (
-		<HelperText style={styles.subtitle} type="info" {...props}>
+		<Text style={styles.subtitle} {...props}>
 			{children}
-		</HelperText>
+		</Text>
 	);
 };
 
@@ -19,5 +16,6 @@ const styles = StyleSheet.create({
 		padding: 0,
 		marginBottom: 8,
 		color: Colors.darkGray,
+		fontSize: 12,
 	},
 });

@@ -7,6 +7,7 @@ import { Animal } from "../../types/Animal";
 import { Batch } from "../../types/Batch";
 import { getFormattedAge } from "../../utils/getFormattedAge";
 import { getGenderIcon } from "../../utils/getGenderIcon";
+import { sharedStyles } from "../../styles/shared";
 
 interface AnimalRowProps {
 	animal: Animal;
@@ -55,18 +56,21 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 				}}
 			>
 				<DataTable.Row>
-					<DataTable.Cell>
+					<DataTable.Cell textStyle={sharedStyles.text}>
 						{getGenderIcon(animal.gender)}
 						{" " + animal.name}
 					</DataTable.Cell>
-					<DataTable.Cell>
+					<DataTable.Cell textStyle={sharedStyles.text}>
 						{animal.batchId && batch && batch.name}
 					</DataTable.Cell>
-					<DataTable.Cell>
+					<DataTable.Cell textStyle={sharedStyles.text}>
 						{animal.birthdate && getFormattedAge(animal.birthdate)}
 					</DataTable.Cell>
 					{isEditMode && (
-						<DataTable.Cell style={{ flex: 1 / 3 }}>
+						<DataTable.Cell
+							textStyle={sharedStyles.text}
+							style={{ flex: 1 / 3 }}
+						>
 							<Checkbox
 								color={Colors.green}
 								status={isSelected ? "checked" : "unchecked"}
