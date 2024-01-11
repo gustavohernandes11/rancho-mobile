@@ -89,6 +89,7 @@ export const ChooseBatchModal: React.FC<
 										<Span
 											justifyContent="space-between"
 											alignItems="center"
+											key={batch.id}
 										>
 											<View>
 												<Text>{batch.name}</Text>

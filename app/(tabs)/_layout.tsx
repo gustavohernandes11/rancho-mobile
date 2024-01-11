@@ -20,14 +20,10 @@ export default function TabLayout() {
 				tabBarInactiveTintColor: Colors.gray,
 				headerTintColor: Colors.white,
 				tabBarStyle: {
-					borderTopLeftRadius: 4,
-					borderTopRightRadius: 4,
 					overflow: "hidden",
 				},
 				headerStyle: {
 					backgroundColor: Colors.green,
-					borderBottomLeftRadius: 4,
-					borderBottomRightRadius: 4,
 				},
 				headerTitleStyle: {
 					fontWeight: "bold",
@@ -46,24 +42,6 @@ export default function TabLayout() {
 					),
 				}}
 			/>
-			{/* <Tabs.Screen
-				name="add"
-				options={{
-					tabBarShowLabel: false,
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="plus" color={color} />
-					),
-				}}
-			/>
-			<Tabs.Screen
-				name="list"
-				options={{
-					tabBarShowLabel: false,
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="list" color={color} />
-					),
-				}}
-			/> */}
 			<Tabs.Screen
 				name="config"
 				options={{
