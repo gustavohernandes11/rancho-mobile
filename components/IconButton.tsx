@@ -41,7 +41,7 @@ export const IconButton: React.FC<CustomButtonProps> = ({
 			<FontAwesome
 				aria-label={icon}
 				color={getButtonTextColor(type)}
-				size={14}
+				size={18}
 				name={icon}
 			/>
 		</TouchableHighlight>

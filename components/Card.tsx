@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
 		justifyContent: "space-around",
 		minHeight: 100,
 		gap: 8,
+		elevation: 3,
 	},
 	image: {
 		height: 38,
