@@ -8,14 +8,15 @@ import { SelectedHeader } from "./SelectedHeader";
 import { useFocusEffect } from "expo-router";
 import { sharedStyles } from "../../styles/shared";
 import { StorageService } from "../../database/StorageService";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
 
 interface AnimalTableProps {
 	animals: Animal[];
 }
 export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 	const [batches, setBatches] = useState<Batch[]>();
-	const [selectedIDs, setSelectedIDs] = useState<string[]>([]);
-	const [isEditMode, setIsEditMode] = useState<boolean>();
+	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
+		useSelectionMode();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -28,8 +29,8 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 	useFocusEffect(
 		React.useCallback(() => {
 			const backAction = () => {
-				if (isEditMode) {
-					setIsEditMode(false);
+				if (isSelectionMode) {
+					setIsSelectionMode(false);
 					setSelectedIDs([]);
 					return true;
 				} else {
@@ -43,19 +44,12 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 			);
 
 			return () => backHandler.remove();
-		}, [isEditMode, selectedIDs])
+		}, [isSelectionMode, selectedIDs])
 	);
 
 	return (
 		<>
-			{isEditMode && (
-				<SelectedHeader
-					setIsEditMode={setIsEditMode}
-					count={selectedIDs.length}
-					selectedIDs={selectedIDs}
-					setSelectedIDs={setSelectedIDs}
-				/>
-			)}
+			{isSelectionMode && <SelectedHeader />}
 			<DataTable>
 				<DataTable.Header>
 					<DataTable.Title textStyle={sharedStyles.text}>
@@ -67,7 +61,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 					<DataTable.Title textStyle={sharedStyles.text}>
 						Idade
 					</DataTable.Title>
-					{isEditMode && (
+					{isSelectionMode && (
 						<DataTable.Title
 							style={{ flex: 1 / 3 }}
 							textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
@@ -82,13 +76,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 						animal={animal}
 						batch={batches?.find((b) => b.id === animal.batchId)}
 						key={animal.id}
-						isSelected={
-							(selectedIDs && selectedIDs.includes(animal.id)) ||
-							false
-						}
-						isEditMode={isEditMode}
-						setIsEditMode={setIsEditMode}
-						setSelectedIDs={setSelectedIDs}
 					/>
 				))}
 			</DataTable>

@@ -15,17 +15,18 @@ import { Button } from "../Button";
 import { Heading } from "../Heading";
 import { Span } from "../Span";
 import { StorageService } from "../../database/StorageService";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
 
 interface ChooseBatchModalProps {
 	visible: boolean;
 	onDismiss: () => void;
-	selectedIDs: string[];
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export const ChooseBatchModal: React.FC<
 	ChooseBatchModalProps & Omit<ModalProps, "children">
-> = ({ visible, onDismiss, selectedIDs, setIsBatchModalVisible, ...props }) => {
+> = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
+	const { selectedIDs } = useSelectionMode();
 
 	const [batches, setBatches] = useState<Batch[]>();
 

@@ -8,24 +8,18 @@ import { Batch } from "../../types/Batch";
 import { getFormattedAge } from "../../utils/getFormattedAge";
 import { getGenderIcon } from "../../utils/getGenderIcon";
 import { sharedStyles } from "../../styles/shared";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
 
 interface AnimalRowProps {
 	animal: Animal;
 	batch?: Batch;
-	isEditMode?: boolean;
-	isSelected?: boolean;
-	setIsEditMode: (editMode: boolean) => any;
-	setSelectedIDs: Function;
 }
 
-export const AnimalRow: React.FC<AnimalRowProps> = ({
-	animal,
-	batch,
-	setIsEditMode,
-	setSelectedIDs,
-	isSelected = false,
-	isEditMode = false,
-}) => {
+export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
+	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
+		useSelectionMode();
+	const isSelected = selectedIDs && selectedIDs.includes(animal.id);
+
 	const toggleSelected = () => {
 		if (isSelected) {
 			setSelectedIDs((prevIDs: string[]) =>
@@ -47,7 +41,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 				key={animal.id}
 				style={isSelected ? styles.seleted : null}
 				onLongPress={() => {
-					setIsEditMode && setIsEditMode(true);
+					setIsSelectionMode(true);
 					setSelectedIDs &&
 						setSelectedIDs((prevIDs: string[]) => [
 							...prevIDs,
@@ -66,7 +60,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 					<DataTable.Cell textStyle={sharedStyles.text}>
 						{animal.birthdate && getFormattedAge(animal.birthdate)}
 					</DataTable.Cell>
-					{isEditMode && (
+					{isSelectionMode && (
 						<DataTable.Cell
 							textStyle={sharedStyles.text}
 							style={{ flex: 1 / 3 }}

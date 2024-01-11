@@ -6,70 +6,61 @@ import { Span } from "../Span";
 import { IconButton } from "react-native-paper";
 import { ChooseBatchModal } from "./ChooseBatchModal";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
 
-interface SelectedHeaderProps {
-	count: React.ReactNode;
-	setIsEditMode: (isEditMode: boolean) => any;
-	setSelectedIDs: React.Dispatch<React.SetStateAction<string[]>>;
-	selectedIDs: string[];
-}
+interface SelectedHeaderProps {}
 
 export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
-	count,
-	setIsEditMode,
-	setSelectedIDs,
-	selectedIDs,
 	...props
 }) => {
+	const { setIsSelectionMode, selectedIDs, setSelectedIDs } =
+		useSelectionMode();
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 	return (
-		<>
-			<View style={styles.container} {...props}>
-				<ChooseBatchModal
-					selectedIDs={selectedIDs}
-					visible={isBatchModalVisible}
-					onDismiss={() => setIsBatchModalVisible(false)}
-					setIsBatchModalVisible={setIsBatchModalVisible}
+		<View style={styles.container} {...props}>
+			<ChooseBatchModal
+				visible={isBatchModalVisible}
+				onDismiss={() => setIsBatchModalVisible(false)}
+				setIsBatchModalVisible={setIsBatchModalVisible}
+			/>
+			<Span
+				justifyContent="space-between"
+				marginVertical={0}
+				alignItems="center"
+			>
+				<IconButton
+					iconColor={Colors.white}
+					icon="close"
+					onPress={() => {
+						setIsSelectionMode(false);
+						setSelectedIDs([]);
+					}}
+					style={{ margin: 0 }}
+					size={20}
 				/>
-				<Span
-					justifyContent="space-between"
-					marginVertical={0}
-					alignItems="center"
-				>
+				<Text style={styles.text}>
+					{selectedIDs.length} animais selecionados
+				</Text>
+				<View style={{ flexDirection: "row", gap: 4 }}>
 					<IconButton
 						iconColor={Colors.white}
-						icon="close"
-						onPress={() => {
-							setIsEditMode(false);
-							setSelectedIDs([]);
-						}}
+						icon="delete"
+						onPress={() =>
+							showConfirmationAndDeleteAll(selectedIDs)
+						}
 						style={{ margin: 0 }}
 						size={20}
 					/>
-					<Text style={styles.text}>
-						{count} animais selecionados
-					</Text>
-					<View style={{ flexDirection: "row", gap: 4 }}>
-						<IconButton
-							iconColor={Colors.white}
-							icon="delete"
-							onPress={() =>
-								showConfirmationAndDeleteAll(selectedIDs)
-							}
-							style={{ margin: 0 }}
-							size={20}
-						/>
-						<IconButton
-							iconColor={Colors.white}
-							icon="gate-arrow-right"
-							onPress={() => setIsBatchModalVisible(true)}
-							style={{ margin: 0 }}
-							size={20}
-						/>
-					</View>
-				</Span>
-			</View>
-		</>
+					<IconButton
+						iconColor={Colors.white}
+						icon="gate-arrow-right"
+						onPress={() => setIsBatchModalVisible(true)}
+						style={{ margin: 0 }}
+						size={20}
+					/>
+				</View>
+			</Span>
+		</View>
 	);
 };
 
