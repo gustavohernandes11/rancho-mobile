@@ -1,7 +1,6 @@
 import { Link, Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { HelperText } from "react-native-paper";
 import { AnimalInfo } from "../../../components/AnimalInfo";
 import { BatchInfo } from "../../../components/BatchInfo";
 import { Button } from "../../../components/Button";
