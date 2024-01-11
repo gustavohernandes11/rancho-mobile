@@ -60,13 +60,15 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 				<DataTable.Header>
 					<DataTable.Title>Nome</DataTable.Title>
 					<DataTable.Title>Lote</DataTable.Title>
-					<DataTable.Title
-						style={{ flex: 1 / 3 }}
-						textStyle={{ flexShrink: 1 }}
-					>
-						Idade
-					</DataTable.Title>
-					{isEditMode && <DataTable.Title>{null}</DataTable.Title>}
+					<DataTable.Title>Idade</DataTable.Title>
+					{isEditMode && (
+						<DataTable.Title
+							style={{ flex: 1 / 3 }}
+							textStyle={{ flexShrink: 1 }}
+						>
+							{" "}
+						</DataTable.Title>
+					)}
 				</DataTable.Header>
 
 				{animals.map((animal) => (

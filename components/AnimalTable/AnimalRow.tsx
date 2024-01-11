@@ -25,6 +25,15 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 	isSelected = false,
 	isEditMode = false,
 }) => {
+	const toggleSelected = () => {
+		if (isSelected) {
+			setSelectedIDs((prevIDs: string[]) =>
+				prevIDs.filter((id) => id !== animal.id)
+			);
+		} else {
+			setSelectedIDs((prevIDs: string[]) => [...prevIDs, animal.id]);
+		}
+	};
 	return (
 		<Link
 			href={{
@@ -61,12 +70,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 							<Checkbox
 								color={Colors.green}
 								status={isSelected ? "checked" : "unchecked"}
-								onPress={() => {
-									setSelectedIDs((prevIDs: string[]) => [
-										...prevIDs,
-										animal.id,
-									]);
-								}}
+								onPress={toggleSelected}
 							/>
 						</DataTable.Cell>
 					)}
