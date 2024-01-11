@@ -5,11 +5,11 @@ import { DatabaseRepository } from "../types/DatabaseRepository";
 export class StorageService implements DatabaseRepository {
 	constructor(private readonly dbRepository: DatabaseRepository) {}
 
-	async insertAnimal(animal: AddAnimal): Promise<boolean> {
+	async insertAnimal(animal: AddAnimal): Promise<string> {
 		return this.dbRepository.insertAnimal(animal);
 	}
 
-	async insertBatch(batch: AddBatch): Promise<boolean> {
+	async insertBatch(batch: AddBatch): Promise<string> {
 		return this.dbRepository.insertBatch(batch);
 	}
 	async deleteAnimal(id: string): Promise<boolean> {

@@ -6,6 +6,12 @@ import { mockedBatches } from "./mockedBatches";
 
 export class MockedRepository implements DatabaseRepository {
 	constructor() {}
+	deleteAnimal(id: string): Promise<boolean> {
+		return Promise.resolve(true);
+	}
+	deleteBatch(id: string): Promise<boolean> {
+		return Promise.resolve(true);
+	}
 	insertAnimal(animal: AddAnimal): Promise<boolean> {
 		return Promise.resolve(true);
 	}

@@ -57,4 +57,34 @@ export const mockedAnimals: Animal[] = [
 		batchId: "01",
 		birthdate: new Date(2023, 5, 25).toISOString(),
 	},
+	{
+		id: "7",
+		gender: "M",
+		name: "Lambarí",
+		batchId: "01",
+		birthdate: new Date(2023, 3, 25).toISOString(),
+	},
+	{
+		id: "8",
+		gender: "M",
+		name: "Filho da Nébula",
+		batchId: "01",
+		birthdate: new Date(2023, 3, 25).toISOString(),
+	},
+	{
+		id: "9",
+		gender: "F",
+		name: "Novilha de fulano",
+	},
+	{
+		id: "10",
+		gender: "F",
+		name: "Sem nome",
+	},
+	{
+		id: "11",
+		gender: "M",
+		name: "Sem nome",
+		observation: "Leilão",
+	},
 ];
