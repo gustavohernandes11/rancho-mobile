@@ -9,7 +9,6 @@ import { Animal } from "../../types/Animal";
 import { defaultValues } from "./defaultValues";
 import { Alert, View } from "react-native";
 import { validationSchema } from "./validation.schema";
-import { createStorageService } from "../../database/createStorageServiceFactory";
 import { Batch } from "../../types/Batch";
 import { filterPossiblePaternity } from "./filterPossiblePaternity";
 import { serializeBatchesToKeyValue } from "./serializeBatchesToKeyValue";
@@ -18,6 +17,7 @@ import { filterPossibleMaternity } from "./filterPossibleMaternity";
 import { getFormattedGender } from "../../utils/getFormattedGender";
 import moment from "moment";
 import { router, useNavigation } from "expo-router";
+import { StorageService } from "../../database/StorageService";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
@@ -25,7 +25,6 @@ const getFieldError = (field: string, formik: FormikValues) =>
 interface AnimalFormProps {
 	initialValues?: Animal;
 }
-const storageService = createStorageService();
 export const AnimalForm: React.FC<AnimalFormProps> = ({
 	initialValues = defaultValues,
 }) => {
@@ -34,15 +33,13 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		initialValues,
 		onSubmit: (values) => {
 			initialValues.id
-				? storageService
-						.updateAnimal(values)
+				? StorageService.updateAnimal(values)
 						.then(() => {
 							Alert.alert("UPDATE");
 							router.replace("/(screens)/animals/");
 						})
 						.catch((error) => Alert.alert("Error", error))
-				: storageService
-						.insertAnimal(values)
+				: StorageService.insertAnimal(values)
 						.then(() => {
 							Alert.alert("INSERIDO");
 							router.replace("/(screens)/animals/");
@@ -56,9 +53,9 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const batches = await storageService.listAllBatchesInfo();
+			const batches = await StorageService.listAllBatchesInfo();
 			setBatches(batches);
-			const animals = await storageService.listAnimals();
+			const animals = await StorageService.listAnimals();
 			setAnimals(animals);
 		};
 		fetchData();

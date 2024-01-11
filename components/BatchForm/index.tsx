@@ -7,8 +7,8 @@ import { Batch } from "../../types/Batch";
 import { defaultValues } from "./defaultValues";
 import { Alert, View } from "react-native";
 import { validationSchema } from "./validation.schema";
-import { createStorageService } from "../../database/createStorageServiceFactory";
 import { router, useNavigation } from "expo-router";
+import { StorageService } from "../../database/StorageService";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
@@ -16,7 +16,6 @@ const getFieldError = (field: string, formik: FormikValues) =>
 interface BatchFormProps {
 	initialValues?: Batch;
 }
-const storageService = createStorageService();
 export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
@@ -25,14 +24,12 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		initialValues,
 		onSubmit: (values) => {
 			initialValues.id
-				? storageService
-						.updateBatch(values)
+				? StorageService.updateBatch(values)
 						.then(() => {
 							router.replace("/(screens)/batches/");
 						})
 						.catch((error) => Alert.alert("Error", error))
-				: storageService
-						.insertBatch(values)
+				: StorageService.insertBatch(values)
 						.then(() => {
 							router.replace("/(screens)/batches/");
 						})

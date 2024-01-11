@@ -6,16 +6,15 @@ import { ContainerView } from "../../../components/ContainerView";
 import { Heading } from "../../../components/Heading";
 import { Span } from "../../../components/Span";
 import { SubTitle } from "../../../components/SubTitle";
-import { createStorageService } from "../../../database/createStorageServiceFactory";
 import { Animal } from "../../../types/Animal";
+import { StorageService } from "../../../database/StorageService";
 
-const storageService = createStorageService();
 export default function ViewAnimalsScreen() {
 	const [animals, setAnimals] = useState<Animal[]>();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const animals = await storageService.listAnimals();
+			const animals = await StorageService.listAnimals();
 			setAnimals(animals);
 		};
 		fetchData();

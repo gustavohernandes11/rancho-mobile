@@ -1,5 +1,4 @@
 import { ContainerView } from "../../../components/ContainerView";
-import { createStorageService } from "../../../database/createStorageServiceFactory";
 import { useEffect, useState } from "react";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { Batch } from "../../../types/Batch";
@@ -9,8 +8,8 @@ import { Heading } from "../../../components/Heading";
 import { HelperText } from "react-native-paper";
 import { SimpleTable } from "../../../components/SimpleTable";
 import { Item } from "../../../types/Item";
+import { StorageService } from "../../../database/StorageService";
 
-const storageService = createStorageService();
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [animals, setBatches] = useState<Animal[]>();
@@ -18,9 +17,9 @@ export default function ViewBatchDetailsScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const animals = await storageService.loadBatchAnimals(id);
+			const animals = await StorageService.loadBatchAnimals(id);
 			setBatches(animals);
-			const batch = await storageService.loadBatchInfo(id);
+			const batch = await StorageService.loadBatchInfo(id);
 			setBatch(batch);
 		};
 		fetchData();

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 import { DataTable } from "react-native-paper";
-import { createStorageService } from "../../database/createStorageServiceFactory";
 import { Animal } from "../../types/Animal";
 import { Batch } from "../../types/Batch";
 import { AnimalRow } from "./AnimalRow";
 import { SelectedHeader } from "./SelectedHeader";
 import { useFocusEffect } from "expo-router";
 import { sharedStyles } from "../../styles/shared";
+import { StorageService } from "../../database/StorageService";
 
 interface AnimalTableProps {
 	animals: Animal[];
 }
-const storageService = createStorageService();
 export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 	const [batches, setBatches] = useState<Batch[]>();
 	const [selectedIDs, setSelectedIDs] = useState<string[]>([]);
@@ -20,7 +19,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const batches = await storageService.listAllBatchesInfo();
+			const batches = await StorageService.listAllBatchesInfo();
 			setBatches(batches);
 		};
 		fetchData();

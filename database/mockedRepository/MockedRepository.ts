@@ -12,11 +12,11 @@ export class MockedRepository implements DatabaseRepository {
 	deleteBatch(id: string): Promise<boolean> {
 		return Promise.resolve(true);
 	}
-	insertAnimal(animal: AddAnimal): Promise<boolean> {
-		return Promise.resolve(true);
+	insertAnimal(animal: AddAnimal): Promise<string> {
+		return Promise.resolve("INSERTED_ID");
 	}
-	insertBatch(batch: AddBatch): Promise<boolean> {
-		return Promise.resolve(true);
+	insertBatch(batch: AddBatch): Promise<string> {
+		return Promise.resolve("INSERTED_ID");
 	}
 	loadAnimal(id: string): Promise<Animal> {
 		return Promise.resolve(

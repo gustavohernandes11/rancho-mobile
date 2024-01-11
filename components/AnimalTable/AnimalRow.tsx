@@ -88,9 +88,4 @@ const styles = StyleSheet.create({
 	seleted: {
 		backgroundColor: Colors.gray,
 	},
-	relative: {
-		position: "relative",
-		right: 10,
-		top: 10,
-	},
 });

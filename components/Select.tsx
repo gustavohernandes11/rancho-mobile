@@ -70,10 +70,10 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		width: "auto",
-		borderRadius: 4,
 		backgroundColor: Colors.lightGray,
 		borderWidth: 2,
 		borderColor: Colors.border,
+		borderRadius: 4,
 		padding: 8,
 	},
 	row: {

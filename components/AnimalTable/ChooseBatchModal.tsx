@@ -10,11 +10,11 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Divider, ModalProps, Portal, RadioButton } from "react-native-paper";
 import Colors from "../../constants/Colors";
-import { createStorageService } from "../../database/createStorageServiceFactory";
 import { Batch } from "../../types/Batch";
 import { Button } from "../Button";
 import { Heading } from "../Heading";
 import { Span } from "../Span";
+import { StorageService } from "../../database/StorageService";
 
 interface ChooseBatchModalProps {
 	visible: boolean;
@@ -22,8 +22,6 @@ interface ChooseBatchModalProps {
 	selectedIDs: string[];
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
-const storageService = createStorageService();
-
 export const ChooseBatchModal: React.FC<
 	ChooseBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, selectedIDs, setIsBatchModalVisible, ...props }) => {
@@ -33,7 +31,7 @@ export const ChooseBatchModal: React.FC<
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await storageService.listAllBatchesInfo();
+			const response = await StorageService.listAllBatchesInfo();
 			setBatches(response);
 		};
 		fetchData();
@@ -41,7 +39,7 @@ export const ChooseBatchModal: React.FC<
 
 	const moveAllAnimalsTo = () => {
 		const promises = selectedIDs.map((id: string) =>
-			storageService.updateAnimal({
+			StorageService.updateAnimal({
 				id,
 				batchId: selectedBatch!.id,
 			})

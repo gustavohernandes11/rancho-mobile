@@ -6,16 +6,15 @@ import { ContainerView } from "../../../components/ContainerView";
 import { Heading } from "../../../components/Heading";
 import { Span } from "../../../components/Span";
 import { SubTitle } from "../../../components/SubTitle";
-import { createStorageService } from "../../../database/createStorageServiceFactory";
 import { Batch } from "../../../types/Batch";
+import { StorageService } from "../../../database/StorageService";
 
-const storageService = createStorageService();
 export default function ViewBatchesScreen() {
 	const [batches, setBatches] = useState<Batch[]>();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const batches = await storageService.listAllBatchesInfo();
+			const batches = await StorageService.listAllBatchesInfo();
 			setBatches(batches);
 		};
 		fetchData();

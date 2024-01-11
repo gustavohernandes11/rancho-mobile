@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, ViewProps } from "react-native";
+import { StyleSheet, View, ViewProps } from "react-native";
 import Colors from "../../constants/Colors";
 import { Text } from "react-native";
 import { Span } from "../Span";
 import { IconButton } from "react-native-paper";
-import { createStorageService } from "../../database/createStorageServiceFactory";
 import { ChooseBatchModal } from "./ChooseBatchModal";
-
-const storageService = createStorageService();
+import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
 interface SelectedHeaderProps {
 	count: React.ReactNode;
@@ -16,24 +14,6 @@ interface SelectedHeaderProps {
 	selectedIDs: string[];
 }
 
-const showConfirmationAndDeleteAll = (selectedIDs: string[]) => {
-	Alert.alert(
-		`Deletar animais?`,
-		`Você têm certeza que deseja deletar ${selectedIDs.length} animais?`,
-		[
-			{
-				text: "Cancelar",
-				style: "cancel",
-			},
-			{
-				text: "Deletar",
-				onPress: () =>
-					selectedIDs.map((id) => storageService.deleteAnimal(id)),
-				style: "destructive",
-			},
-		]
-	);
-};
 export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
 	count,
 	setIsEditMode,

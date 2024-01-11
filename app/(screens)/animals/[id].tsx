@@ -9,15 +9,14 @@ import { Heading } from "../../../components/Heading";
 import { Input } from "../../../components/Input";
 import { SimpleTable } from "../../../components/SimpleTable";
 import { Span } from "../../../components/Span";
-import { createStorageService } from "../../../database/createStorageServiceFactory";
 import { Animal } from "../../../types/Animal";
 import { Batch } from "../../../types/Batch";
 import { Item } from "../../../types/Item";
 import { getFormattedAge } from "../../../utils/getFormattedAge";
 import { getFormattedGender } from "../../../utils/getFormattedGender";
 import { SubTitle } from "../../../components/SubTitle";
+import { StorageService } from "../../../database/StorageService";
 
-const storageService = createStorageService();
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [animal, setAnimal] = useState<Animal>();
@@ -27,20 +26,20 @@ export default function ViewAnimalDetailsScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const animal = await storageService.loadAnimal(id);
+			const animal = await StorageService.loadAnimal(id);
 			setAnimal(animal);
 
 			if (animal.batchId) {
-				setBatch(await storageService.loadBatchInfo(animal.batchId));
+				setBatch(await StorageService.loadBatchInfo(animal.batchId));
 			}
 			if (animal.maternityId) {
 				setMaternityAnimal(
-					await storageService.loadAnimal(animal.maternityId)
+					await StorageService.loadAnimal(animal.maternityId)
 				);
 			}
 			if (animal.paternityId) {
 				setPaternityAnimal(
-					await storageService.loadAnimal(animal.paternityId)
+					await StorageService.loadAnimal(animal.paternityId)
 				);
 			}
 		};
@@ -53,7 +52,7 @@ export default function ViewAnimalDetailsScreen() {
 			<Heading>{animal?.name}</Heading>
 			<SubTitle>{`Detalhes do animal "${animal?.name}"`}</SubTitle>
 			<Heading size="small">Informações gerais</Heading>
-			<SimpleTable data={serializeAnimalToKeyValue(animal)} />
+			<SimpleTable data={serializeAnimalInfoToKeyValue(animal)} />
 			{batch && (
 				<>
 					<Heading size="small">Lote</Heading>
@@ -116,13 +115,13 @@ const showConfirmationAndDelete = (animal: Animal) => {
 			},
 			{
 				text: "Deletar",
-				onPress: () => storageService.deleteAnimal(animal.id),
+				onPress: () => StorageService.deleteAnimal(animal.id),
 				style: "destructive",
 			},
 		]
 	);
 };
-const serializeAnimalToKeyValue = (animal?: Animal): Item[] => {
+const serializeAnimalInfoToKeyValue = (animal?: Animal): Item[] => {
 	let items: Item[] = [];
 	if (!animal) return items;
 
