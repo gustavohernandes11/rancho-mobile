@@ -34,25 +34,6 @@ const showConfirmationAndDeleteAll = (selectedIDs: string[]) => {
 		]
 	);
 };
-const showModalAndMoveAll = (selectedIDs: string[]) => {
-	Alert.alert(
-		`Deletar animais?`,
-		`Você têm certeza que deseja deletar ${selectedIDs.length} animais?`,
-		[
-			{
-				text: "Cancelar",
-				style: "cancel",
-			},
-			{
-				text: "Deletar",
-				onPress: () =>
-					selectedIDs.map((id) => storageService.deleteAnimal(id)),
-				style: "destructive",
-			},
-		]
-	);
-};
-
 export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
 	count,
 	setIsEditMode,

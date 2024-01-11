@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import Colors from "../../constants/Colors";
