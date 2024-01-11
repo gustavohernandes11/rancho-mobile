@@ -55,11 +55,13 @@ export default function ViewAnimalDetailsScreen() {
 			<SubTitle>{`Detalhes do animal "${animal?.name}"`}</SubTitle>
 			<Heading size="small">Informações gerais</Heading>
 			<SimpleTable data={serializeAnimalToKeyValue(animal)} />
-			<Heading size="small">Lote</Heading>
 			{batch && (
-				<Link href={`/(screens)/batches/${batch.id}`} asChild>
-					<BatchInfo batch={batch} />
-				</Link>
+				<>
+					<Heading size="small">Lote</Heading>
+					<Link href={`/(screens)/batches/${batch.id}`} asChild>
+						<BatchInfo batch={batch} />
+					</Link>
+				</>
 			)}
 			{animal && paternityAnimal && (
 				<>
