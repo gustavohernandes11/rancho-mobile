@@ -6,6 +6,7 @@ import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
 import { getButtonBorderColor } from "../utils/getButtonBorderColor";
 import { ButtonProps, Button as PaperButton } from "react-native-paper";
 import { sharedStyles } from "../styles/shared";
+import Colors from "../constants/Colors";
 
 type CustomButtonProps = {
 	title: string;
@@ -16,6 +17,7 @@ type CustomButtonProps = {
 export const Button: React.FC<CustomButtonProps> = ({
 	title,
 	onPress,
+	disabled,
 	type = "primary",
 	...props
 }) => {
@@ -27,12 +29,18 @@ export const Button: React.FC<CustomButtonProps> = ({
 					backgroundColor: getButtonBackgroundColor(type),
 					borderColor: getButtonBorderColor(type),
 				},
+				disabled && styles.disabled,
 			]}
+			disabled={disabled}
 			onPress={onPress}
 			{...props}
 		>
 			<Text
-				style={[sharedStyles.text, { color: getButtonTextColor(type) }]}
+				style={[
+					sharedStyles.text,
+					{ color: getButtonTextColor(type) },
+					disabled && styles.textDisabled,
+				]}
 			>
 				{title}
 			</Text>
@@ -44,5 +52,15 @@ const styles = StyleSheet.create({
 	button: {
 		borderWidth: 1,
 		borderRadius: 4,
+	},
+	disabled: {
+		backgroundColor: Colors.lightGray,
+		borderColor: Colors.border,
+		borderStyle: "dashed",
+		borderRadius: 4,
+		borderWidth: 2,
+	},
+	textDisabled: {
+		color: Colors.darkGray,
 	},
 });
