@@ -3,7 +3,7 @@ import Colors from "constants/Colors";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
-import { IconButton } from "react-native-paper";
+import { IconButton, Tooltip } from "react-native-paper";
 import { MoveToBatchModal } from "./MoveToBatchModal";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
@@ -46,29 +46,35 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 					{selectedIDs.length} animais selecionados
 				</Text>
 				<View style={{ flexDirection: "row", gap: 4 }}>
-					<IconButton
-						iconColor={Colors.white}
-						icon="delete"
-						onPress={() =>
-							showConfirmationAndDeleteAll(selectedIDs)
-						}
-						style={{ margin: 0 }}
-						size={20}
-					/>
-					<IconButton
-						iconColor={Colors.white}
-						icon="select-all"
-						onPress={() => setSelectedIDs(allAnimalIDs)}
-						style={{ margin: 0 }}
-						size={20}
-					/>
-					<IconButton
-						iconColor={Colors.white}
-						icon="folder-move"
-						onPress={() => setIsBatchModalVisible(true)}
-						style={{ margin: 0 }}
-						size={20}
-					/>
+					<Tooltip title="Deletar">
+						<IconButton
+							iconColor={Colors.white}
+							icon="delete"
+							onPress={() =>
+								showConfirmationAndDeleteAll(selectedIDs)
+							}
+							style={{ margin: 0 }}
+							size={20}
+						/>
+					</Tooltip>
+					<Tooltip title="Selecionar todos">
+						<IconButton
+							iconColor={Colors.white}
+							icon="select-all"
+							onPress={() => setSelectedIDs(allAnimalIDs)}
+							style={{ margin: 0 }}
+							size={20}
+						/>
+					</Tooltip>
+					<Tooltip title="Mover de lote">
+						<IconButton
+							iconColor={Colors.white}
+							icon="folder-move"
+							onPress={() => setIsBatchModalVisible(true)}
+							style={{ margin: 0 }}
+							size={20}
+						/>
+					</Tooltip>
 				</View>
 			</Span>
 		</View>

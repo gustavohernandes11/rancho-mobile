@@ -39,7 +39,10 @@ export default function ViewAnimalsScreen() {
 					placeholder="Busque por nome, observação ou código."
 				/>
 			</Span>
-			<SubTitle>Clique sobre o animal para ver mais detalhes</SubTitle>
+			<SubTitle>
+				Clique sobre o animal para ver mais detalhes. Pressione para
+				selecionar vários.
+			</SubTitle>
 
 			<AnimalTable
 				animals={filterAnimalsByText(animals, searchText) || []}
