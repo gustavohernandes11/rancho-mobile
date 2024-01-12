@@ -1,10 +1,10 @@
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
-import { Item } from "../types/Item";
 import Colors from "../constants/Colors";
-import { RowProps } from "../types/RowProps";
-import { getRowColor } from "../utils/getRowColor";
 import { sharedStyles } from "../styles/shared";
+import { Item } from "../types/Item";
+import { RowProps } from "../types/RowProps";
+import { getRowColor } from "../utils";
 
 interface SimpleTableProps {
 	data: Item[];

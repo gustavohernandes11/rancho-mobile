@@ -1,14 +1,13 @@
-import React from "react";
-import SelectDropdown from "react-native-select-dropdown";
-
 import { FontAwesome } from "@expo/vector-icons";
+import React from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { HelperText } from "react-native-paper";
+import SelectDropdown from "react-native-select-dropdown";
 import Colors from "../constants/Colors";
 import Fonts from "../constants/Fonts";
 import { sharedStyles } from "../styles/shared";
 import { Item } from "../types/Item";
-import { getInputBorderColor } from "../utils/getInputBorderColor";
+import { getInputBorderColor } from "../utils";
 
 const dropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />

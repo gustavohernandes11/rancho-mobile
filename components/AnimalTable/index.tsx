@@ -1,14 +1,14 @@
+import { useFocusEffect } from "expo-router";
 import React, { useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 import { DataTable } from "react-native-paper";
+import { StorageService } from "../../database/StorageService";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
+import { sharedStyles } from "../../styles/shared";
 import { Animal } from "../../types/Animal";
 import { Batch } from "../../types/Batch";
 import { AnimalRow } from "./AnimalRow";
-import { SelectedHeader } from "./SelectedHeader";
-import { useFocusEffect } from "expo-router";
-import { sharedStyles } from "../../styles/shared";
-import { StorageService } from "../../database/StorageService";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
+import { SelectionBanner } from "./SelectionBanner";
 
 interface AnimalTableProps {
 	animals: Animal[];
@@ -49,7 +49,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 
 	return (
 		<>
-			{isSelectionMode && <SelectedHeader />}
+			{isSelectionMode && <SelectionBanner />}
 			<DataTable>
 				<DataTable.Header>
 					<DataTable.Title textStyle={sharedStyles.text}>
