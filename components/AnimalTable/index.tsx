@@ -8,7 +8,7 @@ import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { AnimalRow } from "./AnimalRow";
-import { SelectedHeader } from "./SelectedHeader";
+import { SelectionBanner } from "./SelectionBanner";
 import { Span } from "components/Span";
 
 interface AnimalTableProps {
@@ -52,7 +52,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 		<>
 			{isSelectionMode && (
 				<Span>
-					<SelectedHeader />
+					<SelectionBanner />
 				</Span>
 			)}
 			<DataTable>

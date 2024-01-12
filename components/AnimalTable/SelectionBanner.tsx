@@ -4,12 +4,12 @@ import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { IconButton } from "react-native-paper";
-import { ChooseBatchModal } from "./ChooseBatchModal";
+import { MoveToBatchModal } from "./MoveToBatchModal";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
-interface SelectedHeaderProps {}
+interface SelectionBannerProps {}
 
-export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
+export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	...props
 }) => {
 	const { setIsSelectionMode, selectedIDs, setSelectedIDs } =
@@ -17,7 +17,7 @@ export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 	return (
 		<View style={styles.container} {...props}>
-			<ChooseBatchModal
+			<MoveToBatchModal
 				visible={isBatchModalVisible}
 				onDismiss={() => setIsBatchModalVisible(false)}
 				setIsBatchModalVisible={setIsBatchModalVisible}

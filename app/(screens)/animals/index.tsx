@@ -24,7 +24,11 @@ export default function ViewAnimalsScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Rebanho" }} />
-			<Span justifyContent="space-between" marginVertical={0}>
+			<Span
+				justifyContent="space-between"
+				marginVertical={0}
+				alignItems="center"
+			>
 				<Heading>Todos seus animais</Heading>
 				<SubTitle>{`Total: ${animals?.length}`}</SubTitle>
 			</Span>

@@ -22,7 +22,7 @@ export default function ViewBatchesScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Ver lotes" }} />
-			<Span justifyContent="space-between">
+			<Span justifyContent="space-between" alignItems="center">
 				<Heading>Lotes</Heading>
 				<SubTitle>{`Total: ${batches?.length}`}</SubTitle>
 			</Span>

@@ -17,13 +17,13 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Divider, ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Batch } from "types/Batch";
 
-interface ChooseBatchModalProps {
+interface MoveToBatchModalProps {
 	visible: boolean;
 	onDismiss: () => void;
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const ChooseBatchModal: React.FC<
-	ChooseBatchModalProps & Omit<ModalProps, "children">
+export const MoveToBatchModal: React.FC<
+	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
 	const { selectedIDs } = useSelectionMode();
