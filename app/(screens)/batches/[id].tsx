@@ -2,10 +2,10 @@ import { AnimalTable } from "components/AnimalTable";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { SimpleTable } from "components/SimpleTable";
+import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { HelperText } from "react-native-paper";
 import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { Item } from "types/Item";
@@ -29,12 +29,12 @@ export default function ViewBatchDetailsScreen() {
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Detalhes do lote" }} />
 			<Heading>{batch?.name}</Heading>
-			<HelperText style={{ padding: 0, marginBottom: 8 }} type="info">
-				{`Detalhes do lote "${batch?.name}"`}
-			</HelperText>
+			<SubTitle>{`Detalhes do lote "${batch?.name}"`}</SubTitle>
+
 			<Heading size="small">Informações Gerais</Heading>
 			<SimpleTable data={serializeBatchInfoToKeyValue(batch)} />
-			<Heading size="small">Animais</Heading>
+
+			<Heading size="small">Animais do lote</Heading>
 			<AnimalTable animals={animals || []} />
 		</ContainerView>
 	);

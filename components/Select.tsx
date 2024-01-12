@@ -2,9 +2,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import React from "react";
-import { StyleSheet, Text, View, ViewProps } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { HelperText } from "react-native-paper";
-import SelectDropdown from "react-native-select-dropdown";
+import SelectDropdown, {
+	SelectDropdownProps,
+} from "react-native-select-dropdown";
 import { sharedStyles } from "styles/shared";
 import { Item } from "types/Item";
 import { getInputBorderColor } from "utils/getInputBorderColor";
@@ -21,14 +23,9 @@ interface SelectProps {
 	defaultValue?: string;
 	defaultButtonText?: string;
 }
-export const Select: React.FC<SelectProps & ViewProps> = ({
-	items,
-	onSelect,
-	defaultButtonText,
-	label,
-	errorText,
-	...props
-}) => {
+export const Select: React.FC<
+	SelectProps & Omit<SelectDropdownProps, "data">
+> = ({ items, onSelect, defaultButtonText, label, errorText, ...props }) => {
 	return (
 		<View style={styles.inputContainer}>
 			<HelperText
