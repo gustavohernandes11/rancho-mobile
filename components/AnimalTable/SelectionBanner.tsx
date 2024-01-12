@@ -7,9 +7,12 @@ import { IconButton } from "react-native-paper";
 import { MoveToBatchModal } from "./MoveToBatchModal";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
-interface SelectionBannerProps {}
+interface SelectionBannerProps {
+	allAnimalIDs: string[];
+}
 
 export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
+	allAnimalIDs,
 	...props
 }) => {
 	const { setIsSelectionMode, selectedIDs, setSelectedIDs } =
@@ -29,7 +32,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 			>
 				<IconButton
 					iconColor={Colors.white}
-					icon="close-thick"
+					icon="close"
 					onPress={() => {
 						setIsSelectionMode(false);
 						setSelectedIDs([]);
@@ -54,7 +57,14 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 					/>
 					<IconButton
 						iconColor={Colors.white}
-						icon="gate-arrow-right"
+						icon="select-all"
+						onPress={() => setSelectedIDs(allAnimalIDs)}
+						style={{ margin: 0 }}
+						size={20}
+					/>
+					<IconButton
+						iconColor={Colors.white}
+						icon="folder-move"
 						onPress={() => setIsBatchModalVisible(true)}
 						style={{ margin: 0 }}
 						size={20}

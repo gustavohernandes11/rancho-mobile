@@ -2,7 +2,7 @@ import { StorageService } from "database/StorageService";
 import { useFocusEffect } from "expo-router";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect, useState } from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, Text } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
@@ -14,6 +14,7 @@ import { Span } from "components/Span";
 interface AnimalTableProps {
 	animals: Animal[];
 }
+
 export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 	const [batches, setBatches] = useState<Batch[]>();
 	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
@@ -52,7 +53,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 		<>
 			{isSelectionMode && (
 				<Span>
-					<SelectionBanner />
+					<SelectionBanner allAnimalIDs={animals.map((a) => a.id)} />
 				</Span>
 			)}
 			<DataTable>
@@ -75,7 +76,11 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 						</DataTable.Title>
 					)}
 				</DataTable.Header>
-
+				{animals.length === 0 && (
+					<Span justifyContent="center">
+						<Text>Nenhum animal por aqui.</Text>
+					</Span>
+				)}
 				{animals.map((animal) => (
 					<AnimalRow
 						animal={animal}
