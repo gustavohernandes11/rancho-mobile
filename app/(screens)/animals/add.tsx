@@ -1,6 +1,6 @@
-import { Stack } from "expo-router";
-import { ContainerView } from "components/ContainerView";
 import { AnimalForm } from "components/AnimalForm";
+import { ContainerView } from "components/ContainerView";
+import { Stack } from "expo-router";
 
 export default function AddAnimalScreen() {
 	return (

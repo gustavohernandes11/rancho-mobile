@@ -4,7 +4,7 @@ import { Span } from "components/Span";
 import Colors from "constants/Colors";
 import { StorageService } from "database/StorageService";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import React, { useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import {
 	Alert,
 	Modal,
@@ -86,11 +86,10 @@ export const ChooseBatchModal: React.FC<
 							>
 								<CustomDivider />
 								{batches?.map((batch) => (
-									<>
+									<Fragment key={batch.id}>
 										<Span
 											justifyContent="space-between"
 											alignItems="center"
-											key={batch.id}
 										>
 											<View>
 												<Text>{batch.name}</Text>
@@ -112,7 +111,7 @@ export const ChooseBatchModal: React.FC<
 											/>
 										</Span>
 										<CustomDivider />
-									</>
+									</Fragment>
 								))}
 							</RadioButton.Group>
 
