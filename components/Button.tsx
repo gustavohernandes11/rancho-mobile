@@ -1,14 +1,12 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
-import { ButtonProps, Button as PaperButton } from "react-native-paper";
-import Colors from "../constants/Colors";
-import { sharedStyles } from "../styles/shared";
 import { ButtonTypes } from "../types/ButtonTypes";
-import {
-	getButtonBackgroundColor,
-	getButtonBorderColor,
-	getButtonTextColor,
-} from "../utils/";
+import { getButtonTextColor } from "../utils/getButtonTextColor";
+import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
+import { getButtonBorderColor } from "../utils/getButtonBorderColor";
+import { ButtonProps, Button as PaperButton } from "react-native-paper";
+import { sharedStyles } from "../styles/shared";
+import Colors from "../constants/Colors";
 
 type CustomButtonProps = {
 	title: string;

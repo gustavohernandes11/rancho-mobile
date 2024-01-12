@@ -9,12 +9,13 @@ import { Heading } from "../../../components/Heading";
 import { Input } from "../../../components/Input";
 import { SimpleTable } from "../../../components/SimpleTable";
 import { Span } from "../../../components/Span";
-import { SubTitle } from "../../../components/SubTitle";
-import { StorageService } from "../../../database/StorageService";
 import { Animal } from "../../../types/Animal";
 import { Batch } from "../../../types/Batch";
 import { Item } from "../../../types/Item";
-import { getFormattedAge, getFormattedGender } from "../../../utils";
+import { getFormattedAge } from "../../../utils/getFormattedAge";
+import { getFormattedGender } from "../../../utils/getFormattedGender";
+import { SubTitle } from "../../../components/SubTitle";
+import { StorageService } from "../../../database/StorageService";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
