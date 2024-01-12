@@ -1,14 +1,14 @@
-import { Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import { HelperText } from "react-native-paper";
-import { AnimalTable } from "../../../components/AnimalTable";
 import { ContainerView } from "../../../components/ContainerView";
-import { Heading } from "../../../components/Heading";
-import { SimpleTable } from "../../../components/SimpleTable";
-import { StorageService } from "../../../database/StorageService";
-import { Animal } from "../../../types/Animal";
+import { useEffect, useState } from "react";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { Batch } from "../../../types/Batch";
+import { Animal } from "../../../types/Animal";
+import { AnimalTable } from "../../../components/AnimalTable";
+import { Heading } from "../../../components/Heading";
+import { HelperText } from "react-native-paper";
+import { SimpleTable } from "../../../components/SimpleTable";
 import { Item } from "../../../types/Item";
+import { StorageService } from "../../../database/StorageService";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();

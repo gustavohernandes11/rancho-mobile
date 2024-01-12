@@ -6,8 +6,8 @@ import { ContainerView } from "../../../components/ContainerView";
 import { Heading } from "../../../components/Heading";
 import { Span } from "../../../components/Span";
 import { SubTitle } from "../../../components/SubTitle";
-import { StorageService } from "../../../database/StorageService";
 import { Animal } from "../../../types/Animal";
+import { StorageService } from "../../../database/StorageService";
 
 export default function ViewAnimalsScreen() {
 	const [animals, setAnimals] = useState<Animal[]>();

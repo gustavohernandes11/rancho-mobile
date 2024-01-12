@@ -1,9 +1,10 @@
 import React from "react";
 import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
-import Colors from "../constants/Colors";
-import { sharedStyles } from "../styles/shared";
 import { Animal } from "../types/Animal";
-import { getFormattedAge, getGenderIcon } from "../utils";
+import Colors from "../constants/Colors";
+import { getGenderIcon } from "../utils/getGenderIcon";
+import { getFormattedAge } from "../utils/getFormattedAge";
+import { sharedStyles } from "../styles/shared";
 
 interface AnimalInfoProps {
 	animal: Animal;

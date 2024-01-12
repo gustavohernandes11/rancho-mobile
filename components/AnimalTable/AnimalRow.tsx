@@ -3,11 +3,12 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import Colors from "../../constants/Colors";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
-import { sharedStyles } from "../../styles/shared";
 import { Animal } from "../../types/Animal";
 import { Batch } from "../../types/Batch";
-import { getFormattedAge, getGenderIcon } from "../../utils";
+import { getFormattedAge } from "../../utils/getFormattedAge";
+import { getGenderIcon } from "../../utils/getGenderIcon";
+import { sharedStyles } from "../../styles/shared";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
 
 interface AnimalRowProps {
 	animal: Animal;
@@ -17,8 +18,7 @@ interface AnimalRowProps {
 export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
 	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
 		useSelectionMode();
-
-	const isSelected = selectedIDs.includes(animal.id);
+	const isSelected = selectedIDs && selectedIDs.includes(animal.id);
 
 	const toggleSelected = () => {
 		if (isSelected) {
@@ -29,7 +29,6 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
 			setSelectedIDs((prevIDs: string[]) => [...prevIDs, animal.id]);
 		}
 	};
-
 	return (
 		<Link
 			href={{
@@ -43,10 +42,11 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
 				style={isSelected ? styles.seleted : null}
 				onLongPress={() => {
 					setIsSelectionMode(true);
-					setSelectedIDs((prevIDs: string[]) => [
-						...prevIDs,
-						animal.id,
-					]);
+					setSelectedIDs &&
+						setSelectedIDs((prevIDs: string[]) => [
+							...prevIDs,
+							animal.id,
+						]);
 				}}
 			>
 				<DataTable.Row>

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
 	Alert,
 	Modal,
@@ -10,20 +10,20 @@ import {
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Divider, ModalProps, Portal, RadioButton } from "react-native-paper";
 import Colors from "../../constants/Colors";
-import { StorageService } from "../../database/StorageService";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
 import { Batch } from "../../types/Batch";
 import { Button } from "../Button";
 import { Heading } from "../Heading";
 import { Span } from "../Span";
+import { StorageService } from "../../database/StorageService";
+import { useSelectionMode } from "../../hooks/useSelectionMode";
 
-interface MoveBatchModalProps {
+interface ChooseBatchModalProps {
 	visible: boolean;
 	onDismiss: () => void;
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
-export const MoveBatchModal: React.FC<
-	MoveBatchModalProps & Omit<ModalProps, "children">
+export const ChooseBatchModal: React.FC<
+	ChooseBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
 	const { selectedIDs } = useSelectionMode();
@@ -86,10 +86,11 @@ export const MoveBatchModal: React.FC<
 							>
 								<CustomDivider />
 								{batches?.map((batch) => (
-									<Fragment key={batch.id}>
+									<>
 										<Span
 											justifyContent="space-between"
 											alignItems="center"
+											key={batch.id}
 										>
 											<View>
 												<Text>{batch.name}</Text>
@@ -111,7 +112,7 @@ export const MoveBatchModal: React.FC<
 											/>
 										</Span>
 										<CustomDivider />
-									</Fragment>
+									</>
 								))}
 							</RadioButton.Group>
 
