@@ -6,8 +6,8 @@ import { ContainerView } from "../../../components/ContainerView";
 import { Heading } from "../../../components/Heading";
 import { Span } from "../../../components/Span";
 import { SubTitle } from "../../../components/SubTitle";
-import { Batch } from "../../../types/Batch";
 import { StorageService } from "../../../database/StorageService";
+import { Batch } from "../../../types/Batch";
 
 export default function ViewBatchesScreen() {
 	const [batches, setBatches] = useState<Batch[]>();

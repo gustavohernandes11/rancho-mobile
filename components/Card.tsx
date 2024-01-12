@@ -1,10 +1,10 @@
+import { Link, LinkProps } from "expo-router";
 import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
-import Colors from "../constants/Colors";
-import { Link, LinkProps } from "expo-router";
 import { TouchableRipple } from "react-native-paper";
-import { Span } from "./Span";
+import Colors from "../constants/Colors";
 import { sharedStyles } from "../styles/shared";
+import { Span } from "./Span";
 
 type ColorOptions = "green" | "blue" | "purple";
 interface CardProps {

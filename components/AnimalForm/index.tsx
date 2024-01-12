@@ -1,23 +1,23 @@
+import { router, useNavigation } from "expo-router";
+import { FormikValues, useFormik } from "formik";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
+import { Alert, View } from "react-native";
+import { StorageService } from "../../database/StorageService";
+import { Animal } from "../../types/Animal";
+import { Batch } from "../../types/Batch";
+import { getFormattedGender } from "../../utils";
+import { Button } from "../Button";
 import { DatePicker } from "../DatePicker";
 import { Input } from "../Input";
 import { Select } from "../Select";
 import { Span } from "../Span";
-import { Button } from "../Button";
-import { FormikValues, useFormik } from "formik";
-import { Animal } from "../../types/Animal";
 import { defaultValues } from "./defaultValues";
-import { Alert, View } from "react-native";
-import { validationSchema } from "./validation.schema";
-import { Batch } from "../../types/Batch";
-import { filterPossiblePaternity } from "./filterPossiblePaternity";
-import { serializeBatchesToKeyValue } from "./serializeBatchesToKeyValue";
-import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
 import { filterPossibleMaternity } from "./filterPossibleMaternity";
-import { getFormattedGender } from "../../utils/getFormattedGender";
-import moment from "moment";
-import { router, useNavigation } from "expo-router";
-import { StorageService } from "../../database/StorageService";
+import { filterPossiblePaternity } from "./filterPossiblePaternity";
+import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
+import { serializeBatchesToKeyValue } from "./serializeBatchesToKeyValue";
+import { validationSchema } from "./validation.schema";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";

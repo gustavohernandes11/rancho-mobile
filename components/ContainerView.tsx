@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, ViewProps, ScrollView, View } from "react-native";
+import { ScrollView, StyleSheet, View, ViewProps } from "react-native";
 import Colors from "../constants/Colors";
 
 interface ContainerViewType {
