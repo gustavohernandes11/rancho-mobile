@@ -1,15 +1,15 @@
+import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import {
-	TouchableHighlight,
 	StyleSheet,
+	TouchableHighlight,
 	TouchableHighlightProps,
 } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
-import { ButtonTypes } from "../types/ButtonTypes";
-import { getButtonBackgroundColor } from "../utils/getButtonBackgroundColor";
-import { getButtonBorderColor } from "../utils/getButtonBorderColor";
-import { getOnPressedColor } from "../utils/getOnPressedColor";
-import { getButtonTextColor } from "../utils/getButtonTextColor";
+import { ButtonTypes } from "types/ButtonTypes";
+import { getButtonBackgroundColor } from "utils/getButtonBackgroundColor";
+import { getButtonBorderColor } from "utils/getButtonBorderColor";
+import { getButtonTextColor } from "utils/getButtonTextColor";
+import { getOnPressedColor } from "utils/getOnPressedColor";
 
 type CustomButtonProps = {
 	icon: React.ComponentProps<typeof FontAwesome>["name"];

@@ -1,5 +1,5 @@
-import { Animal } from "../../types/Animal";
 import moment from "moment";
+import { Animal } from "types/Animal";
 
 /**
  * Filters a list of animals to find potential mothers based on gender and, optionally, birthdate.

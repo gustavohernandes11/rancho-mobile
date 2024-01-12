@@ -1,4 +1,4 @@
-import { Animal } from "../../types/Animal";
+import { Animal } from "types/Animal";
 
 export const defaultValues: Animal = {
 	id: "",

@@ -1,7 +1,20 @@
 {
 	"extends": "expo/tsconfig.base",
 	"compilerOptions": {
-		"strict": true
+		"strict": true,
+		"baseUrl": ".",
+		"paths": {
+			"assets/*": ["assets/*"],
+			"components/*": ["components/*"],
+			"constants/*": ["constants/*"],
+			"contexts/*": ["contexts/*"],
+			"database/*": ["database/*"],
+			"hooks/*": ["hooks/*"],
+			"styles/*": ["styles/*"],
+			"tests/*": ["tests/*"],
+			"types/*": ["types/*"],
+			"utils/*": ["utils/*"]
+		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"],
 	"files": ["globals.d.ts"]

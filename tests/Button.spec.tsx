@@ -1,7 +1,7 @@
-import { render, screen } from "../utils/setupTests";
+import { render, screen } from "utils/setupTests";
 
-import { Button } from "../components/Button";
-import Colors from "../constants/Colors";
+import { Button } from "components/Button";
+import Colors from "constants/Colors";
 
 describe("Button", () => {
 	it("should render the component", () => {

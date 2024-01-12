@@ -1,7 +1,7 @@
+import Colors from "constants/Colors";
 import { useNavigation } from "expo-router";
 import React from "react";
 import { IconButton } from "react-native-paper";
-import Colors from "../constants/Colors";
 
 interface GoBackButtonProps {
 	children?: React.ReactNode;

@@ -1,6 +1,6 @@
-import { GoBackButton } from "../../components/GoBackButton";
-import Colors from "../../constants/Colors";
-import Fonts from "../../constants/Fonts";
+import { GoBackButton } from "components/GoBackButton";
+import Colors from "constants/Colors";
+import Fonts from "constants/Fonts";
 
 export const screenOptions: any = {
 	headerStyle: {

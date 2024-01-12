@@ -1,5 +1,5 @@
 import { SplashScreen, Stack } from "expo-router";
-import { screenOptions } from "../(screenOptions)";
+import { screenOptions } from "../../../config/screenOptions";
 
 SplashScreen.preventAutoHideAsync();
 

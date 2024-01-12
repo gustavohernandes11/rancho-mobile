@@ -1,7 +1,7 @@
+import Colors from "constants/Colors";
+import Fonts from "constants/Fonts";
 import React from "react";
 import { StyleSheet, Text, TextProps } from "react-native";
-import Colors from "../constants/Colors";
-import Fonts from "../constants/Fonts";
 
 type HeadingSizes = "medium" | "small";
 interface HeadingProps {

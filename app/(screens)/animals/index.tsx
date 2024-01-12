@@ -1,13 +1,13 @@
+import { AnimalTable } from "components/AnimalTable";
+import { Button } from "components/Button";
+import { ContainerView } from "components/ContainerView";
+import { Heading } from "components/Heading";
+import { Span } from "components/Span";
+import { SubTitle } from "components/SubTitle";
+import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { AnimalTable } from "../../../components/AnimalTable";
-import { Button } from "../../../components/Button";
-import { ContainerView } from "../../../components/ContainerView";
-import { Heading } from "../../../components/Heading";
-import { Span } from "../../../components/Span";
-import { SubTitle } from "../../../components/SubTitle";
-import { Animal } from "../../../types/Animal";
-import { StorageService } from "../../../database/StorageService";
+import { Animal } from "types/Animal";
 
 export default function ViewAnimalsScreen() {
 	const [animals, setAnimals] = useState<Animal[]>();

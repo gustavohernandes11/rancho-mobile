@@ -1,5 +1,5 @@
-import { Animal } from "../../types/Animal";
-import { Item } from "../../types/Item";
+import { Animal } from "types/Animal";
+import { Item } from "types/Item";
 
 /**
  * Serializes a list of animals into key-value pairs.

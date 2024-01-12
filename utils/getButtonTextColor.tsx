@@ -1,5 +1,5 @@
-import Colors from "../constants/Colors";
-import { ButtonTypes } from "../types/ButtonTypes";
+import Colors from "constants/Colors";
+import { ButtonTypes } from "types/ButtonTypes";
 
 export const getButtonTextColor = (type: ButtonTypes) => {
 	if (type === "danger") return Colors.red;

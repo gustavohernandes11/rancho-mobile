@@ -1,5 +1,5 @@
-import { Batch } from "../../types/Batch";
-import { Item } from "../../types/Item";
+import { Batch } from "types/Batch";
+import { Item } from "types/Item";
 
 /**
  * Serializes a list of batches into key-value pairs.

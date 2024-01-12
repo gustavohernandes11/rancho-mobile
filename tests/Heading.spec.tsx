@@ -1,6 +1,6 @@
-import { render, screen } from "../utils/setupTests";
+import { render, screen } from "utils/setupTests";
 
-import { Heading } from "../components/Heading";
+import { Heading } from "components/Heading";
 
 describe("Heading", () => {
 	it("should render the text", () => {

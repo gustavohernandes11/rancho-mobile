@@ -1,6 +1,6 @@
+import Colors from "constants/Colors";
 import React from "react";
-import { StyleSheet, ViewProps, ScrollView, View } from "react-native";
-import Colors from "../constants/Colors";
+import { ScrollView, StyleSheet, View, ViewProps } from "react-native";
 
 interface ContainerViewType {
 	flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";

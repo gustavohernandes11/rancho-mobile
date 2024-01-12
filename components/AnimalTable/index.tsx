@@ -1,14 +1,14 @@
+import { StorageService } from "database/StorageService";
+import { useFocusEffect } from "expo-router";
+import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect, useState } from "react";
 import { BackHandler } from "react-native";
 import { DataTable } from "react-native-paper";
-import { Animal } from "../../types/Animal";
-import { Batch } from "../../types/Batch";
+import { sharedStyles } from "styles/shared";
+import { Animal } from "types/Animal";
+import { Batch } from "types/Batch";
 import { AnimalRow } from "./AnimalRow";
 import { SelectedHeader } from "./SelectedHeader";
-import { useFocusEffect } from "expo-router";
-import { sharedStyles } from "../../styles/shared";
-import { StorageService } from "../../database/StorageService";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
 
 interface AnimalTableProps {
 	animals: Animal[];

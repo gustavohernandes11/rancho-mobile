@@ -1,7 +1,7 @@
-import { render, screen } from "../utils/setupTests";
+import { render, screen } from "utils/setupTests";
 
-import { Select } from "../components/Select";
-import { Item } from "../types/Item";
+import { Select } from "components/Select";
+import { Item } from "types/Item";
 
 describe("Select", () => {
 	const mockItems: Item[] = [
@@ -9,7 +9,6 @@ describe("Select", () => {
 		{ key: "second-option", value: "2" },
 	];
 	const mockOnSelect = jest.fn();
-
 	it("should render the component", () => {
 		render(<Select items={mockItems} onSelect={mockOnSelect} />);
 		const sut = screen.getByText("Selecione uma opção");

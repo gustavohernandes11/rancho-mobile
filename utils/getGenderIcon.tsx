@@ -1,6 +1,6 @@
 import React from "react";
 import { FontAwesome } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
+import Colors from "constants/Colors";
 
 export const getGenderIcon = (gender: "F" | "M") =>
 	gender === "M" ? (

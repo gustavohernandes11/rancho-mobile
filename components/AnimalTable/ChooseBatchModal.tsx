@@ -1,3 +1,9 @@
+import { Button } from "components/Button";
+import { Heading } from "components/Heading";
+import { Span } from "components/Span";
+import Colors from "constants/Colors";
+import { StorageService } from "database/StorageService";
+import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect, useState } from "react";
 import {
 	Alert,
@@ -9,13 +15,7 @@ import {
 } from "react-native";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { Divider, ModalProps, Portal, RadioButton } from "react-native-paper";
-import Colors from "../../constants/Colors";
-import { Batch } from "../../types/Batch";
-import { Button } from "../Button";
-import { Heading } from "../Heading";
-import { Span } from "../Span";
-import { StorageService } from "../../database/StorageService";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
+import { Batch } from "types/Batch";
 
 interface ChooseBatchModalProps {
 	visible: boolean;

@@ -1,9 +1,9 @@
-import { render, screen } from "../utils/setupTests";
+import { render, screen } from "utils/setupTests";
 
-import { Card } from "../components/Card";
-import Colors from "../constants/Colors";
-jest.mock("../assets/images/CowIcon.png");
-const cowIcon = require("../assets/images/CowIcon.png");
+import { Card } from "components/Card";
+import Colors from "constants/Colors";
+jest.mock("assets/images/CowIcon.png");
+const cowIcon = require("assets/images/CowIcon.png");
 
 describe("Card", () => {
 	it("should render the component", () => {

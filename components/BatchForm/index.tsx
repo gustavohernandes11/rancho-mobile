@@ -1,14 +1,14 @@
-import React from "react";
-import { Input } from "../Input";
-import { Span } from "../Span";
-import { Button } from "../Button";
-import { FormikValues, useFormik } from "formik";
-import { Batch } from "../../types/Batch";
-import { defaultValues } from "./defaultValues";
-import { Alert, View } from "react-native";
-import { validationSchema } from "./validation.schema";
+import { Button } from "components/Button";
+import { Input } from "components/Input";
+import { Span } from "components/Span";
+import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
-import { StorageService } from "../../database/StorageService";
+import { FormikValues, useFormik } from "formik";
+import React from "react";
+import { Alert, View } from "react-native";
+import { Batch } from "types/Batch";
+import { defaultValues } from "./defaultValues";
+import { validationSchema } from "./validation.schema";
 
 const getFieldError = (field: string, formik: FormikValues) =>
 	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";

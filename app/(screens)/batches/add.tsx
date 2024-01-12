@@ -1,6 +1,6 @@
+import { BatchForm } from "components/BatchForm";
+import { ContainerView } from "components/ContainerView";
 import { Stack } from "expo-router";
-import { ContainerView } from "../../../components/ContainerView";
-import { BatchForm } from "../../../components/BatchForm";
 
 export default function AddBatchScreen() {
 	return (

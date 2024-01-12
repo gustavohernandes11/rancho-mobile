@@ -1,13 +1,13 @@
+import { BatchInfo } from "components/BatchInfo";
+import { Button } from "components/Button";
+import { ContainerView } from "components/ContainerView";
+import { Heading } from "components/Heading";
+import { Span } from "components/Span";
+import { SubTitle } from "components/SubTitle";
+import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { BatchInfo } from "../../../components/BatchInfo";
-import { Button } from "../../../components/Button";
-import { ContainerView } from "../../../components/ContainerView";
-import { Heading } from "../../../components/Heading";
-import { Span } from "../../../components/Span";
-import { SubTitle } from "../../../components/SubTitle";
-import { Batch } from "../../../types/Batch";
-import { StorageService } from "../../../database/StorageService";
+import { Batch } from "types/Batch";
 
 export default function ViewBatchesScreen() {
 	const [batches, setBatches] = useState<Batch[]>();

@@ -1,12 +1,11 @@
+import { Span } from "components/Span";
+import Colors from "constants/Colors";
+import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useState } from "react";
-import { StyleSheet, View, ViewProps } from "react-native";
-import Colors from "../../constants/Colors";
-import { Text } from "react-native";
-import { Span } from "../Span";
+import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { IconButton } from "react-native-paper";
 import { ChooseBatchModal } from "./ChooseBatchModal";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
 
 interface SelectedHeaderProps {}
 

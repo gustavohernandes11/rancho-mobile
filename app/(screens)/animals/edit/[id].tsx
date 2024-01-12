@@ -1,9 +1,9 @@
+import { AnimalForm } from "components/AnimalForm";
+import { ContainerView } from "components/ContainerView";
+import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
-import { AnimalForm } from "../../../../components/AnimalForm";
-import { ContainerView } from "../../../../components/ContainerView";
-import { Animal } from "../../../../types/Animal";
-import { StorageService } from "../../../../database/StorageService";
+import { Animal } from "types/Animal";
 
 export default function EditAnimalScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();

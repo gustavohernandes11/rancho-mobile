@@ -1,14 +1,14 @@
+import Colors from "constants/Colors";
 import { Link } from "expo-router";
+import { useSelectionMode } from "hooks/useSelectionMode";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
-import Colors from "../../constants/Colors";
-import { Animal } from "../../types/Animal";
-import { Batch } from "../../types/Batch";
-import { getFormattedAge } from "../../utils/getFormattedAge";
-import { getGenderIcon } from "../../utils/getGenderIcon";
-import { sharedStyles } from "../../styles/shared";
-import { useSelectionMode } from "../../hooks/useSelectionMode";
+import { sharedStyles } from "styles/shared";
+import { Animal } from "types/Animal";
+import { Batch } from "types/Batch";
+import { getFormattedAge } from "utils/getFormattedAge";
+import { getGenderIcon } from "utils/getGenderIcon";
 
 interface AnimalRowProps {
 	animal: Animal;
