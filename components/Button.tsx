@@ -1,7 +1,10 @@
 import Colors from "constants/Colors";
-import React from "react";
+import React, { forwardRef } from "react";
 import { StyleSheet, Text } from "react-native";
-import { ButtonProps, Button as PaperButton } from "react-native-paper";
+import {
+	Button as PaperButton,
+	ButtonProps as PaperButtonProps,
+} from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { ButtonTypes } from "types/ButtonTypes";
 import { getButtonBackgroundColor } from "utils/getButtonBackgroundColor";
@@ -12,17 +15,14 @@ type CustomButtonProps = {
 	title: string;
 	type?: ButtonTypes;
 	onPress?: () => any;
-} & Omit<ButtonProps, "children">;
+} & Omit<PaperButtonProps, "children">;
 
-export const Button: React.FC<CustomButtonProps> = ({
-	title,
-	onPress,
-	disabled,
-	type = "primary",
-	...props
-}) => {
+export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
+	const { title, onPress, disabled, type = "primary", ...rest } = props;
+
 	return (
 		<PaperButton
+			ref={ref}
 			style={[
 				styles.button,
 				{
@@ -33,7 +33,7 @@ export const Button: React.FC<CustomButtonProps> = ({
 			]}
 			disabled={disabled}
 			onPress={onPress}
-			{...props}
+			{...rest}
 		>
 			<Text
 				style={[
@@ -46,7 +46,7 @@ export const Button: React.FC<CustomButtonProps> = ({
 			</Text>
 		</PaperButton>
 	);
-};
+});
 
 const styles = StyleSheet.create({
 	button: {

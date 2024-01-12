@@ -29,12 +29,14 @@ export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
 			>
 				<IconButton
 					iconColor={Colors.white}
-					icon="close"
+					icon="close-thick"
 					onPress={() => {
 						setIsSelectionMode(false);
 						setSelectedIDs([]);
 					}}
-					style={{ margin: 0 }}
+					style={{
+						margin: 0,
+					}}
 					size={20}
 				/>
 				<Text style={styles.text}>
@@ -65,10 +67,12 @@ export const SelectedHeader: React.FC<SelectedHeaderProps & ViewProps> = ({
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		borderRadius: 4,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		backgroundColor: Colors.green,
+		padding: 4,
 	},
 	text: {
 		color: Colors.white,

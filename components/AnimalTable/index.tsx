@@ -9,6 +9,7 @@ import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { AnimalRow } from "./AnimalRow";
 import { SelectedHeader } from "./SelectedHeader";
+import { Span } from "components/Span";
 
 interface AnimalTableProps {
 	animals: Animal[];
@@ -49,7 +50,11 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 
 	return (
 		<>
-			{isSelectionMode && <SelectedHeader />}
+			{isSelectionMode && (
+				<Span>
+					<SelectedHeader />
+				</Span>
+			)}
 			<DataTable>
 				<DataTable.Header>
 					<DataTable.Title textStyle={sharedStyles.text}>
