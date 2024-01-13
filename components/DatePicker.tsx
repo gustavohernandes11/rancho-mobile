@@ -32,7 +32,9 @@ export const DatePicker: React.FC<
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
 				textColor={Colors.darkGray}
-				locale="br"
+				startYear={1990}
+				endYear={2025}
+				locale="pt"
 				placeholderTextColor={Colors.darkGray}
 				style={styles.input}
 				{...props}
