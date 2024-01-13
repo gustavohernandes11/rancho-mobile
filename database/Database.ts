@@ -8,7 +8,7 @@ export class Database implements DatabaseRepository {
 	async insertAnimal(animal: AddAnimal): Promise<string> {
 		return this.dbRepository.insertAnimal(animal);
 	}
-	async insertBatch(batch: AddBatch): Promise<string> {
+	async insertBatch(batch: AddBatch, animalIDs?: string[]): Promise<string> {
 		return this.dbRepository.insertBatch(batch);
 	}
 	async deleteAnimal(id: string): Promise<boolean> {
@@ -26,11 +26,9 @@ export class Database implements DatabaseRepository {
 	async loadBatchAnimals(id: string): Promise<Animal[]> {
 		return this.dbRepository.loadBatchAnimals(id);
 	}
-
 	async loadBatchInfo(id: string): Promise<Batch> {
 		return this.dbRepository.loadBatchInfo(id);
 	}
-
 	async listAllBatchesInfo(): Promise<Batch[]> {
 		return this.dbRepository.listAllBatchesInfo();
 	}
@@ -40,7 +38,21 @@ export class Database implements DatabaseRepository {
 	async updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
 		return this.dbRepository.updateAnimal(updateData);
 	}
-	async updateBatch(updateData: UpdateBatch): Promise<Batch> {
+	async updateBatch(
+		updateData: UpdateBatch,
+		animalIDsToUpdate?: string[]
+	): Promise<Batch> {
 		return this.dbRepository.updateBatch(updateData);
+	}
+	async updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
+		return this.dbRepository.updateManyAnimals(updateDataList);
+	}
+
+	async deleteManyAnimals(animalIDsToDelete: string[]): Promise<boolean> {
+		return this.dbRepository.deleteManyAnimals(animalIDsToDelete);
+	}
+
+	async deleteBatchAndItsAnimals(batchID: string): Promise<boolean> {
+		return this.dbRepository.deleteBatchAndItsAnimals(batchID);
 	}
 }

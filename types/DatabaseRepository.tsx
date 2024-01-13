@@ -4,14 +4,17 @@ import { AddBatch, Batch, UpdateBatch } from "./Batch";
 export interface DatabaseRepository {
 	insertAnimal(animal: AddAnimal): Promise<string>;
 	insertBatch(batch: AddBatch): Promise<string>;
-	loadAnimal(id: string): Promise<Animal>;
+	loadAnimal(animalID: string): Promise<Animal>;
 	listAnimals(search?: string): Promise<Animal[]>;
 	loadBatchAnimals(id: string): Promise<Animal[]>;
-	loadBatchInfo(id: string): Promise<Batch>;
+	loadBatchInfo(batchID: string): Promise<Batch>;
 	listAllBatchesInfo(): Promise<Batch[]>;
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal>;
 	updateBatch(updateData: UpdateBatch): Promise<Batch>;
-	deleteAnimal(id: string): Promise<boolean>;
-	deleteBatch(id: string): Promise<boolean>;
+	deleteAnimal(animalID: string): Promise<boolean>;
+	deleteBatch(batchID: string): Promise<boolean>;
 	clearDatabase(): Promise<boolean>;
+	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]>;
+	deleteManyAnimals(animalIDs: string[]): Promise<boolean>;
+	deleteBatchAndItsAnimals(batchID: string): Promise<boolean>;
 }
