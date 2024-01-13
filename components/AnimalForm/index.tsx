@@ -5,22 +5,20 @@ import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
-import { FormikValues, useFormik } from "formik";
+import { useFormik } from "formik";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Alert, View } from "react-native";
 import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { getFormattedGender } from "utils/getFormattedGender";
+import { getFieldError } from "../../utils/getFieldError";
 import { defaultValues } from "./defaultValues";
 import { filterPossibleMaternity } from "./filterPossibleMaternity";
 import { filterPossiblePaternity } from "./filterPossiblePaternity";
 import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
 import { serializeBatchesToKeyValue } from "./serializeBatchesToKeyValue";
 import { validationSchema } from "./validation.schema";
-
-const getFieldError = (field: string, formik: FormikValues) =>
-	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
 
 interface AnimalFormProps {
 	initialValues?: Animal;
@@ -70,15 +68,20 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					onChangeText={(text) => formik.setFieldValue("name", text)}
 					errorText={getFieldError("name", formik)}
 				/>
+
 				<Select
 					label="Gênero*"
 					items={[
 						{ key: "♀ Fêmea", value: "F" },
 						{ key: "♂ Macho", value: "M" },
+						{ key: "Escolha um gênero", value: "" },
 					]}
 					defaultButtonText={
-						getFormattedGender(formik.values.gender) || ""
+						initialValues.gender
+							? getFormattedGender(initialValues.gender)
+							: "Escolha um gênero"
 					}
+					defaultValue={initialValues.gender}
 					errorText={getFieldError("gender", formik)}
 					onSelect={(option) =>
 						formik.setFieldValue("gender", option.value)
@@ -106,7 +109,10 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 				/>
 			</Span>
 			<Select
-				items={serializeBatchesToKeyValue(batches || [])}
+				items={[
+					...serializeBatchesToKeyValue(batches || []),
+					{ key: "Selecione um lote", value: "" },
+				]}
 				defaultButtonText={
 					batches?.find((b) => b.id === initialValues.batchId)
 						?.name || "Selecione um lote"
@@ -132,14 +138,15 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						animals?.find((a) => a.id === initialValues.paternityId)
 							?.name || "Selecione um animal"
 					}
-					items={
-						serializeAnimalsToKeyValue(
+					items={[
+						...serializeAnimalsToKeyValue(
 							filterPossiblePaternity(
 								animals!,
 								formik.values.birthdate
 							)
-						) || []
-					}
+						),
+						{ key: "Selecione um animal", value: "" },
+					]}
 					errorText={getFieldError("paternityId", formik)}
 					onSelect={(option) =>
 						formik.setFieldValue("paternityId", option.value)
@@ -151,14 +158,15 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						animals?.find((a) => a.id === initialValues.maternityId)
 							?.name || "Selecione um animal"
 					}
-					items={
-						serializeAnimalsToKeyValue(
+					items={[
+						...(serializeAnimalsToKeyValue(
 							filterPossibleMaternity(
 								animals!,
 								formik.values.birthdate
 							)
-						) || []
-					}
+						) || []),
+						{ key: "Selecione um animal", value: "" },
+					]}
 					errorText={getFieldError("maternityId", formik)}
 					defaultValue={formik.initialValues.maternityId}
 					onSelect={(option) =>

@@ -46,13 +46,7 @@ export const Select: React.FC<
 				rowTextStyle={sharedStyles.text}
 				dropdownStyle={styles.dropdown}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
-				data={[
-					...items,
-					{
-						key: defaultButtonText || "Selecione uma opção",
-						value: "",
-					},
-				]}
+				data={items}
 				onSelect={onSelect}
 				buttonTextAfterSelection={(selectedItem) => selectedItem.key}
 				rowTextForSelection={(item: Item) => item.key}
