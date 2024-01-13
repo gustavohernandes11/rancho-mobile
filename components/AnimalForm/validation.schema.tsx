@@ -11,12 +11,24 @@ export const validationSchema = Yup.object({
 		.test(
 			"is-a-future-date",
 			"A data deve ser menor que a atual",
-			(value) => moment(value).isBefore(moment())
+			(value) => {
+				if (value) {
+					return moment(value).isBefore(moment());
+				} else {
+					return false;
+				}
+			}
 		)
 		.test(
 			"is-date-too-old",
 			"Use uma data mais próxima da atualidade.",
-			(value) => moment(value).isAfter(moment().year(1950))
+			(value) => {
+				if (value) {
+					return moment(value).isAfter(moment().year(1950));
+				} else {
+					return false;
+				}
+			}
 		),
 	batchId: Yup.string(),
 	code: Yup.string(),
