@@ -14,4 +14,32 @@ export const sharedStyles = StyleSheet.create({
 		fontFamily: Fonts.primaryFamily,
 		paddingLeft: 0,
 	},
+	inputAspect: {
+		borderRadius: 4,
+		backgroundColor: Colors.lightGray,
+		borderColor: Colors.border,
+		borderWidth: 1,
+		fontFamily: Fonts.primaryFamily,
+	},
+	error: {
+		fontSize: 12,
+		color: Colors.red,
+		fontFamily: Fonts.primaryFamily,
+	},
+	heading: {
+		fontSize: 20,
+		color: Colors.text,
+		marginVertical: 8,
+		fontFamily: Fonts.primaryFamily,
+	},
+	disabled: {
+		backgroundColor: Colors.lightGray,
+		borderColor: Colors.border,
+		borderStyle: "dashed",
+		borderRadius: 4,
+		borderWidth: 2,
+	},
+	textDisabled: {
+		color: Colors.darkGray,
+	},
 });

@@ -11,7 +11,7 @@ import { sharedStyles } from "styles/shared";
 import { Item } from "types/Item";
 import { getInputBorderColor } from "utils/getInputBorderColor";
 
-const dropdownIcon = () => (
+const DropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
 );
 
@@ -36,7 +36,7 @@ export const Select: React.FC<
 				{label}
 			</HelperText>
 			<SelectDropdown
-				renderDropdownIcon={dropdownIcon}
+				renderDropdownIcon={DropdownIcon}
 				buttonTextStyle={sharedStyles.text}
 				buttonStyle={[
 					styles.button,
@@ -46,7 +46,13 @@ export const Select: React.FC<
 				rowTextStyle={sharedStyles.text}
 				dropdownStyle={styles.dropdown}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
-				data={items}
+				data={[
+					...items,
+					{
+						key: defaultButtonText || "Selecione uma opção",
+						value: "",
+					},
+				]}
 				onSelect={onSelect}
 				buttonTextAfterSelection={(selectedItem) => selectedItem.key}
 				rowTextForSelection={(item: Item) => item.key}

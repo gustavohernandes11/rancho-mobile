@@ -29,7 +29,7 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 					backgroundColor: getButtonBackgroundColor(type),
 					borderColor: getButtonBorderColor(type),
 				},
-				disabled && styles.disabled,
+				disabled && sharedStyles.disabled,
 			]}
 			disabled={disabled}
 			onPress={onPress}
@@ -39,7 +39,7 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 				style={[
 					sharedStyles.text,
 					{ color: getButtonTextColor(type) },
-					disabled && styles.textDisabled,
+					disabled && sharedStyles.textDisabled,
 				]}
 			>
 				{title}
@@ -52,15 +52,5 @@ const styles = StyleSheet.create({
 	button: {
 		borderWidth: 1,
 		borderRadius: 4,
-	},
-	disabled: {
-		backgroundColor: Colors.lightGray,
-		borderColor: Colors.border,
-		borderStyle: "dashed",
-		borderRadius: 4,
-		borderWidth: 2,
-	},
-	textDisabled: {
-		color: Colors.darkGray,
 	},
 });

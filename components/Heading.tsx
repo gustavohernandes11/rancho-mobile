@@ -31,6 +31,7 @@ export const Heading: React.FC<TextProps & HeadingProps> = ({
 
 const styles = StyleSheet.create({
 	heading: {
+		fontSize: 20,
 		color: Colors.text,
 		marginVertical: 8,
 		fontFamily: Fonts.primaryFamily,

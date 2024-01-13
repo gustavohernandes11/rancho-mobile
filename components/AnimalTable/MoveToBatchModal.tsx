@@ -74,7 +74,7 @@ export const MoveToBatchModal: React.FC<
 			>
 				<TouchableOpacity style={styles.blur} onPress={onDismiss}>
 					<View onStartShouldSetResponder={() => true}>
-						<TouchableWithoutFeedback style={styles.content}>
+						<TouchableWithoutFeedback style={styles.modal}>
 							<Heading>Selecione um lote de destino</Heading>
 							<RadioButton.Group
 								onValueChange={(id) =>
@@ -141,7 +141,7 @@ const CustomDivider = () => (
 );
 
 const styles = StyleSheet.create({
-	content: {
+	modal: {
 		marginHorizontal: 16,
 		marginVertical: "50%",
 		backgroundColor: Colors.white,
