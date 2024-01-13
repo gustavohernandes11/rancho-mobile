@@ -26,14 +26,13 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 	const isSelected = selectedIDs.includes(animal.id);
 
 	const toggleSelected = () => {
-		if (isSelected) {
-			setSelectedIDs((prevIDs: string[]) =>
-				prevIDs.filter((id) => id !== animal.id)
-			);
-		} else {
-			setSelectedIDs((prevIDs: string[]) => [...prevIDs, animal.id]);
-		}
+		setSelectedIDs((prevIDs) =>
+			isSelected
+				? prevIDs.filter((id) => id !== animal.id)
+				: [...prevIDs, animal.id]
+		);
 	};
+
 	return (
 		<Link
 			href={{

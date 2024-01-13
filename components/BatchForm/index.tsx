@@ -8,7 +8,7 @@ import { router, useFocusEffect, useNavigation } from "expo-router";
 import { FormikValues, useFormik } from "formik";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, BackHandler, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
@@ -35,7 +35,17 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 
 	useFocusEffect(
 		React.useCallback(() => {
-			return () => setSelectedIDs([]);
+			const backAction = () => {
+				setSelectedIDs([]);
+				return false;
+			};
+
+			const backHandler = BackHandler.addEventListener(
+				"hardwareBackPress",
+				backAction
+			);
+
+			return () => backHandler.remove();
 		}, [])
 	);
 
@@ -112,7 +122,10 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 				<Button
 					type="light"
 					title="Cancelar"
-					onPress={navigation.goBack}
+					onPress={() => {
+						navigation.goBack();
+						setSelectedIDs([]);
+					}}
 				/>
 				<Button title="Salvar" onPress={formik.submitForm} />
 			</Span>
