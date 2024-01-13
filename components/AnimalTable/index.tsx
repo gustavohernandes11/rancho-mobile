@@ -13,9 +13,16 @@ import { Span } from "components/Span";
 
 interface AnimalTableProps {
 	animals: Animal[];
+	onlySelectionMode?: boolean;
+	scroll?: boolean;
 }
 
-export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
+export const AnimalTable: React.FC<AnimalTableProps> = ({
+	animals,
+	scroll,
+	onlySelectionMode = false,
+	...props
+}) => {
 	const [batches, setBatches] = useState<Batch[]>();
 	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
 		useSelectionMode();
@@ -51,12 +58,16 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 
 	return (
 		<>
-			{isSelectionMode && (
+			{(onlySelectionMode || isSelectionMode) && (
 				<Span>
-					<SelectionBanner allAnimalIDs={animals.map((a) => a.id)} />
+					<SelectionBanner
+						showActions={!onlySelectionMode}
+						showDeleteButton={!onlySelectionMode}
+						allAnimalIDs={animals.map((a) => a.id)}
+					/>
 				</Span>
 			)}
-			<DataTable>
+			<DataTable {...props}>
 				<DataTable.Header>
 					<DataTable.Title textStyle={sharedStyles.text}>
 						Nome
@@ -67,7 +78,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 					<DataTable.Title textStyle={sharedStyles.text}>
 						Idade
 					</DataTable.Title>
-					{isSelectionMode && (
+					{(onlySelectionMode || isSelectionMode) && (
 						<DataTable.Title
 							style={{ flex: 1 / 3 }}
 							textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
@@ -83,6 +94,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
 				)}
 				{animals.map((animal) => (
 					<AnimalRow
+						alwaysShowCheckbox={onlySelectionMode}
 						animal={animal}
 						batch={batches?.find((b) => b.id === animal.batchId)}
 						key={animal.id}

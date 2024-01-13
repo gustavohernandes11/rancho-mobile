@@ -9,17 +9,24 @@ import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
 interface SelectionBannerProps {
 	allAnimalIDs: string[];
+	showActions?: boolean;
+	showDeleteButton?: boolean;
 }
 
 export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	allAnimalIDs,
+	showActions,
+	showDeleteButton,
 	...props
 }) => {
 	const { setIsSelectionMode, selectedIDs, setSelectedIDs } =
 		useSelectionMode();
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 	return (
-		<View style={styles.container} {...props}>
+		<View
+			style={[styles.container, !showActions && { padding: 12 }]}
+			{...props}
+		>
 			<MoveToBatchModal
 				visible={isBatchModalVisible}
 				onDismiss={() => setIsBatchModalVisible(false)}
@@ -30,52 +37,56 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 				marginVertical={0}
 				alignItems="center"
 			>
-				<IconButton
-					iconColor={Colors.white}
-					icon="close"
-					onPress={() => {
-						setIsSelectionMode(false);
-						setSelectedIDs([]);
-					}}
-					style={{
-						margin: 0,
-					}}
-					size={20}
-				/>
+				{showDeleteButton && (
+					<IconButton
+						iconColor={Colors.white}
+						icon="close"
+						onPress={() => {
+							setIsSelectionMode(false);
+							setSelectedIDs([]);
+						}}
+						style={{
+							margin: 0,
+						}}
+						size={20}
+					/>
+				)}
 				<Text style={styles.text}>
-					{selectedIDs.length} animais selecionados
+					{selectedIDs.length} selecionado(s).
 				</Text>
-				<View style={{ flexDirection: "row", gap: 4 }}>
-					<Tooltip title="Deletar">
-						<IconButton
-							iconColor={Colors.white}
-							icon="delete"
-							onPress={() =>
-								showConfirmationAndDeleteAll(selectedIDs)
-							}
-							style={{ margin: 0 }}
-							size={20}
-						/>
-					</Tooltip>
-					<Tooltip title="Selecionar todos">
-						<IconButton
-							iconColor={Colors.white}
-							icon="select-all"
-							onPress={() => setSelectedIDs(allAnimalIDs)}
-							style={{ margin: 0 }}
-							size={20}
-						/>
-					</Tooltip>
-					<Tooltip title="Mover de lote">
-						<IconButton
-							iconColor={Colors.white}
-							icon="folder-move"
-							onPress={() => setIsBatchModalVisible(true)}
-							style={{ margin: 0 }}
-							size={20}
-						/>
-					</Tooltip>
-				</View>
+				{showActions && (
+					<View style={{ flexDirection: "row", gap: 4 }}>
+						<Tooltip title="Deletar">
+							<IconButton
+								iconColor={Colors.white}
+								icon="delete"
+								onPress={() =>
+									showConfirmationAndDeleteAll(selectedIDs)
+								}
+								style={{ margin: 0 }}
+								size={20}
+							/>
+						</Tooltip>
+						<Tooltip title="Selecionar todos">
+							<IconButton
+								iconColor={Colors.white}
+								icon="select-all"
+								onPress={() => setSelectedIDs(allAnimalIDs)}
+								style={{ margin: 0 }}
+								size={20}
+							/>
+						</Tooltip>
+						<Tooltip title="Mover de lote">
+							<IconButton
+								iconColor={Colors.white}
+								icon="folder-move"
+								onPress={() => setIsBatchModalVisible(true)}
+								style={{ margin: 0 }}
+								size={20}
+							/>
+						</Tooltip>
+					</View>
+				)}
 			</Span>
 		</View>
 	);

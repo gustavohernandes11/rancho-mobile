@@ -18,7 +18,7 @@ export const sharedStyles = StyleSheet.create({
 		borderRadius: 4,
 		backgroundColor: Colors.lightGray,
 		borderColor: Colors.border,
-		borderWidth: 1,
+		borderWidth: 2,
 		fontFamily: Fonts.primaryFamily,
 	},
 	error: {

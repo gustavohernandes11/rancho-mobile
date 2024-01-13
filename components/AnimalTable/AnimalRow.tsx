@@ -13,12 +13,17 @@ import { getGenderIcon } from "utils/getGenderIcon";
 interface AnimalRowProps {
 	animal: Animal;
 	batch?: Batch;
+	alwaysShowCheckbox?: boolean;
 }
 
-export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
+export const AnimalRow: React.FC<AnimalRowProps> = ({
+	animal,
+	batch,
+	alwaysShowCheckbox,
+}) => {
 	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
 		useSelectionMode();
-	const isSelected = selectedIDs && selectedIDs.includes(animal.id);
+	const isSelected = selectedIDs.includes(animal.id);
 
 	const toggleSelected = () => {
 		if (isSelected) {
@@ -42,11 +47,10 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
 				style={isSelected ? styles.seleted : null}
 				onLongPress={() => {
 					setIsSelectionMode(true);
-					setSelectedIDs &&
-						setSelectedIDs((prevIDs: string[]) => [
-							...prevIDs,
-							animal.id,
-						]);
+					setSelectedIDs((prevIDs: string[]) => [
+						...prevIDs,
+						animal.id,
+					]);
 				}}
 			>
 				<DataTable.Row>
@@ -60,7 +64,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({ animal, batch }) => {
 					<DataTable.Cell textStyle={sharedStyles.text}>
 						{animal.birthdate && getFormattedAge(animal.birthdate)}
 					</DataTable.Cell>
-					{isSelectionMode && (
+					{(alwaysShowCheckbox || isSelectionMode) && (
 						<DataTable.Cell
 							textStyle={sharedStyles.text}
 							style={{ flex: 1 / 3 }}
