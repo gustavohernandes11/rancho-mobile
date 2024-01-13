@@ -88,7 +88,6 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 			<Span>
 				<DatePicker
 					inputMode="start"
-					locale="pt"
 					saveLabel="Salvar"
 					errorText={getFieldError("birthdate", formik)}
 					onChange={(date) => {

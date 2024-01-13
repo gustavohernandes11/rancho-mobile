@@ -12,11 +12,9 @@ interface DatePickerProps {
 	errorText?: string;
 }
 
-export const DatePicker: React.FC<DatePickerProps & DatePickerInputProps> = ({
-	label,
-	errorText,
-	...props
-}) => {
+export const DatePicker: React.FC<
+	DatePickerProps & Omit<DatePickerInputProps, "locale">
+> = ({ label, errorText, ...props }) => {
 	return (
 		<View style={styles.inputContainer}>
 			{label && (
@@ -34,6 +32,7 @@ export const DatePicker: React.FC<DatePickerProps & DatePickerInputProps> = ({
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
 				textColor={Colors.darkGray}
+				locale="br"
 				placeholderTextColor={Colors.darkGray}
 				style={styles.input}
 				{...props}

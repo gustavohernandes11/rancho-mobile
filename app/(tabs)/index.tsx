@@ -35,20 +35,6 @@ export default function TabOneScreen() {
 					title="Ver lotes"
 					color="blue"
 				/>
-				<Card
-					href="/production/add"
-					alt="alt"
-					iconSource={require("assets/images/GallonIcon.png")}
-					title="Adicionar produção"
-					color="purple"
-				/>
-				<Card
-					href="/production"
-					alt="alt"
-					iconSource={require("assets/images/GallonIcon.png")}
-					title="Ver produção"
-					color="purple"
-				/>
 			</Span>
 		</ContainerView>
 	);
