@@ -1,6 +1,6 @@
 {
 	"expo": {
-		"name": "rancho_mobile",
+		"name": "Rancho",
 		"slug": "rancho_mobile",
 		"version": "1.0.0",
 		"orientation": "portrait",
@@ -20,7 +20,8 @@
 			"adaptiveIcon": {
 				"foregroundImage": "./assets/images/adaptive-icon.png",
 				"backgroundColor": "#ffffff"
-			}
+			},
+			"package": "com.snipermiope.rancho_mobile"
 		},
 		"web": {
 			"bundler": "metro",
@@ -30,6 +31,14 @@
 		"plugins": ["expo-router"],
 		"experiments": {
 			"typedRoutes": true
+		},
+		"extra": {
+			"router": {
+				"origin": false
+			},
+			"eas": {
+				"projectId": "13bca209-edd4-4c37-b7e6-40a347709478"
+			}
 		}
 	}
 }
