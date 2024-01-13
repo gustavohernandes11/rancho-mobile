@@ -1,3 +1,4 @@
+import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { useFocusEffect } from "expo-router";
 import { useSelectionMode } from "hooks/useSelectionMode";
@@ -9,7 +10,6 @@ import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { AnimalRow } from "./AnimalRow";
 import { SelectionBanner } from "./SelectionBanner";
-import { Span } from "components/Span";
 
 interface AnimalTableProps {
 	animals: Animal[];

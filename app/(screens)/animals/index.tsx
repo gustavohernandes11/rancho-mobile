@@ -2,12 +2,13 @@ import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Loading } from "components/Loading";
 import { SearchBar } from "components/SearchBar";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Animal } from "types/Animal";
 
 export default function ViewAnimalsScreen() {
@@ -43,10 +44,11 @@ export default function ViewAnimalsScreen() {
 				Clique sobre o animal para ver mais detalhes. Pressione para
 				selecionar vários.
 			</SubTitle>
-
-			<AnimalTable
-				animals={filterAnimalsByText(animals, searchText) || []}
-			/>
+			<Suspense fallback={<Loading />}>
+				<AnimalTable
+					animals={filterAnimalsByText(animals, searchText) || []}
+				/>
+			</Suspense>
 			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Link href="/(screens)/animals/add" asChild>
 					<Button title="Adicionar novo animal" />

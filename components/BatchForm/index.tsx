@@ -108,7 +108,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 				</Text>
 			</Span>
 			<List.Accordion
-				style={sharedStyles.inputAspect}
+				style={[sharedStyles.inputAspect, { padding: 0 }]}
 				titleStyle={sharedStyles.text}
 				title={`${selectedIDs.length} selecionado(s)`}
 			>
