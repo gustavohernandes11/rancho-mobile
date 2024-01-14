@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import React from "react";
+import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
@@ -25,13 +25,13 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 		useSelectionMode();
 	const isSelected = selectedIDs.includes(animal.id);
 
-	const toggleSelected = () => {
+	const toggleSelected = useCallback(() => {
 		setSelectedIDs((prevIDs) =>
 			isSelected
 				? prevIDs.filter((id) => id !== animal.id)
 				: [...prevIDs, animal.id]
 		);
-	};
+	}, [animal.id, setSelectedIDs]);
 
 	return (
 		<Link
