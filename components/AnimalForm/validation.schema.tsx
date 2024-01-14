@@ -7,28 +7,19 @@ export const validationSchema = Yup.object({
 		.max(45, "Nome muito longo!")
 		.required("Campo obrigatório"),
 	gender: Yup.string().oneOf(["F", "M"]).required("Campo obrigatório"),
-	birthdate: Yup.date()
+	birthdate: Yup.string()
+		.transform((curr, orig) => (!!orig ? undefined : curr))
+		.notRequired()
 		.test(
 			"is-a-future-date",
 			"A data deve ser menor que a atual",
-			(value) => {
-				if (value) {
-					return moment(value).isBefore(moment());
-				} else {
-					return false;
-				}
-			}
+			(value) => (value ? moment(value).isBefore(moment()) : true)
 		)
 		.test(
 			"is-date-too-old",
 			"Use uma data mais próxima da atualidade.",
-			(value) => {
-				if (value) {
-					return moment(value).isAfter(moment().year(1950));
-				} else {
-					return false;
-				}
-			}
+			(value) =>
+				value ? moment(value).isAfter(moment().year(1950)) : true
 		),
 	batchId: Yup.string(),
 	code: Yup.string(),
