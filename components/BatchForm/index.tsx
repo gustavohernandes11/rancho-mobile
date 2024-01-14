@@ -5,18 +5,16 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { mockedAnimals } from "database/mockedRepository/mockedAnimals";
 import { router, useFocusEffect, useNavigation } from "expo-router";
-import { FormikValues, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect } from "react";
 import { Alert, BackHandler, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
+import { getFieldError } from "utils/getFieldError";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-
-const getFieldError = (field: string, formik: FormikValues) =>
-	formik.touched[field] && formik.errors[field] ? formik.errors[field] : "";
 
 interface BatchFormProps {
 	initialValues?: Batch;
