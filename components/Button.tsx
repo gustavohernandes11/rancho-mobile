@@ -1,4 +1,3 @@
-import Colors from "constants/Colors";
 import React, { forwardRef } from "react";
 import { StyleSheet, Text } from "react-native";
 import {

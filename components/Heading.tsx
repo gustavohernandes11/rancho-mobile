@@ -2,6 +2,7 @@ import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import React from "react";
 import { StyleSheet, Text, TextProps } from "react-native";
+import { sharedStyles } from "styles/shared";
 
 type HeadingSizes = "medium" | "small";
 interface HeadingProps {
@@ -21,19 +22,10 @@ export const Heading: React.FC<TextProps & HeadingProps> = ({
 
 	return (
 		<Text
-			style={[styles.heading, { fontSize: getFontSize(size) }]}
+			style={[sharedStyles.heading, { fontSize: getFontSize(size) }]}
 			{...props}
 		>
 			{children}
 		</Text>
 	);
 };
-
-const styles = StyleSheet.create({
-	heading: {
-		fontSize: 20,
-		color: Colors.text,
-		marginVertical: 8,
-		fontFamily: Fonts.primaryFamily,
-	},
-});

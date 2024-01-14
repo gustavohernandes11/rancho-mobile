@@ -52,7 +52,7 @@ export const Select: React.FC<
 				rowTextForSelection={(item: Item) => item.key}
 				{...props}
 			/>
-			{errorText && <Text style={styles.error}>{errorText}</Text>}
+			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
 		</View>
 	);
 };
@@ -78,10 +78,5 @@ const styles = StyleSheet.create({
 		borderWidth: 1,
 		borderColor: Colors.border,
 		padding: 8,
-	},
-	error: {
-		fontSize: 12,
-		color: Colors.red,
-		fontFamily: Fonts.primaryFamily,
 	},
 });

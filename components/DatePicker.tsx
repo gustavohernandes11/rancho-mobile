@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { HelperText } from "react-native-paper";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
@@ -18,7 +18,7 @@ export const DatePicker: React.FC<
 	return (
 		<View style={styles.inputContainer}>
 			{label && (
-				<HelperText style={styles.label} type="info">
+				<HelperText style={sharedStyles.label} type="info">
 					{label}
 				</HelperText>
 			)}
@@ -39,11 +39,7 @@ export const DatePicker: React.FC<
 				style={styles.input}
 				{...props}
 			/>
-			{errorText && (
-				<HelperText type="error" visible={!!errorText}>
-					{errorText}
-				</HelperText>
-			)}
+			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
 		</View>
 	);
 };
@@ -58,9 +54,5 @@ const styles = StyleSheet.create({
 		fontSize: 14,
 		fontFamily: Fonts.primaryFamily,
 		backgroundColor: Colors.lightGray,
-	},
-	label: {
-		...sharedStyles.text,
-		paddingLeft: 0,
 	},
 });

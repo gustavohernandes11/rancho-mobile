@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { HelperText, TextInput, TextInputProps } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { getInputBorderColor } from "utils/getInputBorderColor";
@@ -36,10 +36,13 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				cursorColor={Colors.darkGray}
 				error={!!errorText}
 				multiline={multiline}
-				style={[styles.input, { height: multiline ? 80 : 50 }]}
+				style={[
+					sharedStyles.inputAspect,
+					{ height: multiline ? 80 : 50, borderWidth: 0 },
+				]}
 				{...props}
 			/>
-			{errorText && <HelperText type="error">{errorText}</HelperText>}
+			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
 		</View>
 	);
 };
@@ -47,12 +50,5 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 const styles = StyleSheet.create({
 	inputContainer: {
 		flex: 1,
-	},
-	input: {
-		borderRadius: 4,
-		height: 50,
-		fontSize: 14,
-		fontFamily: Fonts.primaryFamily,
-		backgroundColor: Colors.lightGray,
 	},
 });
