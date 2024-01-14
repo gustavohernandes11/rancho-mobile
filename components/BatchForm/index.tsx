@@ -3,7 +3,7 @@ import { Button } from "components/Button";
 import { Input } from "components/Input";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
-import { mockedAnimals } from "database/mockedRepository/mockedAnimals";
+import { mockedAnimals } from "database/MockedRepository/mockedAnimals";
 import { router, useFocusEffect, useNavigation } from "expo-router";
 import { useFormik } from "formik";
 import { useSelectionMode } from "hooks/useSelectionMode";
