@@ -39,7 +39,7 @@ export const MoveToBatchModal: React.FC<
 	}, []);
 
 	const moveAllAnimalsTo = () => {
-		const promises = selectedIDs.map((id: string) =>
+		const promises = selectedIDs.map((id: number) =>
 			StorageService.updateAnimal({
 				id,
 				batchId: selectedBatch!.id,
@@ -79,10 +79,12 @@ export const MoveToBatchModal: React.FC<
 							<RadioButton.Group
 								onValueChange={(id) =>
 									setSelectedBatch(
-										batches?.find((b) => b.id === id)
+										batches?.find(
+											(b) => b.id === Number(id)
+										)
 									)
 								}
-								value={selectedBatch?.id || ""}
+								value={selectedBatch?.id.toString() || ""}
 							>
 								<CustomDivider />
 								{batches?.map((batch) => (
@@ -101,7 +103,7 @@ export const MoveToBatchModal: React.FC<
 											</View>
 											<RadioButton
 												color={Colors.green}
-												value={batch.id}
+												value={batch.id.toString()}
 												status={
 													selectedBatch?.id ===
 													batch.id

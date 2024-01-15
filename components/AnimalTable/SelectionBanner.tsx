@@ -8,7 +8,7 @@ import { MoveToBatchModal } from "./MoveToBatchModal";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
 interface SelectionBannerProps {
-	allAnimalIDs: string[];
+	allAnimalIDs: number[];
 	showActions?: boolean;
 	showDeleteButton?: boolean;
 }

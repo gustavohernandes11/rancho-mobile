@@ -2,9 +2,9 @@ import { createContext, useState } from "react";
 
 export const SelectionModeContext = createContext<
 	| {
-			selectedIDs: string[];
+			selectedIDs: number[];
 			isSelectionMode: boolean | undefined;
-			setSelectedIDs: React.Dispatch<React.SetStateAction<string[]>>;
+			setSelectedIDs: React.Dispatch<React.SetStateAction<number[]>>;
 			setIsSelectionMode: React.Dispatch<
 				React.SetStateAction<boolean | undefined>
 			>;
@@ -13,7 +13,7 @@ export const SelectionModeContext = createContext<
 >(undefined);
 
 export const SelectionModeProvider: React.FC<any> = ({ children }) => {
-	const [selectedIDs, setSelectedIDs] = useState<string[]>([]);
+	const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
 	const [isSelectionMode, setIsSelectionMode] = useState<boolean | undefined>(
 		undefined
 	);

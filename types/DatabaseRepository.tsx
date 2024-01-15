@@ -2,19 +2,19 @@ import { AddAnimal, Animal, UpdateAnimal } from "./Animal";
 import { AddBatch, Batch, UpdateBatch } from "./Batch";
 
 export interface DatabaseRepository {
-	insertAnimal(animal: AddAnimal): Promise<string>;
-	insertBatch(batch: AddBatch): Promise<string>;
-	loadAnimal(animalID: string): Promise<Animal>;
+	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
+	insertBatch(batch: AddBatch): Promise<number | undefined>;
+	loadAnimal(animalID: number): Promise<Animal>;
 	listAnimals(search?: string): Promise<Animal[]>;
-	loadBatchAnimals(id: string): Promise<Animal[]>;
-	loadBatchInfo(batchID: string): Promise<Batch>;
+	loadBatchAnimals(batchID: number): Promise<Animal[]>;
+	loadBatchInfo(batchID: number): Promise<Batch>;
 	listAllBatchesInfo(): Promise<Batch[]>;
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal>;
 	updateBatch(updateData: UpdateBatch): Promise<Batch>;
-	deleteAnimal(animalID: string): Promise<boolean>;
-	deleteBatch(batchID: string): Promise<boolean>;
+	deleteAnimal(animalID: number): Promise<boolean>;
+	deleteBatch(batchID: number): Promise<boolean>;
 	clearDatabase(): Promise<boolean>;
 	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]>;
-	deleteManyAnimals(animalIDs: string[]): Promise<boolean>;
-	deleteBatchAndItsAnimals(batchID: string): Promise<boolean>;
+	deleteManyAnimals(animalIDs: number[]): Promise<boolean>;
+	deleteBatchAndItsAnimals(batchID: number): Promise<boolean>;
 }

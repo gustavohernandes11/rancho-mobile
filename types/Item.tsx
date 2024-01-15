@@ -1,4 +1,4 @@
 export type Item = {
 	key: string;
-	value: string;
+	value: string | number;
 };

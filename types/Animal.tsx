@@ -1,15 +1,15 @@
 export type Animal = {
-	id: string;
+	id: number;
 	name: string;
 	gender: "F" | "M";
 	birthdate?: string;
-	batchId?: string;
+	batchId?: number;
 	code?: string | number;
-	paternityId?: string;
-	maternityId?: string;
+	paternityId?: number;
+	maternityId?: number;
 	observation?: string;
 };
 
 export type AddAnimal = Omit<Animal, "id">;
 
-export type UpdateAnimal = Partial<Animal> & { id: string };
+export type UpdateAnimal = Partial<Animal> & { id: number };

@@ -12,25 +12,25 @@ export class MockedRepository implements DatabaseRepository {
 		});
 		return Promise.resolve(updatedAnimals);
 	}
-	deleteManyAnimals(animalIDs: string[]): Promise<boolean> {
+	deleteManyAnimals(animalIDs: number[]): Promise<boolean> {
 		return Promise.resolve(true);
 	}
-	deleteBatchAndItsAnimals(batchID: string): Promise<boolean> {
+	deleteBatchAndItsAnimals(batchID: number): Promise<boolean> {
 		return Promise.resolve(true);
 	}
-	deleteAnimal(animalID: string): Promise<boolean> {
+	deleteAnimal(animalID: number): Promise<boolean> {
 		return Promise.resolve(true);
 	}
-	deleteBatch(batchID: string): Promise<boolean> {
+	deleteBatch(batchID: number): Promise<boolean> {
 		return Promise.resolve(true);
 	}
-	insertAnimal(animal: AddAnimal): Promise<string> {
-		return Promise.resolve("INSERTED_ID");
+	insertAnimal(animal: AddAnimal): Promise<number> {
+		return Promise.resolve(2);
 	}
-	insertBatch(batch: AddBatch, animalIDs?: string[]): Promise<string> {
-		return Promise.resolve("INSERTED_ID");
+	insertBatch(batch: AddBatch, animalIDs?: number[]): Promise<number> {
+		return Promise.resolve(2);
 	}
-	loadAnimal(animalID: string): Promise<Animal> {
+	loadAnimal(animalID: number): Promise<Animal> {
 		return Promise.resolve(
 			mockedAnimals.find((x) => x.id === animalID) || mockedAnimals[0]
 		);
@@ -38,10 +38,10 @@ export class MockedRepository implements DatabaseRepository {
 	listAnimals(): Promise<Animal[]> {
 		return Promise.resolve(mockedAnimals);
 	}
-	loadBatchAnimals(id: string): Promise<Animal[]> {
+	loadBatchAnimals(id: number): Promise<Animal[]> {
 		return Promise.resolve(mockedAnimals.filter((x) => x.batchId === id));
 	}
-	loadBatchInfo(batchID: string): Promise<Batch> {
+	loadBatchInfo(batchID: number): Promise<Batch> {
 		return Promise.resolve(
 			mockedBatches.find((b) => b.id === batchID) || mockedBatches[0]
 		);
@@ -57,7 +57,7 @@ export class MockedRepository implements DatabaseRepository {
 	}
 	updateBatch(
 		updateData: UpdateBatch,
-		animalIDsToUpdate?: string[]
+		animalIDsToUpdate?: number[]
 	): Promise<Batch> {
 		return Promise.resolve(mockedBatches[0]);
 	}

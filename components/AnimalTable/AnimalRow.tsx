@@ -46,7 +46,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 				style={isSelected ? styles.seleted : null}
 				onLongPress={() => {
 					setIsSelectionMode(true);
-					setSelectedIDs((prevIDs: string[]) => [
+					setSelectedIDs((prevIDs: number[]) => [
 						...prevIDs,
 						animal.id,
 					]);

@@ -168,9 +168,12 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						{ key: "Selecione um animal", value: "" },
 					]}
 					errorText={getFieldError("maternityId", formik)}
-					defaultValue={formik.initialValues.maternityId}
+					defaultValue={formik.initialValues.maternityId?.toString()}
 					onSelect={(option) =>
-						formik.setFieldValue("maternityId", option.value)
+						formik.setFieldValue(
+							"maternityId",
+							Number(option.value)
+						)
 					}
 					label="Maternidade"
 				/>
