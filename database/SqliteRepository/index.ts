@@ -96,11 +96,86 @@ export class SqliteRepository implements DatabaseRepository {
 			);
 		});
 	}
-	deleteAnimal(animalID: number): Promise<boolean> {
-		throw new Error("Method not implemented.");
+	async deleteAnimal(animalID: number): Promise<boolean> {
+		const query = `DELETE FROM Animals WHERE id = ?`;
+
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, [animalID], () => resolve(true));
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
-	deleteBatch(id: number): Promise<boolean> {
-		throw new Error("Method not implemented.");
+	async deleteBatch(batchID: number): Promise<boolean> {
+		const deleteBatchQuery = `DELETE FROM Batches WHERE id = ?;`;
+		const unsignBatchFromAnimalsQuery = `UPDATE Animals SET batchId = NULL WHERE batchId = ?;`;
+
+		const operations = [
+			new Promise((_, reject) => {
+				this.db.transaction(
+					async (tx) => {
+						tx.executeSql(deleteBatchQuery, [batchID]);
+					},
+					(error) => {
+						console.log(error);
+						reject(error);
+					}
+				);
+			}),
+			new Promise((_, reject) => {
+				this.db.transaction(
+					async (tx) => {
+						tx.executeSql(unsignBatchFromAnimalsQuery, [batchID]);
+					},
+					(error) => {
+						console.log(error);
+						reject(error);
+					}
+				);
+			}),
+		];
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
+	}
+	async deleteBatchAndItsAnimals(batchID: number): Promise<boolean> {
+		const deleteBatchQuery = `DELETE FROM Batches WHERE id = ?;`;
+		const deleteAnimals = `DELETE FROM Animals WHERE batchId = ?;`;
+
+		const operations = [
+			new Promise((_, reject) => {
+				this.db.transaction(
+					async (tx) => {
+						tx.executeSql(deleteBatchQuery, [batchID]);
+					},
+					(error) => {
+						console.log(error);
+						reject(error);
+					}
+				);
+			}),
+			new Promise((_, reject) => {
+				this.db.transaction(
+					async (tx) => {
+						tx.executeSql(deleteAnimals, [batchID]);
+					},
+					(error) => {
+						console.log(error);
+						reject(error);
+					}
+				);
+			}),
+		];
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
 	}
 	loadAnimal(id: number): Promise<Animal> {
 		throw new Error("Method not implemented.");
@@ -130,9 +205,6 @@ export class SqliteRepository implements DatabaseRepository {
 		throw new Error("Method not implemented.");
 	}
 	deleteManyAnimals(animalIDsToDelete: number[]): Promise<boolean> {
-		throw new Error("Method not implemented.");
-	}
-	deleteBatchAndItsAnimals(batchID: number): Promise<boolean> {
 		throw new Error("Method not implemented.");
 	}
 }
