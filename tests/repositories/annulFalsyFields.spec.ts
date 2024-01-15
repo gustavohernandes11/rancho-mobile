@@ -1,16 +1,16 @@
-import { annulFalsyFields } from "utils/annulFalsyFields";
+import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
 
-describe("annulFalsyFields", () => {
+describe("nullifyFalsyFields", () => {
 	it("should turn empty string into null", () => {
 		let obj = { name: "A", description: "" };
-		annulFalsyFields(obj);
-		expect(obj.name).toBe("A");
-		expect(obj.description).toBeNull();
+		const result = nullifyFalsyFields(obj);
+		expect(result.name).toBe("A");
+		expect(result.description).toBeNull();
 	});
 	it("should turn undefined string into null", () => {
 		let obj = { name: "A", description: undefined };
-		annulFalsyFields(obj);
-		expect(obj.name).toBe("A");
-		expect(obj.description).toBeNull();
+		const result = nullifyFalsyFields(obj);
+		expect(result.name).toBe("A");
+		expect(result.description).toBeNull();
 	});
 });
