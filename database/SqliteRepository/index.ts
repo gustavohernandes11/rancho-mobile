@@ -74,10 +74,7 @@ export class SqliteRepository implements DatabaseRepository {
 			);
 		});
 	}
-	async insertBatch(
-		batch: AddBatch,
-		animalIDs?: number[] | undefined
-	): Promise<number | undefined> {
+	async insertBatch(batch: AddBatch): Promise<number | undefined> {
 		const query = `INSERT INTO Batches (name, description)
 		VALUES (?, ?);`;
 
@@ -99,7 +96,7 @@ export class SqliteRepository implements DatabaseRepository {
 			);
 		});
 	}
-	deleteAnimal(id: number): Promise<boolean> {
+	deleteAnimal(animalID: number): Promise<boolean> {
 		throw new Error("Method not implemented.");
 	}
 	deleteBatch(id: number): Promise<boolean> {
@@ -126,10 +123,7 @@ export class SqliteRepository implements DatabaseRepository {
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
 		throw new Error("Method not implemented.");
 	}
-	updateBatch(
-		updateData: UpdateBatch,
-		animalIDsToUpdate?: number[] | undefined
-	): Promise<Batch> {
+	updateBatch(updateData: UpdateBatch): Promise<Batch> {
 		throw new Error("Method not implemented.");
 	}
 	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {

@@ -8,29 +8,26 @@ export class Database implements DatabaseRepository {
 	async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
 		return this.dbRepository.insertAnimal(animal);
 	}
-	async insertBatch(
-		batch: AddBatch,
-		animalIDs?: number[]
-	): Promise<number | undefined> {
+	async insertBatch(batch: AddBatch): Promise<number | undefined> {
 		return this.dbRepository.insertBatch(batch);
 	}
-	async deleteAnimal(id: number): Promise<boolean> {
-		return this.dbRepository.deleteAnimal(id);
+	async deleteAnimal(animalID: number): Promise<boolean> {
+		return this.dbRepository.deleteAnimal(animalID);
 	}
-	async deleteBatch(id: number): Promise<boolean> {
-		return this.dbRepository.deleteBatch(id);
+	async deleteBatch(batchID: number): Promise<boolean> {
+		return this.dbRepository.deleteBatch(batchID);
 	}
-	async loadAnimal(id: number): Promise<Animal> {
-		return this.dbRepository.loadAnimal(id);
+	async loadAnimal(animalID: number): Promise<Animal> {
+		return this.dbRepository.loadAnimal(animalID);
 	}
 	async listAnimals(): Promise<Animal[]> {
 		return this.dbRepository.listAnimals();
 	}
-	async loadBatchAnimals(id: number): Promise<Animal[]> {
-		return this.dbRepository.loadBatchAnimals(id);
+	async loadBatchAnimals(batchID: number): Promise<Animal[]> {
+		return this.dbRepository.loadBatchAnimals(batchID);
 	}
-	async loadBatchInfo(id: number): Promise<Batch> {
-		return this.dbRepository.loadBatchInfo(id);
+	async loadBatchInfo(batchID: number): Promise<Batch> {
+		return this.dbRepository.loadBatchInfo(batchID);
 	}
 	async listAllBatchesInfo(): Promise<Batch[]> {
 		return this.dbRepository.listAllBatchesInfo();
@@ -41,10 +38,7 @@ export class Database implements DatabaseRepository {
 	async updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
 		return this.dbRepository.updateAnimal(updateData);
 	}
-	async updateBatch(
-		updateData: UpdateBatch,
-		animalIDsToUpdate?: number[]
-	): Promise<Batch> {
+	async updateBatch(updateData: UpdateBatch): Promise<Batch> {
 		return this.dbRepository.updateBatch(updateData);
 	}
 	async updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
