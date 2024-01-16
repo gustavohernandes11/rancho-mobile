@@ -76,7 +76,20 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		isNewBatch: boolean
 	) => {
 		isNewBatch
-			? StorageService.updateBatch(values)
+			? StorageService.insertBatch(values)
+					.then((insertedId) =>
+						StorageService.moveAnimalsToBatch(
+							selectedIDs,
+							insertedId || null
+						)
+					)
+					.then(() => {
+						setSelectedIDs([]);
+						router.replace("/(screens)/batches/");
+					})
+
+					.catch((error) => Alert.alert("Error", error))
+			: StorageService.updateBatch(values)
 					.then((batch: Batch) => {
 						const initialAnimals = animals;
 
@@ -104,19 +117,6 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						setSelectedIDs([]);
 						router.replace("/(screens)/batches/");
 					})
-					.catch((error) => Alert.alert("Error", error))
-			: StorageService.insertBatch(values)
-					.then((insertedId) =>
-						StorageService.moveAnimalsToBatch(
-							selectedIDs,
-							insertedId || null
-						)
-					)
-					.then(() => {
-						setSelectedIDs([]);
-						router.replace("/(screens)/batches/");
-					})
-
 					.catch((error) => Alert.alert("Error", error));
 	};
 
