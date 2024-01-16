@@ -1,4 +1,4 @@
-import { openDatabase } from "expo-sqlite";
+import { SQLResultSet, openDatabase } from "expo-sqlite";
 import { AddAnimal, Animal, UpdateAnimal } from "types/Animal";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { DatabaseRepository } from "types/DatabaseRepository";
@@ -10,10 +10,20 @@ export class SqliteRepository implements DatabaseRepository {
 	constructor() {
 		this.initDatabase();
 	}
-	private execQueryAsync = async (query: string, params: any[] = []) => {
-		this.db.transactionAsync(async (tx) => {
-			const result = await tx.executeSqlAsync(query, params);
-			console.log(result);
+
+	private executeQuery = async (
+		query: string,
+		params: any[] = []
+	): Promise<SQLResultSet> => {
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, params, (_, result) =>
+						resolve(result)
+					);
+				},
+				(error) => reject(error)
+			);
 		});
 	};
 	initDatabase = async () => {
@@ -21,7 +31,8 @@ export class SqliteRepository implements DatabaseRepository {
 		await this.ensureBatchTableExists();
 	};
 	private ensureAnimalTableExists = async () => {
-		const query = `CREATE TABLE IF NOT EXISTS Animals (
+		const query = `
+		CREATE TABLE IF NOT EXISTS Animals (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
             gender TEXT CHECK(gender IN ('F', 'M')) NOT NULL,
@@ -31,113 +42,83 @@ export class SqliteRepository implements DatabaseRepository {
             paternityId INTEGER REFERENCES Animals(id),
             maternityId INTEGER REFERENCES Animals(id),
             observation TEXT
-          );`;
+        );`;
 
-		await this.execQueryAsync(query, []);
+		await this.executeQuery(query, []);
 	};
 	private ensureBatchTableExists = async () => {
-		const query = `CREATE TABLE IF NOT EXISTS Batches (
+		const query = `
+		CREATE TABLE IF NOT EXISTS Batches (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			name TEXT NOT NULL,
 			description TEXT
-        );`;
-		await this.execQueryAsync(query, []);
+        );
+		`;
+
+		await this.executeQuery(query, []);
 	};
 	async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
-		const query = `INSERT INTO Animals (name, gender, birthdate, batchId, code, paternityId, maternityId, observation)
-		  VALUES (?, ?, ?, ?, ?, ?, ?, ?);`;
+		const query = `
+		INSERT INTO Animals 
+			(name, gender, birthdate, batchId, code, paternityId, maternityId, observation)
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+		`;
 
 		const parsed = nullifyFalsyFields(animal);
+		const params = [
+			parsed.name,
+			parsed.gender,
+			parsed.birthdate,
+			parsed.batchId,
+			parsed.code,
+			parsed.paternityId,
+			parsed.maternityId,
+			parsed.observation,
+		];
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(
-						query,
-						[
-							parsed.name,
-							parsed.gender,
-							parsed.birthdate,
-							parsed.batchId,
-							parsed.code,
-							parsed.paternityId,
-							parsed.maternityId,
-							parsed.observation,
-						],
-						(_, { insertId }) => resolve(insertId)
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, params).then(
+			({ insertId }) => insertId
+		);
 	}
 	async insertBatch(batch: AddBatch): Promise<number | undefined> {
-		const query = `INSERT INTO Batches (name, description)
-		VALUES (?, ?);`;
+		const query = `
+		INSERT INTO Batches 
+			(name, description)
+		VALUES (?, ?);
+		`;
 
 		const parsed = nullifyFalsyFields(batch);
+		const params = [parsed.name, parsed.description];
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(
-						query,
-						[parsed.name, parsed.description],
-						(_, { insertId }) => resolve(insertId)
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, params).then(
+			({ insertId }) => insertId
+		);
 	}
 	async deleteAnimal(animalID: number): Promise<boolean> {
-		const query = `DELETE FROM Animals WHERE id = ?`;
+		const query = `
+		DELETE FROM Animals 
+		WHERE id = ?
+		`;
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, [animalID], () => resolve(true));
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, [animalID]).then(
+			({ rowsAffected }) => !!rowsAffected
+		);
 	}
 	async deleteBatch(batchID: number): Promise<boolean> {
-		const deleteBatchQuery = `DELETE FROM Batches WHERE id = ?;`;
-		const unsignBatchFromAnimalsQuery = `UPDATE Animals SET batchId = NULL WHERE batchId = ?;`;
+		const deleteBatchQuery = `
+		DELETE FROM Batches 
+		WHERE id = ?;
+		`;
+
+		const unlinkAnimalsQuery = `
+		UPDATE Animals 
+		SET batchId = NULL 
+		WHERE batchId = ?;
+		`;
 
 		const operations = [
-			new Promise((_, reject) => {
-				this.db.transaction(
-					async (tx) => {
-						tx.executeSql(deleteBatchQuery, [batchID]);
-					},
-					(error) => {
-						console.log(error);
-						reject(error);
-					}
-				);
-			}),
-			new Promise((_, reject) => {
-				this.db.transaction(
-					async (tx) => {
-						tx.executeSql(unsignBatchFromAnimalsQuery, [batchID]);
-					},
-					(error) => {
-						console.log(error);
-						reject(error);
-					}
-				);
-			}),
+			this.executeQuery(deleteBatchQuery, [batchID]),
+			this.executeQuery(unlinkAnimalsQuery, [batchID]),
 		];
 
 		return Promise.all(operations)
@@ -145,251 +126,158 @@ export class SqliteRepository implements DatabaseRepository {
 			.catch(() => false);
 	}
 	async deleteBatchAndItsAnimals(batchID: number): Promise<boolean> {
-		const deleteBatchQuery = `DELETE FROM Batches WHERE id = ?;`;
-		const deleteAnimals = `DELETE FROM Animals WHERE batchId = ?;`;
+		const deleteBatchQuery = `
+		DELETE FROM Batches 
+		WHERE id = ?;
+		`;
+
+		const deleteAnimals = `
+		DELETE FROM Animals 
+		WHERE batchId = ?;
+		`;
 
 		const operations = [
-			new Promise((_, reject) => {
-				this.db.transaction(
-					async (tx) => {
-						tx.executeSql(deleteBatchQuery, [batchID]);
-					},
-					(error) => {
-						console.log(error);
-						reject(error);
-					}
-				);
-			}),
-			new Promise((_, reject) => {
-				this.db.transaction(
-					async (tx) => {
-						tx.executeSql(deleteAnimals, [batchID]);
-					},
-					(error) => {
-						console.log(error);
-						reject(error);
-					}
-				);
-			}),
+			this.executeQuery(deleteBatchQuery, [batchID]),
+			this.executeQuery(deleteAnimals, [batchID]),
 		];
 
 		return Promise.all(operations)
 			.then(() => true)
 			.catch(() => false);
 	}
-	loadAnimal(animalID: number): Promise<Animal> {
-		const query = `SELECT (name, 
-			gender,
-			birthdate, 
-			batchId, 
-			code, 
-			paternityId, 
-			maternityId, 
-			observation) FROM Animals WHERE id = ?`;
+	async loadAnimal(animalID: number): Promise<Animal> {
+		const query = `
+		SELECT 
+			(name, gender, birthdate, batchId, code, paternityId, maternityId, observation) 
+		FROM Animals 
+		WHERE id = ?
+		`;
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, [animalID], (_, { rows }) =>
-						resolve(rows.item(0))
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, [animalID]).then(({ rows }) =>
+			rows.item(0)
+		);
 	}
-	listAnimals(): Promise<Animal[]> {
-		const query = `SELECT (
-			id,
-			name, 
-			gender,
-			birthdate, 
-			batchId, 
-			code, 
-			paternityId, 
-			maternityId, 
-			observation
-		) FROM Animals`;
+	async listAnimals(): Promise<Animal[]> {
+		const query = `
+		SELECT 
+			(id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation)
+		FROM Animals
+		`;
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, [], (_, { rows }) =>
-						resolve(rows._array)
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, []).then(({ rows }) => rows._array);
 	}
-	loadBatchAnimals(batchId: number): Promise<Animal[]> {
-		const query = `SELECT (
-			id,
-			name, 
-			gender,
-			birthdate, 
-			batchId, 
-			code, 
-			paternityId, 
-			maternityId, 
-			observation
-		) FROM Animals WHERE batchId = ?`;
+	async loadBatchAnimals(batchId: number): Promise<Animal[]> {
+		const query = `
+		SELECT
+			(id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation) 
+		FROM Animals 
+		WHERE batchId = ?
+		`;
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, [batchId], (_, { rows }) => {
-						console.log(rows._array);
-						resolve(rows._array);
-					});
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, [batchId]).then(
+			({ rows }) => rows._array
+		);
 	}
-	loadBatchInfo(batchID: number): Promise<Batch> {
-		const query = `SELECT (
-			id,
-			name,  
-			description
-		) FROM Batches WHERE id = ?`;
-		const countQuery = `SELECT COUNT(id) AS animalCount FROM Animals WHERE batchId = ?`;
+	async loadBatchInfo(batchID: number): Promise<Batch> {
+		const loadBatchQuery = `
+		SELECT 
+			(id, name, description) 
+		FROM Batches 
+		WHERE id = ?
+		`;
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, [batchID], (_, { rows }) => {
-						const batchInfo = rows.item(0);
+		const countQuery = `
+		SELECT COUNT(id) 
+		AS count 
+		FROM Animals 
+		WHERE batchId = ?`;
 
-						tx.executeSql(countQuery, [batchID], (_, { rows }) => {
-							const animalCount = rows.item(0).animalCount;
-							const result = { ...batchInfo, animalCount };
-							console.log(result);
-							resolve(result);
-						});
-					});
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		const batchInfo = this.executeQuery(loadBatchQuery, [batchID]).then(
+			({ rows }) => rows.item(0)
+		);
+		const count = this.executeQuery(countQuery, [batchID]).then(
+			({ rows }) => rows.item(0).count
+		);
+
+		return { ...batchInfo, count };
 	}
-	listAllBatchesInfo(): Promise<Batch[]> {
-		const query = `SELECT (
-			id,
-			name,  
-			description
-		) FROM Batches`;
+	async listAllBatchesInfo(): Promise<Batch[]> {
+		const query = `
+		SELECT 
+			(id, name, description) 
+		FROM Batches
+		`;
 
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, [], (_, { rows }) =>
-						resolve(rows._array)
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, []).then(({ rows }) => rows._array);
 	}
 	async clearDatabase(): Promise<boolean> {
+		const dropAnimalsQuery = `
+		DROP TABLE IF EXISTS Animals
+		`;
+
+		const dropBatchesQuery = `
+		DROP TABLE IF EXISTS Batches
+		`;
+
 		const operations = [
-			this.execQueryAsync("DROP TABLE IF EXISTS Animals"),
-			this.execQueryAsync("DROP TABLE IF EXISTS Batches"),
+			this.executeQuery(dropAnimalsQuery),
+			this.executeQuery(dropBatchesQuery),
 		];
+
 		return Promise.all(operations)
 			.then(() => true)
 			.catch(() => false);
 	}
-	updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
-		const query = `UPDATE Animals SET (name = ?, 
-			gender = ?,
-			birthdate = ?, 
-			batchId = ?, 
-			code = ?, 
-			paternityId = ?, 
-			maternityId = ?, 
-			observation = ?) WHERE id = ?`;
+	async updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
+		const query = `
+		UPDATE Animals SET 
+			(name = ?, gender = ?, birthdate = ?, batchId = ?, code = ?, paternityId = ?, maternityId = ?, observation = ?) 
+		WHERE id = ?
+		`;
 
-		return new Promise((resolve, reject) => {
-			const parsed = nullifyFalsyFields(updateData);
+		const parsed = nullifyFalsyFields(updateData);
+		const params = [
+			parsed.name,
+			parsed.gender,
+			parsed.birthdate,
+			parsed.batchId,
+			parsed.code,
+			parsed.paternityId,
+			parsed.maternityId,
+			parsed.observation,
+			parsed.id,
+		];
 
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(
-						query,
-						[
-							parsed.name,
-							parsed.gender,
-							parsed.birthdate,
-							parsed.batchId,
-							parsed.code,
-							parsed.paternityId,
-							parsed.maternityId,
-							parsed.observation,
-							parsed.id,
-						],
-						(_, { rows }) => resolve(rows.item(0))
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, params).then(({ rows }) =>
+			rows.item(0)
+		);
 	}
-	updateBatch(updateData: UpdateBatch): Promise<Batch> {
-		const query = `UPDATE Batches SET (name = ?, 
-			description = ?
-			) WHERE id = ?`;
+	async updateBatch(updateData: UpdateBatch): Promise<Batch> {
+		const query = `
+		UPDATE Batches SET 
+			(name = ?, description = ?) 
+		WHERE id = ?
+		`;
 
-		return new Promise((resolve, reject) => {
-			const parsed = nullifyFalsyFields(updateData);
+		const parsed = nullifyFalsyFields(updateData);
+		const params = [parsed.name, parsed.description, parsed.id];
 
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(
-						query,
-						[parsed.name, parsed.description, parsed.id],
-						(_, { rows }) => resolve(rows.item(0))
-					);
-				},
-				(error) => {
-					console.log(error);
-					reject(error);
-				}
-			);
-		});
+		return this.executeQuery(query, params).then(({ rows }) =>
+			rows.item(0)
+		);
 	}
 	async updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
 		const operations = updateDataList.map((updateData) =>
 			this.updateAnimal(updateData)
 		);
+
 		return Promise.all(operations);
 	}
 	async deleteManyAnimals(animalIDsToDelete: number[]): Promise<boolean> {
 		const operations = animalIDsToDelete.map((id) => this.deleteAnimal(id));
-		try {
-			await Promise.all(operations);
-			return true;
-		} catch (error) {
-			console.log(error);
-			return false;
-		}
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
 	}
 }
