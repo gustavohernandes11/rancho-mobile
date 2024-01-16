@@ -1,5 +1,6 @@
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
+import { router } from "expo-router";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
@@ -61,7 +62,16 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 								iconColor={Colors.white}
 								icon="delete"
 								onPress={() =>
-									showConfirmationAndDeleteAll(selectedIDs)
+									showConfirmationAndDeleteAll(
+										selectedIDs,
+										() => {
+											router.replace(
+												"/(screens)/animals"
+											);
+											setSelectedIDs([]);
+											setIsSelectionMode(false);
+										}
+									)
 								}
 								style={{ margin: 0 }}
 								size={20}

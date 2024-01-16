@@ -1,7 +1,10 @@
 import { StorageService } from "database/StorageService";
 import { Alert } from "react-native";
 
-export const showConfirmationAndDeleteAll = (selectedIDs: number[]) => {
+export const showConfirmationAndDeleteAll = (
+	selectedIDs: number[],
+	onDeleteCallback?: () => void
+) => {
 	Alert.alert(
 		`Deletar animais?`,
 		`Você têm certeza que deseja deletar ${selectedIDs.length} animais?`,
@@ -13,7 +16,9 @@ export const showConfirmationAndDeleteAll = (selectedIDs: number[]) => {
 			{
 				text: "Deletar",
 				onPress: () =>
-					selectedIDs.map((id) => StorageService.deleteAnimal(id)),
+					StorageService.deleteManyAnimals(selectedIDs).then(() => {
+						if (onDeleteCallback) onDeleteCallback();
+					}),
 				style: "destructive",
 			},
 		]
