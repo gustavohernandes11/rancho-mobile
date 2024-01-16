@@ -50,6 +50,12 @@ export class Database implements DatabaseRepository {
 	async deleteBatchAndItsAnimals(batchID: number): Promise<boolean> {
 		return this.dbRepository.deleteBatchAndItsAnimals(batchID);
 	}
+	async moveAnimalToBatch(
+		animalID: number,
+		batchID: number | null
+	): Promise<boolean> {
+		return this.dbRepository.moveAnimalToBatch(animalID, batchID);
+	}
 	async moveAnimalsToBatch(
 		animalIDsToMove: number[],
 		batchID: number | null

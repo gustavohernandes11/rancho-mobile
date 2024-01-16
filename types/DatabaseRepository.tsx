@@ -17,6 +17,10 @@ export interface DatabaseRepository {
 	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]>;
 	deleteManyAnimals(animalIDs: number[]): Promise<boolean>;
 	deleteBatchAndItsAnimals(batchID: number): Promise<boolean>;
+	moveAnimalToBatch(
+		animalIDsToMove: number,
+		batchID: number | null
+	): Promise<boolean>;
 	moveAnimalsToBatch(
 		animalIDsToMove: number[],
 		batchID: number | null
