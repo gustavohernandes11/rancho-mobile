@@ -2,6 +2,7 @@ import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Loading } from "components/Loading";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
@@ -15,13 +16,13 @@ import { Item } from "types/Item";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const [animals, setBatches] = useState<Animal[]>();
+	const [animals, setAnimals] = useState<Animal[]>();
 	const [batch, setBatch] = useState<Batch>();
 
 	useEffect(() => {
 		const fetchData = async () => {
 			const animals = await StorageService.loadBatchAnimals(Number(id));
-			setBatches(animals);
+			setAnimals(animals);
 			const batch = await StorageService.loadBatchInfo(Number(id));
 			setBatch(batch);
 		};
@@ -44,8 +45,7 @@ export default function ViewBatchDetailsScreen() {
 					</>
 				))}
 			<Heading size="small">Animais do lote</Heading>
-			<AnimalTable animals={animals || []} />
-
+			{animals ? <AnimalTable animals={animals} /> : <Loading />}
 			<Span
 				flexWrap="wrap"
 				justifyContent="flex-end"

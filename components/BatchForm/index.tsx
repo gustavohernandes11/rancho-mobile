@@ -155,7 +155,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					<AnimalTable
 						scroll
 						onlySelectionMode={true}
-						animals={mockedAnimals}
+						animals={animals}
 					/>
 				) : (
 					<Loading />

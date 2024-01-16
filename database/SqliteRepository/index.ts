@@ -205,8 +205,11 @@ export class SqliteRepository implements DatabaseRepository {
 	async listAllBatchesInfo(): Promise<Batch[]> {
 		const query = `
 		SELECT 
-			id, name, description
-		FROM Batches
+        	Batches.id, Batches.name, Batches.description,
+        COUNT(Animals.id) AS count
+    	FROM Batches
+    	LEFT JOIN Animals ON Batches.id = Animals.batchId
+    	GROUP BY Batches.id, Batches.name, Batches.description
 		`;
 
 		return this.executeQuery(query, []).then(({ rows }) => rows._array);
@@ -282,8 +285,8 @@ export class SqliteRepository implements DatabaseRepository {
 			.catch(() => false);
 	}
 	async moveAnimalToBatch(
-		animalId: number,
-		batchId: number | null
+		batchID: number | null,
+		animalId: number
 	): Promise<boolean> {
 		const query = `
 		UPDATE Animals SET 
@@ -291,7 +294,7 @@ export class SqliteRepository implements DatabaseRepository {
 		WHERE id = ?
 		`;
 
-		return this.executeQuery(query, [batchId, animalId])
+		return this.executeQuery(query, [batchID, animalId])
 			.then(() => true)
 			.catch(() => false);
 	}
@@ -300,7 +303,7 @@ export class SqliteRepository implements DatabaseRepository {
 		batchID: number | null
 	): Promise<boolean> {
 		const operations = animalIDsToMove.map((animalId) =>
-			this.moveAnimalToBatch(animalId, batchID)
+			this.moveAnimalToBatch(batchID, animalId)
 		);
 
 		return Promise.all(operations)
