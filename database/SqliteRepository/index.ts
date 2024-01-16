@@ -281,8 +281,7 @@ export class SqliteRepository implements DatabaseRepository {
 			.then(() => true)
 			.catch(() => false);
 	}
-
-	private async moveAnimalToBatch(
+	async moveAnimalToBatch(
 		animalId: number,
 		batchId: number | null
 	): Promise<boolean> {
