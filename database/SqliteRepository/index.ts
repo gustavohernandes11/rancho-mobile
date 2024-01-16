@@ -148,7 +148,7 @@ export class SqliteRepository implements DatabaseRepository {
 	async loadAnimal(animalID: number): Promise<Animal> {
 		const query = `
 		SELECT 
-			name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals 
 		WHERE id = ?
 		`;
