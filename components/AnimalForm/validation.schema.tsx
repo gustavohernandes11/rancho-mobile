@@ -20,10 +20,11 @@ export const validationSchema = Yup.object({
 			"Use uma data mais próxima da atualidade.",
 			(value) =>
 				value ? moment(value).isAfter(moment().year(1950)) : true
-		),
-	batchId: Yup.string(),
-	code: Yup.string(),
-	paternityId: Yup.string(),
-	maternityId: Yup.string(),
-	observation: Yup.string(),
+		)
+		.nullable(),
+	batchId: Yup.string().nullable(),
+	code: Yup.string().nullable(),
+	paternityId: Yup.string().nullable(),
+	maternityId: Yup.string().nullable(),
+	observation: Yup.string().nullable(),
 });
