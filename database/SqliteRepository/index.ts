@@ -316,15 +316,80 @@ export class SqliteRepository implements DatabaseRepository {
 			.catch(() => false);
 	}
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
-		throw new Error("Method not implemented.");
+		const query = `UPDATE Animals SET (name = ?, 
+			gender = ?,
+			birthdate = ?, 
+			batchId = ?, 
+			code = ?, 
+			paternityId = ?, 
+			maternityId = ?, 
+			observation = ?) WHERE id = ?`;
+
+		return new Promise((resolve, reject) => {
+			const parsed = nullifyFalsyFields(updateData);
+
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(
+						query,
+						[
+							parsed.name,
+							parsed.gender,
+							parsed.birthdate,
+							parsed.batchId,
+							parsed.code,
+							parsed.paternityId,
+							parsed.maternityId,
+							parsed.observation,
+							parsed.id,
+						],
+						(_, { rows }) => resolve(rows.item(0))
+					);
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
 	updateBatch(updateData: UpdateBatch): Promise<Batch> {
-		throw new Error("Method not implemented.");
+		const query = `UPDATE Batches SET (name = ?, 
+			description = ?
+			) WHERE id = ?`;
+
+		return new Promise((resolve, reject) => {
+			const parsed = nullifyFalsyFields(updateData);
+
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(
+						query,
+						[parsed.name, parsed.description, parsed.id],
+						(_, { rows }) => resolve(rows.item(0))
+					);
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
-	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
-		throw new Error("Method not implemented.");
+	async updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
+		const operations = updateDataList.map((updateData) =>
+			this.updateAnimal(updateData)
+		);
+		return Promise.all(operations);
 	}
-	deleteManyAnimals(animalIDsToDelete: number[]): Promise<boolean> {
-		throw new Error("Method not implemented.");
+	async deleteManyAnimals(animalIDsToDelete: number[]): Promise<boolean> {
+		const operations = animalIDsToDelete.map((id) => this.deleteAnimal(id));
+		try {
+			await Promise.all(operations);
+			return true;
+		} catch (error) {
+			console.log(error);
+			return false;
+		}
 	}
 }
