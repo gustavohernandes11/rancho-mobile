@@ -34,9 +34,15 @@ export default function ViewBatchDetailsScreen() {
 			<Heading>{batch?.name}</Heading>
 			<SubTitle>{`Detalhes do lote "${batch?.name}"`}</SubTitle>
 
-			<Heading size="small">Informações Gerais</Heading>
-			<SimpleTable data={serializeBatchInfoToKeyValue(batch)} />
-
+			{!!batch?.count ||
+				(batch?.description && (
+					<>
+						<Heading size="small">Informações Gerais</Heading>
+						<SimpleTable
+							data={serializeBatchInfoToKeyValue(batch)}
+						/>
+					</>
+				))}
 			<Heading size="small">Animais do lote</Heading>
 			<AnimalTable animals={animals || []} />
 
@@ -75,7 +81,7 @@ const serializeBatchInfoToKeyValue = (batch?: Batch) => {
 	if (batch.count)
 		items.push({
 			key: "Número de animais",
-			value: batch.count > 0 ? batch.count.toString() : "vazio",
+			value: batch.count > 0 ? batch.count.toString() : "Vazio",
 		});
 
 	return items;

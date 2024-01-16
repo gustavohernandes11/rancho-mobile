@@ -23,9 +23,13 @@ export const BatchInfo: React.FC<BatchInfoProps & ViewProps> = ({
 				)}
 			</View>
 			<View style={styles.right}>
-				<Text style={styles.description}>
-					{batch.count + " " + getGrammaticalFlexion(batch.count)}
-				</Text>
+				{batch.count > 0 ? (
+					<Text style={styles.description}>
+						{batch.count + " " + getGrammaticalFlexion(batch.count)}
+					</Text>
+				) : (
+					<Text style={styles.description}>Vazio</Text>
+				)}
 			</View>
 		</Pressable>
 	);
