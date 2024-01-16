@@ -98,7 +98,10 @@ export const showConfirmationAndDeleteAll = (batch: Batch) => {
 			},
 			{
 				text: "Deletar tudo",
-				onPress: () => {},
+				onPress: () =>
+					StorageService.deleteBatchAndItsAnimals(batch.id).then(() =>
+						router.replace("/(screens)/batches/")
+					),
 				style: "destructive",
 			},
 		]
@@ -117,7 +120,10 @@ export const showConfirmationAndDeleteOnlyBatch = (batch: Batch) => {
 			},
 			{
 				text: "Deletar",
-				onPress: () => {},
+				onPress: () =>
+					StorageService.deleteBatch(batch.id).then(() =>
+						router.replace("/(screens)/batches/")
+					),
 				style: "destructive",
 			},
 		]

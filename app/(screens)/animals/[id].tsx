@@ -116,7 +116,7 @@ const showConfirmationAndDelete = (animal: Animal) => {
 				text: "Deletar",
 				onPress: () =>
 					StorageService.deleteAnimal(animal.id).then(() =>
-						router.back()
+						router.replace("/(screens)/animals/")
 					),
 				style: "destructive",
 			},
