@@ -148,7 +148,7 @@ export class SqliteRepository implements DatabaseRepository {
 	async loadAnimal(animalID: number): Promise<Animal> {
 		const query = `
 		SELECT 
-			(name, gender, birthdate, batchId, code, paternityId, maternityId, observation) 
+			name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals 
 		WHERE id = ?
 		`;
@@ -160,7 +160,7 @@ export class SqliteRepository implements DatabaseRepository {
 	async listAnimals(): Promise<Animal[]> {
 		const query = `
 		SELECT 
-			(id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation)
+			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals
 		`;
 
@@ -169,7 +169,7 @@ export class SqliteRepository implements DatabaseRepository {
 	async loadBatchAnimals(batchId: number): Promise<Animal[]> {
 		const query = `
 		SELECT
-			(id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation) 
+			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals 
 		WHERE batchId = ?
 		`;
@@ -181,30 +181,31 @@ export class SqliteRepository implements DatabaseRepository {
 	async loadBatchInfo(batchID: number): Promise<Batch> {
 		const loadBatchQuery = `
 		SELECT 
-			(id, name, description) 
+			id, name, description
 		FROM Batches 
 		WHERE id = ?
 		`;
 
 		const countQuery = `
-		SELECT COUNT(id) 
+		SELECT COUNT(id)
 		AS count 
 		FROM Animals 
 		WHERE batchId = ?`;
 
-		const batchInfo = this.executeQuery(loadBatchQuery, [batchID]).then(
-			({ rows }) => rows.item(0)
-		);
-		const count = this.executeQuery(countQuery, [batchID]).then(
-			({ rows }) => rows.item(0).count
-		);
+		const [batchInfoResult, countResult] = await Promise.all([
+			this.executeQuery(loadBatchQuery, [batchID]),
+			this.executeQuery(countQuery, [batchID]),
+		]);
+
+		const batchInfo = batchInfoResult.rows.item(0);
+		const count = countResult.rows.item(0).count;
 
 		return { ...batchInfo, count };
 	}
 	async listAllBatchesInfo(): Promise<Batch[]> {
 		const query = `
 		SELECT 
-			(id, name, description) 
+			id, name, description
 		FROM Batches
 		`;
 
@@ -231,7 +232,7 @@ export class SqliteRepository implements DatabaseRepository {
 	async updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
 		const query = `
 		UPDATE Animals SET 
-			(name = ?, gender = ?, birthdate = ?, batchId = ?, code = ?, paternityId = ?, maternityId = ?, observation = ?) 
+			name = ?, gender = ?, birthdate = ?, batchId = ?, code = ?, paternityId = ?, maternityId = ?, observation = ?
 		WHERE id = ?
 		`;
 
@@ -248,22 +249,22 @@ export class SqliteRepository implements DatabaseRepository {
 			parsed.id,
 		];
 
-		return this.executeQuery(query, params).then(({ rows }) =>
-			rows.item(0)
+		return this.executeQuery(query, params).then(() =>
+			this.loadAnimal(updateData.id)
 		);
 	}
 	async updateBatch(updateData: UpdateBatch): Promise<Batch> {
 		const query = `
 		UPDATE Batches SET 
-			(name = ?, description = ?) 
+			name = ?, description = ?
 		WHERE id = ?
 		`;
 
 		const parsed = nullifyFalsyFields(updateData);
 		const params = [parsed.name, parsed.description, parsed.id];
 
-		return this.executeQuery(query, params).then(({ rows }) =>
-			rows.item(0)
+		return this.executeQuery(query, params).then(() =>
+			this.loadBatchInfo(updateData.id)
 		);
 	}
 	async updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
@@ -275,6 +276,33 @@ export class SqliteRepository implements DatabaseRepository {
 	}
 	async deleteManyAnimals(animalIDsToDelete: number[]): Promise<boolean> {
 		const operations = animalIDsToDelete.map((id) => this.deleteAnimal(id));
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
+	}
+
+	private async moveAnimalToBatch(
+		animalId: number,
+		batchId: number | null
+	): Promise<boolean> {
+		const query = `
+		UPDATE Animals SET 
+			batchId = ?
+		WHERE id = ?
+		`;
+
+		return this.executeQuery(query, [batchId, animalId])
+			.then(() => true)
+			.catch(() => false);
+	}
+	async moveAnimalsToBatch(
+		animalIDsToMove: number[],
+		batchID: number | null
+	): Promise<boolean> {
+		const operations = animalIDsToMove.map((animalId) =>
+			this.moveAnimalToBatch(animalId, batchID)
+		);
 
 		return Promise.all(operations)
 			.then(() => true)
