@@ -87,19 +87,22 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 						</DataTable.Title>
 					)}
 				</DataTable.Header>
-				{animals.length === 0 && (
+				{animals && animals.length > 0 ? (
+					animals.map((animal) => (
+						<AnimalRow
+							alwaysShowCheckbox={onlySelectionMode}
+							animal={animal}
+							batch={batches?.find(
+								(b) => b.id === animal.batchId
+							)}
+							key={animal.id}
+						/>
+					))
+				) : (
 					<Span justifyContent="center">
 						<Text>Nenhum animal por aqui.</Text>
 					</Span>
 				)}
-				{animals.map((animal) => (
-					<AnimalRow
-						alwaysShowCheckbox={onlySelectionMode}
-						animal={animal}
-						batch={batches?.find((b) => b.id === animal.batchId)}
-						key={animal.id}
-					/>
-				))}
 			</DataTable>
 		</>
 	);

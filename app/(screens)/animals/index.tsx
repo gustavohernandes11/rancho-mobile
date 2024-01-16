@@ -44,11 +44,13 @@ export default function ViewAnimalsScreen() {
 				Clique sobre o animal para ver mais detalhes. Pressione para
 				selecionar vários.
 			</SubTitle>
-			<Suspense fallback={<Loading />}>
+			{animals ? (
 				<AnimalTable
 					animals={filterAnimalsByText(animals, searchText) || []}
 				/>
-			</Suspense>
+			) : (
+				<Loading />
+			)}
 			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Link href="/(screens)/animals/add" asChild>
 					<Button title="Adicionar novo animal" />

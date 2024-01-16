@@ -20,9 +20,9 @@ export default function ViewBatchDetailsScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const animals = await StorageService.loadBatchAnimals(id);
+			const animals = await StorageService.loadBatchAnimals(Number(id));
 			setBatches(animals);
-			const batch = await StorageService.loadBatchInfo(id);
+			const batch = await StorageService.loadBatchInfo(Number(id));
 			setBatch(batch);
 		};
 		fetchData();
@@ -75,7 +75,7 @@ const serializeBatchInfoToKeyValue = (batch?: Batch) => {
 	if (batch.count)
 		items.push({
 			key: "Número de animais",
-			value: batch?.count.toString(),
+			value: batch.count > 0 ? batch.count.toString() : "vazio",
 		});
 
 	return items;
