@@ -1,5 +1,7 @@
 import { Database } from "./Database";
 import { MockedRepository } from "./MockedRepository";
+import { SqliteRepository } from "./SqliteRepository";
 
 const mockRepository = new MockedRepository();
-export const StorageService = new Database(mockRepository);
+const sqliteRepository = new SqliteRepository();
+export const StorageService = new Database(sqliteRepository);
