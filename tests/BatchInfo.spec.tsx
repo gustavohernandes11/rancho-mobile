@@ -4,7 +4,7 @@ import { BatchInfo } from "components/BatchInfo";
 
 describe("BatchInfo", () => {
 	const mockedBatch = {
-		id: "1",
+		id: 1,
 		name: "Bezerros",
 		description: "Bezerros de 1 a 2 anos de idade",
 		count: 23,
@@ -20,7 +20,7 @@ describe("BatchInfo", () => {
 	it("should render the grammatical flexion 'animal' [pt-BR] when count is 1", () => {
 		render(
 			<BatchInfo
-				batch={{ id: "1", name: "any", description: "any", count: 1 }}
+				batch={{ id: 1, name: "any", description: "any", count: 1 }}
 			/>
 		);
 		expect(screen.getByText("1 animal")).toBeOnTheScreen();
@@ -28,7 +28,7 @@ describe("BatchInfo", () => {
 	it("should render the grammatical flexion 'animais' [pt-BR] when count is bigger then 0", () => {
 		render(
 			<BatchInfo
-				batch={{ id: "1", name: "any", description: "any", count: 123 }}
+				batch={{ id: 1, name: "any", description: "any", count: 123 }}
 			/>
 		);
 		expect(screen.getByText("123 animais")).toBeOnTheScreen();

@@ -6,6 +6,18 @@ import { mockedBatches } from "./mockedBatches";
 
 export class MockedRepository implements DatabaseRepository {
 	constructor() {}
+	moveAnimalToBatch(
+		animalIDsToMove: number,
+		batchID: number | null
+	): Promise<boolean> {
+		throw new Error("Method not implemented.");
+	}
+	moveAnimalsToBatch(
+		animalIDsToMove: number[],
+		batchID: number | null
+	): Promise<boolean> {
+		throw new Error("Method not implemented.");
+	}
 	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
 		const updatedAnimals = updateDataList.map((updateData, index) => {
 			return { ...mockedAnimals[index], ...updateData };
