@@ -177,23 +177,143 @@ export class SqliteRepository implements DatabaseRepository {
 			.then(() => true)
 			.catch(() => false);
 	}
-	loadAnimal(id: number): Promise<Animal> {
-		throw new Error("Method not implemented.");
+	loadAnimal(animalID: number): Promise<Animal> {
+		const query = `SELECT (name, 
+			gender,
+			birthdate, 
+			batchId, 
+			code, 
+			paternityId, 
+			maternityId, 
+			observation) FROM Animals WHERE id = ?`;
+
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, [animalID], (_, { rows }) =>
+						resolve(rows.item(0))
+					);
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
 	listAnimals(): Promise<Animal[]> {
-		throw new Error("Method not implemented.");
+		const query = `SELECT (
+			id,
+			name, 
+			gender,
+			birthdate, 
+			batchId, 
+			code, 
+			paternityId, 
+			maternityId, 
+			observation
+		) FROM Animals`;
+
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, [], (_, { rows }) =>
+						resolve(rows._array)
+					);
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
-	loadBatchAnimals(id: number): Promise<Animal[]> {
-		throw new Error("Method not implemented.");
+	loadBatchAnimals(batchId: number): Promise<Animal[]> {
+		const query = `SELECT (
+			id,
+			name, 
+			gender,
+			birthdate, 
+			batchId, 
+			code, 
+			paternityId, 
+			maternityId, 
+			observation
+		) FROM Animals WHERE batchId = ?`;
+
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, [batchId], (_, { rows }) => {
+						console.log(rows._array);
+						resolve(rows._array);
+					});
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
-	loadBatchInfo(id: number): Promise<Batch> {
-		throw new Error("Method not implemented.");
+	loadBatchInfo(batchID: number): Promise<Batch> {
+		const query = `SELECT (
+			id,
+			name,  
+			description
+		) FROM Batches WHERE id = ?`;
+		const countQuery = `SELECT COUNT(id) AS animalCount FROM Animals WHERE batchId = ?`;
+
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, [batchID], (_, { rows }) => {
+						const batchInfo = rows.item(0);
+
+						tx.executeSql(countQuery, [batchID], (_, { rows }) => {
+							const animalCount = rows.item(0).animalCount;
+							const result = { ...batchInfo, animalCount };
+							console.log(result);
+							resolve(result);
+						});
+					});
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
 	listAllBatchesInfo(): Promise<Batch[]> {
-		throw new Error("Method not implemented.");
+		const query = `SELECT (
+			id,
+			name,  
+			description
+		) FROM Batches`;
+
+		return new Promise((resolve, reject) => {
+			this.db.transaction(
+				async (tx) => {
+					tx.executeSql(query, [], (_, { rows }) =>
+						resolve(rows._array)
+					);
+				},
+				(error) => {
+					console.log(error);
+					reject(error);
+				}
+			);
+		});
 	}
-	clearDatabase(): Promise<boolean> {
-		throw new Error("Method not implemented.");
+	async clearDatabase(): Promise<boolean> {
+		const operations = [
+			this.execQueryAsync("DROP TABLE IF EXISTS Animals"),
+			this.execQueryAsync("DROP TABLE IF EXISTS Batches"),
+		];
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
 	}
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
 		throw new Error("Method not implemented.");
