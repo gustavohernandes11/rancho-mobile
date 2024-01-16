@@ -29,7 +29,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
-		onSubmit: (values) => handleSubmit(values, !!initialValues.id),
+		onSubmit: (values) => handleSubmit(values, !initialValues.id),
 		validationSchema,
 	});
 
@@ -76,13 +76,42 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		isNewBatch: boolean
 	) => {
 		isNewBatch
-			? StorageService.updateBatch(values) // todo
+			? StorageService.updateBatch(values)
+					.then((batch: Batch) => {
+						const initialAnimals = animals;
+
+						initialAnimals?.map((animal) => {
+							if (
+								animal.batchId === batch.id ||
+								!selectedIDs.includes(animal.id)
+							) {
+								StorageService.moveAnimalToBatch(
+									animal.id,
+									null
+								);
+							} else if (
+								animal.batchId !== batch.id ||
+								selectedIDs.includes(animal.id)
+							) {
+								StorageService.moveAnimalToBatch(
+									animal.id,
+									batch.id
+								);
+							}
+						});
+					})
 					.then(() => {
 						setSelectedIDs([]);
 						router.replace("/(screens)/batches/");
 					})
 					.catch((error) => Alert.alert("Error", error))
 			: StorageService.insertBatch(values)
+					.then((insertedId) =>
+						StorageService.moveAnimalsToBatch(
+							selectedIDs,
+							insertedId || null
+						)
+					)
 					.then(() => {
 						setSelectedIDs([]);
 						router.replace("/(screens)/batches/");
