@@ -11,7 +11,7 @@ export default function EditAnimalScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const response = await StorageService.loadBatchInfo(id);
+			const response = await StorageService.loadBatchInfo(Number(id));
 			setBatch(response);
 		};
 		fetchData();

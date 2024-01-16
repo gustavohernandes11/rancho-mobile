@@ -11,7 +11,7 @@ export default function EditAnimalScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const animal = await StorageService.loadAnimal(id);
+			const animal = await StorageService.loadAnimal(Number(id));
 			setAnimal(animal);
 		};
 		fetchData();

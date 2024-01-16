@@ -8,7 +8,7 @@ import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
-import { Link, Stack, useLocalSearchParams } from "expo-router";
+import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Animal } from "types/Animal";
@@ -26,7 +26,7 @@ export default function ViewAnimalDetailsScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			const animal = await StorageService.loadAnimal(id);
+			const animal = await StorageService.loadAnimal(Number(id));
 			setAnimal(animal);
 
 			if (animal.batchId) {
@@ -95,11 +95,10 @@ export default function ViewAnimalDetailsScreen() {
 					title="Deletar"
 					onPress={() => showConfirmationAndDelete(animal!)}
 				/>
-				{animal?.id && (
-					<Link href={`/(screens)/animals/edit/${animal.id}`} asChild>
-						<Button title="Editar" />
-					</Link>
-				)}
+				<Button
+					title="Editar"
+					onPress={() => router.push(`/(screens)/animals/edit/${id}`)}
+				/>
 			</Span>
 		</ContainerView>
 	);
@@ -115,7 +114,10 @@ const showConfirmationAndDelete = (animal: Animal) => {
 			},
 			{
 				text: "Deletar",
-				onPress: () => StorageService.deleteAnimal(animal.id),
+				onPress: () =>
+					StorageService.deleteAnimal(animal.id).then(() =>
+						router.back()
+					),
 				style: "destructive",
 			},
 		]

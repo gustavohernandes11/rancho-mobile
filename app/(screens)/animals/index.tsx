@@ -8,7 +8,7 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Animal } from "types/Animal";
 
 export default function ViewAnimalsScreen() {
