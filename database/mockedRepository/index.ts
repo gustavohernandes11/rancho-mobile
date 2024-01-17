@@ -6,6 +6,9 @@ import { mockedBatches } from "./mockedBatches";
 
 export class MockedRepository implements DatabaseRepository {
 	constructor() {}
+	searchAnimals(text: string): Promise<Animal[]> {
+		throw new Error("Method not implemented.");
+	}
 	moveAnimalToBatch(
 		animalIDsToMove: number,
 		batchID: number | null
