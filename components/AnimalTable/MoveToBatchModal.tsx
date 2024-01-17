@@ -3,6 +3,7 @@ import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
 import { StorageService } from "database/StorageService";
+import { router } from "expo-router";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { Fragment, useEffect, useState } from "react";
 import {
@@ -26,7 +27,8 @@ export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
-	const { selectedIDs } = useSelectionMode();
+	const { selectedIDs, setSelectedIDs, setIsSelectionMode } =
+		useSelectionMode();
 
 	const [batches, setBatches] = useState<Batch[]>();
 
@@ -39,20 +41,16 @@ export const MoveToBatchModal: React.FC<
 	}, []);
 
 	const moveAllAnimalsTo = () => {
-		const promises = selectedIDs.map((id: number) =>
-			StorageService.updateAnimal({
-				id,
-				batchId: selectedBatch!.id,
-			})
-		);
-
-		Promise.all(promises)
+		StorageService.moveAnimalsToBatch(selectedIDs, selectedBatch!.id)
 			.then(() => {
 				setIsBatchModalVisible(() => false);
 				Alert.alert(
 					"Ok!",
 					"Animais movidos para o lote " + selectedBatch!.name + "."
 				);
+				setSelectedIDs([]);
+				setIsSelectionMode(false);
+				router.replace("/(screens)/animals/");
 			})
 			.catch((error) => {
 				Alert.alert(
