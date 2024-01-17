@@ -58,7 +58,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 
 	return (
 		<>
-			<Text>{JSON.stringify(selectedIDs)}</Text>
 			{(onlySelectionMode || isSelectionMode) && (
 				<Span>
 					<SelectionBanner
