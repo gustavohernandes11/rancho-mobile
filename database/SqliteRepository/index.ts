@@ -171,9 +171,9 @@ export class SqliteRepository implements DatabaseRepository {
 		SELECT 
 			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals
-		WHERE (COALESCE(CONVERT(NVARCHAR(max), name), '') +
-			  COALESCE(CONVERT(NVARCHAR(max), code), '') +
-			  COALESCE(CONVERT(VARCHAR(max), observation), '') +) LIKE '%?%'
+		WHERE (COALESCE(CAST(name AS TEXT), '') ||
+               COALESCE(CAST(code AS TEXT), '') ||
+               COALESCE(CAST(observation AS TEXT), '')) LIKE '%' || ? || '%'
 		`;
 
 		return this.executeQuery(query, [text]).then(({ rows }) => rows._array);

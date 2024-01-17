@@ -1,13 +1,9 @@
-import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
-import { SqliteRepository } from "database/SqliteRepository";
 
 export default function TabOneScreen() {
-	const repo = new SqliteRepository();
-
 	return (
 		<ContainerView>
 			<Heading>Início</Heading>

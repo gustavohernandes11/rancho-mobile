@@ -100,7 +100,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					))
 				) : (
 					<Span justifyContent="center">
-						<Text>Nenhum animal por aqui.</Text>
+						<Text>Nenhum animal encontrado.</Text>
 					</Span>
 				)}
 			</DataTable>
