@@ -4,21 +4,16 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
-import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
-import { useEffect, useState } from "react";
+import { useData } from "hooks/useData";
+import { useEffect } from "react";
 import { View } from "react-native";
-import { Batch } from "types/Batch";
 
 export default function ViewBatchesScreen() {
-	const [batches, setBatches] = useState<Batch[]>();
+	const { batches, refreshBatches } = useData();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const batches = await StorageService.listAllBatchesInfo();
-			setBatches(batches);
-		};
-		fetchData();
+		refreshBatches();
 	}, []);
 	return (
 		<ContainerView>

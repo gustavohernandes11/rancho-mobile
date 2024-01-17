@@ -8,32 +8,37 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Stack, router, useLocalSearchParams } from "expo-router";
+import { useData } from "hooks/useData";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { Item } from "types/Item";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const [animals, setAnimals] = useState<Animal[]>();
-	const [batch, setBatch] = useState<Batch>();
+	const { animals, batches, setAnimals, refreshAnimals } = useData();
+	const [isLoading, setIsLoading] = useState(true);
+	const batch = batches.find((b) => b.id === Number(id));
 
 	useEffect(() => {
 		const fetchData = async () => {
+			setIsLoading(true);
 			const animals = await StorageService.loadBatchAnimals(Number(id));
-			setAnimals(animals);
-			const batch = await StorageService.loadBatchInfo(Number(id));
-			setBatch(batch);
+			setAnimals(() => animals);
+			setIsLoading(false);
 		};
 		fetchData();
+
+		return () => {
+			refreshAnimals();
+		};
 	}, []);
 
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Detalhes do lote" }} />
 			<Heading>{batch?.name}</Heading>
-			<SubTitle>{`Detalhes do lote "${batch?.name}"`}</SubTitle>
+			<SubTitle>{`Detalhes do lote "${batch?.name || "?"}"`}</SubTitle>
 
 			{!!batch?.count ||
 				(batch?.description && (
@@ -45,19 +50,7 @@ export default function ViewBatchDetailsScreen() {
 					</>
 				))}
 			<Heading size="small">Animais do lote</Heading>
-			{animals ? (
-				<AnimalTable
-					animals={animals}
-					triggerUpdateData={async () => {
-						const animals = await StorageService.loadBatchAnimals(
-							Number(id)
-						);
-						setAnimals(animals);
-					}}
-				/>
-			) : (
-				<Loading />
-			)}
+			{isLoading ? <Loading /> : <AnimalTable animals={animals} />}
 			<Span
 				flexWrap="wrap"
 				justifyContent="flex-end"

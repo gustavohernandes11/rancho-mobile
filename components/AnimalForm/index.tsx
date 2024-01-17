@@ -6,11 +6,11 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
+import { useData } from "hooks/useData";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
 import { getFormattedGender } from "utils/getFormattedGender";
 import { getFieldError } from "../../utils/getFieldError";
 import { defaultValues } from "./defaultValues";
@@ -33,30 +33,22 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 			initialValues.id
 				? StorageService.updateAnimal(values)
 						.then(() => {
-							Alert.alert("UPDATE");
 							router.replace("/(screens)/animals/");
 						})
 						.catch((error) => Alert.alert("Error", error))
 				: StorageService.insertAnimal(values)
 						.then(() => {
-							Alert.alert("INSERIDO");
 							router.replace("/(screens)/animals/");
 						})
 						.catch((error) => Alert.alert("Error", error));
 		},
 		validationSchema,
 	});
-	const [batches, setBatches] = useState<Batch[]>();
-	const [animals, setAnimals] = useState<Animal[]>();
+	const { animals, batches, refreshAnimals, refreshBatches } = useData();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const batches = await StorageService.listAllBatchesInfo();
-			setBatches(batches);
-			const animals = await StorageService.listAnimals();
-			setAnimals(animals);
-		};
-		fetchData();
+		refreshAnimals();
+		refreshBatches();
 	}, []);
 
 	return (
@@ -74,7 +66,6 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					items={[
 						{ key: "♀ Fêmea", value: "F" },
 						{ key: "♂ Macho", value: "M" },
-						{ key: "Escolha um gênero", value: "" },
 					]}
 					defaultButtonText={
 						initialValues.gender

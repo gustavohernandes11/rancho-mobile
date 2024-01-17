@@ -3,8 +3,9 @@ import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
 import { StorageService } from "database/StorageService";
+import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
 	Alert,
 	Modal,
@@ -21,28 +22,13 @@ interface MoveToBatchModalProps {
 	visible: boolean;
 	onDismiss: () => void;
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-	refreshAnimalsCallback: () => void;
 }
 export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
-> = ({
-	visible,
-	onDismiss,
-	setIsBatchModalVisible,
-	refreshAnimalsCallback,
-	...props
-}) => {
+> = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
+	const { refreshAnimals, batches } = useData();
 	const { selectedIDs, clearSelection } = useSelectionMode();
-	const [batches, setBatches] = useState<Batch[]>();
-
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await StorageService.listAllBatchesInfo();
-			setBatches(response);
-		};
-		fetchData();
-	}, []);
 
 	const moveAllAnimalsTo = () => {
 		StorageService.moveAnimalsToBatch(selectedIDs, selectedBatch!.id)
@@ -53,7 +39,7 @@ export const MoveToBatchModal: React.FC<
 					"Animais movidos para o lote " + selectedBatch!.name + "."
 				);
 				clearSelection();
-				refreshAnimalsCallback();
+				refreshAnimals();
 			})
 			.catch((error) => {
 				Alert.alert(

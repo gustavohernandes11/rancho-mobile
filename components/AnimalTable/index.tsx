@@ -1,13 +1,12 @@
 import { Span } from "components/Span";
-import { StorageService } from "database/StorageService";
 import { useFocusEffect } from "expo-router";
+import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BackHandler, Text } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
 import { AnimalRow } from "./AnimalRow";
 import { SelectionBanner } from "./SelectionBanner";
 
@@ -15,25 +14,19 @@ interface AnimalTableProps {
 	animals: Animal[];
 	onlySelectionMode?: boolean;
 	scroll?: boolean;
-	triggerUpdateData: () => void;
 }
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
 	animals,
 	scroll,
 	onlySelectionMode = false,
-	triggerUpdateData,
 	...props
 }) => {
-	const [batches, setBatches] = useState<Batch[]>();
+	const { refreshBatches } = useData();
 	const { isSelectionMode, clearSelection, selectedIDs } = useSelectionMode();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const batches = await StorageService.listAllBatchesInfo();
-			setBatches(batches);
-		};
-		fetchData();
+		refreshBatches();
 	}, []);
 
 	useFocusEffect(
@@ -64,7 +57,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 						showActions={!onlySelectionMode}
 						showDeleteButton={!onlySelectionMode}
 						allAnimalIDs={animals.map((a) => a.id)}
-						triggerUpdateData={triggerUpdateData}
 					/>
 				</Span>
 			)}
@@ -93,9 +85,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 						<AnimalRow
 							alwaysShowCheckbox={onlySelectionMode}
 							animal={animal}
-							batch={batches?.find(
-								(b) => b.id === animal.batchId
-							)}
 							key={animal.id}
 						/>
 					))

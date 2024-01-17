@@ -46,7 +46,7 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 
 const styles = StyleSheet.create({
 	card: {
-		width: "48%",
+		width: "48.8%",
 		maxWidth: 250,
 		aspectRatio: 1.6 / 1,
 		backgroundColor: Colors.green,

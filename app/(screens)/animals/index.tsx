@@ -8,22 +8,20 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
+import { useData } from "hooks/useData";
 import { useEffect, useState } from "react";
 import { Animal } from "types/Animal";
 
 export default function ViewAnimalsScreen() {
-	const [animals, setAnimals] = useState<Animal[]>();
+	const { animals, refreshAnimals, setAnimals } = useData();
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			const animals = await StorageService.listAnimals();
-			setAnimals(animals);
-			setIsLoading(false);
-		};
-		fetchData();
+		refreshAnimals();
+		setIsLoading(false);
+
+		return () => refreshAnimals();
 	}, []);
 	return (
 		<ContainerView>
@@ -40,9 +38,12 @@ export default function ViewAnimalsScreen() {
 				<SearchBar
 					onChangeText={(text) => {
 						setSearchText(text);
-						StorageService.searchAnimals(text).then((animals) =>
-							setAnimals(animals)
-						);
+					}}
+					onBlur={() => {
+						setIsLoading(true);
+						StorageService.searchAnimals(searchText)
+							.then((animals) => setAnimals(animals))
+							.finally(() => setIsLoading(false));
 					}}
 					value={searchText}
 					placeholder="Busque por nome, observação ou código."
@@ -52,17 +53,7 @@ export default function ViewAnimalsScreen() {
 				Clique sobre o animal para ver mais detalhes. Pressione para
 				selecionar vários.
 			</SubTitle>
-			{isLoading ? (
-				<Loading />
-			) : (
-				<AnimalTable
-					animals={filterAnimalsByText(animals, searchText) || []}
-					triggerUpdateData={async () => {
-						const animals = await StorageService.listAnimals();
-						setAnimals(animals);
-					}}
-				/>
-			)}
+			{isLoading ? <Loading /> : <AnimalTable animals={animals || []} />}
 			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Link href="/(screens)/animals/add" asChild>
 					<Button title="Adicionar novo animal" />
@@ -71,19 +62,3 @@ export default function ViewAnimalsScreen() {
 		</ContainerView>
 	);
 }
-
-const filterAnimalsByText = (animals?: Animal[], text?: string) => {
-	if (!text || !animals) return animals;
-	return animals?.filter((animal) => {
-		const lowerCaseText = text.toLowerCase();
-		const animalName = animal.name.toLowerCase();
-		const animalObservation = animal.observation?.toLowerCase() || "";
-		const animalCode = animal.code?.toString().toLowerCase() || "";
-
-		return (
-			animalName.includes(lowerCaseText) ||
-			animalObservation.includes(lowerCaseText) ||
-			animalCode.includes(lowerCaseText)
-		);
-	});
-};

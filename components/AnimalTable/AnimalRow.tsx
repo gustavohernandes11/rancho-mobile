@@ -1,29 +1,29 @@
 import Colors from "constants/Colors";
 import { Link } from "expo-router";
+import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useCallback } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
 import { getFormattedAge } from "utils/getFormattedAge";
 import { getGenderIcon } from "utils/getGenderIcon";
 
 interface AnimalRowProps {
 	animal: Animal;
-	batch?: Batch;
 	alwaysShowCheckbox?: boolean;
 }
 
 export const AnimalRow: React.FC<AnimalRowProps> = ({
 	animal,
-	batch,
 	alwaysShowCheckbox,
 }) => {
 	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
 		useSelectionMode();
+	const { batches } = useData();
 	const isSelected = selectedIDs.includes(animal.id);
+	const batch = batches.find((b) => animal?.batchId === b.id);
 
 	const toggleSelected = useCallback(() => {
 		setSelectedIDs((prevIDs) =>
@@ -58,7 +58,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 						{" " + animal.name}
 					</DataTable.Cell>
 					<DataTable.Cell textStyle={sharedStyles.text}>
-						{animal.batchId && batch && batch.name}
+						{batch && batch.name}
 					</DataTable.Cell>
 					<DataTable.Cell textStyle={sharedStyles.text}>
 						{animal.birthdate && getFormattedAge(animal.birthdate)}

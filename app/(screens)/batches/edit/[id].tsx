@@ -1,21 +1,13 @@
 import { BatchForm } from "components/BatchForm";
 import { ContainerView } from "components/ContainerView";
-import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
-import { Batch } from "types/Batch";
+import { useData } from "hooks/useData";
 
 export default function EditAnimalScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const [batch, setBatch] = useState<Batch>();
+	const { batches } = useData();
+	const batch = batches.find((batch) => batch.id === Number(id));
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const response = await StorageService.loadBatchInfo(Number(id));
-			setBatch(response);
-		};
-		fetchData();
-	}, []);
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Editar lote" }} />

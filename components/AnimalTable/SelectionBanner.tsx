@@ -1,6 +1,6 @@
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
-import { router } from "expo-router";
+import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
@@ -10,7 +10,6 @@ import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
 interface SelectionBannerProps {
 	allAnimalIDs: number[];
-	triggerUpdateData: () => void;
 	showActions?: boolean;
 	showDeleteButton?: boolean;
 }
@@ -19,10 +18,10 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	allAnimalIDs,
 	showActions,
 	showDeleteButton,
-	triggerUpdateData,
 	...props
 }) => {
 	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
+	const { setAnimals } = useData();
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 	return (
 		<View
@@ -33,7 +32,6 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 				visible={isBatchModalVisible}
 				onDismiss={() => setIsBatchModalVisible(false)}
 				setIsBatchModalVisible={setIsBatchModalVisible}
-				refreshAnimalsCallback={triggerUpdateData}
 			/>
 			<Span
 				justifyContent="space-between"
@@ -64,7 +62,14 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 									showConfirmationAndDeleteAll(
 										selectedIDs,
 										() => {
-											triggerUpdateData();
+											setAnimals((prev) =>
+												prev.filter(
+													(al) =>
+														!selectedIDs.includes(
+															al.id
+														)
+												)
+											);
 											clearSelection();
 										}
 									)

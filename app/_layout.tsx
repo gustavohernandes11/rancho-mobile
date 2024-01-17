@@ -4,6 +4,7 @@ import {
 	DefaultTheme,
 	ThemeProvider,
 } from "@react-navigation/native";
+import { DataProvider } from "contexts/DataContext";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
@@ -44,16 +45,18 @@ function RootLayoutNav() {
 			<ThemeProvider
 				value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
 			>
-				<Stack>
-					<Stack.Screen
-						name="(tabs)"
-						options={{ headerShown: false }}
-					/>
-					<Stack.Screen
-						name="(screens)"
-						options={{ headerShown: false }}
-					/>
-				</Stack>
+				<DataProvider>
+					<Stack>
+						<Stack.Screen
+							name="(tabs)"
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name="(screens)"
+							options={{ headerShown: false }}
+						/>
+					</Stack>
+				</DataProvider>
 			</ThemeProvider>
 		</Provider>
 	);

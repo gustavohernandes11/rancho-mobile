@@ -9,48 +9,27 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
-import { useEffect, useState } from "react";
+import { useData } from "hooks/useData";
 import { Alert } from "react-native";
 import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
 import { Item } from "types/Item";
 import { getFormattedAge } from "utils/getFormattedAge";
 import { getFormattedGender } from "utils/getFormattedGender";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const [animal, setAnimal] = useState<Animal>();
-	const [paternityAnimal, setPaternityAnimal] = useState<Animal>();
-	const [maternityAnimal, setMaternityAnimal] = useState<Animal>();
-	const [batch, setBatch] = useState<Batch>();
+	const { refreshAnimals, batches, animals } = useData();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			const animal = await StorageService.loadAnimal(Number(id));
-			setAnimal(animal);
-
-			if (animal.batchId) {
-				setBatch(await StorageService.loadBatchInfo(animal.batchId));
-			}
-			if (animal.maternityId) {
-				setMaternityAnimal(
-					await StorageService.loadAnimal(animal.maternityId)
-				);
-			}
-			if (animal.paternityId) {
-				setPaternityAnimal(
-					await StorageService.loadAnimal(animal.paternityId)
-				);
-			}
-		};
-		fetchData();
-	}, []);
+	const animal = animals.find((a) => a.id === Number(id));
+	const batch = batches.find((b) => b.id === animal?.batchId);
+	const maternity = animals.find((a) => a.id === animal?.maternityId);
+	const paternity = animals.find((a) => a.id === animal?.paternityId);
 
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Detalhes do animal" }} />
 			<Heading>{animal?.name}</Heading>
-			<SubTitle>{`Detalhes do animal "${animal?.name}"`}</SubTitle>
+			<SubTitle>Detalhes do animal</SubTitle>
 			<Heading size="small">Informações gerais</Heading>
 			<SimpleTable data={serializeAnimalInfoToKeyValue(animal)} />
 			{batch && (
@@ -61,25 +40,25 @@ export default function ViewAnimalDetailsScreen() {
 					</Link>
 				</>
 			)}
-			{animal && paternityAnimal && (
+			{animal && paternity && (
 				<>
 					<Heading size="small">Paternidade</Heading>
 					<Link
 						href={`/(screens)/animals/${animal.paternityId}`}
 						asChild
 					>
-						<AnimalInfo animal={paternityAnimal} />
+						<AnimalInfo animal={paternity} />
 					</Link>
 				</>
 			)}
-			{animal && maternityAnimal && (
+			{animal && maternity && (
 				<>
 					<Heading size="small">Maternidade</Heading>
 					<Link
 						href={`/(screens)/animals/${animal.maternityId}`}
 						asChild
 					>
-						<AnimalInfo animal={maternityAnimal} />
+						<AnimalInfo animal={maternity} />
 					</Link>
 				</>
 			)}
@@ -93,7 +72,9 @@ export default function ViewAnimalDetailsScreen() {
 				<Button
 					type="danger"
 					title="Deletar"
-					onPress={() => showConfirmationAndDelete(animal!)}
+					onPress={() =>
+						showConfirmationAndDelete(animal!, refreshAnimals)
+					}
 				/>
 				<Button
 					title="Editar"
@@ -103,7 +84,10 @@ export default function ViewAnimalDetailsScreen() {
 		</ContainerView>
 	);
 }
-const showConfirmationAndDelete = (animal: Animal) => {
+const showConfirmationAndDelete = (
+	animal: Animal,
+	onDeleteCallback: () => void
+) => {
 	Alert.alert(
 		`Deletar animal?`,
 		`Você têm certeza que deseja deletar o animal "${animal.name}"?`,
@@ -116,7 +100,7 @@ const showConfirmationAndDelete = (animal: Animal) => {
 				text: "Deletar",
 				onPress: () =>
 					StorageService.deleteAnimal(animal.id).then(() =>
-						router.replace("/(screens)/animals/")
+						onDeleteCallback()
 					),
 				style: "destructive",
 			},
