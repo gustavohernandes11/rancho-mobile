@@ -31,7 +31,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = ({
 				? prevIDs.filter((id) => id !== animal.id)
 				: [...prevIDs, animal.id]
 		);
-	}, [animal.id, setSelectedIDs]);
+	}, [animal.id, selectedIDs]);
 
 	return (
 		<Link
