@@ -14,11 +14,14 @@ import { Animal } from "types/Animal";
 export default function ViewAnimalsScreen() {
 	const [animals, setAnimals] = useState<Animal[]>();
 	const [searchText, setSearchText] = useState("");
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
 		const fetchData = async () => {
+			setIsLoading(true);
 			const animals = await StorageService.listAnimals();
 			setAnimals(animals);
+			setIsLoading(false);
 		};
 		fetchData();
 	}, []);
@@ -31,11 +34,16 @@ export default function ViewAnimalsScreen() {
 				alignItems="center"
 			>
 				<Heading>Todos seus animais</Heading>
-				<SubTitle>{`Total: ${animals?.length}`}</SubTitle>
+				<SubTitle>{`Total: ${animals?.length || "?"}`}</SubTitle>
 			</Span>
 			<Span>
 				<SearchBar
-					onChangeText={(text) => setSearchText(text)}
+					onChangeText={(text) => {
+						setSearchText(text);
+						StorageService.searchAnimals(text).then((animals) =>
+							setAnimals(animals)
+						);
+					}}
 					value={searchText}
 					placeholder="Busque por nome, observação ou código."
 				/>
@@ -44,12 +52,12 @@ export default function ViewAnimalsScreen() {
 				Clique sobre o animal para ver mais detalhes. Pressione para
 				selecionar vários.
 			</SubTitle>
-			{animals ? (
+			{isLoading ? (
+				<Loading />
+			) : (
 				<AnimalTable
 					animals={filterAnimalsByText(animals, searchText) || []}
 				/>
-			) : (
-				<Loading />
 			)}
 			<Span justifyContent="flex-end" paddingVertical={16}>
 				<Link href="/(screens)/animals/add" asChild>
