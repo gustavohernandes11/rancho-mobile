@@ -62,4 +62,7 @@ export class Database implements DatabaseRepository {
 	): Promise<boolean> {
 		return this.dbRepository.moveAnimalsToBatch(animalIDsToMove, batchID);
 	}
+	async searchAnimals(text: string): Promise<Animal[]> {
+		return this.dbRepository.searchAnimals(text);
+	}
 }

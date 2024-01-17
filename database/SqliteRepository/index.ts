@@ -166,6 +166,18 @@ export class SqliteRepository implements DatabaseRepository {
 
 		return this.executeQuery(query, []).then(({ rows }) => rows._array);
 	}
+	async searchAnimals(text: string): Promise<Animal[]> {
+		const query = `
+		SELECT 
+			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+		FROM Animals
+		WHERE (COALESCE(CONVERT(NVARCHAR(max), name), '') +
+			  COALESCE(CONVERT(NVARCHAR(max), code), '') +
+			  COALESCE(CONVERT(VARCHAR(max), observation), '') +) LIKE '%?%'
+		`;
+
+		return this.executeQuery(query, [text]).then(({ rows }) => rows._array);
+	}
 	async loadBatchAnimals(batchId: number): Promise<Animal[]> {
 		const query = `
 		SELECT

@@ -5,7 +5,8 @@ export interface DatabaseRepository {
 	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
 	insertBatch(batch: AddBatch): Promise<number | undefined>;
 	loadAnimal(animalID: number): Promise<Animal>;
-	listAnimals(search?: string): Promise<Animal[]>;
+	listAnimals(): Promise<Animal[]>;
+	searchAnimals(text: string): Promise<Animal[]>;
 	loadBatchAnimals(batchID: number): Promise<Animal[]>;
 	loadBatchInfo(batchID: number): Promise<Batch>;
 	listAllBatchesInfo(): Promise<Batch[]>;
