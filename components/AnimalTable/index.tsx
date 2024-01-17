@@ -15,12 +15,14 @@ interface AnimalTableProps {
 	animals: Animal[];
 	onlySelectionMode?: boolean;
 	scroll?: boolean;
+	triggerUpdateData: () => void;
 }
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
 	animals,
 	scroll,
 	onlySelectionMode = false,
+	triggerUpdateData,
 	...props
 }) => {
 	const [batches, setBatches] = useState<Batch[]>();
@@ -56,12 +58,14 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 
 	return (
 		<>
+			<Text>{JSON.stringify(selectedIDs)}</Text>
 			{(onlySelectionMode || isSelectionMode) && (
 				<Span>
 					<SelectionBanner
 						showActions={!onlySelectionMode}
 						showDeleteButton={!onlySelectionMode}
 						allAnimalIDs={animals.map((a) => a.id)}
+						triggerUpdateData={triggerUpdateData}
 					/>
 				</Span>
 			)}

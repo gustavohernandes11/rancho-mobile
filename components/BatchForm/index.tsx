@@ -94,7 +94,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 
 						initialAnimals?.map((animal) => {
 							if (
-								animal.batchId === batch.id ||
+								animal.batchId === batch.id &&
 								!selectedIDs.includes(animal.id)
 							) {
 								StorageService.moveAnimalToBatch(
@@ -102,7 +102,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 									null
 								);
 							} else if (
-								animal.batchId !== batch.id ||
+								animal.batchId !== batch.id &&
 								selectedIDs.includes(animal.id)
 							) {
 								StorageService.moveAnimalToBatch(
@@ -155,6 +155,10 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						scroll
 						onlySelectionMode={true}
 						animals={animals}
+						triggerUpdateData={async () => {
+							const animals = await StorageService.listAnimals();
+							setAnimals(animals);
+						}}
 					/>
 				) : (
 					<Loading />

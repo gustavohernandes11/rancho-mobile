@@ -10,6 +10,7 @@ import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
 interface SelectionBannerProps {
 	allAnimalIDs: number[];
+	triggerUpdateData: () => void;
 	showActions?: boolean;
 	showDeleteButton?: boolean;
 }
@@ -18,6 +19,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	allAnimalIDs,
 	showActions,
 	showDeleteButton,
+	triggerUpdateData,
 	...props
 }) => {
 	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
@@ -31,6 +33,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 				visible={isBatchModalVisible}
 				onDismiss={() => setIsBatchModalVisible(false)}
 				setIsBatchModalVisible={setIsBatchModalVisible}
+				refreshAnimalsCallback={triggerUpdateData}
 			/>
 			<Span
 				justifyContent="space-between"
@@ -61,9 +64,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 									showConfirmationAndDeleteAll(
 										selectedIDs,
 										() => {
-											router.replace(
-												"/(screens)/animals"
-											);
+											triggerUpdateData();
 											clearSelection();
 										}
 									)

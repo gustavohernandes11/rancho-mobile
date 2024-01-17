@@ -25,7 +25,7 @@ export default function ViewBatchesScreen() {
 			<Stack.Screen options={{ headerTitle: "Ver lotes" }} />
 			<Span justifyContent="space-between" alignItems="center">
 				<Heading>Lotes</Heading>
-				<SubTitle>{`Total: ${batches?.length}`}</SubTitle>
+				<SubTitle>{`Total: ${batches?.length || "?"}`}</SubTitle>
 			</Span>
 			<SubTitle>Clique sobre o lote para ver mais detalhes</SubTitle>
 			<View style={{ gap: 4 }}>

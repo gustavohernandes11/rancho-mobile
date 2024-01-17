@@ -3,7 +3,6 @@ import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
 import { StorageService } from "database/StorageService";
-import { router } from "expo-router";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { Fragment, useEffect, useState } from "react";
 import {
@@ -22,13 +21,19 @@ interface MoveToBatchModalProps {
 	visible: boolean;
 	onDismiss: () => void;
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	refreshAnimalsCallback: () => void;
 }
 export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
-> = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
+> = ({
+	visible,
+	onDismiss,
+	setIsBatchModalVisible,
+	refreshAnimalsCallback,
+	...props
+}) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
 	const { selectedIDs, clearSelection } = useSelectionMode();
-
 	const [batches, setBatches] = useState<Batch[]>();
 
 	useEffect(() => {
@@ -48,7 +53,7 @@ export const MoveToBatchModal: React.FC<
 					"Animais movidos para o lote " + selectedBatch!.name + "."
 				);
 				clearSelection();
-				router.replace("/(screens)/animals/");
+				refreshAnimalsCallback();
 			})
 			.catch((error) => {
 				Alert.alert(

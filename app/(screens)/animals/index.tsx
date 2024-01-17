@@ -57,6 +57,10 @@ export default function ViewAnimalsScreen() {
 			) : (
 				<AnimalTable
 					animals={filterAnimalsByText(animals, searchText) || []}
+					triggerUpdateData={async () => {
+						const animals = await StorageService.listAnimals();
+						setAnimals(animals);
+					}}
 				/>
 			)}
 			<Span justifyContent="flex-end" paddingVertical={16}>

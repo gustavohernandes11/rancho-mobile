@@ -45,7 +45,19 @@ export default function ViewBatchDetailsScreen() {
 					</>
 				))}
 			<Heading size="small">Animais do lote</Heading>
-			{animals ? <AnimalTable animals={animals} /> : <Loading />}
+			{animals ? (
+				<AnimalTable
+					animals={animals}
+					triggerUpdateData={async () => {
+						const animals = await StorageService.loadBatchAnimals(
+							Number(id)
+						);
+						setAnimals(animals);
+					}}
+				/>
+			) : (
+				<Loading />
+			)}
 			<Span
 				flexWrap="wrap"
 				justifyContent="flex-end"
