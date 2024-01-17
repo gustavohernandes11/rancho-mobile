@@ -24,8 +24,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	...props
 }) => {
 	const [batches, setBatches] = useState<Batch[]>();
-	const { isSelectionMode, setIsSelectionMode, selectedIDs, setSelectedIDs } =
-		useSelectionMode();
+	const { isSelectionMode, clearSelection, selectedIDs } = useSelectionMode();
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -39,8 +38,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 		React.useCallback(() => {
 			const backAction = () => {
 				if (isSelectionMode) {
-					setIsSelectionMode(false);
-					setSelectedIDs([]);
+					clearSelection();
 					return true;
 				} else {
 					return false;

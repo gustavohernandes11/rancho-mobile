@@ -20,8 +20,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	showDeleteButton,
 	...props
 }) => {
-	const { setIsSelectionMode, selectedIDs, setSelectedIDs } =
-		useSelectionMode();
+	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 	return (
 		<View
@@ -42,10 +41,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 					<IconButton
 						iconColor={Colors.white}
 						icon="close"
-						onPress={() => {
-							setIsSelectionMode(false);
-							setSelectedIDs([]);
-						}}
+						onPress={clearSelection}
 						style={{
 							margin: 0,
 						}}
@@ -68,8 +64,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 											router.replace(
 												"/(screens)/animals"
 											);
-											setSelectedIDs([]);
-											setIsSelectionMode(false);
+											clearSelection();
 										}
 									)
 								}

@@ -27,8 +27,7 @@ export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch>();
-	const { selectedIDs, setSelectedIDs, setIsSelectionMode } =
-		useSelectionMode();
+	const { selectedIDs, clearSelection } = useSelectionMode();
 
 	const [batches, setBatches] = useState<Batch[]>();
 
@@ -48,8 +47,7 @@ export const MoveToBatchModal: React.FC<
 					"Ok!",
 					"Animais movidos para o lote " + selectedBatch!.name + "."
 				);
-				setSelectedIDs([]);
-				setIsSelectionMode(false);
+				clearSelection();
 				router.replace("/(screens)/animals/");
 			})
 			.catch((error) => {

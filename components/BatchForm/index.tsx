@@ -24,7 +24,7 @@ interface BatchFormProps {
 export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
-	const { selectedIDs, setSelectedIDs } = useSelectionMode();
+	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
@@ -45,7 +45,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	useFocusEffect(
 		React.useCallback(() => {
 			const backAction = () => {
-				setSelectedIDs([]);
+				clearSelection();
 				return false;
 			};
 
@@ -83,7 +83,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						)
 					)
 					.then(() => {
-						setSelectedIDs([]);
+						clearSelection();
 						router.replace("/(screens)/batches/");
 					})
 
@@ -113,7 +113,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						});
 					})
 					.then(() => {
-						setSelectedIDs([]);
+						clearSelection();
 						router.replace("/(screens)/batches/");
 					})
 					.catch((error) => Alert.alert("Error", error));
@@ -166,7 +166,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					title="Cancelar"
 					onPress={() => {
 						navigation.goBack();
-						setSelectedIDs([]);
+						clearSelection();
 					}}
 				/>
 				<Button title="Salvar" onPress={formik.submitForm} />
