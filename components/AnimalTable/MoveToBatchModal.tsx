@@ -14,8 +14,17 @@ import {
 	TouchableOpacity,
 	View,
 } from "react-native";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
-import { Divider, ModalProps, Portal, RadioButton } from "react-native-paper";
+import {
+	ScrollView,
+	TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
+import {
+	Divider,
+	DividerProps,
+	ModalProps,
+	Portal,
+	RadioButton,
+} from "react-native-paper";
 import { Batch } from "types/Batch";
 
 interface MoveToBatchModalProps {
@@ -74,34 +83,45 @@ export const MoveToBatchModal: React.FC<
 								value={selectedBatch?.id.toString() || ""}
 							>
 								<CustomDivider />
-								{batches?.map((batch) => (
-									<Fragment key={batch.id}>
-										<Span
-											justifyContent="space-between"
-											alignItems="center"
-										>
-											<View>
-												<Text>{batch.name}</Text>
-												<Text
-													style={styles.description}
-												>
-													{batch.description}
-												</Text>
-											</View>
-											<RadioButton
-												color={Colors.green}
-												value={batch.id.toString()}
-												status={
-													selectedBatch?.id ===
-													batch.id
-														? "checked"
-														: "unchecked"
+								<ScrollView style={{ height: "75%" }}>
+									{batches?.map((batch) => (
+										<Fragment key={batch.id}>
+											<Span
+												onStartShouldSetResponder={() =>
+													true
 												}
-											/>
-										</Span>
-										<CustomDivider />
-									</Fragment>
-								))}
+												justifyContent="space-between"
+												alignItems="center"
+											>
+												<View
+													onStartShouldSetResponder={() =>
+														true
+													}
+												>
+													<Text>{batch.name}</Text>
+													<Text
+														style={
+															styles.description
+														}
+													>
+														{batch.description}
+													</Text>
+												</View>
+												<RadioButton
+													color={Colors.green}
+													value={batch.id.toString()}
+													status={
+														selectedBatch?.id ===
+														batch.id
+															? "checked"
+															: "unchecked"
+													}
+												/>
+											</Span>
+											<CustomDivider />
+										</Fragment>
+									))}
+								</ScrollView>
 							</RadioButton.Group>
 
 							<Span justifyContent="flex-end" marginVertical={16}>
@@ -125,14 +145,14 @@ export const MoveToBatchModal: React.FC<
 		</Portal>
 	);
 };
-const CustomDivider = () => (
-	<Divider style={{ backgroundColor: Colors.border }} />
+const CustomDivider = ({ ...props }: DividerProps) => (
+	<Divider style={{ backgroundColor: Colors.border }} {...props} />
 );
 
 const styles = StyleSheet.create({
 	modal: {
 		marginHorizontal: 16,
-		marginVertical: "50%",
+		marginVertical: "20%",
 		backgroundColor: Colors.white,
 		padding: 16,
 		borderRadius: 4,
