@@ -2,7 +2,7 @@ import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import React from "react";
 import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
-import { Batch } from "types/Batch";
+import { Batch } from "types";
 
 interface BatchInfoProps {
 	batch: Batch;

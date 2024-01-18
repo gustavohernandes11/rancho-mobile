@@ -1,5 +1,5 @@
 import Colors from "constants/Colors";
-import { ButtonTypes } from "types/ButtonTypes";
+import { ButtonTypes } from "types";
 
 export const getButtonBackgroundColor = (type: ButtonTypes) =>
 	type === "primary" ? Colors.green : Colors.gray;

@@ -1,7 +1,13 @@
 import { SQLResultSet, openDatabase } from "expo-sqlite";
-import { AddAnimal, Animal, UpdateAnimal } from "types/Animal";
-import { AddBatch, Batch, UpdateBatch } from "types/Batch";
-import { DatabaseRepository } from "types/DatabaseRepository";
+import {
+	AddAnimal,
+	AddBatch,
+	Animal,
+	Batch,
+	DatabaseRepository,
+	UpdateAnimal,
+	UpdateBatch,
+} from "types";
 import { nullifyFalsyFields } from "utils/serializers";
 
 export class SqliteRepository implements DatabaseRepository {

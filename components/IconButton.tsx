@@ -5,7 +5,7 @@ import {
 	TouchableHighlight,
 	TouchableHighlightProps,
 } from "react-native";
-import { ButtonTypes } from "types/ButtonTypes";
+import { ButtonTypes } from "types";
 import {
 	getOnPressedColor,
 	getButtonBackgroundColor,

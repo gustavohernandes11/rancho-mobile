@@ -1,6 +1,4 @@
-import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
-import { Item } from "types/Item";
+import { Animal, Batch, Item } from "types";
 
 export const serializeAnimals = (animals: Animal[]): Item[] =>
 	animals.map((a) => ({

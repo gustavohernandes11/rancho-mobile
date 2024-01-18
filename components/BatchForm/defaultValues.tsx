@@ -1,4 +1,4 @@
-import { Batch } from "types/Batch";
+import { Batch } from "types";
 
 export const defaultValues: Batch = {
 	id: "",

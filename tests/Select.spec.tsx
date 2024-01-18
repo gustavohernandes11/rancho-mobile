@@ -1,7 +1,7 @@
 import { render, screen } from "utils/setup-tests";
 
 import { Select } from "components/Select";
-import { Item } from "types/Item";
+import { Item } from "types";
 
 describe("Select", () => {
 	const mockItems: Item[] = [

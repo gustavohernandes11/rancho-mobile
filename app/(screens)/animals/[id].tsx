@@ -12,8 +12,7 @@ import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
 import { useEffect } from "react";
 import { Alert } from "react-native";
-import { Animal } from "types/Animal";
-import { Item } from "types/Item";
+import { Animal, Item } from "types";
 import { getFormattedAge, getFormattedGender } from "utils/formatters";
 
 export default function ViewAnimalDetailsScreen() {
@@ -37,7 +36,7 @@ export default function ViewAnimalDetailsScreen() {
 			<Heading>{animal?.name}</Heading>
 			<SubTitle>Detalhes do animal</SubTitle>
 			<Heading size="small">Informações gerais</Heading>
-			<SimpleTable data={serializeAnimalInfoToKeyValue(animal)} />
+			<SimpleTable data={serializeAnimalInfo(animal)} />
 			{batch && (
 				<>
 					<Heading size="small">Lote</Heading>
@@ -113,7 +112,7 @@ const showConfirmationAndDelete = (
 		]
 	);
 };
-const serializeAnimalInfoToKeyValue = (animal?: Animal): Item[] => {
+const serializeAnimalInfo = (animal?: Animal): Item[] => {
 	let items: Item[] = [];
 	if (!animal) return items;
 

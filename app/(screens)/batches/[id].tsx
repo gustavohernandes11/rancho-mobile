@@ -11,8 +11,7 @@ import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Batch } from "types/Batch";
-import { Item } from "types/Item";
+import { Batch, Item } from "types";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();

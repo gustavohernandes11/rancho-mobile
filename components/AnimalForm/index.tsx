@@ -10,7 +10,7 @@ import { useData } from "hooks/useData";
 import moment from "moment";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 import {
 	filterPossibleMaternity,
 	filterPossiblePaternity,

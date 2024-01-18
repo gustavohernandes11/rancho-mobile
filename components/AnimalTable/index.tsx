@@ -7,7 +7,7 @@ import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect } from "react";
 import { BackHandler } from "react-native";
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 import { AnimalRow } from "./AnimalRow";
 import { SelectionBanner } from "./SelectionBanner";
 

@@ -1,7 +1,6 @@
 import { StorageService } from "database/StorageService";
 import { createContext, useState } from "react";
-import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
+import { Animal, Batch } from "types";
 
 export const DataContext = createContext<
 	| {
