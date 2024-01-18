@@ -1,4 +1,5 @@
 import { Button } from "components/Button";
+import { CustomDivider } from "components/CustomDivider";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
@@ -145,9 +146,6 @@ export const MoveToBatchModal: React.FC<
 		</Portal>
 	);
 };
-const CustomDivider = ({ ...props }: DividerProps) => (
-	<Divider style={{ backgroundColor: Colors.border }} {...props} />
-);
 
 const styles = StyleSheet.create({
 	modal: {

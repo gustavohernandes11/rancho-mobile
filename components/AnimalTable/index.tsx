@@ -1,12 +1,11 @@
-import { FlatList, Text } from "react-native";
-import { DataTable } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
 import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect } from "react";
-import { BackHandler } from "react-native";
+import { BackHandler, FlatList, ScrollView, Text } from "react-native";
+import { DataTable } from "react-native-paper";
+import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
 import { AnimalRow } from "./AnimalRow";
 import { SelectionBanner } from "./SelectionBanner";
@@ -53,7 +52,10 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	);
 
 	return (
-		<>
+		<ScrollView
+			horizontal={true}
+			contentContainerStyle={{ width: "100%", height: "100%" }}
+		>
 			{(onlySelectionMode || isSelectionMode) && (
 				<Span>
 					<SelectionBanner
@@ -100,6 +102,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					</Span>
 				)}
 			/>
-		</>
+		</ScrollView>
 	);
 };

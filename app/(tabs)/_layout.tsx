@@ -43,11 +43,20 @@ export default function TabLayout() {
 				}}
 			/>
 			<Tabs.Screen
-				name="config"
+				name="animals"
 				options={{
 					tabBarShowLabel: false,
 					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="cogs" color={color} />
+						<TabBarIcon name="list" color={color} />
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="batches"
+				options={{
+					tabBarShowLabel: false,
+					tabBarIcon: ({ color }) => (
+						<TabBarIcon name="cubes" color={color} />
 					),
 				}}
 			/>

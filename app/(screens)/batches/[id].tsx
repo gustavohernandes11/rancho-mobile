@@ -15,7 +15,8 @@ import { Batch, Item } from "types";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { animals, batches, setAnimals, refreshAnimals } = useData();
+	const { animals, batches, setAnimals, refreshAnimals, refreshBatches } =
+		useData();
 	const [isLoading, setIsLoading] = useState(true);
 	const batch = batches.find((b) => b.id === Number(id));
 
@@ -37,7 +38,7 @@ export default function ViewBatchDetailsScreen() {
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Detalhes do lote" }} />
 			<Heading>{batch?.name}</Heading>
-			<SubTitle>{`Detalhes do lote "${batch?.name || "?"}"`}</SubTitle>
+			<SubTitle>Detalhes do lote</SubTitle>
 
 			{!!batch?.count ||
 				(batch?.description && (
@@ -58,12 +59,24 @@ export default function ViewBatchDetailsScreen() {
 				<Button
 					type="danger"
 					title="Deletar lote e animais"
-					onPress={() => showConfirmationAndDeleteAll(batch!)}
+					onPress={() =>
+						showConfirmationAndDeleteAll(batch!, () => {
+							refreshAnimals();
+							refreshBatches();
+							router.back();
+						})
+					}
 				/>
 				<Button
 					type="danger"
 					title="Deletar lote"
-					onPress={() => showConfirmationAndDeleteOnlyBatch(batch!)}
+					onPress={() =>
+						showConfirmationAndDeleteOnlyBatch(batch!, () => {
+							refreshAnimals();
+							refreshBatches();
+							router.back();
+						})
+					}
 				/>
 				<Button
 					title="Editar"
@@ -91,7 +104,10 @@ const serializeBatchInfoToKeyValue = (batch?: Batch) => {
 	return items;
 };
 
-export const showConfirmationAndDeleteAll = (batch: Batch) => {
+export const showConfirmationAndDeleteAll = (
+	batch: Batch,
+	onConfirmCallback: () => void
+) => {
 	Alert.alert(
 		`Deletar tudo?`,
 		`Você têm certeza que deseja deletar o lote "${batch.name}" e todos seus animais?`,
@@ -104,7 +120,7 @@ export const showConfirmationAndDeleteAll = (batch: Batch) => {
 				text: "Deletar tudo",
 				onPress: () =>
 					StorageService.deleteBatchAndItsAnimals(batch.id).then(() =>
-						router.replace("/(screens)/batches/")
+						onConfirmCallback()
 					),
 				style: "destructive",
 			},
@@ -112,7 +128,10 @@ export const showConfirmationAndDeleteAll = (batch: Batch) => {
 	);
 };
 
-export const showConfirmationAndDeleteOnlyBatch = (batch: Batch) => {
+export const showConfirmationAndDeleteOnlyBatch = (
+	batch: Batch,
+	onConfirmCallback: () => void
+) => {
 	Alert.alert(
 		`Deletar apenas o lote?`,
 		`Você têm certeza que deseja deletar o lote "${batch.name}"? Os animais serão apenas desvinculados e não serão deletados.`,
@@ -126,7 +145,7 @@ export const showConfirmationAndDeleteOnlyBatch = (batch: Batch) => {
 				text: "Deletar",
 				onPress: () =>
 					StorageService.deleteBatch(batch.id).then(() =>
-						router.replace("/(screens)/batches/")
+						onConfirmCallback()
 					),
 				style: "destructive",
 			},

@@ -53,7 +53,7 @@ export default function ViewAnimalsScreen() {
 				selecionar vários.
 			</SubTitle>
 			{isLoading ? <Loading /> : <AnimalTable animals={animals || []} />}
-			<Span justifyContent="flex-end" paddingVertical={16}>
+			<Span justifyContent="flex-end" paddingVertical={8}>
 				<Link href="/(screens)/animals/add" asChild>
 					<Button title="Adicionar novo animal" />
 				</Link>

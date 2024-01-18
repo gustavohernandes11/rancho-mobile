@@ -16,7 +16,7 @@ export default function TabOneScreen() {
 					title="Adicionar animal"
 				/>
 				<Card
-					href="/animals"
+					href="/(tabs)/animals"
 					alt="alt"
 					iconSource={require("assets/images/CowIcon.png")}
 					title="Rebanho"

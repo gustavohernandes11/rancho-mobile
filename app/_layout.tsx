@@ -10,6 +10,7 @@ import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { useColorScheme } from "react-native";
 import { Provider } from "react-native-paper";
+import { SelectionModeProvider } from "contexts/SelectionContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -45,18 +46,20 @@ function RootLayoutNav() {
 			<ThemeProvider
 				value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
 			>
-				<DataProvider>
-					<Stack>
-						<Stack.Screen
-							name="(tabs)"
-							options={{ headerShown: false }}
-						/>
-						<Stack.Screen
-							name="(screens)"
-							options={{ headerShown: false }}
-						/>
-					</Stack>
-				</DataProvider>
+				<SelectionModeProvider>
+					<DataProvider>
+						<Stack>
+							<Stack.Screen
+								name="(tabs)"
+								options={{ headerShown: false }}
+							/>
+							<Stack.Screen
+								name="(screens)"
+								options={{ headerShown: false }}
+							/>
+						</Stack>
+					</DataProvider>
+				</SelectionModeProvider>
 			</ThemeProvider>
 		</Provider>
 	);
