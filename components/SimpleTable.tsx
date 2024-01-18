@@ -39,10 +39,11 @@ const styles = StyleSheet.create({
 		borderRadius: 4,
 		borderWidth: 1,
 		borderColor: Colors.border,
+		borderTopWidth: 0,
 	},
 	row: {
 		flexDirection: "row",
-		borderWidth: 1,
+		borderTopWidth: 1,
 		borderColor: Colors.border,
 		paddingVertical: 16,
 		paddingHorizontal: 8,

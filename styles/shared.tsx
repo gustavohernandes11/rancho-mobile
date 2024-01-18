@@ -18,7 +18,7 @@ export const sharedStyles = StyleSheet.create({
 		borderRadius: 4,
 		backgroundColor: Colors.lightGray,
 		borderColor: Colors.border,
-		borderWidth: 2,
+		borderWidth: 1,
 		fontFamily: Fonts.primaryFamily,
 	},
 	error: {
@@ -37,7 +37,7 @@ export const sharedStyles = StyleSheet.create({
 		borderColor: Colors.border,
 		borderStyle: "dashed",
 		borderRadius: 4,
-		borderWidth: 2,
+		borderWidth: 1,
 	},
 	textDisabled: {
 		color: Colors.darkGray,

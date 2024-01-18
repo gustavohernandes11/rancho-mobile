@@ -27,7 +27,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				mode="outlined"
 				outlineStyle={{
 					borderColor: getInputBorderColor(!!errorText),
-					borderWidth: 2,
+					borderWidth: 1,
 				}}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}

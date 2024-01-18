@@ -1,11 +1,12 @@
+import { FlatList, Text } from "react-native";
+import { DataTable } from "react-native-paper";
+import { sharedStyles } from "styles/shared";
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
 import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect } from "react";
-import { BackHandler, Text } from "react-native";
-import { DataTable } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import { BackHandler } from "react-native";
 import { Animal } from "types/Animal";
 import { AnimalRow } from "./AnimalRow";
 import { SelectionBanner } from "./SelectionBanner";
@@ -13,12 +14,10 @@ import { SelectionBanner } from "./SelectionBanner";
 interface AnimalTableProps {
 	animals: Animal[];
 	onlySelectionMode?: boolean;
-	scroll?: boolean;
 }
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
 	animals,
-	scroll,
 	onlySelectionMode = false,
 	...props
 }) => {
@@ -49,6 +48,10 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 		}, [isSelectionMode, selectedIDs])
 	);
 
+	const renderItem = ({ item }: { item: Animal }) => (
+		<AnimalRow alwaysShowCheckbox={onlySelectionMode} animal={item} />
+	);
+
 	return (
 		<>
 			{(onlySelectionMode || isSelectionMode) && (
@@ -60,40 +63,43 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					/>
 				</Span>
 			)}
-			<DataTable {...props}>
-				<DataTable.Header>
-					<DataTable.Title textStyle={sharedStyles.text}>
-						Nome
-					</DataTable.Title>
-					<DataTable.Title textStyle={sharedStyles.text}>
-						Lote
-					</DataTable.Title>
-					<DataTable.Title textStyle={sharedStyles.text}>
-						Idade
-					</DataTable.Title>
-					{(onlySelectionMode || isSelectionMode) && (
-						<DataTable.Title
-							style={{ flex: 1 / 3 }}
-							textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
-						>
-							{" "}
-						</DataTable.Title>
-					)}
-				</DataTable.Header>
-				{animals && animals.length > 0 ? (
-					animals.map((animal) => (
-						<AnimalRow
-							alwaysShowCheckbox={onlySelectionMode}
-							animal={animal}
-							key={animal.id}
-						/>
-					))
-				) : (
+			<FlatList
+				stickyHeaderHiddenOnScroll={false}
+				data={animals}
+				keyExtractor={(item) => item.id.toString()}
+				renderItem={renderItem}
+				ListHeaderComponent={() => (
+					<DataTable {...props}>
+						<DataTable.Header>
+							<DataTable.Title textStyle={sharedStyles.text}>
+								Nome
+							</DataTable.Title>
+							<DataTable.Title textStyle={sharedStyles.text}>
+								Lote
+							</DataTable.Title>
+							<DataTable.Title textStyle={sharedStyles.text}>
+								Idade
+							</DataTable.Title>
+							{(onlySelectionMode || isSelectionMode) && (
+								<DataTable.Title
+									style={{ flex: 1 / 3 }}
+									textStyle={[
+										{ flexShrink: 1 },
+										sharedStyles.text,
+									]}
+								>
+									{" "}
+								</DataTable.Title>
+							)}
+						</DataTable.Header>
+					</DataTable>
+				)}
+				ListEmptyComponent={() => (
 					<Span justifyContent="center">
 						<Text>Nenhum animal encontrado.</Text>
 					</Span>
 				)}
-			</DataTable>
+			/>
 		</>
 	);
 };
