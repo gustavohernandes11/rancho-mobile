@@ -101,14 +101,30 @@ export class SqliteRepository implements DatabaseRepository {
 		);
 	}
 	async deleteAnimal(animalID: number): Promise<boolean> {
-		const query = `
+		const deleteQuery = `
 		DELETE FROM Animals 
 		WHERE id = ?
 		`;
+		const unlinkPaternityQuery = `
+		UPDATE Animals
+		SET paternityId = NULL
+		WHERE paternityId = ?
+		`;
+		const unlinkMaternityQuery = `
+		UPDATE Animals
+		SET maternityId = NULL
+		WHERE maternityId = ?
+		`;
 
-		return this.executeQuery(query, [animalID]).then(
-			({ rowsAffected }) => !!rowsAffected
-		);
+		const operations = [
+			this.executeQuery(deleteQuery, [animalID]),
+			this.executeQuery(unlinkPaternityQuery, [animalID]),
+			this.executeQuery(unlinkMaternityQuery, [animalID]),
+		];
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
 	}
 	async deleteBatch(batchID: number): Promise<boolean> {
 		const deleteBatchQuery = `

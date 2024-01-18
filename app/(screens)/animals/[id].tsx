@@ -78,7 +78,10 @@ export default function ViewAnimalDetailsScreen() {
 					type="danger"
 					title="Deletar"
 					onPress={() =>
-						showConfirmationAndDelete(animal!, refreshAnimals)
+						showConfirmationAndDelete(animal!, () => {
+							refreshAnimals();
+							router.back();
+						})
 					}
 				/>
 				<Button
