@@ -6,12 +6,12 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useFocusEffect, useNavigation } from "expo-router";
 import { useFormik } from "formik";
+import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Alert, BackHandler, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
-import { Animal } from "types/Animal";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/getFieldError";
 import { defaultValues } from "./defaultValues";
@@ -25,6 +25,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
 	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
+	const { animals, refreshAnimals } = useData();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
@@ -32,14 +33,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		validationSchema,
 	});
 
-	const [animals, setAnimals] = useState<Animal[]>();
-
 	useEffect(() => {
-		const fetchData = async () => {
-			const animals = await StorageService.listAnimals();
-			setAnimals(animals);
-		};
-		fetchData();
+		refreshAnimals();
 	}, []);
 
 	useFocusEffect(
@@ -60,13 +55,10 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 
 	useEffect(() => {
 		if (initialValues.id) {
-			const fetchData = async () => {
-				const animalsFromBatch = await StorageService.loadBatchAnimals(
-					initialValues.id
-				);
-				setSelectedIDs(animalsFromBatch.map((a) => a.id));
-			};
-			fetchData();
+			const animalsFromBatch = animals.filter(
+				(al) => al.batchId === initialValues.id
+			);
+			setSelectedIDs(animalsFromBatch.map((a) => a.id));
 		}
 	}, [initialValues.id]);
 
@@ -151,15 +143,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 				title={`${selectedIDs.length} selecionado(s)`}
 			>
 				{animals ? (
-					<AnimalTable
-						scroll
-						onlySelectionMode={true}
-						animals={animals}
-						triggerUpdateData={async () => {
-							const animals = await StorageService.listAnimals();
-							setAnimals(animals);
-						}}
-					/>
+					<AnimalTable onlySelectionMode={true} animals={animals} />
 				) : (
 					<Loading />
 				)}
