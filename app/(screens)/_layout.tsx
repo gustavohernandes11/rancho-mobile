@@ -1,5 +1,5 @@
 import { Stack } from "expo-router";
-import { screenOptions } from "config/screenOptions";
+import { screenOptions } from "../../config/screenOptions";
 import { SelectionModeProvider } from "contexts/SelectionContext";
 
 export default function CommonPagesLayout() {
