@@ -10,11 +10,11 @@ import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
+import { useEffect } from "react";
 import { Alert } from "react-native";
 import { Animal } from "types/Animal";
 import { Item } from "types/Item";
-import { getFormattedAge } from "utils/getFormattedAge";
-import { getFormattedGender } from "utils/getFormattedGender";
+import { getFormattedAge, getFormattedGender } from "utils/formatters";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
@@ -24,6 +24,12 @@ export default function ViewAnimalDetailsScreen() {
 	const batch = batches.find((b) => b.id === animal?.batchId);
 	const maternity = animals.find((a) => a.id === animal?.maternityId);
 	const paternity = animals.find((a) => a.id === animal?.paternityId);
+
+	useEffect(() => {
+		refreshAnimals();
+
+		return () => refreshAnimals();
+	}, []);
 
 	return (
 		<ContainerView>

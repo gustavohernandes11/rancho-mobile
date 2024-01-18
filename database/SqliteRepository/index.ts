@@ -2,7 +2,7 @@ import { SQLResultSet, openDatabase } from "expo-sqlite";
 import { AddAnimal, Animal, UpdateAnimal } from "types/Animal";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { DatabaseRepository } from "types/DatabaseRepository";
-import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
+import { nullifyFalsyFields } from "utils/serializers";
 
 export class SqliteRepository implements DatabaseRepository {
 	private db = openDatabase("rancho.db");

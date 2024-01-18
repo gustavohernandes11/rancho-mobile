@@ -1,4 +1,4 @@
-import { render, screen } from "utils/setupTests";
+import { render, screen } from "utils/setup-tests";
 
 import { Select } from "components/Select";
 import { Item } from "types/Item";

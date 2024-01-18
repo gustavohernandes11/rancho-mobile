@@ -10,7 +10,6 @@ import { StorageService } from "database/StorageService";
 import { Link, Stack } from "expo-router";
 import { useData } from "hooks/useData";
 import { useEffect, useState } from "react";
-import { Animal } from "types/Animal";
 
 export default function ViewAnimalsScreen() {
 	const { animals, refreshAnimals, setAnimals } = useData();

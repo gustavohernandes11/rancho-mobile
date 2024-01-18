@@ -11,13 +11,14 @@ import moment from "moment";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Animal } from "types/Animal";
-import { getFormattedGender } from "utils/getFormattedGender";
-import { getFieldError } from "../../utils/getFieldError";
+import {
+	filterPossibleMaternity,
+	filterPossiblePaternity,
+} from "utils/filters";
+import { getFormattedGender } from "utils/formatters";
+import { getFieldError } from "utils/forms";
+import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { defaultValues } from "./defaultValues";
-import { filterPossibleMaternity } from "./filterPossibleMaternity";
-import { filterPossiblePaternity } from "./filterPossiblePaternity";
-import { serializeAnimalsToKeyValue } from "./serializeAnimalsToKeyValue";
-import { serializeBatchesToKeyValue } from "./serializeBatchesToKeyValue";
 import { validationSchema } from "./validation.schema";
 
 interface AnimalFormProps {
@@ -33,12 +34,12 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 			initialValues.id
 				? StorageService.updateAnimal(values)
 						.then(() => {
-							router.replace("/(screens)/animals/");
+							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error))
 				: StorageService.insertAnimal(values)
 						.then(() => {
-							router.replace("/(screens)/animals/");
+							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error));
 		},
@@ -101,7 +102,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 			</Span>
 			<Select
 				items={[
-					...serializeBatchesToKeyValue(batches || []),
+					...serializeBatches(batches || []),
 					{ key: "Selecione um lote", value: "" },
 				]}
 				defaultButtonText={
@@ -130,7 +131,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 							?.name || "Selecione um animal"
 					}
 					items={[
-						...serializeAnimalsToKeyValue(
+						...serializeAnimals(
 							filterPossiblePaternity(
 								animals!,
 								formik.values.birthdate
@@ -150,7 +151,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 							?.name || "Selecione um animal"
 					}
 					items={[
-						...(serializeAnimalsToKeyValue(
+						...(serializeAnimals(
 							filterPossibleMaternity(
 								animals!,
 								formik.values.birthdate

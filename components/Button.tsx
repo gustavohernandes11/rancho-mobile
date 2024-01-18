@@ -6,9 +6,11 @@ import {
 } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { ButtonTypes } from "types/ButtonTypes";
-import { getButtonBackgroundColor } from "utils/getButtonBackgroundColor";
-import { getButtonBorderColor } from "utils/getButtonBorderColor";
-import { getButtonTextColor } from "utils/getButtonTextColor";
+import {
+	getButtonBackgroundColor,
+	getButtonBorderColor,
+	getButtonTextColor,
+} from "utils/conditional-styles";
 
 type CustomButtonProps = {
 	title: string;

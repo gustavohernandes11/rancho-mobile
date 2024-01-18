@@ -3,8 +3,7 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
-import { getFormattedAge } from "utils/getFormattedAge";
-import { getGenderIcon } from "utils/getGenderIcon";
+import { getGenderIcon, getFormattedAge } from "utils/formatters";
 
 interface AnimalInfoProps {
 	animal: Animal;

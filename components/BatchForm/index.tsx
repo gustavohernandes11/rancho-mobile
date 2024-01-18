@@ -13,7 +13,7 @@ import { Alert, BackHandler, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
-import { getFieldError } from "utils/getFieldError";
+import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 

@@ -6,10 +6,12 @@ import {
 	TouchableHighlightProps,
 } from "react-native";
 import { ButtonTypes } from "types/ButtonTypes";
-import { getButtonBackgroundColor } from "utils/getButtonBackgroundColor";
-import { getButtonBorderColor } from "utils/getButtonBorderColor";
-import { getButtonTextColor } from "utils/getButtonTextColor";
-import { getOnPressedColor } from "utils/getOnPressedColor";
+import {
+	getOnPressedColor,
+	getButtonBackgroundColor,
+	getButtonBorderColor,
+	getButtonTextColor,
+} from "utils/conditional-styles";
 
 type CustomButtonProps = {
 	icon: React.ComponentProps<typeof FontAwesome>["name"];

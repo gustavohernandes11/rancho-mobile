@@ -1,3 +1,6 @@
+import { FontAwesome } from "@expo/vector-icons";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+
 export const getFormattedAge = (input: string): string => {
 	const current = new Date();
 	const birthdate = new Date(input);
@@ -22,3 +25,13 @@ export const getFormattedAge = (input: string): string => {
 		}
 	}
 };
+
+export const getFormattedGender = (gender: "F" | "M") =>
+	gender === "M" ? "♂ Macho" : "♀ Fêmea";
+
+export const getGenderIcon = (gender: "F" | "M") =>
+	gender === "M" ? (
+		<FontAwesome color={Colors.blue} name="mars" />
+	) : (
+		<FontAwesome color={Colors.red} name="venus" />
+	);

@@ -7,8 +7,7 @@ import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
-import { getFormattedAge } from "utils/getFormattedAge";
-import { getGenderIcon } from "utils/getGenderIcon";
+import { getGenderIcon, getFormattedAge } from "utils/formatters";
 
 interface AnimalRowProps {
 	animal: Animal;

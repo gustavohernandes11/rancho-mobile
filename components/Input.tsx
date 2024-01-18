@@ -1,10 +1,9 @@
 import Colors from "constants/Colors";
-import Fonts from "constants/Fonts";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HelperText, TextInput, TextInputProps } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
-import { getInputBorderColor } from "utils/getInputBorderColor";
+import { getInputBorderColor } from "utils/conditional-styles";
 
 interface InputProps {
 	errorText?: string;
