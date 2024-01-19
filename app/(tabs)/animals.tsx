@@ -14,14 +14,13 @@ import { useEffect, useState } from "react";
 export default function ViewAnimalsScreen() {
 	const { animals, refreshAnimals, setAnimals } = useData();
 	const [searchText, setSearchText] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
 		refreshAnimals();
-		setIsLoading(false);
-
 		return () => refreshAnimals();
 	}, []);
+
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Rebanho" }} />

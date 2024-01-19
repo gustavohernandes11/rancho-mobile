@@ -3,7 +3,7 @@ import { useFocusEffect } from "expo-router";
 import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import React, { useEffect } from "react";
-import { BackHandler, FlatList, ScrollView, Text } from "react-native";
+import { BackHandler, FlatList, Text } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
@@ -21,7 +21,13 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	...props
 }) => {
 	const { refreshBatches } = useData();
-	const { isSelectionMode, clearSelection, selectedIDs } = useSelectionMode();
+	const {
+		isSelectionMode,
+		clearSelection,
+		selectedIDs,
+		setSelectedIDs,
+		setIsSelectionMode,
+	} = useSelectionMode();
 
 	useEffect(() => {
 		refreshBatches();
@@ -48,14 +54,31 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	);
 
 	const renderItem = ({ item }: { item: Animal }) => (
-		<AnimalRow alwaysShowCheckbox={onlySelectionMode} animal={item} />
+		<AnimalRow
+			onCheck={() => {
+				setSelectedIDs((prevIDs) =>
+					selectedIDs.includes(item.id)
+						? prevIDs.filter((id) => id !== item.id)
+						: [...prevIDs, item.id]
+				);
+			}}
+			onLongPress={() => {
+				if (!isSelectionMode) {
+					setIsSelectionMode(true);
+					setSelectedIDs((prevIDs: number[]) => [
+						...prevIDs,
+						item.id,
+					]);
+				}
+			}}
+			isChecked={selectedIDs.includes(item.id)}
+			showCheckbox={onlySelectionMode || isSelectionMode}
+			animal={item}
+		/>
 	);
 
 	return (
-		<ScrollView
-			horizontal={true}
-			contentContainerStyle={{ width: "100%", height: "100%" }}
-		>
+		<>
 			{(onlySelectionMode || isSelectionMode) && (
 				<Span>
 					<SelectionBanner
@@ -65,11 +88,13 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					/>
 				</Span>
 			)}
+
 			<FlatList
-				stickyHeaderHiddenOnScroll={false}
 				data={animals}
 				keyExtractor={(item) => item.id.toString()}
 				renderItem={renderItem}
+				initialNumToRender={10}
+				maxToRenderPerBatch={10}
 				ListHeaderComponent={() => (
 					<DataTable {...props}>
 						<DataTable.Header>
@@ -102,6 +127,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					</Span>
 				)}
 			/>
-		</ScrollView>
+		</>
 	);
 };

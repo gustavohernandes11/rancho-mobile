@@ -1,7 +1,7 @@
 import { render, screen } from "utils/setup-tests";
-
 import { Card } from "components/Card";
 import Colors from "constants/Colors";
+
 jest.mock("assets/images/CowIcon.png");
 const cowIcon = require("assets/images/CowIcon.png");
 

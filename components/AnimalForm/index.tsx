@@ -34,11 +34,15 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 			initialValues.id
 				? StorageService.updateAnimal(values)
 						.then(() => {
+							refreshAnimals();
+							refreshBatches();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error))
 				: StorageService.insertAnimal(values)
 						.then(() => {
+							refreshAnimals();
+							refreshBatches();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error));

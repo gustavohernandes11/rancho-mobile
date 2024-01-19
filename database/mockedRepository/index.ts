@@ -13,19 +13,19 @@ import { mockedBatches } from "./mockedBatches";
 export class MockedRepository implements DatabaseRepository {
 	constructor() {}
 	searchAnimals(text: string): Promise<Animal[]> {
-		throw new Error("Method not implemented.");
+		return Promise.resolve(mockedAnimals.slice(0, 2));
 	}
 	moveAnimalToBatch(
 		animalIDsToMove: number,
 		batchID: number | null
 	): Promise<boolean> {
-		throw new Error("Method not implemented.");
+		return Promise.resolve(true);
 	}
 	moveAnimalsToBatch(
 		animalIDsToMove: number[],
 		batchID: number | null
 	): Promise<boolean> {
-		throw new Error("Method not implemented.");
+		return Promise.resolve(true);
 	}
 	updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
 		const updatedAnimals = updateDataList.map((updateData, index) => {

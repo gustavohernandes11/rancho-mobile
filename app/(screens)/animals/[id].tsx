@@ -17,7 +17,7 @@ import { getFormattedAge, getFormattedGender } from "utils/formatters";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAnimals, batches, animals } = useData();
+	const { refreshAnimals, refreshBatches, batches, animals } = useData();
 
 	const animal = animals.find((a) => a.id === Number(id));
 	const batch = batches.find((b) => b.id === animal?.batchId);
@@ -25,8 +25,6 @@ export default function ViewAnimalDetailsScreen() {
 	const paternity = animals.find((a) => a.id === animal?.paternityId);
 
 	useEffect(() => {
-		refreshAnimals();
-
 		return () => refreshAnimals();
 	}, []);
 
@@ -80,6 +78,7 @@ export default function ViewAnimalDetailsScreen() {
 					onPress={() =>
 						showConfirmationAndDelete(animal!, () => {
 							refreshAnimals();
+							refreshBatches();
 							router.back();
 						})
 					}

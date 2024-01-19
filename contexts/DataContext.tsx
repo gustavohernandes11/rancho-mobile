@@ -18,12 +18,12 @@ export const DataProvider: React.FC<any> = ({ children }) => {
 	const [animals, setAnimals] = useState<Animal[]>([]);
 	const [batches, setBatches] = useState<Batch[]>([]);
 	const refreshBatches = async () => {
-		const batches = await StorageService.listAllBatchesInfo();
-		setBatches(batches);
+		StorageService.listAllBatchesInfo().then((batches) =>
+			setBatches(batches)
+		);
 	};
 	const refreshAnimals = async () => {
-		const batches = await StorageService.listAnimals();
-		setAnimals(batches);
+		StorageService.listAnimals().then((animals) => setAnimals(animals));
 	};
 	return (
 		<DataContext.Provider

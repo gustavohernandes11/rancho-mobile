@@ -25,7 +25,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
 	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
-	const { animals, refreshAnimals } = useData();
+	const { animals, refreshAnimals, refreshBatches } = useData();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
@@ -34,7 +34,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	});
 
 	useEffect(() => {
-		refreshAnimals();
+		return () => clearSelection();
 	}, []);
 
 	useFocusEffect(
@@ -75,6 +75,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						)
 					)
 					.then(() => {
+						refreshAnimals();
+						refreshBatches();
 						clearSelection();
 						router.replace("/(tabs)/batches");
 					})
@@ -105,6 +107,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						});
 					})
 					.then(() => {
+						refreshAnimals();
+						refreshBatches();
 						clearSelection();
 						router.replace("/(tabs)/batches");
 					})

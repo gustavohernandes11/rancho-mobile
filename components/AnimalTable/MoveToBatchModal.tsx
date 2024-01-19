@@ -19,13 +19,7 @@ import {
 	ScrollView,
 	TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
-import {
-	Divider,
-	DividerProps,
-	ModalProps,
-	Portal,
-	RadioButton,
-} from "react-native-paper";
+import { ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Batch } from "types/Batch";
 
 interface MoveToBatchModalProps {
