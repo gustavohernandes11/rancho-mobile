@@ -91,6 +91,17 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 								"birthdate",
 								date!.toISOString()
 							);
+						else formik.setFieldValue("birthdate", "");
+					}}
+					onChangeText={(text) => {
+						if (text === "") {
+							formik.setFieldValue("birthdate", "");
+						} else if (!moment.isDate(text)) {
+							formik.setFieldError(
+								"birthdate",
+								"Formato de data inválido. Use 'DD/MM/AAAA'"
+							);
+						}
 					}}
 					value={
 						formik.values.birthdate
