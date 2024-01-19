@@ -76,7 +76,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					)
 					.then(() => {
 						clearSelection();
-						router.replace("/(screens)/batches/");
+						router.replace("/(tabs)/batches");
 					})
 
 					.catch((error) => Alert.alert("Error", error))
@@ -106,7 +106,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					})
 					.then(() => {
 						clearSelection();
-						router.replace("/(screens)/batches/");
+						router.replace("/(tabs)/batches");
 					})
 					.catch((error) => Alert.alert("Error", error));
 	};
