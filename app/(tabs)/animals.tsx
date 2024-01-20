@@ -17,7 +17,7 @@ export default function ViewAnimalsScreen() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		refreshAnimals();
+		if (!searchText) refreshAnimals();
 		return () => refreshAnimals();
 	}, []);
 
@@ -35,10 +35,8 @@ export default function ViewAnimalsScreen() {
 			<Span>
 				<SearchBar
 					onChangeText={(text) => {
-						setSearchText(text);
-					}}
-					onBlur={() => {
 						setIsLoading(true);
+						setSearchText(text);
 						StorageService.searchAnimals(searchText)
 							.then((animals) => setAnimals(animals))
 							.finally(() => setIsLoading(false));

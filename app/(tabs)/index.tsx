@@ -29,7 +29,7 @@ export default function TabOneScreen() {
 					color="blue"
 				/>
 				<Card
-					href="/batches"
+					href="/(tabs)/batches"
 					alt="alt"
 					iconSource={require("assets/images/FenceIcon.png")}
 					title="Ver lotes"
