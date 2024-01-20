@@ -6,5 +6,11 @@ export const Loading: React.FC<ActivityIndicatorProps> = ({
 	children,
 	...props
 }) => {
-	return <ActivityIndicator color={Colors.green} {...props} />;
+	return (
+		<ActivityIndicator
+			style={{ padding: 10 }}
+			color={Colors.green}
+			{...props}
+		/>
+	);
 };
