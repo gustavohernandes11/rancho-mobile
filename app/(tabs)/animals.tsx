@@ -35,11 +35,14 @@ export default function ViewAnimalsScreen() {
 			<Span>
 				<SearchBar
 					onChangeText={(text) => {
-						setIsLoading(true);
-						setSearchText(text);
-						StorageService.searchAnimals(searchText)
-							.then((animals) => setAnimals(animals))
-							.finally(() => setIsLoading(false));
+						if (text === "") refreshAnimals();
+						else {
+							setIsLoading(true);
+							setSearchText(text);
+							StorageService.searchAnimals(searchText)
+								.then((animals) => setAnimals(animals))
+								.finally(() => setIsLoading(false));
+						}
 					}}
 					value={searchText}
 					placeholder="Busque por nome, observação ou código."
