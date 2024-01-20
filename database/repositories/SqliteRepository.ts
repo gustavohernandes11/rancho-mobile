@@ -19,7 +19,7 @@ export class SqliteRepository implements Repository {
 
 	private executeQuery = async (
 		query: string,
-		params: any[] = []
+		params: (string | number | null)[] = []
 	): Promise<SQLResultSet> => {
 		return new Promise((resolve, reject) => {
 			this.db.transaction(
