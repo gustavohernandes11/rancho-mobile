@@ -12,7 +12,6 @@ export const validationSchema = Yup.object({
 			"is-a-future-date",
 			"A data deve ser menor que a atual",
 			(value) => {
-				console.log(value);
 				return !!value ? moment(value).isBefore(moment()) : true;
 			}
 		)

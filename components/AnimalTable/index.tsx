@@ -1,8 +1,10 @@
+import { Button } from "components/Button";
 import { Span } from "components/Span";
+import { StorageService } from "database/StorageService";
 import { useFocusEffect } from "expo-router";
 import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import { BackHandler, FlatList, Text } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
@@ -14,7 +16,6 @@ interface AnimalTableProps {
 	animals: Animal[];
 	onlySelectionMode?: boolean;
 }
-
 export const AnimalTable: React.FC<AnimalTableProps> = ({
 	animals,
 	onlySelectionMode = false,
@@ -52,7 +53,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			return () => backHandler.remove();
 		}, [isSelectionMode, selectedIDs])
 	);
-
+	const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
 	const renderItem = ({ item }: { item: Animal }) => (
 		<AnimalRow
 			onCheck={() => {
@@ -72,7 +73,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 				}
 			}}
 			isChecked={selectedIDs.includes(item.id)}
-			showCheckbox={onlySelectionMode || isSelectionMode}
+			showCheckbox={onlySelectionMode || (isSelectionMode ?? false)}
 			animal={item}
 		/>
 	);
@@ -91,8 +92,8 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 
 			<FlatList
 				data={animals}
-				keyExtractor={(item) => item.id.toString()}
-				renderItem={renderItem}
+				keyExtractor={keyExtractor}
+				renderItem={renderItem as any}
 				initialNumToRender={10}
 				maxToRenderPerBatch={10}
 				ListHeaderComponent={() => (
@@ -107,7 +108,8 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 							<DataTable.Title textStyle={sharedStyles.text}>
 								Idade
 							</DataTable.Title>
-							{(onlySelectionMode || isSelectionMode) && (
+							{(isSelectionMode ||
+								(onlySelectionMode ?? false)) && (
 								<DataTable.Title
 									style={{ flex: 1 / 3 }}
 									textStyle={[
