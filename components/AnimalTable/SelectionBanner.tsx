@@ -11,13 +11,13 @@ import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 interface SelectionBannerProps {
 	allAnimalIDs: number[];
 	showActions?: boolean;
-	showDeleteButton?: boolean;
+	showCloseButton?: boolean;
 }
 
 export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	allAnimalIDs,
 	showActions,
-	showDeleteButton,
+	showCloseButton,
 	...props
 }) => {
 	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
@@ -38,7 +38,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 				marginVertical={0}
 				alignItems="center"
 			>
-				{showDeleteButton && (
+				{showCloseButton && (
 					<IconButton
 						iconColor={Colors.white}
 						icon="close"

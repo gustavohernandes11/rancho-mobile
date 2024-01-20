@@ -12,6 +12,7 @@ export const getButtonTextColor = (type: ButtonTypes) => {
 	else if (type === "primary") return Colors.white;
 	else return Colors.text;
 };
+
 export const getInputBorderColor = (hasError: boolean) =>
 	hasError ? Colors.red : Colors.border;
 

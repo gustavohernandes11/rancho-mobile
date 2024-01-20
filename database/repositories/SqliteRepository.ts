@@ -4,13 +4,13 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
-	DatabaseRepository,
+	Repository,
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
 import { nullifyFalsyFields } from "utils/serializers";
 
-export class SqliteRepository implements DatabaseRepository {
+export class SqliteRepository implements Repository {
 	private db = openDatabase("rancho.db");
 
 	constructor() {

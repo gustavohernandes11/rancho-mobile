@@ -9,7 +9,5 @@ export type Animal = {
 	maternityId?: number;
 	observation?: string;
 };
-
 export type AddAnimal = Omit<Animal, "id">;
-
 export type UpdateAnimal = Partial<Animal> & { id: number };

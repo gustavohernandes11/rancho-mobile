@@ -82,7 +82,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 				<Span>
 					<SelectionBanner
 						showActions={!onlySelectionMode}
-						showDeleteButton={!onlySelectionMode}
+						showCloseButton={!onlySelectionMode}
 						allAnimalIDs={animals.map((a) => a.id)}
 					/>
 				</Span>

@@ -1,7 +1,7 @@
 import { AddAnimal, Animal, UpdateAnimal } from "./Animal";
 import { AddBatch, Batch, UpdateBatch } from "./Batch";
 
-export interface DatabaseRepository {
+export interface Repository {
 	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
 	insertBatch(batch: AddBatch): Promise<number | undefined>;
 	loadAnimal(animalID: number): Promise<Animal>;
