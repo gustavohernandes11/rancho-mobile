@@ -9,18 +9,22 @@ import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
+import { useSelectionMode } from "hooks/useSelectionMode";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Batch, Item } from "types";
+import { Batch } from "types";
+import { serializeBatchInfo } from "utils/serializers";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const { animals, batches, setAnimals, refreshAnimals, refreshBatches } =
 		useData();
+	const { clearSelection } = useSelectionMode();
 	const [isLoading, setIsLoading] = useState(true);
 	const batch = batches.find((b) => b.id === Number(id));
 
 	useEffect(() => {
+		clearSelection();
 		const fetchData = async () => {
 			setIsLoading(true);
 			const animals = await StorageService.loadBatchAnimals(Number(id));
@@ -44,9 +48,7 @@ export default function ViewBatchDetailsScreen() {
 				(batch?.description && (
 					<>
 						<Heading size="small">Informações Gerais</Heading>
-						<SimpleTable
-							data={serializeBatchInfoToKeyValue(batch)}
-						/>
+						<SimpleTable data={serializeBatchInfo(batch)} />
 					</>
 				))}
 			<Heading size="small">Animais do lote</Heading>
@@ -88,21 +90,6 @@ export default function ViewBatchDetailsScreen() {
 		</ContainerView>
 	);
 }
-
-const serializeBatchInfoToKeyValue = (batch?: Batch) => {
-	let items: Item[] = [];
-	if (!batch) return items;
-
-	if (batch.description)
-		items.push({ key: "Descrição", value: batch.description });
-	if (batch.count)
-		items.push({
-			key: "Número de animais",
-			value: batch.count > 0 ? batch.count.toString() : "Vazio",
-		});
-
-	return items;
-};
 
 export const showConfirmationAndDeleteAll = (
 	batch: Batch,

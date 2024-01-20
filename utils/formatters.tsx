@@ -1,5 +1,5 @@
 import { FontAwesome } from "@expo/vector-icons";
-import { Colors } from "react-native/Libraries/NewAppScreen";
+import Colors from "constants/Colors";
 
 export const getFormattedAge = (input: string): string => {
 	const current = new Date();

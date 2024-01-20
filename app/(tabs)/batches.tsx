@@ -15,6 +15,7 @@ export default function ViewBatchesScreen() {
 	useEffect(() => {
 		refreshBatches();
 	}, []);
+
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Lotes" }} />

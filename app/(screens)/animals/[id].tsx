@@ -12,8 +12,8 @@ import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
 import { useEffect } from "react";
 import { Alert } from "react-native";
-import { Animal, Item } from "types";
-import { getFormattedAge, getFormattedGender } from "utils/formatters";
+import { Animal } from "types";
+import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
@@ -113,31 +113,4 @@ const showConfirmationAndDelete = (
 			},
 		]
 	);
-};
-const serializeAnimalInfo = (animal?: Animal): Item[] => {
-	let items: Item[] = [];
-	if (!animal) return items;
-
-	if (animal.name) items.push({ key: "Nome", value: animal.name });
-	if (animal.gender)
-		items.push({
-			key: "Gênero",
-			value: getFormattedGender(animal.gender),
-		});
-	if (animal.code)
-		items.push({ key: "Código", value: animal.code.toString() });
-	if (animal.birthdate) {
-		items.push({
-			key: "Idade",
-			value: getFormattedAge(animal.birthdate),
-		});
-		items.push({
-			key: "Data de nascimento",
-			value: new Date(animal.birthdate).toLocaleDateString(),
-		});
-	}
-	if (animal.observation)
-		items.push({ key: "Observação", value: animal.observation });
-
-	return items;
 };
