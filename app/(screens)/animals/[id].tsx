@@ -1,5 +1,5 @@
-import { AnimalInfo } from "components/AnimalInfo";
-import { BatchInfo } from "components/BatchInfo";
+import { AnimalInfoBanner } from "components/AnimalInfoBanner";
+import { BatchInfoBanner } from "components/BatchInfoBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
@@ -39,7 +39,7 @@ export default function ViewAnimalDetailsScreen() {
 				<>
 					<Heading size="small">Lote</Heading>
 					<Link href={`/(screens)/batches/${batch.id}`} asChild>
-						<BatchInfo batch={batch} />
+						<BatchInfoBanner batch={batch} />
 					</Link>
 				</>
 			)}
@@ -50,7 +50,7 @@ export default function ViewAnimalDetailsScreen() {
 						href={`/(screens)/animals/${animal.paternityId}`}
 						asChild
 					>
-						<AnimalInfo animal={paternity} />
+						<AnimalInfoBanner animal={paternity} />
 					</Link>
 				</>
 			)}
@@ -61,7 +61,7 @@ export default function ViewAnimalDetailsScreen() {
 						href={`/(screens)/animals/${animal.maternityId}`}
 						asChild
 					>
-						<AnimalInfo animal={maternity} />
+						<AnimalInfoBanner animal={maternity} />
 					</Link>
 				</>
 			)}

@@ -4,13 +4,13 @@ import React from "react";
 import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
 import { Batch } from "types";
 
-interface BatchInfoProps {
+interface BatchInfoBannerProps {
 	batch: Batch;
 }
 const getGrammaticalFlexion = (count: number) =>
 	count === 1 ? "animal" : "animais";
 
-export const BatchInfo: React.FC<BatchInfoProps & ViewProps> = ({
+export const BatchInfoBanner: React.FC<BatchInfoBannerProps & ViewProps> = ({
 	batch,
 	...props
 }) => {

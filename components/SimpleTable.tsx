@@ -2,12 +2,16 @@ import Colors from "constants/Colors";
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { sharedStyles } from "styles/shared";
-import { Item, RowProps } from "types";
+import { Item } from "types";
 import { getRowColor } from "utils/conditional-styles";
 
 interface SimpleTableProps {
 	data: Item[];
 }
+type RowProps<T> = {
+	item: T;
+	index: number;
+};
 
 export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 	<ScrollView horizontal={false}>
