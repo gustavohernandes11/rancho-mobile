@@ -24,11 +24,7 @@ export default function ViewAnimalsScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Rebanho" }} />
-			<Span
-				justifyContent="space-between"
-				marginVertical={0}
-				alignItems="center"
-			>
+			<Span justify="space-between" my={0} align="center">
 				<Heading>Todos seus animais</Heading>
 				<SubTitle>{`Total: ${animals?.length || "?"}`}</SubTitle>
 			</Span>
@@ -53,7 +49,7 @@ export default function ViewAnimalsScreen() {
 				selecionar vários.
 			</SubTitle>
 			{isLoading ? <Loading /> : <AnimalTable animals={animals || []} />}
-			<Span justifyContent="flex-end" paddingVertical={8}>
+			<Span justify="flex-end" py={8}>
 				<Link href="/(screens)/animals/add" asChild>
 					<Button title="Adicionar novo animal" />
 				</Link>

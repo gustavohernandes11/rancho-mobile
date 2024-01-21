@@ -53,11 +53,7 @@ export default function ViewBatchDetailsScreen() {
 				))}
 			<Heading size="small">Animais do lote</Heading>
 			{isLoading ? <Loading /> : <AnimalTable animals={animals} />}
-			<Span
-				flexWrap="wrap"
-				justifyContent="flex-end"
-				paddingVertical={16}
-			>
+			<Span flexWrap="wrap" justify="flex-end" py={16}>
 				<Button
 					type="danger"
 					title="Deletar lote e animais"

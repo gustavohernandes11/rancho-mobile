@@ -122,7 +122,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					</DataTable>
 				)}
 				ListEmptyComponent={() => (
-					<Span justifyContent="center">
+					<Span justify="center">
 						<Text>Nenhum animal encontrado.</Text>
 					</Span>
 				)}

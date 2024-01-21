@@ -93,8 +93,8 @@ export const MoveToBatchModal: React.FC<
 												onStartShouldSetResponder={() =>
 													true
 												}
-												justifyContent="space-between"
-												alignItems="center"
+												justify="space-between"
+												align="center"
 											>
 												<View
 													onStartShouldSetResponder={() =>
@@ -131,7 +131,7 @@ export const MoveToBatchModal: React.FC<
 								</ScrollView>
 							</RadioButton.Group>
 
-							<Span justifyContent="flex-end" marginVertical={16}>
+							<Span justify="flex-end" my={16}>
 								<Button
 									type="light"
 									title="Cancelar"
@@ -178,8 +178,8 @@ const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
 	<Fragment>
 		<Span
 			onStartShouldSetResponder={() => true}
-			justifyContent="space-between"
-			alignItems="center"
+			justify="space-between"
+			align="center"
 		>
 			<View onStartShouldSetResponder={() => true}>
 				<Text>Nenhum lote</Text>

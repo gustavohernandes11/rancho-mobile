@@ -152,7 +152,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					<Loading />
 				)}
 			</List.Accordion>
-			<Span justifyContent="flex-end" paddingVertical={16}>
+			<Span justify="flex-end" py={16}>
 				<Button
 					type="light"
 					title="Cancelar"

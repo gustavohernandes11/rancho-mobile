@@ -19,7 +19,7 @@ export default function ViewBatchesScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen options={{ headerTitle: "Lotes" }} />
-			<Span justifyContent="space-between" alignItems="center">
+			<Span justify="space-between" align="center">
 				<Heading>Lotes</Heading>
 				<SubTitle>{`Total: ${batches?.length || "?"}`}</SubTitle>
 			</Span>
@@ -35,7 +35,7 @@ export default function ViewBatchesScreen() {
 					</Link>
 				))}
 			</View>
-			<Span justifyContent="flex-end" paddingVertical={8}>
+			<Span justify="flex-end" py={8}>
 				<Link href={"/(screens)/batches/add"} asChild>
 					<Button title="Adicionar novo lote" />
 				</Link>

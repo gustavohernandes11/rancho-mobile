@@ -71,7 +71,7 @@ export default function ViewAnimalDetailsScreen() {
 					<Input value={animal.observation} multiline disabled />
 				</>
 			)}
-			<Span justifyContent="flex-end">
+			<Span justify="flex-end">
 				<Button
 					type="danger"
 					title="Deletar"

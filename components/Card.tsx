@@ -31,11 +31,7 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 			{...props}
 		>
 			<TouchableRipple>
-				<Span
-					alignItems="center"
-					justifyContent="center"
-					flexWrap="nowrap"
-				>
+				<Span align="center" justify="center" flexWrap="nowrap">
 					<Text style={styles.title}>{title}</Text>
 					<Image style={styles.image} source={iconSource} alt={alt} />
 				</Span>

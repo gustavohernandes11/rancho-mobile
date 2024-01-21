@@ -58,7 +58,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 
 	return (
 		<View>
-			<Span alignItems="flex-start">
+			<Span align="flex-start">
 				<Input
 					label="Nome*"
 					value={formik.values.name}
@@ -196,7 +196,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					multiline={true}
 				/>
 			</Span>
-			<Span justifyContent="flex-end" paddingVertical={16}>
+			<Span justify="flex-end" py={16}>
 				<Button
 					type="light"
 					title="Cancelar"

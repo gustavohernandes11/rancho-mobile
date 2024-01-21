@@ -3,29 +3,29 @@ import { FlexAlignType, StyleSheet, View, ViewProps } from "react-native";
 
 interface SpanProps {
 	children?: React.ReactNode;
-	alignItems?: FlexAlignType;
-	justifyContent?:
+	align?: FlexAlignType;
+	justify?:
 		| "flex-start"
 		| "flex-end"
 		| "center"
 		| "space-between"
 		| "space-around"
 		| "space-evenly";
-	padding?: number;
-	paddingVertical?: number;
-	paddingHorizontal?: number;
+	p?: number;
+	py?: number;
+	px?: number;
 	flexWrap?: "wrap" | "nowrap";
-	marginVertical?: number;
+	my?: number;
 }
 
 export const Span: React.FC<SpanProps & ViewProps> = ({
 	children,
-	alignItems = "flex-end",
-	justifyContent,
-	paddingVertical,
-	paddingHorizontal,
-	padding,
-	marginVertical = 8,
+	align = "flex-end",
+	justify,
+	py,
+	px,
+	p,
+	my = 8,
 	flexWrap,
 	...props
 }) => {
@@ -34,13 +34,13 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 			style={[
 				styles.span,
 				{
-					alignItems,
-					justifyContent,
-					padding,
-					paddingVertical,
-					paddingHorizontal,
+					alignItems: align,
+					justifyContent: justify,
+					padding: p,
+					paddingVertical: py,
+					paddingHorizontal: px,
+					marginVertical: my,
 					flexWrap,
-					marginVertical,
 				},
 			]}
 			{...props}

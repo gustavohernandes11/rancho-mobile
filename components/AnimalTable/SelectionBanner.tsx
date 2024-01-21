@@ -33,11 +33,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 				onDismiss={() => setIsBatchModalVisible(false)}
 				setIsBatchModalVisible={setIsBatchModalVisible}
 			/>
-			<Span
-				justifyContent="space-between"
-				marginVertical={0}
-				alignItems="center"
-			>
+			<Span align="center" justify="space-between" my={0}>
 				{showCloseButton && (
 					<IconButton
 						iconColor={Colors.white}
