@@ -26,14 +26,18 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 	return (
 		<Link
 			href={href}
-			style={[styles.card, { backgroundColor: Colors[color] }]}
+			style={[sharedStyles.card, { backgroundColor: Colors[color] }]}
 			asChild
 			{...props}
 		>
 			<TouchableRipple>
 				<Span align="center" justify="center" flexWrap="nowrap">
 					<Text style={styles.title}>{title}</Text>
-					<Image style={styles.image} source={iconSource} alt={alt} />
+					<Image
+						style={sharedStyles.icon}
+						source={iconSource}
+						alt={alt}
+					/>
 				</Span>
 			</TouchableRipple>
 		</Link>
@@ -41,25 +45,6 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 };
 
 const styles = StyleSheet.create({
-	card: {
-		width: "48.8%",
-		maxWidth: 250,
-		aspectRatio: 1.6 / 1,
-		backgroundColor: Colors.green,
-		borderRadius: 4,
-		padding: 16,
-		flexDirection: "row",
-		alignItems: "center",
-		justifyContent: "space-around",
-		minHeight: 100,
-		gap: 8,
-		elevation: 3,
-	},
-	image: {
-		height: 38,
-		width: 38,
-		resizeMode: "contain",
-	},
 	title: {
 		...sharedStyles.text,
 		flexShrink: 1,

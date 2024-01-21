@@ -42,4 +42,23 @@ export const sharedStyles = StyleSheet.create({
 	textDisabled: {
 		color: Colors.darkGray,
 	},
+	icon: {
+		height: 38,
+		width: 38,
+		resizeMode: "contain",
+	},
+	card: {
+		width: "48.8%",
+		maxWidth: 250,
+		aspectRatio: 1.6 / 1,
+		backgroundColor: Colors.green,
+		borderRadius: 4,
+		padding: 16,
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-around",
+		minHeight: 100,
+		gap: 8,
+		elevation: 3,
+	},
 });
