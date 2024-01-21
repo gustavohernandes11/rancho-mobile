@@ -1,4 +1,4 @@
-import { BatchInfoBanner } from "components/BatchInfoBanner";
+import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
@@ -31,7 +31,7 @@ export default function ViewBatchesScreen() {
 						key={batch.id}
 						asChild
 					>
-						<BatchInfoBanner batch={batch} key={batch.id} />
+						<BatchBanner batch={batch} key={batch.id} />
 					</Link>
 				))}
 			</View>

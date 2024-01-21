@@ -5,11 +5,11 @@ import { sharedStyles } from "styles/shared";
 import { Animal } from "types/Animal";
 import { getGenderIcon, getFormattedAge } from "utils/formatters";
 
-interface AnimalInfoBannerProps {
+interface AnimalBannerProps {
 	animal: Animal;
 }
 
-export const AnimalInfoBanner: React.FC<AnimalInfoBannerProps & ViewProps> = ({
+export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
 	animal,
 	...props
 }) => {

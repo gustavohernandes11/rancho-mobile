@@ -1,7 +1,7 @@
-import { BatchInfoBanner } from "components/BatchInfoBanner";
+import { BatchBanner } from "components/BatchBanner";
 import { render, screen } from "utils/setup-tests";
 
-describe("BatchInfoBanner", () => {
+describe("BatchBanner", () => {
 	const mockedBatch = {
 		id: 1,
 		name: "Bezerros",
@@ -9,7 +9,7 @@ describe("BatchInfoBanner", () => {
 		count: 23,
 	};
 	it("should render the batch information on the screen", () => {
-		render(<BatchInfoBanner batch={mockedBatch} />);
+		render(<BatchBanner batch={mockedBatch} />);
 		expect(screen.getByText("Bezerros")).toBeOnTheScreen();
 		expect(
 			screen.getByText("Bezerros de 1 a 2 anos de idade")
@@ -18,7 +18,7 @@ describe("BatchInfoBanner", () => {
 	});
 	it("should render the grammatical flexion 'animal' [pt-BR] when count is 1", () => {
 		render(
-			<BatchInfoBanner
+			<BatchBanner
 				batch={{ id: 1, name: "any", description: "any", count: 1 }}
 			/>
 		);
@@ -26,7 +26,7 @@ describe("BatchInfoBanner", () => {
 	});
 	it("should render the grammatical flexion 'animais' [pt-BR] when count is bigger then 0", () => {
 		render(
-			<BatchInfoBanner
+			<BatchBanner
 				batch={{ id: 1, name: "any", description: "any", count: 123 }}
 			/>
 		);
