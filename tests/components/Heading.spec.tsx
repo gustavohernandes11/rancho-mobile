@@ -19,4 +19,9 @@ describe("Heading", () => {
 		const sut = screen.getByRole("text");
 		expect(sut).toHaveStyle({ fontSize: 20 });
 	});
+	it("should set the fontSize on 24 when the size is big", () => {
+		render(<Heading size="big">FOO</Heading>);
+		const sut = screen.getByRole("text");
+		expect(sut).toHaveStyle({ fontSize: 24 });
+	});
 });
