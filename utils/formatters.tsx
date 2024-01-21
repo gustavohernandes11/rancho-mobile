@@ -1,26 +1,40 @@
 import { FontAwesome } from "@expo/vector-icons";
 import Colors from "constants/Colors";
+import moment from "moment";
 
 export const getFormattedAge = (input: string): string => {
-	const current = new Date();
-	const birthdate = new Date(input);
+	const duration = moment.duration(moment().diff(moment(input)));
 
-	const years = current.getFullYear() - birthdate.getFullYear();
-	const months = current.getMonth() - birthdate.getMonth();
-	const days = current.getDate() - birthdate.getDate();
+	const years = duration.years();
+	const months = duration.months();
+	const days = duration.days();
 
-	if (years < 1) {
-		if (months < 1) {
+	if (years === 0) {
+		if (months === 0) {
+			if (days === 1) {
+				return `${days} dia`;
+			}
 			return `${days} dias`;
 		} else {
+			if (months === 1) return `${months} mês`;
 			return `${months} meses`;
 		}
 	} else {
-		if (months < 0 || (months === 0 && days < 0)) {
-			return `${years - 1} anos e ${12 + months} meses`;
-		} else if (months === 0) {
+		if (months === 0) {
+			if (years === 1) {
+				return `${years} ano`;
+			}
 			return `${years} anos`;
 		} else {
+			if (years === 1 && months === 1) {
+				return `${years} ano e ${months} mês`;
+			}
+			if (months === 1) {
+				return `${years} anos e ${months} mês`;
+			}
+			if (years === 1) {
+				return `${years} ano e ${months} meses`;
+			}
 			return `${years} anos e ${months} meses`;
 		}
 	}
