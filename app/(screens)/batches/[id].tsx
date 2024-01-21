@@ -46,13 +46,15 @@ export default function ViewBatchDetailsScreen() {
 
 			{!!batch?.count ||
 				(batch?.description && (
-					<>
+					<Span py={8}>
 						<Heading size="small">Informações Gerais</Heading>
 						<SimpleTable data={serializeBatchInfo(batch)} />
-					</>
+					</Span>
 				))}
-			<Heading size="small">Animais do lote</Heading>
-			{isLoading ? <Loading /> : <AnimalTable animals={animals} />}
+			<Span py={8}>
+				<Heading size="small">Animais do lote</Heading>
+				{isLoading ? <Loading /> : <AnimalTable animals={animals} />}
+			</Span>
 			<Span flexWrap="wrap" justify="flex-end" py={16}>
 				<Button
 					type="danger"

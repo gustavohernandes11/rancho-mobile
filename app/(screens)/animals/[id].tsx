@@ -33,18 +33,20 @@ export default function ViewAnimalDetailsScreen() {
 			<Stack.Screen options={{ headerTitle: "Detalhes do animal" }} />
 			<Heading>{animal?.name}</Heading>
 			<SubTitle>Detalhes do animal</SubTitle>
-			<Heading size="small">Informações gerais</Heading>
-			<SimpleTable data={serializeAnimalInfo(animal)} />
+			<Span py={8}>
+				<Heading size="small">Informações gerais</Heading>
+				<SimpleTable data={serializeAnimalInfo(animal)} />
+			</Span>
 			{batch && (
-				<>
+				<Span py={8}>
 					<Heading size="small">Lote</Heading>
 					<Link href={`/(screens)/batches/${batch.id}`} asChild>
 						<BatchInfoBanner batch={batch} />
 					</Link>
-				</>
+				</Span>
 			)}
 			{animal && paternity && (
-				<>
+				<Span py={8}>
 					<Heading size="small">Paternidade</Heading>
 					<Link
 						href={`/(screens)/animals/${animal.paternityId}`}
@@ -52,10 +54,10 @@ export default function ViewAnimalDetailsScreen() {
 					>
 						<AnimalInfoBanner animal={paternity} />
 					</Link>
-				</>
+				</Span>
 			)}
 			{animal && maternity && (
-				<>
+				<Span py={8}>
 					<Heading size="small">Maternidade</Heading>
 					<Link
 						href={`/(screens)/animals/${animal.maternityId}`}
@@ -63,15 +65,15 @@ export default function ViewAnimalDetailsScreen() {
 					>
 						<AnimalInfoBanner animal={maternity} />
 					</Link>
-				</>
+				</Span>
 			)}
 			{animal && animal.observation && (
-				<>
+				<Span py={8}>
 					<Heading size="small">Observação</Heading>
 					<Input value={animal.observation} multiline disabled />
-				</>
+				</Span>
 			)}
-			<Span justify="flex-end">
+			<Span justify="flex-end" py={16}>
 				<Button
 					type="danger"
 					title="Deletar"
