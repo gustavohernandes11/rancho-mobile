@@ -10,7 +10,9 @@ export const filterPossibleMaternity = (
 			?.filter((a) => a.gender === "F")
 			?.filter((a) =>
 				childBirthdate
-					? moment(a.birthdate).isBefore(childBirthdate)
+					? moment(a.birthdate).isBefore(
+							moment(childBirthdate).add(1, "y")
+					  )
 					: true
 			) || []
 	);
@@ -25,7 +27,9 @@ export const filterPossiblePaternity = (
 			?.filter((a) => a.gender === "M")
 			?.filter((a) =>
 				childBirthdate
-					? moment(a.birthdate).isBefore(childBirthdate)
+					? moment(a.birthdate).isBefore(
+							moment(childBirthdate).add(1, "y")
+					  )
 					: true
 			) || []
 	);
