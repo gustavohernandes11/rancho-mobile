@@ -11,6 +11,6 @@ export default {
 	darkSurface: "#CDCDCD",
 	green: "#56A763",
 	border: "#D9D9D9",
-	white: "#FFF",
+	white: "#fff",
 	black: "#000",
 };

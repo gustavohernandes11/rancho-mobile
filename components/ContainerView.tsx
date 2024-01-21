@@ -21,8 +21,7 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 
 const styles = StyleSheet.create({
 	container: {
-		backgroundColor: Colors.white,
-
+		background: Colors.white,
 		flex: 1,
 	},
 	inner: {
