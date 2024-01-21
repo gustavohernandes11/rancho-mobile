@@ -31,7 +31,7 @@ interface MoveToBatchModalProps {
 export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
-	const [selectedBatch, setSelectedBatch] = useState<Batch>();
+	const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
 	const { refreshAnimals, batches } = useData();
 	const { selectedIDs, clearSelection } = useSelectionMode();
 
@@ -39,10 +39,17 @@ export const MoveToBatchModal: React.FC<
 		StorageService.moveAnimalsToBatch(selectedIDs, selectedBatch!.id)
 			.then(() => {
 				setIsBatchModalVisible(() => false);
-				Alert.alert(
-					"Ok!",
-					"Animais movidos para o lote " + selectedBatch!.name + "."
-				);
+				selectedBatch === null
+					? Alert.alert(
+							"Ok!",
+							"Animais movidos para o lote " +
+								selectedBatch!.name +
+								"."
+					  )
+					: Alert.alert(
+							"Ok!",
+							"Animais desvinculados de qualquer lote."
+					  );
 				clearSelection();
 				refreshAnimals();
 			})
@@ -115,6 +122,10 @@ export const MoveToBatchModal: React.FC<
 												/>
 											</Span>
 											<CustomDivider />
+											<EmptyBatchOption
+												checked={selectedBatch === null}
+											/>
+											<CustomDivider />
 										</Fragment>
 									))}
 								</ScrollView>
@@ -162,3 +173,26 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0,0,0,0.2)",
 	},
 });
+
+const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
+	<Fragment>
+		<Span
+			onStartShouldSetResponder={() => true}
+			justifyContent="space-between"
+			alignItems="center"
+		>
+			<View onStartShouldSetResponder={() => true}>
+				<Text>Nenhum lote</Text>
+				<Text style={styles.description}>
+					Desvincular animal de qualquer lote
+				</Text>
+			</View>
+			<RadioButton
+				color={Colors.green}
+				value={""}
+				status={checked ? "checked" : "unchecked"}
+			/>
+		</Span>
+		<CustomDivider />
+	</Fragment>
+);
