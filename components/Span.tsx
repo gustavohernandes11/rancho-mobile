@@ -1,16 +1,11 @@
 import React from "react";
 import { FlexAlignType, StyleSheet, View, ViewProps } from "react-native";
+import { FlexJustifyTypes } from "types";
 
 interface SpanProps {
 	children?: React.ReactNode;
 	align?: FlexAlignType;
-	justify?:
-		| "flex-start"
-		| "flex-end"
-		| "center"
-		| "space-between"
-		| "space-around"
-		| "space-evenly";
+	justify?: FlexJustifyTypes;
 	p?: number;
 	py?: number;
 	px?: number;
