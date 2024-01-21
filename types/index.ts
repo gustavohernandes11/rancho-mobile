@@ -3,3 +3,4 @@ export * from "./Batch";
 export * from "./ButtonTypes";
 export * from "./Repository";
 export * from "./Item";
+export * from "./FlexJustifyTypes";
