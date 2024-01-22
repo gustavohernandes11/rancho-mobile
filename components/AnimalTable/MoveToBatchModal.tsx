@@ -125,12 +125,11 @@ export const MoveToBatchModal: React.FC<
 												/>
 											</Span>
 											<CustomDivider />
-											<EmptyBatchOption
-												checked={selectedBatch === null}
-											/>
-											<CustomDivider />
 										</Fragment>
 									))}
+									<EmptyBatchOption
+										checked={selectedBatch === null}
+									/>
 								</ScrollView>
 							</RadioButton.Group>
 
