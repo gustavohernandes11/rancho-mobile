@@ -36,19 +36,22 @@ export const MoveToBatchModal: React.FC<
 	const { selectedIDs, clearSelection } = useSelectionMode();
 
 	const moveAllAnimalsTo = () => {
-		StorageService.moveAnimalsToBatch(selectedIDs, selectedBatch!.id)
+		StorageService.moveAnimalsToBatch(
+			selectedIDs,
+			selectedBatch?.id || null
+		)
 			.then(() => {
 				setIsBatchModalVisible(() => false);
 				selectedBatch === null
 					? Alert.alert(
 							"Ok!",
-							"Animais movidos para o lote " +
-								selectedBatch!.name +
-								"."
+							"Animais desvinculados de qualquer lote."
 					  )
 					: Alert.alert(
 							"Ok!",
-							"Animais desvinculados de qualquer lote."
+							"Animais movidos para o lote " +
+								selectedBatch!.name +
+								"."
 					  );
 				clearSelection();
 				refreshAnimals();
@@ -131,7 +134,7 @@ export const MoveToBatchModal: React.FC<
 								</ScrollView>
 							</RadioButton.Group>
 
-							<Span justify="flex-end" my={16}>
+							<Span justify="flex-end" py={8} flexWrap="nowrap">
 								<Button
 									type="light"
 									title="Cancelar"
@@ -189,7 +192,7 @@ const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
 			</View>
 			<RadioButton
 				color={Colors.green}
-				value={""}
+				value={null as any}
 				status={checked ? "checked" : "unchecked"}
 			/>
 		</Span>
