@@ -7,10 +7,13 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
+import { Count } from "types/Count";
 
 export class Database implements Repository {
 	constructor(private readonly DbRepository: Repository) {}
-
+	async count(): Promise<Count> {
+		return this.DbRepository.count();
+	}
 	async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
 		return this.DbRepository.insertAnimal(animal);
 	}

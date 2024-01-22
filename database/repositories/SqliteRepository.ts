@@ -8,6 +8,7 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
+import { Count } from "types/Count";
 import { nullifyFalsyFields } from "utils/serializers";
 
 export class SqliteRepository implements Repository {
@@ -63,6 +64,28 @@ export class SqliteRepository implements Repository {
 
 		await this.executeQuery(query, []);
 	};
+	async count(): Promise<Count> {
+		const countAnimalsQuery = `
+		SELECT COUNT(id)
+		AS animals 
+		FROM Animals
+		`;
+		const countBatchesQuery = `
+		SELECT COUNT(id)
+		AS batches 
+		FROM Batches
+		`;
+
+		const [animalsResult, batchesResult] = await Promise.all([
+			this.executeQuery(countAnimalsQuery, []),
+			this.executeQuery(countBatchesQuery, []),
+		]);
+
+		return {
+			animals: animalsResult.rows.item(0).animals,
+			batches: batchesResult.rows.item(0).batches,
+		};
+	}
 	async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
 		const query = `
 		INSERT INTO Animals 

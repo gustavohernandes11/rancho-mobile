@@ -1,7 +1,9 @@
 import { AddAnimal, Animal, UpdateAnimal } from "./Animal";
 import { AddBatch, Batch, UpdateBatch } from "./Batch";
+import { Count } from "./Count";
 
 export interface Repository {
+	count(): Promise<Count>;
 	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
 	insertBatch(batch: AddBatch): Promise<number | undefined>;
 	loadAnimal(animalID: number): Promise<Animal>;

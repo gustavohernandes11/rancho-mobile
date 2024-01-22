@@ -7,9 +7,13 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
+import { Count } from "types/Count";
 
 export class MockedRepository implements Repository {
 	constructor() {}
+	count(): Promise<Count> {
+		return Promise.resolve({ animals: 10, batches: 3 });
+	}
 	searchAnimals(text: string): Promise<Animal[]> {
 		return Promise.resolve(mockedAnimals.slice(0, 2));
 	}

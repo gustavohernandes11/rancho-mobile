@@ -3,23 +3,29 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { Span } from "components/Span";
-import { useData } from "hooks/useData";
+import { StorageService } from "database/StorageService";
+import { useEffect, useState } from "react";
+import { Count } from "types/Count";
 
 export default function TabOneScreen() {
-	const { animals, batches } = useData();
+	const [count, setCount] = useState<Count>();
+
+	useEffect(() => {
+		StorageService.count().then((count) => setCount(count));
+	});
 	return (
 		<ContainerView>
 			<Heading>Início</Heading>
 			<Span py={4}>
-				{animals && (
+				{count?.animals && (
 					<InfoCard
-						title={animals.length.toString() || "?"}
+						title={count.animals.toString() || "?"}
 						description="Animais registrados"
 					/>
 				)}
-				{batches && (
+				{count?.batches && (
 					<InfoCard
-						title={batches.length.toString() || "?"}
+						title={count.batches.toString() || "?"}
 						description="Lotes registrados"
 					/>
 				)}
