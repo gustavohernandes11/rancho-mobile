@@ -202,7 +202,10 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					title="Cancelar"
 					onPress={navigation.goBack}
 				/>
-				<Button title="Salvar" onPress={formik.submitForm} />
+				<Button
+					title="Salvar"
+					onPress={formik.isSubmitting ? () => {} : formik.submitForm}
+				/>
 			</Span>
 		</View>
 	);

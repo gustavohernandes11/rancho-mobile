@@ -161,7 +161,10 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						clearSelection();
 					}}
 				/>
-				<Button title="Salvar" onPress={formik.submitForm} />
+				<Button
+					title="Salvar"
+					onPress={formik.isSubmitting ? () => {} : formik.submitForm}
+				/>
 			</Span>
 		</View>
 	);
