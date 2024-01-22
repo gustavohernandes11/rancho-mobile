@@ -65,7 +65,8 @@ export const AnimalRow: React.FC<AnimalRowProps> = memo(
 	(prevProps: AnimalRowProps, nextProps: AnimalRowProps) => {
 		return (
 			prevProps.showCheckbox === nextProps.showCheckbox &&
-			prevProps.isChecked === nextProps.isChecked
+			prevProps.isChecked === nextProps.isChecked &&
+			prevProps.animal === nextProps.animal
 		);
 	}
 );
