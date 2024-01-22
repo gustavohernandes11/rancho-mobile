@@ -2,17 +2,18 @@ import { BatchForm } from "components/BatchForm";
 import { ContainerView } from "components/ContainerView";
 import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Batch } from "types/Batch";
 
 export default function EditAnimalScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [batch, setBatch] = useState<Batch>();
 
-	useLayoutEffect(() => {
+	useEffect(() => {
 		const fetchData = async () => {
-			const batch = await StorageService.loadBatchInfo(Number(id));
-			setBatch(batch);
+			await StorageService.loadBatchInfo(Number(id)).then((batch) =>
+				setBatch(batch)
+			);
 		};
 		fetchData();
 	}, []);

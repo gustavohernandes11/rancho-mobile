@@ -50,8 +50,12 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 const styles = StyleSheet.create({
 	card: {
 		...sharedStyles.card,
+		gap: 0,
 		flexDirection: "column",
-		backgroundColor: Colors.darkSurface,
-		borderWidth: 0,
+		alignItems: "flex-start",
+		backgroundColor: Colors.gray,
+		borderWidth: 1,
+		borderColor: Colors.border,
+		elevation: 0,
 	},
 });
