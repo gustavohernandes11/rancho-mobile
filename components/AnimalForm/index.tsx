@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import { useData } from "hooks/useData";
 import moment from "moment";
 import React, { useEffect } from "react";
-import { Alert, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { Animal } from "types";
 import {
 	filterPossibleMaternity,
@@ -55,6 +55,32 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		refreshAnimals();
 		refreshBatches();
 	}, []);
+
+	useEffect(() => {
+		navigation.addListener("beforeRemove", (e: any) => {
+			if (!formik.dirty) {
+				return;
+			}
+
+			e.preventDefault();
+			Alert.alert(
+				"Sair da página?",
+				"É possível perder informações não salvas.",
+				[
+					{
+						text: "Cancelar",
+						style: "cancel",
+						onPress: () => {},
+					},
+					{
+						text: "Descartar",
+						style: "destructive",
+						onPress: () => navigation.dispatch(e.data.action),
+					},
+				]
+			);
+		});
+	}, [navigation, formik.dirty]);
 
 	return (
 		<View>

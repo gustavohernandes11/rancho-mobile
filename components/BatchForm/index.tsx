@@ -54,6 +54,32 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	);
 
 	useEffect(() => {
+		navigation.addListener("beforeRemove", (e: any) => {
+			if (!formik.dirty) {
+				return;
+			}
+
+			e.preventDefault();
+			Alert.alert(
+				"Sair da página?",
+				"É possível perder informações não salvas.",
+				[
+					{
+						text: "Cancelar",
+						style: "cancel",
+						onPress: () => {},
+					},
+					{
+						text: "Descartar",
+						style: "destructive",
+						onPress: () => navigation.dispatch(e.data.action),
+					},
+				]
+			);
+		});
+	}, [navigation, formik.dirty]);
+
+	useEffect(() => {
 		if (initialValues.id) {
 			const animalsFromBatch = animals.filter(
 				(al) => al.batchId === initialValues.id
