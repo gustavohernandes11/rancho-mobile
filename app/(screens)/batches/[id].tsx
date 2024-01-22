@@ -46,16 +46,16 @@ export default function ViewBatchDetailsScreen() {
 
 			{!!batch?.count ||
 				(batch?.description && (
-					<Span py={8}>
+					<Span direction="column">
 						<Heading size="small">Informações Gerais</Heading>
 						<SimpleTable data={serializeBatchInfo(batch)} />
 					</Span>
 				))}
-			<Span py={8}>
+			<Span direction="column">
 				<Heading size="small">Animais do lote</Heading>
 				{isLoading ? <Loading /> : <AnimalTable animals={animals} />}
 			</Span>
-			<Span flexWrap="wrap" justify="flex-end" py={16}>
+			<Span flexWrap="wrap" justify="flex-end" py={8}>
 				<Button
 					type="danger"
 					title="Deletar lote e animais"

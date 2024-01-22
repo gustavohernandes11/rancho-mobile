@@ -29,7 +29,7 @@ export const sharedStyles = StyleSheet.create({
 	heading: {
 		fontSize: 20,
 		color: Colors.text,
-		marginVertical: 8,
+		marginVertical: 4,
 		fontFamily: Fonts.primaryFamily,
 	},
 	disabled: {

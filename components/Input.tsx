@@ -49,5 +49,6 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 const styles = StyleSheet.create({
 	inputContainer: {
 		flex: 1,
+		width: "100%",
 	},
 });

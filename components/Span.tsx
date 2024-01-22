@@ -16,14 +16,14 @@ interface SpanProps {
 
 export const Span: React.FC<SpanProps & ViewProps> = ({
 	children,
-	align = "flex-end",
+	align = "flex-start",
 	justify,
 	py,
 	px,
 	p,
 	my = 8,
-	flexWrap,
-	direction,
+	flexWrap = "wrap",
+	direction = "row",
 	...props
 }) => {
 	return (
@@ -51,8 +51,6 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 const styles = StyleSheet.create({
 	span: {
 		gap: 8,
-		flexDirection: "row",
-		flexWrap: "wrap",
 		width: "100%",
 	},
 });

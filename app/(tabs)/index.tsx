@@ -6,20 +6,26 @@ import { Span } from "components/Span";
 import { useData } from "hooks/useData";
 
 export default function TabOneScreen() {
-	const { animals } = useData();
+	const { animals, batches } = useData();
 	return (
 		<ContainerView>
 			<Heading>Início</Heading>
-			<Span>
+			<Span py={4}>
 				{animals && (
 					<InfoCard
 						title={animals.length.toString() || "?"}
 						description="Animais registrados"
 					/>
 				)}
+				{batches && (
+					<InfoCard
+						title={batches.length.toString() || "?"}
+						description="Lotes registrados"
+					/>
+				)}
 			</Span>
 			<Heading size="small">O que você quer fazer?</Heading>
-			<Span flexWrap="wrap">
+			<Span flexWrap="wrap" py={4}>
 				<Card
 					href="/animals/add"
 					alt="alt"

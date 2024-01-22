@@ -94,6 +94,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 				renderItem={renderItem as any}
 				initialNumToRender={10}
 				maxToRenderPerBatch={10}
+				style={{ width: "100%" }}
 				ListHeaderComponent={() => (
 					<DataTable {...props}>
 						<DataTable.Header>
