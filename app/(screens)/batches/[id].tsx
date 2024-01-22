@@ -32,6 +32,10 @@ export default function ViewBatchDetailsScreen() {
 			setIsLoading(false);
 		};
 		fetchData();
+
+		return () => {
+			refreshAnimals();
+		};
 	}, []);
 
 	return (

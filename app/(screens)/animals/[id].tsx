@@ -10,6 +10,7 @@ import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
+import { useEffect } from "react";
 import { Alert } from "react-native";
 import { Animal } from "types";
 import { serializeAnimalInfo } from "utils/serializers";
@@ -22,6 +23,10 @@ export default function ViewAnimalDetailsScreen() {
 	const batch = batches.find((b) => b.id === animal?.batchId);
 	const maternity = animals.find((a) => a.id === animal?.maternityId);
 	const paternity = animals.find((a) => a.id === animal?.paternityId);
+
+	useEffect(() => {
+		return () => refreshAnimals();
+	}, []);
 
 	return (
 		<ContainerView>
