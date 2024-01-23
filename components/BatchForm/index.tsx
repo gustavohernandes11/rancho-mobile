@@ -54,7 +54,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	);
 
 	useEffect(() => {
-		navigation.addListener("beforeRemove", (e: any) => {
+		const cleanup = navigation.addListener("beforeRemove", (e: any) => {
 			if (!formik.dirty) {
 				return;
 			}
@@ -77,6 +77,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 				]
 			);
 		});
+
+		return cleanup;
 	}, [navigation, formik.dirty]);
 
 	useEffect(() => {
@@ -104,6 +106,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						refreshAnimals();
 						refreshBatches();
 						clearSelection();
+						formik.resetForm();
 						router.replace("/(tabs)/batches");
 					})
 
@@ -136,6 +139,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						refreshAnimals();
 						refreshBatches();
 						clearSelection();
+						formik.resetForm();
 						router.replace("/(tabs)/batches");
 					})
 					.catch((error) => Alert.alert("Error", error));

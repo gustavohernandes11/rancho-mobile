@@ -36,6 +36,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						.then(() => {
 							refreshAnimals();
 							refreshBatches();
+							formik.resetForm();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error))
@@ -43,6 +44,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						.then(() => {
 							refreshAnimals();
 							refreshBatches();
+							formik.resetForm();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error));
@@ -57,7 +59,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 	}, []);
 
 	useEffect(() => {
-		navigation.addListener("beforeRemove", (e: any) => {
+		const cleanup = navigation.addListener("beforeRemove", (e: any) => {
 			if (!formik.dirty) {
 				return;
 			}
@@ -80,6 +82,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 				]
 			);
 		});
+
+		return cleanup;
 	}, [navigation, formik.dirty]);
 
 	return (
