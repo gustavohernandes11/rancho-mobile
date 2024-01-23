@@ -47,22 +47,7 @@ export default function ViewBatchDetailsScreen() {
 			<Heading>{batch?.name}</Heading>
 			<SubTitle>Detalhes do lote</SubTitle>
 
-			{!!batch?.count ||
-				(batch?.description && (
-					<Span direction="column">
-						<Heading size="small">Informações Gerais</Heading>
-						<SimpleTable data={serializeBatchInfo(batch)} />
-					</Span>
-				))}
-			<Span direction="column">
-				<Heading size="small">Animais do lote</Heading>
-				{isLoading ? (
-					<Loading />
-				) : (
-					<AnimalTable animals={batchAnimals || []} />
-				)}
-			</Span>
-			<Span flexWrap="wrap" justify="flex-end" py={8}>
+			<Span flexWrap="wrap">
 				<Button
 					type="danger"
 					title="Deletar lote e animais"
@@ -91,6 +76,22 @@ export default function ViewBatchDetailsScreen() {
 						router.push(`/(screens)/batches/edit/${batch!.id}`)
 					}
 				/>
+			</Span>
+
+			{!!batch?.count ||
+				(batch?.description && (
+					<Span direction="column">
+						<Heading size="small">Informações Gerais</Heading>
+						<SimpleTable data={serializeBatchInfo(batch)} />
+					</Span>
+				))}
+			<Span direction="column">
+				<Heading size="small">Animais do lote</Heading>
+				{isLoading ? (
+					<Loading />
+				) : (
+					<AnimalTable animals={batchAnimals || []} />
+				)}
 			</Span>
 		</ContainerView>
 	);
