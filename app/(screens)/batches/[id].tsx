@@ -12,28 +12,31 @@ import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Batch } from "types";
+import { Animal, Batch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { animals, batches, setAnimals, refreshAnimals, refreshBatches } =
-		useData();
+	const { batches, refreshAnimals, refreshBatches } = useData();
+	const [batchAnimals, setBatchAnimals] = useState<Animal[]>();
 	const { clearSelection } = useSelectionMode();
 	const [isLoading, setIsLoading] = useState(true);
 	const batch = batches.find((b) => b.id === Number(id));
 
 	useEffect(() => {
-		clearSelection();
 		const fetchData = async () => {
 			setIsLoading(true);
-			const animals = await StorageService.loadBatchAnimals(Number(id));
-			setAnimals(() => animals);
+			const animalsFromBatch = await StorageService.loadBatchAnimals(
+				Number(id)
+			);
+			setBatchAnimals(animalsFromBatch);
 			setIsLoading(false);
 		};
 		fetchData();
+		clearSelection();
 
 		return () => {
+			clearSelection();
 			refreshAnimals();
 		};
 	}, []);
@@ -53,7 +56,11 @@ export default function ViewBatchDetailsScreen() {
 				))}
 			<Span direction="column">
 				<Heading size="small">Animais do lote</Heading>
-				{isLoading ? <Loading /> : <AnimalTable animals={animals} />}
+				{isLoading ? (
+					<Loading />
+				) : (
+					<AnimalTable animals={batchAnimals || []} />
+				)}
 			</Span>
 			<Span flexWrap="wrap" justify="flex-end" py={8}>
 				<Button
