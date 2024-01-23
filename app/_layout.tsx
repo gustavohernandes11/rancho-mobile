@@ -1,16 +1,10 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-	DarkTheme,
-	DefaultTheme,
-	ThemeProvider,
-} from "@react-navigation/native";
 import { DataProvider } from "contexts/DataContext";
+import { SelectionModeProvider } from "contexts/SelectionContext";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
 import { Provider } from "react-native-paper";
-import { SelectionModeProvider } from "contexts/SelectionContext";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -39,28 +33,22 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-	const colorScheme = useColorScheme();
-
 	return (
 		<Provider>
-			<ThemeProvider
-				value={colorScheme === "dark" ? DarkTheme : DefaultTheme}
-			>
-				<SelectionModeProvider>
-					<DataProvider>
-						<Stack>
-							<Stack.Screen
-								name="(tabs)"
-								options={{ headerShown: false }}
-							/>
-							<Stack.Screen
-								name="(screens)"
-								options={{ headerShown: false }}
-							/>
-						</Stack>
-					</DataProvider>
-				</SelectionModeProvider>
-			</ThemeProvider>
+			<SelectionModeProvider>
+				<DataProvider>
+					<Stack>
+						<Stack.Screen
+							name="(tabs)"
+							options={{ headerShown: false }}
+						/>
+						<Stack.Screen
+							name="(screens)"
+							options={{ headerShown: false }}
+						/>
+					</Stack>
+				</DataProvider>
+			</SelectionModeProvider>
 		</Provider>
 	);
 }
