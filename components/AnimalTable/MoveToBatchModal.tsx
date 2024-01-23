@@ -28,6 +28,29 @@ interface MoveToBatchModalProps {
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
+	<Fragment>
+		<Span
+			onStartShouldSetResponder={() => true}
+			justify="space-between"
+			align="center"
+		>
+			<View onStartShouldSetResponder={() => true}>
+				<Text>Nenhum lote</Text>
+				<Text style={styles.description}>
+					Desvincular animal de qualquer lote
+				</Text>
+			</View>
+			<RadioButton
+				color={Colors.green}
+				value={null as any}
+				status={checked ? "checked" : "unchecked"}
+			/>
+		</Span>
+		<CustomDivider />
+	</Fragment>
+);
+
 export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
@@ -42,7 +65,7 @@ export const MoveToBatchModal: React.FC<
 		)
 			.then(() => {
 				setIsBatchModalVisible(() => false);
-				selectedBatch === null
+				selectedBatch?.id === null
 					? Alert.alert(
 							"Ok!",
 							"Animais desvinculados de qualquer lote."
@@ -80,14 +103,26 @@ export const MoveToBatchModal: React.FC<
 						<TouchableWithoutFeedback style={styles.modal}>
 							<Heading>Selecione um lote de destino</Heading>
 							<RadioButton.Group
-								onValueChange={(id) =>
-									setSelectedBatch(
-										batches?.find(
-											(b) => b.id === Number(id)
-										)
-									)
+								onValueChange={(id) => {
+									if (id == null) {
+										setSelectedBatch({
+											id: null as unknown as number,
+											name: "Null dummy batch",
+											count: 0,
+										});
+									} else {
+										setSelectedBatch(
+											batches?.find(
+												(b) => b.id === Number(id)
+											)
+										);
+									}
+								}}
+								value={
+									selectedBatch?.id === null
+										? (null as any)
+										: selectedBatch?.id.toString() || ""
 								}
-								value={selectedBatch?.id.toString() || ""}
 							>
 								<CustomDivider />
 								<ScrollView style={{ height: "75%" }}>
@@ -129,7 +164,7 @@ export const MoveToBatchModal: React.FC<
 										</Fragment>
 									))}
 									<EmptyBatchOption
-										checked={selectedBatch === null}
+										checked={selectedBatch?.id === null}
 									/>
 								</ScrollView>
 							</RadioButton.Group>
@@ -144,7 +179,7 @@ export const MoveToBatchModal: React.FC<
 								/>
 								<Button
 									title="Mover"
-									disabled={!selectedBatch?.id}
+									disabled={!selectedBatch}
 									onPress={moveAllAnimalsTo}
 								/>
 							</Span>
@@ -176,26 +211,3 @@ const styles = StyleSheet.create({
 		backgroundColor: "rgba(0,0,0,0.2)",
 	},
 });
-
-const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
-	<Fragment>
-		<Span
-			onStartShouldSetResponder={() => true}
-			justify="space-between"
-			align="center"
-		>
-			<View onStartShouldSetResponder={() => true}>
-				<Text>Nenhum lote</Text>
-				<Text style={styles.description}>
-					Desvincular animal de qualquer lote
-				</Text>
-			</View>
-			<RadioButton
-				color={Colors.green}
-				value={null as any}
-				status={checked ? "checked" : "unchecked"}
-			/>
-		</Span>
-		<CustomDivider />
-	</Fragment>
-);
