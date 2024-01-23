@@ -1,5 +1,5 @@
+import { AddButton } from "components/AddIconButton";
 import { AnimalTable } from "components/AnimalTable";
-import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
@@ -7,7 +7,7 @@ import { SearchBar } from "components/SearchBar";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
-import { Link, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { useData } from "hooks/useData";
 import { useEffect, useState } from "react";
 
@@ -23,7 +23,14 @@ export default function ViewAnimalsScreen() {
 
 	return (
 		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Rebanho" }} />
+			<Stack.Screen
+				options={{
+					headerTitle: "Rebanho",
+					headerRight: () => (
+						<AddButton href="/(screens)/animals/add" />
+					),
+				}}
+			/>
 			<Span justify="space-between" my={0} align="center">
 				<Heading>Todos seus animais</Heading>
 				<SubTitle>{`Total: ${animals?.length || "?"}`}</SubTitle>
@@ -49,11 +56,6 @@ export default function ViewAnimalsScreen() {
 				selecionar vários.
 			</SubTitle>
 			{isLoading ? <Loading /> : <AnimalTable animals={animals || []} />}
-			<Span justify="flex-end" py={8}>
-				<Link href="/(screens)/animals/add" asChild>
-					<Button title="Adicionar novo animal" />
-				</Link>
-			</Span>
 		</ContainerView>
 	);
 }

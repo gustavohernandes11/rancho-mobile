@@ -1,5 +1,5 @@
+import { AddButton } from "components/AddIconButton";
 import { BatchBanner } from "components/BatchBanner";
-import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
@@ -18,7 +18,14 @@ export default function ViewBatchesScreen() {
 
 	return (
 		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Lotes" }} />
+			<Stack.Screen
+				options={{
+					headerTitle: "Lotes",
+					headerRight: () => (
+						<AddButton href="/(screens)/batches/add" />
+					),
+				}}
+			/>
 			<Span justify="space-between" align="center">
 				<Heading>Lotes</Heading>
 				<SubTitle>{`Total: ${batches?.length || "?"}`}</SubTitle>
@@ -35,11 +42,6 @@ export default function ViewBatchesScreen() {
 					</Link>
 				))}
 			</View>
-			<Span justify="flex-end" py={8}>
-				<Link href={"/(screens)/batches/add"} asChild>
-					<Button title="Adicionar novo lote" />
-				</Link>
-			</Span>
 		</ContainerView>
 	);
 }
