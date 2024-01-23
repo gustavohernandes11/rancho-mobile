@@ -6,15 +6,10 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { Link, Stack } from "expo-router";
 import { useData } from "hooks/useData";
-import { useEffect } from "react";
 import { View } from "react-native";
 
 export default function ViewBatchesScreen() {
-	const { batches, refreshBatches } = useData();
-
-	useEffect(() => {
-		refreshBatches();
-	}, []);
+	const { batches } = useData();
 
 	return (
 		<ContainerView>

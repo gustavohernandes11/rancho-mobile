@@ -32,7 +32,7 @@ export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
-	const { refreshAnimals, batches } = useData();
+	const { refreshAnimals, batches, refreshBatches } = useData();
 	const { selectedIDs, clearSelection } = useSelectionMode();
 
 	const moveAllAnimalsTo = () => {
@@ -55,6 +55,7 @@ export const MoveToBatchModal: React.FC<
 					  );
 				clearSelection();
 				refreshAnimals();
+				refreshBatches();
 			})
 			.catch((error) => {
 				Alert.alert(
