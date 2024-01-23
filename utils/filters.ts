@@ -10,8 +10,8 @@ const oneYearOlderThenChild = (animal: Animal, childBirthdate?: string) =>
 		  )
 		: true;
 
-const isMale = (animal: Animal) => animal.gender === "F";
-const isFemale = (animal: Animal) => animal.gender === "M";
+const isMale = (animal: Animal) => animal.gender === "M";
+const isFemale = (animal: Animal) => animal.gender === "F";
 
 export const filterPossibleMaternity = (
 	animals: Animal[],
