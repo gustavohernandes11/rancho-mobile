@@ -34,21 +34,30 @@ export const AnimalRow: React.FC<AnimalRowProps> = memo(
 					onLongPress={onLongPress}
 				>
 					<DataTable.Row>
-						<DataTable.Cell textStyle={sharedStyles.text}>
+						<DataTable.Cell
+							style={{ flex: 4 }}
+							textStyle={sharedStyles.text}
+						>
 							{getGenderIcon(animal.gender)}
 							{" " + animal.name}
 						</DataTable.Cell>
-						<DataTable.Cell textStyle={sharedStyles.text}>
+						<DataTable.Cell
+							style={{ flex: 4 }}
+							textStyle={sharedStyles.text}
+						>
 							{batch && batch.name}
 						</DataTable.Cell>
-						<DataTable.Cell textStyle={sharedStyles.text}>
+						<DataTable.Cell
+							style={{ flex: 2 }}
+							textStyle={sharedStyles.text}
+						>
 							{animal.birthdate &&
 								getFormattedAge(animal.birthdate)}
 						</DataTable.Cell>
 						{showCheckbox && (
 							<DataTable.Cell
 								textStyle={sharedStyles.text}
-								style={{ flex: 1 / 3 }}
+								style={{ flex: 1 }}
 							>
 								<Checkbox
 									color={Colors.green}

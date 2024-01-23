@@ -98,19 +98,28 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 				ListHeaderComponent={() => (
 					<DataTable {...props}>
 						<DataTable.Header>
-							<DataTable.Title textStyle={sharedStyles.text}>
+							<DataTable.Title
+								style={{ flex: 4 }}
+								textStyle={sharedStyles.text}
+							>
 								Nome
 							</DataTable.Title>
-							<DataTable.Title textStyle={sharedStyles.text}>
+							<DataTable.Title
+								style={{ flex: 4 }}
+								textStyle={sharedStyles.text}
+							>
 								Lote
 							</DataTable.Title>
-							<DataTable.Title textStyle={sharedStyles.text}>
+							<DataTable.Title
+								style={{ flex: 2 }}
+								textStyle={sharedStyles.text}
+							>
 								Idade
 							</DataTable.Title>
 							{(isSelectionMode ||
 								(onlySelectionMode ?? false)) && (
 								<DataTable.Title
-									style={{ flex: 1 / 3 }}
+									style={{ flex: 1 }}
 									textStyle={[
 										{ flexShrink: 1 },
 										sharedStyles.text,
