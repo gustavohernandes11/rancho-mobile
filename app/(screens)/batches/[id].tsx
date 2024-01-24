@@ -7,10 +7,15 @@ import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
-import { Stack, router, useLocalSearchParams } from "expo-router";
+import {
+	Stack,
+	router,
+	useFocusEffect,
+	useLocalSearchParams,
+} from "expo-router";
 import { useData } from "hooks/useData";
 import { useSelectionMode } from "hooks/useSelectionMode";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Animal, Batch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
@@ -23,16 +28,21 @@ export default function ViewBatchDetailsScreen() {
 	const [isLoading, setIsLoading] = useState(true);
 	const batch = batches.find((b) => b.id === Number(id));
 
+	useFocusEffect(
+		useCallback(() => {
+			const fetchData = async () => {
+				setIsLoading(true);
+				const animalsFromBatch = await StorageService.loadBatchAnimals(
+					Number(id)
+				);
+				setBatchAnimals(animalsFromBatch);
+				setIsLoading(false);
+			};
+			fetchData();
+		}, [id])
+	);
+
 	useEffect(() => {
-		const fetchData = async () => {
-			setIsLoading(true);
-			const animalsFromBatch = await StorageService.loadBatchAnimals(
-				Number(id)
-			);
-			setBatchAnimals(animalsFromBatch);
-			setIsLoading(false);
-		};
-		fetchData();
 		clearSelection();
 
 		return () => {
