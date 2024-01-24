@@ -3,6 +3,7 @@ import { DataProvider } from "contexts/DataContext";
 import { SelectionModeProvider } from "contexts/SelectionContext";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import { Provider } from "react-native-paper";
 
@@ -47,6 +48,7 @@ function RootLayoutNav() {
 							options={{ headerShown: false }}
 						/>
 					</Stack>
+					<StatusBar style="light" />
 				</DataProvider>
 			</SelectionModeProvider>
 		</Provider>
