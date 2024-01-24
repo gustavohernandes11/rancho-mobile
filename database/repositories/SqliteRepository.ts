@@ -207,6 +207,7 @@ export class SqliteRepository implements Repository {
 		SELECT 
 			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals
+		ORDER BY name
 		`;
 
 		return this.executeQuery(query, []).then(({ rows }) => rows._array);
@@ -229,6 +230,7 @@ export class SqliteRepository implements Repository {
 			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals 
 		WHERE batchId = ?
+		ORDER BY name
 		`;
 
 		return this.executeQuery(query, [batchId]).then(
