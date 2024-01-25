@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import { useData } from "hooks/useData";
 import moment from "moment";
 import React, { useEffect } from "react";
-import { Alert, Text, View } from "react-native";
+import { Alert, View } from "react-native";
 import { Animal } from "types";
 import {
 	filterPossibleMaternity,
@@ -36,7 +36,9 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						.then(() => {
 							refreshAnimals();
 							refreshBatches();
-							formik.resetForm();
+							formik.resetForm({ values });
+						})
+						.then(() => {
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error))
@@ -44,7 +46,9 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						.then(() => {
 							refreshAnimals();
 							refreshBatches();
-							formik.resetForm();
+							formik.resetForm({ values });
+						})
+						.then(() => {
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error));

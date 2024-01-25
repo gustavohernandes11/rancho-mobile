@@ -107,8 +107,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						refreshBatches();
 						clearSelection();
 						formik.resetForm();
-						router.replace("/(tabs)/batches");
 					})
+					.then(() => router.replace("/(tabs)/batches"))
 
 					.catch((error) => Alert.alert("Error", error))
 			: StorageService.updateBatch(values)
@@ -140,8 +140,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						refreshBatches();
 						clearSelection();
 						formik.resetForm();
-						router.replace("/(tabs)/batches");
 					})
+					.then(() => router.replace("/(tabs)/batches"))
 					.catch((error) => Alert.alert("Error", error));
 	};
 
