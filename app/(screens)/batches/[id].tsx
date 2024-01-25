@@ -31,12 +31,10 @@ export default function ViewBatchDetailsScreen() {
 	useFocusEffect(
 		useCallback(() => {
 			const fetchData = async () => {
-				setIsLoading(true);
 				const animalsFromBatch = await StorageService.loadBatchAnimals(
 					Number(id)
 				);
 				setBatchAnimals(animalsFromBatch);
-				setIsLoading(false);
 			};
 			fetchData();
 		}, [id])
@@ -44,6 +42,15 @@ export default function ViewBatchDetailsScreen() {
 
 	useEffect(() => {
 		clearSelection();
+		const fetchData = async () => {
+			setIsLoading(true);
+			const animalsFromBatch = await StorageService.loadBatchAnimals(
+				Number(id)
+			);
+			setBatchAnimals(animalsFromBatch);
+			setIsLoading(false);
+		};
+		fetchData();
 
 		return () => {
 			clearSelection();
