@@ -1,5 +1,6 @@
 import { AddButton } from "components/AddIconButton";
 import { AnimalTable } from "components/AnimalTable";
+import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
@@ -7,7 +8,7 @@ import { SearchBar } from "components/SearchBar";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
-import { Stack } from "expo-router";
+import { Stack, router } from "expo-router";
 import { useData } from "hooks/useData";
 import { useEffect, useState } from "react";
 
@@ -55,7 +56,16 @@ export default function ViewAnimalsScreen() {
 				Clique sobre o animal para ver mais detalhes. Pressione para
 				selecionar vários.
 			</SubTitle>
+
 			{isLoading ? <Loading /> : <AnimalTable animals={animals || []} />}
+			{animals.length === 0 ? (
+				<Span justify="center" py={8}>
+					<Button
+						title="Registrar novo animal"
+						onPress={() => router.push("/(screens)/animals/add")}
+					/>
+				</Span>
+			) : null}
 		</ContainerView>
 	);
 }

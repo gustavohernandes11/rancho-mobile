@@ -17,18 +17,18 @@ export default function TabOneScreen() {
 		<ContainerView>
 			<Heading>Início</Heading>
 			<Span py={4}>
-				{count?.animals && (
+				{count && count.animals !== undefined ? (
 					<InfoCard
 						title={count.animals.toString() || "?"}
 						description="Animais registrados"
 					/>
-				)}
-				{count?.batches && (
+				) : null}
+				{count && count.batches !== undefined ? (
 					<InfoCard
 						title={count.batches.toString() || "?"}
 						description="Lotes registrados"
 					/>
-				)}
+				) : null}
 			</Span>
 			<Heading size="small">O que você quer fazer?</Heading>
 			<Span flexWrap="wrap" py={4}>

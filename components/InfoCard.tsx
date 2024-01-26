@@ -32,13 +32,13 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 }) => {
 	return (
 		<View {...props} style={styles.card}>
-			{iconSource && (
+			{iconSource ? (
 				<Image
 					style={sharedStyles.icon}
 					source={iconSource}
 					alt={alt}
 				/>
-			)}
+			) : null}
 			<Heading size="big" shrink={1}>
 				{title}
 			</Heading>
