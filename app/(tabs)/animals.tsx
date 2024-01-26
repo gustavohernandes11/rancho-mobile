@@ -34,7 +34,7 @@ export default function ViewAnimalsScreen() {
 			/>
 			<Span justify="space-between" my={0} align="center">
 				<Heading>Todos seus animais</Heading>
-				<SubTitle>{`Total: ${animals?.length || "?"}`}</SubTitle>
+				<SubTitle>{`Total: ${animals?.length || "0"}`}</SubTitle>
 			</Span>
 			<Span>
 				<SearchBar
