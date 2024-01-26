@@ -3,7 +3,7 @@ import { Tabs } from "expo-router";
 
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
-
+import { Image } from "react-native";
 function TabBarIcon(props: {
 	name: React.ComponentProps<typeof FontAwesome>["name"];
 	color: string;
@@ -15,7 +15,16 @@ export default function TabLayout() {
 	return (
 		<Tabs
 			screenOptions={{
-				title: "Rancho",
+				headerTitle: () => (
+					<Image
+						style={{
+							height: 25,
+							width: 100,
+						}}
+						source={require("../../assets/images/Logo.png")}
+						alt={"Logo"}
+					/>
+				),
 				tabBarActiveTintColor: Colors.white,
 				tabBarInactiveTintColor: Colors.gray,
 				headerTintColor: Colors.white,
