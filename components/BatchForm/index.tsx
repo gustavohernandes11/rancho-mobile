@@ -79,7 +79,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		});
 
 		return cleanup;
-	}, [navigation, formik.dirty]);
+	}, [navigation, formik.dirty, formik.isSubmitting]);
 
 	useEffect(() => {
 		if (initialValues.id) {

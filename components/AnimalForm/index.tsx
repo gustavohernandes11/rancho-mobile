@@ -36,9 +36,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						.then(() => {
 							refreshAnimals();
 							refreshBatches();
-							formik.resetForm({ values });
-						})
-						.then(() => {
+							formik.resetForm();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error))
@@ -46,9 +44,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						.then(() => {
 							refreshAnimals();
 							refreshBatches();
-							formik.resetForm({ values });
-						})
-						.then(() => {
+							formik.resetForm();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error));
@@ -88,7 +84,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		});
 
 		return cleanup;
-	}, [navigation, formik.dirty]);
+	}, [navigation, formik.dirty, formik.isSubmitting]);
 
 	return (
 		<View>
