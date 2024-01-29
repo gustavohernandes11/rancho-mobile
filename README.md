@@ -1,8 +1,14 @@
-# Rancho - Aplicativo Mobile Offline para Gerenciamento de Gado
+<div align="center">
+  
+  <img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/eebd2f84-fa2d-46a8-b6b0-61dfa377d4cd" width="300">
 
-![Screenshot_20240124-075214_Rancho-portrait](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/8bbf0ba1-4318-4980-8dfa-26ce4f81ec25)
+ Aplicativo simples para gerenciamento de gado
 
-Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento de gado. É possível fazer coisas como: registrar animais, separá-los em lotes, demarcar prole, acompanhar a idade, fazer observações importantes.
+![Screenshot_20240128-204857_Rancho-portrait](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/05cb241c-8165-423c-93e4-b5c64e293d47)
+
+Uma versão mobile e offline da aplicação Rancho. Criada para ajudar no gerenciamento de gado focado em pequenos e médios produtores rurais. É possível fazer coisas como: registrar seus animais, separá-los em lotes, demarcar prole, acompanhar a idade, fazer observações importantes, etc.
+
+</div>
 
 ## Capturas de Tela
 
@@ -40,4 +46,6 @@ Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento d
 </details>
 
 ## Instalação
-Em breve
+Playstore: Em breve
+
+Baixe o arquivo APK [aqui](https://www.mediafire.com/file/7473valtj5279gr/Rancho_1.0.0.apk/file)
