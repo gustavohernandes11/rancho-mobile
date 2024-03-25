@@ -15,9 +15,10 @@ import { useEffect, useState } from "react";
 export default function ViewAnimalsScreen() {
 	const { animals, refreshAnimals, setAnimals } = useData();
 	const [searchText, setSearchText] = useState("");
-	const [isLoading, setIsLoading] = useState(false);
+	const [isLoading, setIsLoading] = useState(true);
 
 	useEffect(() => {
+		setIsLoading(false);
 		if (!searchText) refreshAnimals();
 		return () => refreshAnimals();
 	}, []);
