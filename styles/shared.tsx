@@ -56,7 +56,6 @@ export const sharedStyles = StyleSheet.create({
 		padding: 16,
 		flexDirection: "row",
 		alignItems: "center",
-		justifyContent: "space-around",
 		minHeight: 100,
 		gap: 8,
 		elevation: 3,

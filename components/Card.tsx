@@ -32,12 +32,12 @@ export const Card: React.FC<LinkProps<any> & CardProps> = ({
 		>
 			<TouchableRipple>
 				<Span align="center" justify="center" flexWrap="nowrap">
-					<Text style={styles.title}>{title}</Text>
 					<Image
 						style={sharedStyles.icon}
 						source={iconSource}
 						alt={alt}
 					/>
+					<Text style={styles.title}>{title}</Text>
 				</Span>
 			</TouchableRipple>
 		</Link>
