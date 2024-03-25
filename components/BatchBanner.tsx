@@ -1,7 +1,15 @@
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import React from "react";
-import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
+import {
+	Image,
+	Pressable,
+	StyleSheet,
+	Text,
+	View,
+	ViewProps,
+} from "react-native";
+import { sharedStyles } from "styles/shared";
 import { Batch } from "types";
 
 interface BatchBannerProps {
@@ -16,6 +24,13 @@ export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
 }) => {
 	return (
 		<Pressable style={styles.container} {...props}>
+			<View style={styles.iconSpan}>
+				<Image
+					style={sharedStyles.icon}
+					source={require("../assets/images/RoundedBatchIcon.png")}
+					alt={"Lote"}
+				/>
+			</View>
 			<View style={styles.left}>
 				<Text style={styles.title}>{batch.name}</Text>
 				{batch.description && (
@@ -52,15 +67,21 @@ const styles = StyleSheet.create({
 	left: {
 		flex: 1,
 		alignItems: "flex-start",
+		justifyContent: "center",
 		gap: 4,
 	},
 	title: {
-		fontSize: 14,
+		fontSize: 16,
 		fontFamily: Fonts.primaryFamily,
 	},
 	description: {
 		fontSize: 12,
 		color: Colors.darkGray,
 		fontFamily: Fonts.primaryFamily,
+	},
+	iconSpan: {
+		alignItems: "center",
+		justifyContent: "center",
+		paddingRight: 16,
 	},
 });
