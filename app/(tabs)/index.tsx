@@ -35,7 +35,7 @@ export default function TabOneScreen() {
 				<Card
 					href="/animals/add"
 					alt="alt"
-					iconSource={require("assets/images/CowIcon.png")}
+					iconSource={require("assets/images/AddAnimalIcon.png")}
 					title="Adicionar animal"
 				/>
 				<Card
@@ -47,7 +47,7 @@ export default function TabOneScreen() {
 				<Card
 					href="/batches/add"
 					alt="alt"
-					iconSource={require("assets/images/FenceIcon.png")}
+					iconSource={require("assets/images/AddBatchIcon.png")}
 					title="Adicionar lote"
 					color="blue"
 				/>
