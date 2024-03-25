@@ -1,16 +1,33 @@
 import Colors from "constants/Colors";
 import React from "react";
-import { ActivityIndicatorProps, ActivityIndicator } from "react-native-paper";
+import {
+	ActivityIndicator,
+	ActivityIndicatorProps,
+	StyleSheet,
+	View,
+} from "react-native";
 
-export const Loading: React.FC<ActivityIndicatorProps> = ({
+type CustomLoadingProps = {
+	height?: number;
+};
+
+export const Loading: React.FC<ActivityIndicatorProps & CustomLoadingProps> = ({
 	children,
+	height = 100,
 	...props
 }) => {
 	return (
-		<ActivityIndicator
-			style={{ padding: 10 }}
-			color={Colors.green}
-			{...props}
-		/>
+		<View style={[styles.container, { height }]}>
+			<ActivityIndicator color={Colors.green} size={30} {...props} />
+		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		alignItems: "center",
+		justifyContent: "center",
+		width: "100%",
+	},
+});

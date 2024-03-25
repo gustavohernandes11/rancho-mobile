@@ -1,6 +1,7 @@
 import Colors from "constants/Colors";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View, ViewProps } from "react-native";
+import { Loading } from "./Loading";
 
 interface ContainerViewType {
 	flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
@@ -12,9 +13,19 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 	flexDirection,
 	...props
 }) => {
+	const [isLoading, setIsLoading] = useState(true);
+
+	useEffect(() => {
+		setIsLoading(false);
+	}, []);
+
 	return (
 		<ScrollView style={[styles.container, { flexDirection }]} {...props}>
-			<View style={styles.inner}>{children}</View>
+			{isLoading ? (
+				<Loading height={500} />
+			) : (
+				<View style={styles.inner}>{children}</View>
+			)}
 		</ScrollView>
 	);
 };
