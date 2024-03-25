@@ -18,7 +18,11 @@ export default function EditAnimalScreen() {
 	}, []);
 	return (
 		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Editar animal" }} />
+			<Stack.Screen
+				options={{
+					headerTitle: `Editando animal "${animal?.name || "..."}"`,
+				}}
+			/>
 			{animal && <AnimalForm initialValues={animal} />}
 		</ContainerView>
 	);

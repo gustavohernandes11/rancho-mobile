@@ -60,7 +60,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 
 	useEffect(() => {
 		const cleanup = navigation.addListener("beforeRemove", (e: any) => {
-			if (!formik.dirty) {
+			if (!formik.dirty || formik.isSubmitting) {
 				return;
 			}
 
