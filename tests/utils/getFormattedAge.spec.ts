@@ -1,5 +1,6 @@
 import moment from "moment";
 import { getFormattedAge } from "utils/formatters";
+jest.useFakeTimers().setSystemTime(new Date("2024-01-20"));
 
 describe("getFormattedAge", () => {
 	it("should return 0 days if the age is less than one day", () => {
