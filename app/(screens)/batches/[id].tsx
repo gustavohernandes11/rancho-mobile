@@ -5,7 +5,6 @@ import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
-import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import {
 	Stack,
@@ -60,9 +59,10 @@ export default function ViewBatchDetailsScreen() {
 
 	return (
 		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Detalhes do lote" }} />
+			<Stack.Screen
+				options={{ headerTitle: `Lote "${batch?.name || "..."}"` }}
+			/>
 			<Heading>{batch?.name}</Heading>
-			<SubTitle>Detalhes do lote</SubTitle>
 
 			<Span flexWrap="wrap">
 				<Button

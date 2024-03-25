@@ -28,10 +28,9 @@ export default function ViewBatchesScreen() {
 				}}
 			/>
 			<Span justify="space-between" align="center">
-				<Heading>Lotes</Heading>
-				<SubTitle>{`Total: ${batches?.length || "0"}`}</SubTitle>
+				<Heading>Crie e edite seus lotes</Heading>
+				<SubTitle>{`Total: ${batches?.length || "..."}`}</SubTitle>
 			</Span>
-			<SubTitle>Clique sobre o lote para ver mais detalhes</SubTitle>
 			<View style={{ gap: 4 }}>
 				{batches.length > 0 ? (
 					batches?.map((batch) => (

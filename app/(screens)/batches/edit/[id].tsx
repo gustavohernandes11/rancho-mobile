@@ -22,7 +22,11 @@ export default function EditAnimalScreen() {
 	}, []);
 	return (
 		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Editar lote" }} />
+			<Stack.Screen
+				options={{
+					headerTitle: `Editando lote "${batch?.name || "..."}"`,
+				}}
+			/>
 			{batch && <BatchForm initialValues={batch} />}
 		</ContainerView>
 	);

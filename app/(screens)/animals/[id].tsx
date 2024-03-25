@@ -30,9 +30,12 @@ export default function ViewAnimalDetailsScreen() {
 
 	return (
 		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Detalhes do animal" }} />
+			<Stack.Screen
+				options={{
+					headerTitle: `Detalhes de "${animal?.name || "..."}"`,
+				}}
+			/>
 			<Heading>{animal?.name}</Heading>
-			<SubTitle>Detalhes do animal</SubTitle>
 			<Span direction="column">
 				<Heading size="small">Informações gerais</Heading>
 				<SimpleTable data={serializeAnimalInfo(animal)} />
