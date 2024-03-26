@@ -6,7 +6,6 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
-import { useData } from "hooks/useData";
 import moment from "moment";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
@@ -20,6 +19,7 @@ import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
+import { useGlobalState } from "hooks/useGlobalState";
 
 interface AnimalFormProps {
 	initialValues?: Animal;
@@ -51,7 +51,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		},
 		validationSchema,
 	});
-	const { animals, batches, refreshAnimals, refreshBatches } = useData();
+	const { animals, batches, refreshAnimals, refreshBatches } =
+		useGlobalState();
 
 	useEffect(() => {
 		refreshAnimals();

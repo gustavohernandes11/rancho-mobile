@@ -2,13 +2,13 @@ import { BatchForm } from "components/BatchForm";
 import { ContainerView } from "components/ContainerView";
 import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
-import { useData } from "hooks/useData";
+import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Batch } from "types/Batch";
 
 export default function EditAnimalScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAnimals } = useData();
+	const { refreshAnimals } = useGlobalState();
 	const [batch, setBatch] = useState<Batch>();
 
 	useEffect(() => {

@@ -6,8 +6,7 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useFocusEffect, useNavigation } from "expo-router";
 import { useFormik } from "formik";
-import { useData } from "hooks/useData";
-import { useSelectionMode } from "hooks/useSelectionMode";
+import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
 import { Alert, BackHandler, Text, View } from "react-native";
 import { List } from "react-native-paper";
@@ -24,8 +23,8 @@ interface BatchFormProps {
 export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
-	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
-	const { animals, refreshAnimals, refreshBatches } = useData();
+	const { selectedIDs, setSelectedIDs, clearSelection } = useGlobalState();
+	const { animals, refreshAnimals, refreshBatches } = useGlobalState();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,

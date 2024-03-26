@@ -8,7 +8,7 @@ import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
-import { useData } from "hooks/useData";
+import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect } from "react";
 import { Alert } from "react-native";
 import { Animal } from "types";
@@ -16,7 +16,8 @@ import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAnimals, refreshBatches, batches, animals } = useData();
+	const { refreshAnimals, refreshBatches, batches, animals } =
+		useGlobalState();
 
 	const animal = animals.find((a) => a.id === Number(id));
 	const batch = batches.find((b) => b.id === animal?.batchId);

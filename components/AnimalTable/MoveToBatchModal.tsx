@@ -4,8 +4,7 @@ import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
 import { StorageService } from "database/StorageService";
-import { useData } from "hooks/useData";
-import { useSelectionMode } from "hooks/useSelectionMode";
+import { useGlobalState } from "hooks/useGlobalState";
 import React, { Fragment, useState } from "react";
 import {
 	Alert,
@@ -55,8 +54,8 @@ export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
 > = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
-	const { refreshAnimals, batches, refreshBatches } = useData();
-	const { selectedIDs, clearSelection } = useSelectionMode();
+	const { refreshAnimals, batches, refreshBatches } = useGlobalState();
+	const { selectedIDs, clearSelection } = useGlobalState();
 
 	const moveAllAnimalsTo = () => {
 		StorageService.moveAnimalsToBatch(

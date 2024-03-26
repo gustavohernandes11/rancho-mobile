@@ -6,12 +6,12 @@ import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { Link, Stack, router } from "expo-router";
-import { useData } from "hooks/useData";
+import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
 
 export default function ViewBatchesScreen() {
-	const { batches, refreshBatches } = useData();
+	const { batches, refreshBatches } = useGlobalState();
 
 	useEffect(() => {
 		refreshBatches();

@@ -1,7 +1,6 @@
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
-import { useData } from "hooks/useData";
-import { useSelectionMode } from "hooks/useSelectionMode";
+import { useGlobalState } from "hooks/useGlobalState";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { IconButton, Tooltip } from "react-native-paper";
@@ -20,8 +19,8 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	showCloseButton,
 	...props
 }) => {
-	const { selectedIDs, setSelectedIDs, clearSelection } = useSelectionMode();
-	const { setAnimals } = useData();
+	const { selectedIDs, setSelectedIDs, clearSelection } = useGlobalState();
+	const { setAnimals, animals } = useGlobalState();
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 	return (
 		<View
@@ -58,11 +57,11 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 									showConfirmationAndDeleteAll(
 										selectedIDs,
 										() => {
-											setAnimals((prev) =>
-												prev.filter(
-													(al) =>
+											setAnimals(
+												animals.filter(
+													(animal) =>
 														!selectedIDs.includes(
-															al.id
+															animal.id
 														)
 												)
 											);

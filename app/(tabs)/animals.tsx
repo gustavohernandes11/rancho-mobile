@@ -9,11 +9,11 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Stack, router } from "expo-router";
-import { useData } from "hooks/useData";
+import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 
 export default function ViewAnimalsScreen() {
-	const { animals, refreshAnimals, setAnimals } = useData();
+	const { animals, refreshAnimals, setAnimals } = useGlobalState();
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 

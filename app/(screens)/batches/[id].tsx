@@ -12,8 +12,7 @@ import {
 	useFocusEffect,
 	useLocalSearchParams,
 } from "expo-router";
-import { useData } from "hooks/useData";
-import { useSelectionMode } from "hooks/useSelectionMode";
+import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Animal, Batch } from "types";
@@ -21,9 +20,9 @@ import { serializeBatchInfo } from "utils/serializers";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { batches, refreshAnimals, refreshBatches } = useData();
+	const { batches, refreshAnimals, refreshBatches } = useGlobalState();
 	const [batchAnimals, setBatchAnimals] = useState<Animal[]>();
-	const { clearSelection } = useSelectionMode();
+	const { clearSelection } = useGlobalState();
 	const [isLoading, setIsLoading] = useState(true);
 	const batch = batches.find((b) => b.id === Number(id));
 

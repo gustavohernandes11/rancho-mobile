@@ -1,6 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { DataProvider } from "contexts/DataContext";
-import { SelectionModeProvider } from "contexts/SelectionContext";
+import { Logs } from "expo";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -11,6 +10,7 @@ export { ErrorBoundary } from "expo-router";
 
 SplashScreen.preventAutoHideAsync();
 
+Logs.enableExpoCliLogging();
 export default function RootLayout() {
 	const [loaded, error] = useFonts({
 		OpenSans: require("assets/fonts/OpenSans.ttf"),
@@ -36,21 +36,14 @@ export default function RootLayout() {
 function RootLayoutNav() {
 	return (
 		<Provider>
-			<SelectionModeProvider>
-				<DataProvider>
-					<Stack>
-						<Stack.Screen
-							name="(tabs)"
-							options={{ headerShown: false }}
-						/>
-						<Stack.Screen
-							name="(screens)"
-							options={{ headerShown: false }}
-						/>
-					</Stack>
-					<StatusBar style="light" />
-				</DataProvider>
-			</SelectionModeProvider>
+			<Stack>
+				<Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+				<Stack.Screen
+					name="(screens)"
+					options={{ headerShown: false }}
+				/>
+			</Stack>
+			<StatusBar style="light" />
 		</Provider>
 	);
 }

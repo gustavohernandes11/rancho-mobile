@@ -1,7 +1,6 @@
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
-import { useData } from "hooks/useData";
-import { useSelectionMode } from "hooks/useSelectionMode";
+import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback, useEffect } from "react";
 import { BackHandler, FlatList, Text } from "react-native";
 import { DataTable } from "react-native-paper";
@@ -19,14 +18,14 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	onlySelectionMode = false,
 	...props
 }) => {
-	const { refreshBatches } = useData();
+	const { refreshBatches } = useGlobalState();
 	const {
 		isSelectionMode,
 		clearSelection,
 		selectedIDs,
-		setSelectedIDs,
 		setIsSelectionMode,
-	} = useSelectionMode();
+		toggleCheckID,
+	} = useGlobalState();
 
 	useEffect(() => {
 		refreshBatches();
@@ -54,20 +53,11 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
 	const renderItem = ({ item }: { item: Animal }) => (
 		<AnimalRow
-			onCheck={() => {
-				setSelectedIDs((prevIDs) =>
-					selectedIDs.includes(item.id)
-						? prevIDs.filter((id) => id !== item.id)
-						: [...prevIDs, item.id]
-				);
-			}}
+			onCheck={() => toggleCheckID(item.id)}
 			onLongPress={() => {
 				if (!isSelectionMode) {
 					setIsSelectionMode(true);
-					setSelectedIDs((prevIDs: number[]) => [
-						...prevIDs,
-						item.id,
-					]);
+					toggleCheckID(item.id);
 				}
 			}}
 			isChecked={selectedIDs.includes(item.id)}
