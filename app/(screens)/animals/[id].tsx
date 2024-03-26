@@ -6,7 +6,6 @@ import { Heading } from "components/Heading";
 import { Input } from "components/Input";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
-import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useData } from "hooks/useData";
