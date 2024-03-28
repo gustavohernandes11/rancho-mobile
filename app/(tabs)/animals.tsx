@@ -59,6 +59,7 @@ export default function ViewAnimalsScreen() {
 			</SubTitle>
 
 			{isLoading ? <Loading /> : <AnimalTable animals={animals || []} />}
+
 			{animals.length === 0 ? (
 				<Span justify="center" py={8}>
 					<Button

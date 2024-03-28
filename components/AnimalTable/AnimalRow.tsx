@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
@@ -26,6 +26,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = memo(
 					pathname: `/animals/${animal?.id}`,
 					params: { id: animal?.id },
 				}}
+				key={animal.id}
 				asChild
 			>
 				<TouchableRipple
@@ -75,7 +76,7 @@ export const AnimalRow: React.FC<AnimalRowProps> = memo(
 		return (
 			prevProps.showCheckbox === nextProps.showCheckbox &&
 			prevProps.isChecked === nextProps.isChecked &&
-			prevProps.animal.id === nextProps.animal.id
+			prevProps.animal === nextProps.animal
 		);
 	}
 );
