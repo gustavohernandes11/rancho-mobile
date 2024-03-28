@@ -16,70 +16,66 @@ interface AnimalRowProps {
 	onLongPress: () => void;
 }
 
-export const AnimalRow: React.FC<AnimalRowProps> = memo(
-	({ animal, showCheckbox, isChecked = false, onLongPress, onCheck }) => {
-		const { batches } = useGlobalState();
-		const batch = batches.find((b) => animal?.batchId === b.id);
-		return (
-			<Link
-				href={{
-					pathname: `/animals/${animal?.id}`,
-					params: { id: animal?.id },
-				}}
+export const AnimalRow: React.FC<AnimalRowProps> = ({
+	animal,
+	showCheckbox,
+	isChecked = false,
+	onLongPress,
+	onCheck,
+}) => {
+	const { batches } = useGlobalState();
+	const batch = batches.find((b) => animal?.batchId === b.id);
+	return (
+		<Link
+			href={{
+				pathname: `/animals/${animal?.id}`,
+				params: { id: animal?.id },
+			}}
+			key={animal.id}
+			asChild
+		>
+			<TouchableRipple
 				key={animal.id}
-				asChild
+				style={isChecked ? styles.checked : null}
+				onLongPress={onLongPress}
 			>
-				<TouchableRipple
-					key={animal.id}
-					style={isChecked ? styles.checked : null}
-					onLongPress={onLongPress}
-				>
-					<DataTable.Row>
+				<DataTable.Row>
+					<DataTable.Cell
+						style={{ flex: 4 }}
+						textStyle={sharedStyles.text}
+					>
+						{getGenderIcon(animal.gender)}
+						{" " + animal.name}
+					</DataTable.Cell>
+					<DataTable.Cell
+						style={{ flex: 4 }}
+						textStyle={sharedStyles.text}
+					>
+						{batch && batch.name}
+					</DataTable.Cell>
+					<DataTable.Cell
+						style={{ flex: 2 }}
+						textStyle={sharedStyles.text}
+					>
+						{animal.birthdate && getFormattedAge(animal.birthdate)}
+					</DataTable.Cell>
+					{showCheckbox && (
 						<DataTable.Cell
-							style={{ flex: 4 }}
 							textStyle={sharedStyles.text}
+							style={{ flex: 1 }}
 						>
-							{getGenderIcon(animal.gender)}
-							{" " + animal.name}
+							<Checkbox
+								color={Colors.green}
+								status={isChecked ? "checked" : "unchecked"}
+								onPress={onCheck}
+							/>
 						</DataTable.Cell>
-						<DataTable.Cell
-							style={{ flex: 4 }}
-							textStyle={sharedStyles.text}
-						>
-							{batch && batch.name}
-						</DataTable.Cell>
-						<DataTable.Cell
-							style={{ flex: 2 }}
-							textStyle={sharedStyles.text}
-						>
-							{animal.birthdate &&
-								getFormattedAge(animal.birthdate)}
-						</DataTable.Cell>
-						{showCheckbox && (
-							<DataTable.Cell
-								textStyle={sharedStyles.text}
-								style={{ flex: 1 }}
-							>
-								<Checkbox
-									color={Colors.green}
-									status={isChecked ? "checked" : "unchecked"}
-									onPress={onCheck}
-								/>
-							</DataTable.Cell>
-						)}
-					</DataTable.Row>
-				</TouchableRipple>
-			</Link>
-		);
-	},
-	(prevProps: AnimalRowProps, nextProps: AnimalRowProps) => {
-		return (
-			prevProps.showCheckbox === nextProps.showCheckbox &&
-			prevProps.isChecked === nextProps.isChecked &&
-			prevProps.animal === nextProps.animal
-		);
-	}
-);
+					)}
+				</DataTable.Row>
+			</TouchableRipple>
+		</Link>
+	);
+};
 
 const styles = StyleSheet.create({
 	checked: {

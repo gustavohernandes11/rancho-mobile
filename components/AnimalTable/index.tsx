@@ -1,8 +1,9 @@
+import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback, useEffect } from "react";
-import { BackHandler, FlatList, SafeAreaView, Text } from "react-native";
+import { BackHandler, Dimensions, Text, View } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
@@ -112,7 +113,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	);
 
 	return (
-		<SafeAreaView>
+		<>
 			<Span>
 				<SelectionBanner
 					active={isSelectionMode}
@@ -120,18 +121,23 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					showCloseButton={true}
 				/>
 			</Span>
-			<FlatList
-				removeClippedSubviews={true}
-				data={animals}
-				keyExtractor={keyExtractor}
-				renderItem={renderItem as any}
-				initialNumToRender={10}
-				maxToRenderPerBatch={10}
-				style={{ width: "100%" }}
-				ListHeaderComponent={renderHeader}
-				ListEmptyComponent={renderEmptyList}
-				scrollEnabled={true}
-			/>
-		</SafeAreaView>
+			<View
+				style={{
+					minHeight: 2,
+					width: Dimensions.get("screen").width,
+				}}
+			>
+				<FlashList
+					removeClippedSubviews={true}
+					data={animals}
+					extraData={selectedIDs}
+					keyExtractor={keyExtractor}
+					renderItem={renderItem as any}
+					estimatedItemSize={100}
+					ListHeaderComponent={renderHeader}
+					ListEmptyComponent={renderEmptyList}
+				/>
+			</View>
+		</>
 	);
 };
