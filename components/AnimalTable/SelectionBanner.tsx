@@ -1,6 +1,5 @@
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
-import { useGlobalState } from "hooks/useGlobalState";
 import React, { useState } from "react";
 import { StyleSheet, Text, View, ViewProps } from "react-native";
 import { IconButton, Tooltip } from "react-native-paper";
@@ -11,16 +10,22 @@ interface SelectionBannerProps {
 	showActions?: boolean;
 	showCloseButton?: boolean;
 	active: boolean;
+	onClearSelection: () => void;
+	selectedIDs: number[];
+	onSelectAll: () => void;
+	onDeleteMany: () => void;
 }
 
 export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 	showActions = true,
 	showCloseButton = true,
 	active,
+	onClearSelection,
+	selectedIDs,
+	onSelectAll,
+	onDeleteMany,
 	...props
 }) => {
-	const { selectedIDs, setSelectedIDs, clearSelection, animals, setAnimals } =
-		useGlobalState();
 	const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
 
 	return (
@@ -34,13 +39,15 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 						visible={isBatchModalVisible}
 						onDismiss={() => setIsBatchModalVisible(false)}
 						setIsBatchModalVisible={setIsBatchModalVisible}
+						onClearSelection={onClearSelection}
+						selectedIDs={selectedIDs}
 					/>
 					<Span align="center" justify="space-between" my={0}>
 						{showCloseButton && (
 							<IconButton
 								iconColor={Colors.white}
 								icon="close"
-								onPress={clearSelection}
+								onPress={onClearSelection}
 								style={{
 									margin: 0,
 								}}
@@ -59,17 +66,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 										onPress={() =>
 											showConfirmationAndDeleteAll(
 												selectedIDs,
-												() => {
-													setAnimals(
-														animals.filter(
-															(animal) =>
-																!selectedIDs.includes(
-																	animal.id
-																)
-														)
-													);
-													clearSelection();
-												}
+												() => onDeleteMany
 											)
 										}
 										style={{ margin: 0 }}
@@ -80,11 +77,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 									<IconButton
 										iconColor={Colors.white}
 										icon="select-all"
-										onPress={() =>
-											setSelectedIDs(
-												animals.map((a) => a.id)
-											)
-										}
+										onPress={onSelectAll}
 										style={{ margin: 0 }}
 										size={20}
 									/>

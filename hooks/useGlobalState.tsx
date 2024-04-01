@@ -10,13 +10,6 @@ interface GlobalState {
 	refreshBatches: () => void;
 	batches: Batch[];
 	setBatches: (batches: Batch[]) => void;
-
-	selectedIDs: number[];
-	isSelectionMode: boolean;
-	setSelectedIDs: (IDs: number[]) => void;
-	clearSelection: () => void;
-	setIsSelectionMode: (isSelection: boolean) => void;
-	toggleCheckID: (ID: number) => void;
 }
 
 export const useGlobalState = create<GlobalState>()((set) => ({
@@ -34,22 +27,4 @@ export const useGlobalState = create<GlobalState>()((set) => ({
 	},
 	setAnimals: (animals) => set(() => ({ animals })),
 	setBatches: (batches) => set(() => ({ batches })),
-
-	selectedIDs: [],
-	isSelectionMode: false,
-	setSelectedIDs: (IDs: number[]) => set(() => ({ selectedIDs: IDs })),
-	clearSelection: () =>
-		set(() => ({ selectedIDs: [], isSelectionMode: false })),
-	setIsSelectionMode: (isSelection: boolean) =>
-		set(() => ({ isSelectionMode: isSelection })),
-	toggleCheckID: (ID: number) =>
-		set((state) =>
-			state.selectedIDs.includes(ID)
-				? {
-						selectedIDs: state.selectedIDs.filter(
-							(itemID) => itemID !== ID
-						),
-				  }
-				: { selectedIDs: [...state.selectedIDs, ID] }
-		),
 }));

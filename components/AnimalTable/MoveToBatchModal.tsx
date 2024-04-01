@@ -25,6 +25,8 @@ interface MoveToBatchModalProps {
 	visible: boolean;
 	onDismiss: () => void;
 	setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
+	selectedIDs: number[];
+	onClearSelection: () => void;
 }
 
 const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
@@ -52,10 +54,16 @@ const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
 
 export const MoveToBatchModal: React.FC<
 	MoveToBatchModalProps & Omit<ModalProps, "children">
-> = ({ visible, onDismiss, setIsBatchModalVisible, ...props }) => {
+> = ({
+	visible,
+	onDismiss,
+	setIsBatchModalVisible,
+	selectedIDs,
+	onClearSelection,
+	...props
+}) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
 	const { refreshAnimals, batches, refreshBatches } = useGlobalState();
-	const { selectedIDs, clearSelection } = useGlobalState();
 
 	const moveAllAnimalsTo = () => {
 		StorageService.moveAnimalsToBatch(
@@ -75,7 +83,7 @@ export const MoveToBatchModal: React.FC<
 								selectedBatch!.name +
 								"."
 					  );
-				clearSelection();
+				onClearSelection();
 				refreshAnimals();
 				refreshBatches();
 			})

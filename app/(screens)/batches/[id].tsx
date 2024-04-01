@@ -12,6 +12,7 @@ import {
 	useFocusEffect,
 	useLocalSearchParams,
 } from "expo-router";
+import { useAnimalTable } from "hooks/useAnimalSelection";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -20,11 +21,11 @@ import { serializeBatchInfo } from "utils/serializers";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
+	const [isLoading, setIsLoading] = useState(true);
 	const { batches, refreshAnimals, refreshBatches } = useGlobalState();
 	const [batchAnimals, setBatchAnimals] = useState<Animal[]>();
-	const { clearSelection } = useGlobalState();
-	const [isLoading, setIsLoading] = useState(true);
 	const batch = batches.find((b) => b.id === Number(id));
+	const table = useAnimalTable();
 
 	useFocusEffect(
 		useCallback(() => {
@@ -39,7 +40,7 @@ export default function ViewBatchDetailsScreen() {
 	);
 
 	useEffect(() => {
-		clearSelection();
+		table.clearSelection();
 		const fetchData = async () => {
 			setIsLoading(true);
 			const animalsFromBatch = await StorageService.loadBatchAnimals(
@@ -51,7 +52,7 @@ export default function ViewBatchDetailsScreen() {
 		fetchData();
 
 		return () => {
-			clearSelection();
+			table.clearSelection();
 			refreshAnimals();
 		};
 	}, []);
@@ -106,7 +107,10 @@ export default function ViewBatchDetailsScreen() {
 				{isLoading ? (
 					<Loading />
 				) : (
-					<AnimalTable animals={batchAnimals || []} />
+					<AnimalTable
+						liftedController={table}
+						animals={batchAnimals || []}
+					/>
 				)}
 			</Span>
 		</ContainerView>

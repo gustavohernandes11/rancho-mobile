@@ -2,40 +2,66 @@ import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, Dimensions, Text, View } from "react-native";
-import { DataTable } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
-import { AnimalRow } from "./AnimalRow";
+import { Header } from "./Header";
+import { Row } from "./Row";
 import { SelectionBanner } from "./SelectionBanner";
+import {
+	ControlledAnimalTableProps,
+	useAnimalTable,
+} from "hooks/useAnimalSelection";
 
-interface AnimalTableProps {
+type AnimalTableProps = {
 	animals: Animal[];
 	onlySelectionMode?: boolean;
-}
+	liftedController?: ControlledAnimalTableProps | null;
+};
+
 export const AnimalTable: React.FC<AnimalTableProps> = ({
 	animals,
 	onlySelectionMode = false,
+	liftedController = null,
 }) => {
-	const {
-		isSelectionMode,
-		clearSelection,
-		setIsSelectionMode,
-		toggleCheckID,
-		refreshBatches,
-		selectedIDs,
-	} = useGlobalState();
+	const { refreshBatches, setAnimals } = useGlobalState();
+	const localController = useAnimalTable();
+	const controller = liftedController || localController;
 
 	useEffect(() => {
 		refreshBatches();
 	}, []);
 
+	useEffect(() => {
+		refreshBatches();
+	}, []);
+
+	const handleCheck = (id: number) => {
+		controller.toggleCheckID(id);
+	};
+	const handleLongPress = (id: number) => {
+		if (!controller.isSelectionMode) {
+			controller.setIsSelectionMode(true);
+			controller.toggleCheckID(id);
+		}
+	};
+	const handleSelectAll = () => {
+		controller.setSelectedIDs(animals.map((al) => al.id));
+	};
+	const handleDeleteManyFromState = () => {
+		setAnimals(
+			animals.filter(
+				(animal) => !controller.selectedIDs.includes(animal.id)
+			)
+		);
+		controller.clearSelection();
+	};
+
 	useFocusEffect(
 		React.useCallback(() => {
 			const backAction = () => {
-				if (isSelectionMode) {
-					clearSelection();
+				if (controller.isSelectionMode) {
+					controller.clearSelection();
 					return true;
 				} else {
 					return false;
@@ -48,58 +74,27 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			);
 
 			return () => backHandler.remove();
-		}, [isSelectionMode])
+		}, [controller.isSelectionMode])
 	);
+
 	const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
 	const renderItem = ({ item }: { item: Animal }) => (
-		<AnimalRow
-			onCheck={() => {
-				toggleCheckID(item.id);
-			}}
-			onLongPress={() => {
-				if (!isSelectionMode) {
-					setIsSelectionMode(true);
-					toggleCheckID(item.id);
-				}
-			}}
-			isChecked={selectedIDs.includes(item.id)}
-			showCheckbox={onlySelectionMode || isSelectionMode}
+		<Row
+			isChecked={controller.selectedIDs.includes(item.id)}
+			onCheck={() => handleCheck(item.id)}
+			onLongPress={() => handleLongPress(item.id)}
+			showCheckbox={onlySelectionMode || !!controller.isSelectionMode}
 			animal={item}
 		/>
 	);
 
 	const renderHeader = useCallback(
 		() => (
-			<DataTable>
-				<DataTable.Header>
-					<DataTable.Title
-						style={{ flex: 4 }}
-						textStyle={sharedStyles.text}
-					>
-						Nome
-					</DataTable.Title>
-					<DataTable.Title
-						style={{ flex: 4 }}
-						textStyle={sharedStyles.text}
-					>
-						Lote
-					</DataTable.Title>
-					<DataTable.Title
-						style={{ flex: 2 }}
-						textStyle={sharedStyles.text}
-					>
-						Idade
-					</DataTable.Title>
-					{(isSelectionMode || onlySelectionMode) && (
-						<DataTable.Title
-							style={{ flex: 1 }}
-							textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
-						>
-							{" "}
-						</DataTable.Title>
-					)}
-				</DataTable.Header>
-			</DataTable>
+			<Header
+				leaveSpaceAtRight={
+					onlySelectionMode || !!controller.isSelectionMode
+				}
+			/>
 		),
 		[]
 	);
@@ -116,24 +111,28 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 		<>
 			<Span>
 				<SelectionBanner
-					active={isSelectionMode}
+					active={!!controller.isSelectionMode}
 					showActions={true}
 					showCloseButton={true}
+					onClearSelection={controller.clearSelection}
+					onSelectAll={handleSelectAll}
+					selectedIDs={controller.selectedIDs}
+					onDeleteMany={handleDeleteManyFromState}
 				/>
 			</Span>
 			<View
 				style={{
-					minHeight: 2,
+					minHeight: 700,
 					width: Dimensions.get("screen").width,
 				}}
 			>
 				<FlashList
 					removeClippedSubviews={true}
 					data={animals}
-					extraData={selectedIDs}
 					keyExtractor={keyExtractor}
-					renderItem={renderItem as any}
-					estimatedItemSize={100}
+					extraData={controller.selectedIDs}
+					renderItem={renderItem}
+					estimatedItemSize={50}
 					ListHeaderComponent={renderHeader}
 					ListEmptyComponent={renderEmptyList}
 				/>

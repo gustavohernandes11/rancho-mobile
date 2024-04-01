@@ -6,6 +6,7 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
+import { useGlobalState } from "hooks/useGlobalState";
 import moment from "moment";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
@@ -19,7 +20,6 @@ import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { useGlobalState } from "hooks/useGlobalState";
 
 interface AnimalFormProps {
 	initialValues?: Animal;

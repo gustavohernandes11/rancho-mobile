@@ -15,6 +15,7 @@ import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
+import { useAnimalTable } from "hooks/useAnimalSelection";
 
 interface BatchFormProps {
 	initialValues?: Batch;
@@ -23,7 +24,7 @@ interface BatchFormProps {
 export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
-	const { selectedIDs, setSelectedIDs, clearSelection } = useGlobalState();
+	const table = useAnimalTable();
 	const { animals, refreshAnimals, refreshBatches } = useGlobalState();
 	const navigation = useNavigation();
 	const formik = useFormik({
@@ -33,13 +34,13 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	});
 
 	useEffect(() => {
-		return () => clearSelection();
+		return () => table.clearSelection();
 	}, []);
 
 	useFocusEffect(
 		React.useCallback(() => {
 			const backAction = () => {
-				clearSelection();
+				table.clearSelection();
 				return false;
 			};
 
@@ -85,7 +86,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 			const animalsFromBatch = animals.filter(
 				(al) => al.batchId === initialValues.id
 			);
-			setSelectedIDs(animalsFromBatch.map((a) => a.id));
+			table.setSelectedIDs(animalsFromBatch.map((a) => a.id));
 		}
 	}, [initialValues.id]);
 
@@ -97,14 +98,14 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 			? StorageService.insertBatch(values)
 					.then((insertedId) =>
 						StorageService.moveAnimalsToBatch(
-							selectedIDs,
+							table.selectedIDs,
 							insertedId || null
 						)
 					)
 					.then(() => {
 						refreshAnimals();
 						refreshBatches();
-						clearSelection();
+						table.clearSelection();
 						formik.resetForm();
 					})
 					.then(() => router.replace("/(tabs)/batches"))
@@ -117,7 +118,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						initialAnimals?.map((animal) => {
 							if (
 								animal.batchId === batch.id &&
-								!selectedIDs.includes(animal.id)
+								!table.selectedIDs.includes(animal.id)
 							) {
 								StorageService.moveAnimalToBatch(
 									animal.id,
@@ -125,7 +126,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 								);
 							} else if (
 								animal.batchId !== batch.id &&
-								selectedIDs.includes(animal.id)
+								table.selectedIDs.includes(animal.id)
 							) {
 								StorageService.moveAnimalToBatch(
 									animal.id,
@@ -137,7 +138,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					.then(() => {
 						refreshAnimals();
 						refreshBatches();
-						clearSelection();
+						table.clearSelection();
 						formik.resetForm();
 					})
 					.then(() => router.replace("/(tabs)/batches"))
@@ -173,10 +174,14 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 			<List.Accordion
 				style={[sharedStyles.inputAspect, { padding: 0 }]}
 				titleStyle={sharedStyles.text}
-				title={`${selectedIDs.length} selecionado(s)`}
+				title={`${table.selectedIDs.length} selecionado(s)`}
 			>
 				{animals ? (
-					<AnimalTable onlySelectionMode={true} animals={animals} />
+					<AnimalTable
+						onlySelectionMode={true}
+						liftedController={table}
+						animals={animals}
+					/>
 				) : (
 					<Loading />
 				)}
@@ -187,7 +192,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					title="Cancelar"
 					onPress={() => {
 						navigation.goBack();
-						clearSelection();
+						table.clearSelection();
 					}}
 				/>
 				<Button
