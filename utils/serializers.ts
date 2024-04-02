@@ -55,8 +55,10 @@ export const serializeBatchInfo = (batch?: Batch) => {
 	let items: Item[] = [];
 	if (!batch) return items;
 
-	if (batch.description)
+	if (batch.description) {
 		items.push({ key: "Descrição", value: batch.description });
+	}
+
 	items.push({
 		key: "Número de animais",
 		value: batch.count > 0 ? batch.count.toString() : "Vazio",

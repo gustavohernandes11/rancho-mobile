@@ -5,11 +5,9 @@ import { create } from "zustand";
 
 interface GlobalState {
 	animals: Animal[];
-	setAnimals: (animals: Animal[]) => void;
 	refreshAnimals: () => void;
 	refreshBatches: () => void;
 	batches: Batch[];
-	setBatches: (batches: Batch[]) => void;
 }
 
 export const useGlobalState = create<GlobalState>()((set) => ({
@@ -25,6 +23,4 @@ export const useGlobalState = create<GlobalState>()((set) => ({
 			set(() => ({ animals }))
 		);
 	},
-	setAnimals: (animals) => set(() => ({ animals })),
-	setBatches: (batches) => set(() => ({ batches })),
 }));

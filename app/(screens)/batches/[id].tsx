@@ -16,40 +16,32 @@ import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Animal, Batch } from "types";
+import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { batches, refreshAnimals, refreshBatches } = useGlobalState();
-	const [batchAnimals, setBatchAnimals] = useState<Animal[]>();
-	const batch = batches.find((b) => b.id === Number(id));
+	const { refreshAnimals, refreshBatches } = useGlobalState();
+	const [batch, setBatch] = useState<PopulatedBatch>();
 	const table = useAnimalTable();
+
+	const fetchBatch = async () => {
+		setIsLoading(true);
+		await StorageService.loadBatch(Number(id))
+			.then((populatedBatch) => setBatch(populatedBatch))
+			.then(() => setIsLoading(false));
+	};
 
 	useFocusEffect(
 		useCallback(() => {
-			const fetchData = async () => {
-				const animalsFromBatch = await StorageService.loadBatchAnimals(
-					Number(id)
-				);
-				setBatchAnimals(animalsFromBatch);
-			};
-			fetchData();
+			fetchBatch();
 		}, [id])
 	);
 
 	useEffect(() => {
 		table.clearSelection();
-		const fetchData = async () => {
-			setIsLoading(true);
-			const animalsFromBatch = await StorageService.loadBatchAnimals(
-				Number(id)
-			);
-			setBatchAnimals(animalsFromBatch);
-			setIsLoading(false);
-		};
-		fetchData();
+		fetchBatch();
 
 		return () => {
 			table.clearSelection();
@@ -95,13 +87,12 @@ export default function ViewBatchDetailsScreen() {
 				/>
 			</Span>
 
-			{!!batch?.count ||
-				(batch?.description && (
-					<Span direction="column">
-						<Heading size="small">Informações Gerais</Heading>
-						<SimpleTable data={serializeBatchInfo(batch)} />
-					</Span>
-				))}
+			{batch && (
+				<Span direction="column">
+					<Heading size="small">Informações Gerais</Heading>
+					<SimpleTable data={serializeBatchInfo(batch)} />
+				</Span>
+			)}
 			<Span direction="column">
 				<Heading size="small">Animais do lote</Heading>
 				{isLoading ? (
@@ -109,7 +100,7 @@ export default function ViewBatchDetailsScreen() {
 				) : (
 					<AnimalTable
 						liftedController={table}
-						animals={batchAnimals || []}
+						animals={batch?.animals || []}
 					/>
 				)}
 			</Span>

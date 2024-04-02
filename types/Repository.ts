@@ -1,5 +1,5 @@
 import { AddAnimal, Animal, UpdateAnimal } from "./Animal";
-import { AddBatch, Batch, UpdateBatch } from "./Batch";
+import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
 
 export type OrderByOptions = "alfabetic" | "age";
@@ -15,9 +15,7 @@ export interface Repository {
 	insertBatch(batch: AddBatch): Promise<number | undefined>;
 	loadAnimal(animalID: number): Promise<Animal>;
 	listAnimals(query?: QueryOptions): Promise<Animal[]>;
-	searchAnimals(text: string): Promise<Animal[]>;
-	loadBatchAnimals(batchID: number): Promise<Animal[]>;
-	loadBatchInfo(batchID: number): Promise<Batch>;
+	loadBatch(batchID: number): Promise<PopulatedBatch>;
 	listAllBatchesInfo(): Promise<Batch[]>;
 	updateAnimal(updateData: UpdateAnimal): Promise<Animal>;
 	updateBatch(updateData: UpdateBatch): Promise<Batch>;

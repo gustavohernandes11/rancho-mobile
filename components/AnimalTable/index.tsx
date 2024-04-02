@@ -1,17 +1,17 @@
 import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
-import { useGlobalState } from "hooks/useGlobalState";
-import React, { useCallback, useEffect, useState } from "react";
-import { BackHandler, Dimensions, Text, View } from "react-native";
-import { Animal } from "types";
-import { Header } from "./Header";
-import { Row } from "./Row";
-import { SelectionBanner } from "./SelectionBanner";
 import {
 	ControlledAnimalTableProps,
 	useAnimalTable,
 } from "hooks/useAnimalTable";
+import { useGlobalState } from "hooks/useGlobalState";
+import React, { useCallback, useEffect } from "react";
+import { BackHandler, Dimensions, Text, View } from "react-native";
+import { Animal } from "types";
+import { Header } from "./Header";
+import { SelectionBanner } from "./SelectionBanner";
+import { Row } from "./Row";
 
 type AnimalTableProps = {
 	animals: Animal[];
@@ -24,7 +24,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	onlySelectionMode = false,
 	liftedController = null,
 }) => {
-	const { refreshBatches, setAnimals } = useGlobalState();
+	const { refreshBatches, refreshAnimals } = useGlobalState();
 	const localController = useAnimalTable();
 	const controller = liftedController || localController;
 
@@ -53,11 +53,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 		controller.setSelectedIDs(animals.map((al) => al.id));
 	};
 	const handleDeleteManyFromState = () => {
-		setAnimals(
-			animals.filter(
-				(animal) => !controller.selectedIDs.includes(animal.id)
-			)
-		);
+		refreshAnimals();
 		controller.clearSelection();
 	};
 

@@ -4,16 +4,16 @@ import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { Batch } from "types/Batch";
+import { PopulatedBatch } from "types/Batch";
 
 export default function EditAnimalScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const { refreshAnimals } = useGlobalState();
-	const [batch, setBatch] = useState<Batch>();
+	const [batch, setBatch] = useState<PopulatedBatch>();
 
 	useEffect(() => {
 		const fetchData = async () => {
-			await StorageService.loadBatchInfo(Number(id)).then((batch) =>
+			await StorageService.loadBatch(Number(id)).then((batch) =>
 				setBatch(batch)
 			);
 			refreshAnimals();

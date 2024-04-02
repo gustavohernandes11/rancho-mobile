@@ -4,6 +4,7 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	PopulatedBatch,
 	QueryOptions,
 	Repository,
 	UpdateAnimal,
@@ -241,32 +242,6 @@ export class SqliteRepository implements Repository {
 
 		return this.executeQuery(query, params).then(({ rows }) => rows._array);
 	}
-
-	async searchAnimals(text: string): Promise<Animal[]> {
-		const query = `
-		SELECT 
-			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
-		FROM Animals
-		WHERE (COALESCE(CAST(name AS TEXT), '') ||
-               COALESCE(CAST(code AS TEXT), '') ||
-               COALESCE(CAST(observation AS TEXT), '')) LIKE '%' || ? || '%'
-		`;
-
-		return this.executeQuery(query, [text]).then(({ rows }) => rows._array);
-	}
-	async loadBatchAnimals(batchId: number): Promise<Animal[]> {
-		const query = `
-		SELECT
-			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
-		FROM Animals 
-		WHERE batchId = ?
-		ORDER BY name
-		`;
-
-		return this.executeQuery(query, [batchId]).then(
-			({ rows }) => rows._array
-		);
-	}
 	async loadBatchInfo(batchID: number): Promise<Batch> {
 		const loadBatchQuery = `
 		SELECT 
@@ -290,6 +265,38 @@ export class SqliteRepository implements Repository {
 		const count = countResult.rows.item(0).count;
 
 		return { ...batchInfo, count };
+	}
+	async loadBatch(batchID: number): Promise<PopulatedBatch> {
+		const loadBatchQuery = `
+        SELECT 
+            Batches.id, Batches.name, Batches.description,
+            COUNT(Animals.id) AS count
+        FROM Batches
+        LEFT JOIN Animals ON Batches.id = Animals.batchId
+        WHERE Batches.id = ?
+        GROUP BY Batches.id, Batches.name, Batches.description
+    `;
+
+		const loadAnimalsQuery = `
+        SELECT
+            id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+        FROM Animals 
+        WHERE batchId = ?
+        ORDER BY name
+    `;
+
+		const [batchResult, animalsResult] = await Promise.all([
+			this.executeQuery(loadBatchQuery, [batchID]),
+			this.executeQuery(loadAnimalsQuery, [batchID]),
+		]);
+
+		const batchInfo = batchResult.rows.item(0);
+		const animals = animalsResult.rows._array;
+
+		return {
+			...batchInfo,
+			animals,
+		};
 	}
 	async listAllBatchesInfo(): Promise<Batch[]> {
 		const query = `

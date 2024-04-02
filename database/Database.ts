@@ -3,6 +3,7 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	PopulatedBatch,
 	QueryOptions,
 	Repository,
 	UpdateAnimal,
@@ -33,11 +34,8 @@ export class Database implements Repository {
 	async listAnimals(query: QueryOptions): Promise<Animal[]> {
 		return this.DbRepository.listAnimals(query);
 	}
-	async loadBatchAnimals(batchID: number): Promise<Animal[]> {
-		return this.DbRepository.loadBatchAnimals(batchID);
-	}
-	async loadBatchInfo(batchID: number): Promise<Batch> {
-		return this.DbRepository.loadBatchInfo(batchID);
+	async loadBatch(batchID: number): Promise<PopulatedBatch> {
+		return this.DbRepository.loadBatch(batchID);
 	}
 	async listAllBatchesInfo(): Promise<Batch[]> {
 		return this.DbRepository.listAllBatchesInfo();
@@ -71,8 +69,5 @@ export class Database implements Repository {
 		batchID: number | null
 	): Promise<boolean> {
 		return this.DbRepository.moveAnimalsToBatch(animalIDsToMove, batchID);
-	}
-	async searchAnimals(text: string): Promise<Animal[]> {
-		return this.DbRepository.searchAnimals(text);
 	}
 }
