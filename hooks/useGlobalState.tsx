@@ -21,7 +21,7 @@ export const useGlobalState = create<GlobalState>()((set) => ({
 		);
 	},
 	refreshAnimals: async () => {
-		StorageService.listAnimals().then((animals) =>
+		StorageService.listAnimals({}).then((animals) =>
 			set(() => ({ animals }))
 		);
 	},

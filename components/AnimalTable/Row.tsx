@@ -25,9 +25,14 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 };
 
 export const Row: React.FC<RowProps> = memo(
-	({ animal, showCheckbox, isChecked, onCheck, onLongPress }) => {
+	({ animal, showCheckbox, isChecked = false, onCheck, onLongPress }) => {
 		const { batches } = useGlobalState();
 		const batch = batches.find((batch) => batch.id === animal.batchId);
+
+		useEffect(() => {
+			console.log("rerender: " + animal.id);
+			console.log("showCheckbox?: " + showCheckbox);
+		}, []);
 
 		return (
 			<Link
@@ -54,13 +59,15 @@ export const Row: React.FC<RowProps> = memo(
 							{animal.birthdate &&
 								getFormattedAge(animal.birthdate)}
 						</Cell>
-						<Cell flex={1} active={showCheckbox}>
-							<Checkbox
-								color={Colors.green}
-								status={isChecked ? "checked" : "unchecked"}
-								onPress={onCheck}
-							/>
-						</Cell>
+						{showCheckbox && (
+							<Cell flex={1}>
+								<Checkbox
+									color={Colors.green}
+									status={isChecked ? "checked" : "unchecked"}
+									onPress={onCheck}
+								/>
+							</Cell>
+						)}
 					</DataTable.Row>
 				</TouchableRipple>
 			</Link>

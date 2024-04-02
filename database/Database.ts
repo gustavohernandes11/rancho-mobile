@@ -3,6 +3,7 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	QueryOptions,
 	Repository,
 	UpdateAnimal,
 	UpdateBatch,
@@ -29,8 +30,8 @@ export class Database implements Repository {
 	async loadAnimal(animalID: number): Promise<Animal> {
 		return this.DbRepository.loadAnimal(animalID);
 	}
-	async listAnimals(): Promise<Animal[]> {
-		return this.DbRepository.listAnimals();
+	async listAnimals(query: QueryOptions): Promise<Animal[]> {
+		return this.DbRepository.listAnimals(query);
 	}
 	async loadBatchAnimals(batchID: number): Promise<Animal[]> {
 		return this.DbRepository.loadBatchAnimals(batchID);

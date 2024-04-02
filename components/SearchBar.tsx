@@ -20,16 +20,16 @@ const styles = StyleSheet.create({
 	searchbar: {
 		flex: 1,
 		borderRadius: 4,
-		backgroundColor: Colors.lightGray,
+		backgroundColor: Colors.white,
 		borderColor: Colors.border,
 		borderWidth: 1,
 		fontFamily: Fonts.primaryFamily,
+		height: 45,
 	},
 	input: {
 		fontFamily: Fonts.primaryFamily,
 		color: Colors.darkGray,
 		fontSize: 14,
-		padding: 4,
 		minHeight: "auto",
 	},
 });

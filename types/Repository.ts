@@ -2,12 +2,18 @@ import { AddAnimal, Animal, UpdateAnimal } from "./Animal";
 import { AddBatch, Batch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
 
+export type OrderByOptions = "alfabetic" | "age";
+export type QueryOptions = {
+	orderBy?: OrderByOptions;
+	batchId?: number;
+};
+
 export interface Repository {
 	count(): Promise<Count>;
 	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
 	insertBatch(batch: AddBatch): Promise<number | undefined>;
 	loadAnimal(animalID: number): Promise<Animal>;
-	listAnimals(): Promise<Animal[]>;
+	listAnimals(query?: QueryOptions): Promise<Animal[]>;
 	searchAnimals(text: string): Promise<Animal[]>;
 	loadBatchAnimals(batchID: number): Promise<Animal[]>;
 	loadBatchInfo(batchID: number): Promise<Batch>;

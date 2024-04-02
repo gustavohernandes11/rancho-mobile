@@ -29,6 +29,10 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const controller = liftedController || localController;
 
 	useEffect(() => {
+		console.log(JSON.stringify(controller, null, 2));
+	}, [controller]);
+
+	useEffect(() => {
 		refreshBatches();
 	}, []);
 
@@ -74,7 +78,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			);
 
 			return () => backHandler.remove();
-		}, [controller.isSelectionMode])
+		}, [controller.isSelectionMode, controller.selectedIDs])
 	);
 
 	const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
@@ -83,7 +87,9 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			isChecked={controller.selectedIDs.includes(item.id)}
 			onCheck={() => handleCheck(item.id)}
 			onLongPress={() => handleLongPress(item.id)}
-			showCheckbox={onlySelectionMode || !!controller.isSelectionMode}
+			showCheckbox={
+				onlySelectionMode || (controller.isSelectionMode ?? false)
+			}
 			animal={item}
 		/>
 	);
@@ -122,7 +128,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			</Span>
 			<View
 				style={{
-					minHeight: 700,
+					minHeight: 300,
 					width: Dimensions.get("screen").width,
 				}}
 			>
@@ -130,7 +136,10 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					removeClippedSubviews={true}
 					data={animals}
 					keyExtractor={keyExtractor}
-					extraData={controller.selectedIDs}
+					extraData={[
+						controller.selectedIDs,
+						controller.isSelectionMode,
+					]}
 					renderItem={renderItem}
 					estimatedItemSize={50}
 					ListHeaderComponent={renderHeader}

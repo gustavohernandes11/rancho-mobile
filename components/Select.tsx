@@ -21,10 +21,24 @@ interface SelectProps {
 	label?: string;
 	defaultValue?: string;
 	defaultButtonText?: string;
+	size?: "medium" | "small";
+	backgroundColor?: "gray" | "transparent";
 }
 export const Select: React.FC<
 	SelectProps & Omit<SelectDropdownProps, "data">
-> = ({ items, onSelect, defaultButtonText, label, errorText, ...props }) => {
+> = ({
+	items,
+	onSelect,
+	defaultButtonText,
+	label,
+	errorText,
+	backgroundColor = "gray",
+	size = "medium",
+	...props
+}) => {
+	const getSelectHeight = () => (size === "medium" ? 50 : 40);
+	const getBackgroundColor = () =>
+		backgroundColor === "gray" ? Colors.lightGray : "transparent";
 	return (
 		<View style={styles.inputContainer}>
 			<HelperText
@@ -39,9 +53,18 @@ export const Select: React.FC<
 				buttonTextStyle={sharedStyles.text}
 				buttonStyle={[
 					styles.button,
-					{ borderColor: getInputBorderColor(!!errorText) },
+					{
+						borderColor: getInputBorderColor(!!errorText),
+						height: getSelectHeight(),
+						backgroundColor: getBackgroundColor(),
+					},
 				]}
-				rowStyle={styles.row}
+				rowStyle={[
+					styles.row,
+					{
+						height: getSelectHeight(),
+					},
+				]}
 				rowTextStyle={sharedStyles.text}
 				dropdownStyle={styles.dropdown}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
@@ -65,16 +88,14 @@ const styles = StyleSheet.create({
 	},
 	button: {
 		width: "auto",
-		backgroundColor: Colors.lightGray,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		borderRadius: 4,
 		padding: 8,
 	},
 	row: {
-		borderRadius: 4,
 		backgroundColor: Colors.lightGray,
-		borderWidth: 1,
+		borderBottomWidth: 1,
 		borderColor: Colors.border,
 		padding: 8,
 	},

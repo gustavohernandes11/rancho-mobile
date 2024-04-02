@@ -4,6 +4,7 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	QueryOptions,
 	Repository,
 	UpdateAnimal,
 	UpdateBatch,
@@ -202,15 +203,36 @@ export class SqliteRepository implements Repository {
 			rows.item(0)
 		);
 	}
-	async listAnimals(): Promise<Animal[]> {
-		const query = `
-		SELECT 
-			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
-		FROM Animals
-		ORDER BY name
-		`;
+	async listAnimals({
+		orderBy = "alfabetic",
+		batchId,
+	}: QueryOptions): Promise<Animal[]> {
+		let query = `
+        SELECT 
+            id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+        FROM Animals
+    `;
 
-		return this.executeQuery(query, []).then(({ rows }) => rows._array);
+		if (batchId !== undefined) {
+			query += ` WHERE batchId = ?`;
+		}
+
+		switch (orderBy) {
+			case "alfabetic":
+				query += ` ORDER BY name`;
+				break;
+			case "age":
+				query += ` ORDER BY CASE WHEN birthdate IS NULL THEN 1 ELSE 0 END, birthdate DESC`;
+				break;
+			default:
+				query += ` ORDER BY name`;
+				break;
+		}
+
+		return this.executeQuery(
+			query,
+			batchId !== undefined ? [batchId] : []
+		).then(({ rows }) => rows._array);
 	}
 	async searchAnimals(text: string): Promise<Animal[]> {
 		const query = `
