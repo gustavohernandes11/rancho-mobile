@@ -12,7 +12,7 @@ import {
 	useFocusEffect,
 	useLocalSearchParams,
 } from "expo-router";
-import { useAnimalTable } from "hooks/useAnimalSelection";
+import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Alert } from "react-native";

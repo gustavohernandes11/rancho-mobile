@@ -15,7 +15,7 @@ import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { useAnimalTable } from "hooks/useAnimalSelection";
+import { useAnimalTable } from "hooks/useAnimalTable";
 
 interface BatchFormProps {
 	initialValues?: Batch;

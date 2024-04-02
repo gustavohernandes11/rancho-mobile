@@ -11,7 +11,7 @@ import { SelectionBanner } from "./SelectionBanner";
 import {
 	ControlledAnimalTableProps,
 	useAnimalTable,
-} from "hooks/useAnimalSelection";
+} from "hooks/useAnimalTable";
 
 type AnimalTableProps = {
 	animals: Animal[];
