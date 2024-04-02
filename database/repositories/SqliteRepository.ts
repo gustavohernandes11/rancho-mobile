@@ -206,15 +206,25 @@ export class SqliteRepository implements Repository {
 	async listAnimals({
 		orderBy = "alfabetic",
 		batchId,
+		searchText,
 	}: QueryOptions): Promise<Animal[]> {
 		let query = `
-        SELECT 
-            id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
-        FROM Animals
-    `;
+			SELECT 
+				id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+			FROM Animals
+		`;
+
+		const params: (string | number)[] = [];
 
 		if (batchId !== undefined) {
 			query += ` WHERE batchId = ?`;
+			params.push(batchId);
+		}
+
+		if (searchText !== undefined) {
+			query += batchId !== undefined ? ` AND` : ` WHERE`;
+			query += ` (name LIKE '%' || ? || '%' OR code LIKE '%' || ? || '%' OR observation LIKE '%' || ? || '%')`;
+			params.push(searchText, searchText, searchText);
 		}
 
 		switch (orderBy) {
@@ -229,11 +239,9 @@ export class SqliteRepository implements Repository {
 				break;
 		}
 
-		return this.executeQuery(
-			query,
-			batchId !== undefined ? [batchId] : []
-		).then(({ rows }) => rows._array);
+		return this.executeQuery(query, params).then(({ rows }) => rows._array);
 	}
+
 	async searchAnimals(text: string): Promise<Animal[]> {
 		const query = `
 		SELECT 

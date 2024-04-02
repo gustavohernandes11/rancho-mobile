@@ -6,6 +6,7 @@ export type OrderByOptions = "alfabetic" | "age";
 export type QueryOptions = {
 	orderBy?: OrderByOptions;
 	batchId?: number;
+	searchText?: string;
 };
 
 export interface Repository {

@@ -16,7 +16,7 @@ import { OrderByOptions } from "types/Repository";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
-	const { animals, batches, refreshAnimals, setAnimals } = useGlobalState();
+	const { animals, batches } = useGlobalState();
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
@@ -31,6 +31,7 @@ export default function ViewAnimalsScreen() {
 		StorageService.listAnimals({
 			orderBy,
 			batchId: filterByBatchId,
+			searchText,
 		})
 			.then((animals) => setHandleAnimals(animals))
 			.then(() => setIsLoading(false));
@@ -38,13 +39,7 @@ export default function ViewAnimalsScreen() {
 
 	useEffect(() => {
 		fetchFilteredAnimals();
-	}, [animals, orderBy, filterByBatchId]);
-
-	useEffect(() => {
-		setIsLoading(false);
-		if (!searchText) refreshAnimals();
-		return () => refreshAnimals();
-	}, []);
+	}, [animals, orderBy, filterByBatchId, searchText]);
 
 	return (
 		<ContainerView>
@@ -68,16 +63,7 @@ export default function ViewAnimalsScreen() {
 				</SubTitle>
 			</Span>
 			<SearchBar
-				onChangeText={(text) => {
-					if (text === "") refreshAnimals();
-					else {
-						setIsLoading(true);
-						setSearchText(text);
-						StorageService.searchAnimals(searchText)
-							.then((animals) => setAnimals(animals))
-							.finally(() => setIsLoading(false));
-					}
-				}}
+				onChangeText={(text) => setSearchText(text)}
 				value={searchText}
 				placeholder="Busque por nome, observação ou código."
 			/>

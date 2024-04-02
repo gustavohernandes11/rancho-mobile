@@ -29,11 +29,6 @@ export const Row: React.FC<RowProps> = memo(
 		const { batches } = useGlobalState();
 		const batch = batches.find((batch) => batch.id === animal.batchId);
 
-		useEffect(() => {
-			console.log("rerender: " + animal.id);
-			console.log("showCheckbox?: " + showCheckbox);
-		}, []);
-
 		return (
 			<Link
 				href={{

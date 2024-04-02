@@ -16,6 +16,7 @@ export default function EditAnimalScreen() {
 		};
 		fetchData();
 	}, []);
+
 	return (
 		<ContainerView>
 			<Stack.Screen
