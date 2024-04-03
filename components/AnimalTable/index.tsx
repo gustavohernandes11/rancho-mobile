@@ -29,10 +29,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const controller = liftedController || localController;
 
 	useEffect(() => {
-		console.log(JSON.stringify(controller, null, 2));
-	}, [controller]);
-
-	useEffect(() => {
 		refreshBatches();
 	}, []);
 

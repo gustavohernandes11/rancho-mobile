@@ -1,5 +1,5 @@
 import { Input } from "components/Input";
-import { render, screen } from "utils/setup-tests";
+import { render, screen } from "tests/setup-tests";
 
 describe("Input", () => {
 	it("should render the component", () => {

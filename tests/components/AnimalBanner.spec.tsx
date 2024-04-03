@@ -1,7 +1,7 @@
 import { AnimalBanner } from "components/AnimalBanner";
 import moment from "moment";
 import { Animal } from "types/Animal";
-import { render, screen } from "utils/setup-tests";
+import { render, screen } from "tests/setup-tests";
 jest.useFakeTimers().setSystemTime(new Date("2024-01-20"));
 
 describe("AnimalBanner", () => {

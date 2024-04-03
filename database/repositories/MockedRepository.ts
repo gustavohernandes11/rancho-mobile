@@ -3,6 +3,7 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	PopulatedBatch,
 	Repository,
 	UpdateAnimal,
 	UpdateBatch,
@@ -11,6 +12,9 @@ import { Count } from "types/Count";
 
 export class MockedRepository implements Repository {
 	constructor() {}
+	loadBatch(batchID: number): Promise<PopulatedBatch> {
+		return Promise.resolve({ animals: [], count: 0, id: 1, name: "Empty" });
+	}
 	count(): Promise<Count> {
 		return Promise.resolve({ animals: 10, batches: 3 });
 	}

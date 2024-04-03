@@ -1,5 +1,5 @@
 import { BatchBanner } from "components/BatchBanner";
-import { render, screen } from "utils/setup-tests";
+import { render, screen } from "tests/setup-tests";
 
 describe("BatchBanner", () => {
 	const mockedBatch = {
