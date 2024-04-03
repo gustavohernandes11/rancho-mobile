@@ -4,6 +4,7 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	PopulatedAnimal,
 	PopulatedBatch,
 	QueryOptions,
 	Repository,
@@ -192,18 +193,58 @@ export class SqliteRepository implements Repository {
 			.then(() => true)
 			.catch(() => false);
 	}
-	async loadAnimal(animalID: number): Promise<Animal> {
+	private async listOffspring(animalID: number): Promise<Animal[]> {
 		const query = `
 		SELECT 
 			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
 		FROM Animals 
-		WHERE id = ?
+		WHERE paternityId = ? OR maternityId = ?
 		`;
 
-		return this.executeQuery(query, [animalID]).then(({ rows }) =>
-			rows.item(0)
+		return this.executeQuery(query, [animalID]).then(
+			({ rows }) => rows._array
 		);
 	}
+	async loadAnimal(animalID: number): Promise<Animal> {
+		const query = `
+			SELECT 
+				id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+			FROM Animals 
+			WHERE id = ?
+		`;
+
+		const animal = await this.executeQuery(query, [animalID]).then(
+			({ rows }) => rows.item(0) as Animal
+		);
+
+		return animal;
+	}
+
+	async loadPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
+		const animal = await this.loadAnimal(animalID);
+
+		const offspring = await this.listOffspring(animalID);
+		const batch = animal?.batchId
+			? await this.loadBatchInfo(animal.batchId)
+			: null;
+
+		const maternity = animal?.maternityId
+			? await this.loadAnimal(animal.maternityId)
+			: null;
+
+		const paternity = animal?.paternityId
+			? await this.loadAnimal(animal.paternityId)
+			: null;
+
+		return {
+			...animal,
+			offspring,
+			batch,
+			maternity,
+			paternity,
+		};
+	}
+
 	async listAnimals({
 		orderBy = "alfabetic",
 		batchId,

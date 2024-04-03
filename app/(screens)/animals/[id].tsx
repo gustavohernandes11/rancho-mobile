@@ -9,20 +9,25 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { Animal } from "types";
+import { Animal, PopulatedAnimal } from "types";
 import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAnimals, refreshBatches, batches, animals } =
-		useGlobalState();
+	const { refreshAnimals, refreshAll, animals } = useGlobalState();
+	const [animal, setAnimal] = useState<PopulatedAnimal>();
 
-	const animal = animals.find((a) => a.id === Number(id));
-	const batch = batches.find((b) => b.id === animal?.batchId);
-	const maternity = animals.find((a) => a.id === animal?.maternityId);
-	const paternity = animals.find((a) => a.id === animal?.paternityId);
+	const fetchPopulatedAnimal = () => {
+		StorageService.loadPopulatedAnimal(Number(id)).then((animal) =>
+			setAnimal(animal)
+		);
+	};
+
+	useEffect(() => {
+		fetchPopulatedAnimal();
+	}, [animals]);
 
 	useEffect(() => {
 		return () => refreshAnimals();
@@ -40,34 +45,47 @@ export default function ViewAnimalDetailsScreen() {
 				<Heading size="small">Informações gerais</Heading>
 				<SimpleTable data={serializeAnimalInfo(animal)} />
 			</Span>
-			{batch && (
+			{animal && animal?.batch && (
 				<Span direction="column">
 					<Heading size="small">Lote</Heading>
-					<Link href={`/(screens)/batches/${batch.id}`} asChild>
-						<BatchBanner batch={batch} />
+					<Link
+						href={`/(screens)/batches/${animal.batch.id}`}
+						asChild
+					>
+						<BatchBanner batch={animal.batch} />
 					</Link>
 				</Span>
 			)}
-			{animal && paternity && (
+			{animal && animal?.paternity && (
 				<Span direction="column">
 					<Heading size="small">Paternidade</Heading>
 					<Link
 						href={`/(screens)/animals/${animal.paternityId}`}
 						asChild
 					>
-						<AnimalBanner animal={paternity} />
+						<AnimalBanner animal={animal.paternity} />
 					</Link>
 				</Span>
 			)}
-			{animal && maternity && (
+			{animal && animal?.maternity && (
 				<Span direction="column">
 					<Heading size="small">Maternidade</Heading>
 					<Link
 						href={`/(screens)/animals/${animal.maternityId}`}
 						asChild
 					>
-						<AnimalBanner animal={maternity} />
+						<AnimalBanner animal={animal.maternity} />
 					</Link>
+				</Span>
+			)}
+			{animal && animal?.offspring.length > 0 && (
+				<Span direction="column">
+					<Heading size="small">Prole</Heading>
+					{animal.offspring.map((calf) => (
+						<Link href={`/(screens)/animals/${calf.id}`} asChild>
+							<AnimalBanner animal={calf} />
+						</Link>
+					))}
 				</Span>
 			)}
 			{animal && animal.observation && (
@@ -82,8 +100,7 @@ export default function ViewAnimalDetailsScreen() {
 					title="Deletar"
 					onPress={() =>
 						showConfirmationAndDelete(animal!, () => {
-							refreshAnimals();
-							refreshBatches();
+							refreshAll();
 							router.back();
 						})
 					}

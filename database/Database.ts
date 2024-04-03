@@ -3,13 +3,14 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	PopulatedAnimal,
 	PopulatedBatch,
 	QueryOptions,
 	Repository,
 	UpdateAnimal,
 	UpdateBatch,
+	Count,
 } from "types";
-import { Count } from "types/Count";
 
 export class Database implements Repository {
 	constructor(private readonly DbRepository: Repository) {}
@@ -30,6 +31,9 @@ export class Database implements Repository {
 	}
 	async loadAnimal(animalID: number): Promise<Animal> {
 		return this.DbRepository.loadAnimal(animalID);
+	}
+	async loadPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
+		return this.DbRepository.loadPopulatedAnimal(animalID);
 	}
 	async listAnimals(query: QueryOptions): Promise<Animal[]> {
 		return this.DbRepository.listAnimals(query);

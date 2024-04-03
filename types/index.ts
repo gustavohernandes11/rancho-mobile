@@ -4,3 +4,4 @@ export * from "./ButtonTypes";
 export * from "./Repository";
 export * from "./Item";
 export * from "./FlexJustifyTypes";
+export * from "./Count";
