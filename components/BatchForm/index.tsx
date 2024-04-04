@@ -16,6 +16,7 @@ import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
+import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 
 interface BatchFormProps {
 	initialValues?: Batch;
@@ -49,33 +50,9 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		}, [])
 	);
 
-	useEffect(() => {
-		const cleanup = navigation.addListener("beforeRemove", (e: any) => {
-			if (!formik.dirty) {
-				return;
-			}
-
-			e.preventDefault();
-			Alert.alert(
-				"Sair da página?",
-				"É possível perder informações não salvas.",
-				[
-					{
-						text: "Cancelar",
-						style: "cancel",
-						onPress: () => {},
-					},
-					{
-						text: "Descartar",
-						style: "destructive",
-						onPress: () => navigation.dispatch(e.data.action),
-					},
-				]
-			);
-		});
-
-		return cleanup;
-	}, [navigation, formik.dirty, formik.isSubmitting]);
+	useAlertUnsavedChanges({
+		formik,
+	});
 
 	useEffect(() => {
 		if (initialValues.id) {

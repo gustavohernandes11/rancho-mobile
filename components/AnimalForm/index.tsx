@@ -20,6 +20,7 @@ import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
+import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 
 interface AnimalFormProps {
 	initialValues?: Animal;
@@ -49,35 +50,11 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		validationSchema,
 	});
 	const { animals, batches, refreshAll } = useGlobalState();
-
 	const navigation = useNavigation();
-	useEffect(() => {
-		const cleanup = navigation.addListener("beforeRemove", (e: any) => {
-			if (!formik.dirty || formik.isSubmitting) {
-				return;
-			}
 
-			e.preventDefault();
-			Alert.alert(
-				"Sair da página?",
-				"É possível perder informações não salvas.",
-				[
-					{
-						text: "Cancelar",
-						style: "cancel",
-						onPress: () => {},
-					},
-					{
-						text: "Descartar",
-						style: "destructive",
-						onPress: () => navigation.dispatch(e.data.action),
-					},
-				]
-			);
-		});
-
-		return cleanup;
-	}, [navigation, formik.dirty, formik.isSubmitting]);
+	useAlertUnsavedChanges({
+		formik,
+	});
 
 	return (
 		<View>
