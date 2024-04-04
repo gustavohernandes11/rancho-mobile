@@ -1,16 +1,13 @@
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Tabs } from "expo-router";
 
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
 import { Image } from "react-native";
-function TabBarIcon(props: {
-	name: React.ComponentProps<typeof FontAwesome>["name"];
-	color: string;
-}) {
-	return <FontAwesome size={18} style={{ marginBottom: -3 }} {...props} />;
-}
 
+const tabIconSize = {
+	height: 24,
+	width: 24,
+};
 export default function TabLayout() {
 	return (
 		<Tabs
@@ -47,7 +44,11 @@ export default function TabLayout() {
 				options={{
 					tabBarShowLabel: false,
 					tabBarIcon: () => (
-						<TabBarIcon name="home" color={Colors.white} />
+						<Image
+							style={tabIconSize}
+							source={require("../../assets/images/BarnIcon.png")}
+							alt={"home page"}
+						/>
 					),
 				}}
 			/>
@@ -57,10 +58,7 @@ export default function TabLayout() {
 					tabBarShowLabel: false,
 					tabBarIcon: () => (
 						<Image
-							style={{
-								width: 18,
-								height: 18,
-							}}
+							style={tabIconSize}
 							source={require("../../assets/images/CowIcon.png")}
 							alt={"animals page"}
 						/>
@@ -73,10 +71,7 @@ export default function TabLayout() {
 					tabBarShowLabel: false,
 					tabBarIcon: () => (
 						<Image
-							style={{
-								width: 18,
-								height: 18,
-							}}
+							style={tabIconSize}
 							source={require("../../assets/images/FenceIcon.png")}
 							alt={"batches page"}
 						/>
