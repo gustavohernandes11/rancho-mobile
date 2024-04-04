@@ -46,8 +46,8 @@ export default function TabLayout() {
 				name="index"
 				options={{
 					tabBarShowLabel: false,
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="home" color={color} />
+					tabBarIcon: () => (
+						<TabBarIcon name="home" color={Colors.white} />
 					),
 				}}
 			/>
@@ -55,8 +55,15 @@ export default function TabLayout() {
 				name="animals"
 				options={{
 					tabBarShowLabel: false,
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="list" color={color} />
+					tabBarIcon: () => (
+						<Image
+							style={{
+								width: 18,
+								height: 18,
+							}}
+							source={require("../../assets/images/CowIcon.png")}
+							alt={"animals page"}
+						/>
 					),
 				}}
 			/>
@@ -64,8 +71,15 @@ export default function TabLayout() {
 				name="batches"
 				options={{
 					tabBarShowLabel: false,
-					tabBarIcon: ({ color }) => (
-						<TabBarIcon name="cubes" color={color} />
+					tabBarIcon: () => (
+						<Image
+							style={{
+								width: 18,
+								height: 18,
+							}}
+							source={require("../../assets/images/FenceIcon.png")}
+							alt={"batches page"}
+						/>
 					),
 				}}
 			/>
