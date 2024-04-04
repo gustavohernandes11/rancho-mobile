@@ -4,19 +4,20 @@ import { Input } from "components/Input";
 import { Loading } from "components/Loading";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
-import { router, useFocusEffect, useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
+import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useAnimalTable } from "hooks/useAnimalTable";
+import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
-import { Alert, BackHandler, Text, View } from "react-native";
+import { Alert, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 
 interface BatchFormProps {
 	initialValues?: Batch;
@@ -34,32 +35,18 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		validationSchema,
 	});
 
-	useFocusEffect(
-		React.useCallback(() => {
-			const backAction = () => {
-				table.clearSelection();
-				return false;
-			};
-
-			const backHandler = BackHandler.addEventListener(
-				"hardwareBackPress",
-				backAction
-			);
-
-			return () => backHandler.remove();
-		}, [])
-	);
-
+	useClearSelectionOnHardwareBack(table.clearSelection);
 	useAlertUnsavedChanges({
 		formik,
 	});
 
 	useEffect(() => {
 		if (initialValues.id) {
-			const animalsFromBatch = animals.filter(
-				(al) => al.batchId === initialValues.id
-			);
-			table.setSelectedIDs(animalsFromBatch.map((a) => a.id));
+			StorageService.listAnimals({
+				batchId: initialValues.id,
+			}).then((batchAnimals) => {
+				table.setSelectedIDs(batchAnimals.map((a) => a.id));
+			});
 		}
 	}, [initialValues.id]);
 
