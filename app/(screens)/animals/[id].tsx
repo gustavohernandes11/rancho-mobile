@@ -16,7 +16,7 @@ import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAnimals, refreshAll, animals } = useGlobalState();
+	const { refreshAll, animals } = useGlobalState();
 	const [animal, setAnimal] = useState<PopulatedAnimal>();
 
 	const fetchPopulatedAnimal = () => {
@@ -28,10 +28,6 @@ export default function ViewAnimalDetailsScreen() {
 	useEffect(() => {
 		fetchPopulatedAnimal();
 	}, [animals]);
-
-	useEffect(() => {
-		return () => refreshAnimals();
-	}, []);
 
 	return (
 		<ContainerView>

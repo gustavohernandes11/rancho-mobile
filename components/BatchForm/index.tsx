@@ -6,6 +6,7 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useFocusEffect, useNavigation } from "expo-router";
 import { useFormik } from "formik";
+import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
 import { Alert, BackHandler, Text, View } from "react-native";
@@ -15,7 +16,6 @@ import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { useAnimalTable } from "hooks/useAnimalTable";
 
 interface BatchFormProps {
 	initialValues?: Batch;
@@ -25,17 +25,13 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 	initialValues = defaultValues,
 }) => {
 	const table = useAnimalTable();
-	const { animals, refreshAnimals, refreshBatches } = useGlobalState();
+	const { animals, refreshAll } = useGlobalState();
 	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => handleSubmit(values, !initialValues.id),
 		validationSchema,
 	});
-
-	useEffect(() => {
-		return () => table.clearSelection();
-	}, []);
 
 	useFocusEffect(
 		React.useCallback(() => {
@@ -103,8 +99,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						)
 					)
 					.then(() => {
-						refreshAnimals();
-						refreshBatches();
+						refreshAll();
 						table.clearSelection();
 						formik.resetForm();
 					})
@@ -136,8 +131,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						});
 					})
 					.then(() => {
-						refreshAnimals();
-						refreshBatches();
+						refreshAll();
 						table.clearSelection();
 						formik.resetForm();
 					})

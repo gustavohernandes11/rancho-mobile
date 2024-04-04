@@ -66,7 +66,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 										onPress={() =>
 											showConfirmationAndDeleteAll(
 												selectedIDs,
-												() => onDeleteMany
+												onDeleteMany
 											)
 										}
 										style={{ margin: 0 }}

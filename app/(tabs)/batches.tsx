@@ -1,4 +1,4 @@
-import { AddButton } from "components/AddIconButton";
+import { AddButton } from "components/AddButton";
 import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";

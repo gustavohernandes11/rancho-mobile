@@ -27,23 +27,20 @@ interface AnimalFormProps {
 export const AnimalForm: React.FC<AnimalFormProps> = ({
 	initialValues = defaultValues,
 }) => {
-	const navigation = useNavigation();
 	const formik = useFormik({
 		initialValues,
 		onSubmit: (values) => {
 			initialValues.id
 				? StorageService.updateAnimal(values)
 						.then(() => {
-							refreshAnimals();
-							refreshBatches();
+							refreshAll();
 							formik.resetForm();
 							router.back();
 						})
 						.catch((error) => Alert.alert("Error", error))
 				: StorageService.insertAnimal(values)
 						.then(() => {
-							refreshAnimals();
-							refreshBatches();
+							refreshAll();
 							formik.resetForm();
 							router.back();
 						})
@@ -51,14 +48,9 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		},
 		validationSchema,
 	});
-	const { animals, batches, refreshAnimals, refreshBatches } =
-		useGlobalState();
+	const { animals, batches, refreshAll } = useGlobalState();
 
-	useEffect(() => {
-		refreshAnimals();
-		refreshBatches();
-	}, []);
-
+	const navigation = useNavigation();
 	useEffect(() => {
 		const cleanup = navigation.addListener("beforeRemove", (e: any) => {
 			if (!formik.dirty || formik.isSubmitting) {

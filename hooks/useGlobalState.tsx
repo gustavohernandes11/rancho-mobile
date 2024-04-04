@@ -7,10 +7,11 @@ interface GlobalState {
 	animals: Animal[];
 	refreshAnimals: () => void;
 	refreshBatches: () => void;
+	refreshAll: () => void;
 	batches: Batch[];
 }
 
-export const useGlobalState = create<GlobalState>()((set) => ({
+export const useGlobalState = create<GlobalState>()((set, get) => ({
 	animals: [],
 	batches: [],
 	refreshBatches: async () => {
@@ -22,5 +23,9 @@ export const useGlobalState = create<GlobalState>()((set) => ({
 		StorageService.listAnimals({}).then((animals) =>
 			set(() => ({ animals }))
 		);
+	},
+	refreshAll: async () => {
+		get().refreshBatches();
+		get().refreshAnimals();
 	},
 }));

@@ -20,7 +20,9 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 	return (
 		prevProps.showCheckbox === nextProps.showCheckbox &&
 		prevProps.isChecked === nextProps.isChecked &&
-		prevProps.animal === nextProps.animal
+		prevProps.animal.name === nextProps.animal.name &&
+		prevProps.animal?.birthdate === nextProps.animal?.birthdate &&
+		prevProps.animal?.batchId === nextProps.animal?.batchId
 	);
 };
 

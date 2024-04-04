@@ -13,6 +13,7 @@ export default function TabOneScreen() {
 	useEffect(() => {
 		StorageService.count().then((count) => setCount(count));
 	});
+
 	return (
 		<ContainerView>
 			<Heading>Início</Heading>

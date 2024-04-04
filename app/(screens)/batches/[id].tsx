@@ -22,7 +22,7 @@ import { serializeBatchInfo } from "utils/serializers";
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { refreshAnimals, refreshBatches } = useGlobalState();
+	const { refreshAll } = useGlobalState();
 	const [batch, setBatch] = useState<PopulatedBatch>();
 	const table = useAnimalTable();
 
@@ -45,7 +45,6 @@ export default function ViewBatchDetailsScreen() {
 
 		return () => {
 			table.clearSelection();
-			refreshAnimals();
 		};
 	}, []);
 
@@ -62,8 +61,7 @@ export default function ViewBatchDetailsScreen() {
 					title="Deletar lote e animais"
 					onPress={() =>
 						showConfirmationAndDeleteAll(batch!, () => {
-							refreshAnimals();
-							refreshBatches();
+							refreshAll();
 							router.back();
 						})
 					}
@@ -73,8 +71,7 @@ export default function ViewBatchDetailsScreen() {
 					title="Deletar lote"
 					onPress={() =>
 						showConfirmationAndDeleteOnlyBatch(batch!, () => {
-							refreshAnimals();
-							refreshBatches();
+							refreshAll();
 							router.back();
 						})
 					}

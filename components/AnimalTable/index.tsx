@@ -1,17 +1,18 @@
 import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
+import { StorageService } from "database/StorageService";
 import { useFocusEffect } from "expo-router";
 import {
 	ControlledAnimalTableProps,
 	useAnimalTable,
 } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { BackHandler, Dimensions, Text, View } from "react-native";
 import { Animal } from "types";
 import { Header } from "./Header";
-import { SelectionBanner } from "./SelectionBanner";
 import { Row } from "./Row";
+import { SelectionBanner } from "./SelectionBanner";
 
 type AnimalTableProps = {
 	animals: Animal[];
@@ -24,17 +25,9 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	onlySelectionMode = false,
 	liftedController = null,
 }) => {
-	const { refreshBatches, refreshAnimals } = useGlobalState();
+	const { refreshAll } = useGlobalState();
 	const localController = useAnimalTable();
 	const controller = liftedController || localController;
-
-	useEffect(() => {
-		refreshBatches();
-	}, []);
-
-	useEffect(() => {
-		refreshBatches();
-	}, []);
 
 	const handleCheck = (id: number) => {
 		controller.toggleCheckID(id);
@@ -48,9 +41,11 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const handleSelectAll = () => {
 		controller.setSelectedIDs(animals.map((al) => al.id));
 	};
-	const handleDeleteManyFromState = () => {
-		refreshAnimals();
-		controller.clearSelection();
+	const handleDeleteMany = () => {
+		StorageService.deleteManyAnimals(controller.selectedIDs).then(() => {
+			refreshAll();
+			controller.clearSelection();
+		});
 	};
 
 	useFocusEffect(
@@ -115,7 +110,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					onClearSelection={controller.clearSelection}
 					onSelectAll={handleSelectAll}
 					selectedIDs={controller.selectedIDs}
-					onDeleteMany={handleDeleteManyFromState}
+					onDeleteMany={handleDeleteMany}
 				/>
 			</Span>
 			<View

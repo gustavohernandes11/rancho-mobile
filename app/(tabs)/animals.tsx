@@ -1,4 +1,4 @@
-import { AddButton } from "components/AddIconButton";
+import { AddButton } from "components/AddButton";
 import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
@@ -9,9 +9,10 @@ import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
-import { Stack, router } from "expo-router";
+import { Stack, router, useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { Animal } from "types/Animal";
 import { OrderByOptions } from "types/Repository";
 import { serializeBatches } from "utils/serializers";
 
@@ -23,23 +24,36 @@ export default function ViewAnimalsScreen() {
 	const [filterByBatchId, setFilterByBatchId] = useState<
 		number | undefined
 	>();
-	const [handledAnimals, setHandleAnimals] = useState(animals);
+	const [filteredAnimals, setFilteredAnimals] = useState<Animal[]>([]);
 
 	const fetchFilteredAnimals = () => {
-		setIsLoading(true);
-
 		StorageService.listAnimals({
 			orderBy,
 			batchId: filterByBatchId,
 			searchText,
 		})
-			.then((animals) => setHandleAnimals(animals))
+			.then((animals) => setFilteredAnimals(animals))
 			.then(() => setIsLoading(false));
 	};
 
+	// when changing filters
 	useEffect(() => {
+		setIsLoading(true);
 		fetchFilteredAnimals();
-	}, [animals, orderBy, filterByBatchId, searchText]);
+	}, [orderBy, filterByBatchId, searchText]);
+
+	// first fetch
+	useEffect(() => {
+		setIsLoading(true);
+		fetchFilteredAnimals();
+	}, []);
+
+	// update when going back to table
+	useFocusEffect(
+		useCallback(() => {
+			fetchFilteredAnimals();
+		}, [animals])
+	);
 
 	return (
 		<ContainerView>
@@ -55,9 +69,9 @@ export default function ViewAnimalsScreen() {
 				<Heading>Todos seus animais</Heading>
 				<SubTitle>
 					{`total: ${animals?.length || "0"} ${
-						handledAnimals &&
-						handledAnimals.length !== animals.length
-							? ` | filtrado: ${handledAnimals.length}`
+						filteredAnimals &&
+						filteredAnimals.length !== animals.length
+							? ` | filtrado: ${filteredAnimals.length}`
 							: ""
 					}`}
 				</SubTitle>
@@ -99,7 +113,11 @@ export default function ViewAnimalsScreen() {
 				/>
 			</Span>
 
-			{isLoading ? <Loading /> : <AnimalTable animals={handledAnimals} />}
+			{isLoading ? (
+				<Loading />
+			) : (
+				<AnimalTable animals={filteredAnimals} />
+			)}
 
 			{animals.length === 0 ? (
 				<Span justify="center" py={8}>
