@@ -3,15 +3,19 @@ import {
 	AddBatch,
 	Animal,
 	Batch,
+	PopulatedAnimal,
 	PopulatedBatch,
-	Repository,
+	StorageRepository,
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
 import { Count } from "types/Count";
 
-export class MockedRepository implements Repository {
+export class MockedRepository implements StorageRepository {
 	constructor() {}
+	loadPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
+		throw new Error("Method not implemented.");
+	}
 	loadBatch(batchID: number): Promise<PopulatedBatch> {
 		return Promise.resolve({ animals: [], count: 0, id: 1, name: "Empty" });
 	}

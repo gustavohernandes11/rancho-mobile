@@ -13,7 +13,7 @@ import { Stack, router, useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Animal } from "types/Animal";
-import { OrderByOptions } from "types/Repository";
+import { OrderByOptions } from "types/StorageRepository";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {

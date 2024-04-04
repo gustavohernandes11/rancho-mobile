@@ -33,7 +33,7 @@ export default function ViewAnimalDetailsScreen() {
 		<ContainerView>
 			<Stack.Screen
 				options={{
-					headerTitle: `Detalhes de "${animal?.name || "..."}"`,
+					headerTitle: `Detalhes de "${animal?.name || ""}"`,
 				}}
 			/>
 			<Heading>{animal?.name}</Heading>

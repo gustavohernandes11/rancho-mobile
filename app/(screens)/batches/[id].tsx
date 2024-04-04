@@ -51,7 +51,7 @@ export default function ViewBatchDetailsScreen() {
 	return (
 		<ContainerView>
 			<Stack.Screen
-				options={{ headerTitle: `Lote "${batch?.name || "..."}"` }}
+				options={{ headerTitle: `Lote "${batch?.name || ""}"` }}
 			/>
 			<Heading>{batch?.name}</Heading>
 
@@ -135,7 +135,9 @@ export const showConfirmationAndDeleteOnlyBatch = (
 ) => {
 	Alert.alert(
 		`Deletar apenas o lote?`,
-		`Você têm certeza que deseja deletar o lote "${batch.name}"? Os animais serão apenas desvinculados e não serão deletados.`,
+		`Você têm certeza que deseja deletar o lote "${
+			batch?.name || ""
+		}"? Os animais serão apenas desvinculados e não serão deletados.`,
 
 		[
 			{

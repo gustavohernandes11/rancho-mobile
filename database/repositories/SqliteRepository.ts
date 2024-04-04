@@ -7,14 +7,14 @@ import {
 	PopulatedAnimal,
 	PopulatedBatch,
 	QueryOptions,
-	Repository,
+	StorageRepository,
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
 import { Count } from "types/Count";
 import { nullifyFalsyFields } from "utils/serializers";
 
-export class SqliteRepository implements Repository {
+export class SqliteRepository implements StorageRepository {
 	private db = openDatabase("rancho.db");
 
 	constructor() {

@@ -4,15 +4,21 @@ import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
+import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Count } from "types/Count";
 
 export default function TabOneScreen() {
 	const [count, setCount] = useState<Count>();
+	const { refreshAll } = useGlobalState();
 
 	useEffect(() => {
 		StorageService.count().then((count) => setCount(count));
 	});
+
+	useEffect(() => {
+		refreshAll();
+	}, []);
 
 	return (
 		<ContainerView>

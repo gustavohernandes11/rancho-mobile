@@ -29,7 +29,7 @@ export default function ViewBatchesScreen() {
 			/>
 			<Span justify="space-between" align="center">
 				<Heading>Crie e edite seus lotes</Heading>
-				<SubTitle>{`Total: ${batches?.length || "..."}`}</SubTitle>
+				<SubTitle>{`Total: ${batches?.length || ""}`}</SubTitle>
 			</Span>
 			<View style={{ gap: 4 }}>
 				{batches.length > 0 ? (

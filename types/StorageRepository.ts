@@ -9,7 +9,7 @@ export type QueryOptions = {
 	searchText?: string;
 };
 
-export interface Repository {
+export interface StorageRepository {
 	count(): Promise<Count>;
 	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
 	insertBatch(batch: AddBatch): Promise<number | undefined>;

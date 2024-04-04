@@ -25,7 +25,7 @@ export default function EditAnimalScreen() {
 		<ContainerView>
 			<Stack.Screen
 				options={{
-					headerTitle: `Editando lote "${batch?.name || "..."}"`,
+					headerTitle: `Editando lote "${batch?.name || ""}"`,
 				}}
 			/>
 			{batch && <BatchForm initialValues={batch} />}

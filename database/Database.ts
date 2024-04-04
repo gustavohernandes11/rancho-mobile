@@ -6,14 +6,14 @@ import {
 	PopulatedAnimal,
 	PopulatedBatch,
 	QueryOptions,
-	Repository,
+	StorageRepository,
 	UpdateAnimal,
 	UpdateBatch,
 	Count,
 } from "types";
 
-export class Database implements Repository {
-	constructor(private readonly DbRepository: Repository) {}
+export class Database implements StorageRepository {
+	constructor(private readonly DbRepository: StorageRepository) {}
 	async count(): Promise<Count> {
 		return this.DbRepository.count();
 	}
