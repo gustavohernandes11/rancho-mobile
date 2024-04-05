@@ -45,7 +45,15 @@ export const getFormattedGender = (gender: "F" | "M") =>
 
 export const getGenderIcon = (gender: "F" | "M") =>
 	gender === "M" ? (
-		<FontAwesome color={Colors.blue} name="mars" />
+		<FontAwesome
+			accessibilityLabel="Mars icon"
+			color={Colors.blue}
+			name="mars"
+		/>
 	) : (
-		<FontAwesome color={Colors.red} name="venus" />
+		<FontAwesome
+			accessibilityLabel="Jupter icon"
+			color={Colors.red}
+			name="venus"
+		/>
 	);
