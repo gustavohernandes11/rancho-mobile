@@ -3,7 +3,6 @@ import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import { Input } from "components/Input";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
@@ -43,6 +42,38 @@ export default function ViewAnimalDetailsScreen() {
 				}}
 			/>
 			<Heading>{animal?.name}</Heading>
+			<Span flexWrap="wrap">
+				<Button
+					type="danger"
+					icon="delete"
+					title="Deletar"
+					onPress={() =>
+						showConfirmationAndDelete(animal!, () => {
+							refreshAll();
+							router.back();
+						})
+					}
+					disabled={isLoading}
+				/>
+				<Button
+					title="Editar"
+					icon="pencil"
+					onPress={() => router.push(`/(screens)/animals/edit/${id}`)}
+					disabled={isLoading}
+				/>
+				{animal && animal.gender === "F" && (
+					<Button
+						icon={require("../../../assets/images/AddAnimalIcon.png")}
+						title="Novo filhote"
+						onPress={() =>
+							router.push(
+								`/(screens)/animals/register-new-born/${animal.id}`
+							)
+						}
+						disabled={isLoading}
+					/>
+				)}
+			</Span>
 			{animal && (
 				<Span direction="column">
 					<Heading size="small">Informações gerais</Heading>
@@ -96,24 +127,6 @@ export default function ViewAnimalDetailsScreen() {
 					))}
 				</Span>
 			)}
-			<Span justify="flex-end" py={8}>
-				<Button
-					type="danger"
-					title="Deletar"
-					onPress={() =>
-						showConfirmationAndDelete(animal!, () => {
-							refreshAll();
-							router.back();
-						})
-					}
-					disabled={isLoading}
-				/>
-				<Button
-					title="Editar"
-					onPress={() => router.push(`/(screens)/animals/edit/${id}`)}
-					disabled={isLoading}
-				/>
-			</Span>
 		</ContainerView>
 	);
 }

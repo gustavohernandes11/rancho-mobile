@@ -24,14 +24,19 @@ import { validationSchema } from "./validation.schema";
 import { showToast } from "utils/displayToast";
 
 interface AnimalFormProps {
-	initialValues?: Animal;
+	initialValues?: Partial<Animal>;
 }
 export const AnimalForm: React.FC<AnimalFormProps> = ({
 	initialValues = defaultValues,
 }) => {
+	let mergedInitialValues: Animal = Object.assign(
+		{},
+		defaultValues,
+		initialValues
+	);
 	const formik = useFormik({
-		initialValues,
-		onSubmit: (values) => {
+		initialValues: mergedInitialValues,
+		onSubmit: (values: Animal) => {
 			initialValues.id
 				? StorageService.updateAnimal(values)
 						.then(() => {

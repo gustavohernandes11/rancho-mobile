@@ -23,12 +23,14 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 
 	return (
 		<PaperButton
+			textColor={getButtonTextColor(type)}
 			ref={ref}
 			style={[
 				styles.button,
 				{
 					backgroundColor: getButtonBackgroundColor(type),
 					borderColor: getButtonBorderColor(type),
+					overflow: "hidden",
 				},
 				disabled && sharedStyles.disabled,
 			]}
@@ -53,6 +55,5 @@ const styles = StyleSheet.create({
 	button: {
 		borderWidth: 1,
 		borderRadius: 8,
-		elevation: 4,
 	},
 });

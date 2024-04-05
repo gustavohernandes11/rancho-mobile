@@ -6,15 +6,10 @@ import { Loading } from "components/Loading";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
-import {
-	Stack,
-	router,
-	useFocusEffect,
-	useLocalSearchParams,
-} from "expo-router";
+import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
@@ -60,7 +55,8 @@ export default function ViewBatchDetailsScreen() {
 			<Span flexWrap="wrap">
 				<Button
 					type="danger"
-					title="Deletar lote e animais"
+					icon="exclamation"
+					title="Deletar tudo"
 					onPress={() =>
 						showConfirmationAndDeleteAll(batch!, () => {
 							refreshAll();
@@ -71,6 +67,7 @@ export default function ViewBatchDetailsScreen() {
 				/>
 				<Button
 					type="danger"
+					icon="delete"
 					title="Deletar lote"
 					onPress={() =>
 						showConfirmationAndDeleteOnlyBatch(batch!, () => {
@@ -82,8 +79,21 @@ export default function ViewBatchDetailsScreen() {
 				/>
 				<Button
 					title="Editar"
+					icon="pencil"
 					onPress={() =>
 						router.push(`/(screens)/batches/edit/${batch!.id}`)
+					}
+					disabled={isLoading}
+				/>
+				<Button
+					title="Novo animal"
+					icon={require("../../../assets/images/AddAnimalIcon.png")}
+					onPress={() =>
+						router.push(
+							`/(screens)/batches/register-animal-to-batch/${
+								batch!.id
+							}`
+						)
 					}
 					disabled={isLoading}
 				/>

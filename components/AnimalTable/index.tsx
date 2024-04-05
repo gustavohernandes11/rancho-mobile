@@ -9,13 +9,12 @@ import {
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
 import { BackHandler, Dimensions, Text, View } from "react-native";
+import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
+import { showToast } from "utils/displayToast";
 import { Header } from "./Header";
 import { Row } from "./Row";
 import { SelectionBanner } from "./SelectionBanner";
-import { showToast } from "utils/displayToast";
-import Colors from "constants/Colors";
-import { sharedStyles } from "styles/shared";
 
 type AnimalTableProps = {
 	animals: Animal[];
@@ -124,6 +123,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			<View
 				style={[
 					{
+						minHeight: 20,
 						width: Dimensions.get("screen").width - 16,
 					},
 					sharedStyles.border,
