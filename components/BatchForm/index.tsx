@@ -103,7 +103,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						table.clearSelection();
 						formik.resetForm();
 					})
-					.then(() => router.replace("/(tabs)/batches"))
+					.then(() => router.back())
 					.catch((error) => Alert.alert("Error", error));
 	};
 

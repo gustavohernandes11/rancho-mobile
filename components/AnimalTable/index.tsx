@@ -102,17 +102,18 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 
 	return (
 		<>
-			<Span>
-				<SelectionBanner
-					active={!!controller.isSelectionMode}
-					showActions={true}
-					showCloseButton={true}
-					onClearSelection={controller.clearSelection}
-					onSelectAll={handleSelectAll}
-					selectedIDs={controller.selectedIDs}
-					onDeleteMany={handleDeleteMany}
-				/>
-			</Span>
+			{controller.isSelectionMode && (
+				<Span>
+					<SelectionBanner
+						showActions={true}
+						showCloseButton={true}
+						onClearSelection={controller.clearSelection}
+						onSelectAll={handleSelectAll}
+						selectedIDs={controller.selectedIDs}
+						onDeleteMany={handleDeleteMany}
+					/>
+				</Span>
+			)}
 			<View
 				style={{
 					minHeight: 300,
