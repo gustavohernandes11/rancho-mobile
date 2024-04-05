@@ -422,8 +422,8 @@ export class SqliteRepository implements StorageRepository {
 			.catch(() => false);
 	}
 	async moveAnimalToBatch(
-		batchID: number | null,
-		animalId: number
+		animalId: number,
+		batchID: number | null
 	): Promise<boolean> {
 		const query = `
 		UPDATE Animals SET 
@@ -440,7 +440,7 @@ export class SqliteRepository implements StorageRepository {
 		batchID: number | null
 	): Promise<boolean> {
 		const operations = animalIDsToMove.map((animalId) =>
-			this.moveAnimalToBatch(batchID, animalId)
+			this.moveAnimalToBatch(animalId, batchID)
 		);
 
 		return Promise.all(operations)

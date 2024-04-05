@@ -72,27 +72,31 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					.catch((error) => Alert.alert("Error", error))
 			: StorageService.updateBatch(values)
 					.then((batch: Batch) => {
-						const initialAnimals = animals;
+						let promises: Promise<boolean>[] = [];
 
-						initialAnimals?.map((animal) => {
-							if (
-								animal.batchId === batch.id &&
-								!table.selectedIDs.includes(animal.id)
-							) {
-								StorageService.moveAnimalToBatch(
-									animal.id,
-									null
+						animals.forEach(async (animal) => {
+							const isSelected = table.selectedIDs.includes(
+								animal.id
+							);
+							const isSameBatch = animal.batchId === batch.id;
+
+							if (isSameBatch && !isSelected) {
+								promises.push(
+									StorageService.moveAnimalToBatch(
+										animal.id,
+										null
+									)
 								);
-							} else if (
-								animal.batchId !== batch.id &&
-								table.selectedIDs.includes(animal.id)
-							) {
-								StorageService.moveAnimalToBatch(
-									animal.id,
-									batch.id
+							} else if (!isSameBatch && isSelected) {
+								promises.push(
+									StorageService.moveAnimalToBatch(
+										animal.id,
+										batch.id
+									)
 								);
 							}
 						});
+						return Promise.all(promises);
 					})
 					.then(() => {
 						refreshAll();

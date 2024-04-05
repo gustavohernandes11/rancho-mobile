@@ -22,7 +22,7 @@ import { serializeBatchInfo } from "utils/serializers";
 export default function ViewBatchDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const [isLoading, setIsLoading] = useState(true);
-	const { refreshAll } = useGlobalState();
+	const { refreshAll, batches } = useGlobalState();
 	const [batch, setBatch] = useState<PopulatedBatch>();
 	const table = useAnimalTable();
 
@@ -36,7 +36,7 @@ export default function ViewBatchDetailsScreen() {
 	useFocusEffect(
 		useCallback(() => {
 			fetchBatch();
-		}, [id])
+		}, [id, batches])
 	);
 
 	useEffect(() => {
