@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HelperText, TextInput, TextInputProps } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
-import { getInputBorderColor } from "utils/conditional-styles";
+import { getInputBorderColor } from "utils/conditionalStyles";
 
 interface InputProps {
 	errorText?: string;

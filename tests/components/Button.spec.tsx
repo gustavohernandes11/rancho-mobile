@@ -1,4 +1,4 @@
-import { render, screen } from "tests/setup-tests";
+import { render, screen } from "tests/setupTests";
 
 import { Button } from "components/Button";
 import Colors from "constants/Colors";

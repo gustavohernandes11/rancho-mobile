@@ -1,4 +1,4 @@
-import { render, screen } from "tests/setup-tests";
+import { render, screen } from "tests/setupTests";
 import { Card } from "components/Card";
 import Colors from "constants/Colors";
 

@@ -1,4 +1,4 @@
-import { render, screen } from "tests/setup-tests";
+import { render, screen } from "tests/setupTests";
 
 import { ContainerView } from "components/ContainerView";
 import { Text } from "react-native";

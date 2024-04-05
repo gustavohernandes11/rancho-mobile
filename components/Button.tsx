@@ -10,7 +10,7 @@ import {
 	getButtonBackgroundColor,
 	getButtonBorderColor,
 	getButtonTextColor,
-} from "utils/conditional-styles";
+} from "utils/conditionalStyles";
 
 type CustomButtonProps = {
 	title: string;

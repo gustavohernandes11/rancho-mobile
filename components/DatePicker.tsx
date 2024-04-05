@@ -6,7 +6,7 @@ import { HelperText } from "react-native-paper";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
 import { sharedStyles } from "styles/shared";
-import { getInputBorderColor } from "utils/conditional-styles";
+import { getInputBorderColor } from "utils/conditionalStyles";
 
 interface DatePickerProps {
 	errorText?: string;

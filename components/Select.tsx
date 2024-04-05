@@ -8,7 +8,7 @@ import SelectDropdown, {
 } from "react-native-select-dropdown";
 import { sharedStyles } from "styles/shared";
 import { Item } from "types/Item";
-import { getInputBorderColor } from "utils/conditional-styles";
+import { getInputBorderColor } from "utils/conditionalStyles";
 
 const DropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />

@@ -1,4 +1,4 @@
-import { render, screen } from "tests/setup-tests";
+import { render, screen } from "tests/setupTests";
 
 import { SimpleTable } from "components/SimpleTable";
 import { Item } from "types/Item";

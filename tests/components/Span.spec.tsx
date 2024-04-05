@@ -1,6 +1,6 @@
 import { Span } from "components/Span";
 import { Text } from "react-native";
-import { render, screen } from "tests/setup-tests";
+import { render, screen } from "tests/setupTests";
 
 describe("Span", () => {
 	it("should render the component", () => {

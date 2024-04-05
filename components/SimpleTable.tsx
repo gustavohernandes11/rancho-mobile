@@ -3,7 +3,7 @@ import React from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { sharedStyles } from "styles/shared";
 import { Item } from "types";
-import { getRowColor } from "utils/conditional-styles";
+import { getRowColor } from "utils/conditionalStyles";
 
 interface SimpleTableProps {
 	data: Item[];
