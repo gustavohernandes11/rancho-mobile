@@ -3,9 +3,11 @@ import { ContainerView } from "components/ContainerView";
 import { Stack } from "expo-router";
 
 export default function AddAnimalScreen() {
+	const StackScreen = () => (
+		<Stack.Screen options={{ headerTitle: "Adicionar animal" }} />
+	);
 	return (
-		<ContainerView>
-			<Stack.Screen options={{ headerTitle: "Adicionar animal" }} />
+		<ContainerView immediateContent={<StackScreen />}>
 			<AnimalForm />
 		</ContainerView>
 	);

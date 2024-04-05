@@ -21,13 +21,15 @@ export default function EditAnimalScreen() {
 		fetchData();
 	}, []);
 
+	const StackScreen = () => (
+		<Stack.Screen
+			options={{
+				headerTitle: `Editando lote "${batch?.name || ""}"`,
+			}}
+		/>
+	);
 	return (
-		<ContainerView>
-			<Stack.Screen
-				options={{
-					headerTitle: `Editando lote "${batch?.name || ""}"`,
-				}}
-			/>
+		<ContainerView immediateContent={<StackScreen />}>
 			{batch && <BatchForm initialValues={batch} />}
 		</ContainerView>
 	);

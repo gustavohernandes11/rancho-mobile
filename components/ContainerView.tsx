@@ -5,12 +5,14 @@ import { Loading } from "./Loading";
 
 interface ContainerViewType {
 	flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
+	immediateContent?: React.ReactNode;
 	children?: React.ReactNode;
 }
 
 export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 	children,
 	flexDirection,
+	immediateContent,
 	...props
 }) => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -21,11 +23,14 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 
 	return (
 		<ScrollView style={[styles.container, { flexDirection }]} {...props}>
-			{isLoading ? (
-				<Loading height={500} />
-			) : (
-				<View style={styles.inner}>{children}</View>
-			)}
+			<>
+				{immediateContent}
+				{isLoading ? (
+					<Loading height={500} />
+				) : (
+					<View style={styles.inner}>{children}</View>
+				)}
+			</>
 		</ScrollView>
 	);
 };

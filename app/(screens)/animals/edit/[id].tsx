@@ -17,13 +17,16 @@ export default function EditAnimalScreen() {
 		fetchData();
 	}, []);
 
+	const StackScreen = () => (
+		<Stack.Screen
+			options={{
+				headerTitle: `Editando animal "${animal?.name || ""}"`,
+			}}
+		/>
+	);
+
 	return (
-		<ContainerView>
-			<Stack.Screen
-				options={{
-					headerTitle: `Editando animal "${animal?.name || ""}"`,
-				}}
-			/>
+		<ContainerView immediateContent={<StackScreen />}>
 			{animal && <AnimalForm initialValues={animal} />}
 		</ContainerView>
 	);

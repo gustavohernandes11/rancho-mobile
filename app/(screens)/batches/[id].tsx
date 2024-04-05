@@ -45,11 +45,14 @@ export default function ViewBatchDetailsScreen() {
 		};
 	}, []);
 
+	const StackScreen = () => (
+		<Stack.Screen
+			options={{ headerTitle: `Lote "${batch?.name || ""}"` }}
+		/>
+	);
+
 	return (
-		<ContainerView>
-			<Stack.Screen
-				options={{ headerTitle: `Lote "${batch?.name || ""}"` }}
-			/>
+		<ContainerView immediateContent={<StackScreen />}>
 			<Heading>{batch?.name}</Heading>
 
 			<Span flexWrap="wrap">

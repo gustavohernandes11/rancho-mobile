@@ -34,13 +34,16 @@ export default function ViewAnimalDetailsScreen() {
 		fetchPopulatedAnimal();
 	}, [animals]);
 
+	const StackScreen = () => (
+		<Stack.Screen
+			options={{
+				headerTitle: `Detalhes do animal`,
+			}}
+		/>
+	);
+
 	return (
-		<ContainerView>
-			<Stack.Screen
-				options={{
-					headerTitle: `Detalhes de "${animal?.name || ""}"`,
-				}}
-			/>
+		<ContainerView immediateContent={<StackScreen />}>
 			<Heading>{animal?.name}</Heading>
 			<Span flexWrap="wrap">
 				<Button
@@ -113,7 +116,7 @@ export default function ViewAnimalDetailsScreen() {
 					</Link>
 				</Span>
 			)}
-			{animal && animal?.offspring.length > 0 && (
+			{animal && animal.offspring.length > 0 && (
 				<Span direction="column">
 					<Heading size="small">Prole</Heading>
 					{animal.offspring.map((calf) => (
