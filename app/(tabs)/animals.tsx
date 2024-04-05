@@ -116,7 +116,7 @@ export default function ViewAnimalsScreen() {
 			{isLoading ? (
 				<Loading />
 			) : (
-				<Span>
+				<Span py={16}>
 					<AnimalTable animals={filteredAnimals} />
 				</Span>
 			)}
