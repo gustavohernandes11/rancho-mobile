@@ -10,6 +10,7 @@ import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
 import { StorageService } from "database/StorageService";
 import { Stack, router, useFocusEffect } from "expo-router";
+import useDebounce from "hooks/useDebounce";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Animal } from "types/Animal";
@@ -32,15 +33,19 @@ export default function ViewAnimalsScreen() {
 			batchId: filterByBatchId,
 			searchText,
 		})
-			.then((animals) => setFilteredAnimals(animals))
+			.then((animals) => setFilteredAnimals(() => animals))
 			.then(() => setIsLoading(false));
 	};
 
 	// when changing filters
-	useEffect(() => {
-		setIsLoading(true);
-		fetchFilteredAnimals();
-	}, [orderBy, filterByBatchId, searchText]);
+	useDebounce(
+		() => {
+			setIsLoading(true);
+			fetchFilteredAnimals();
+		},
+		[orderBy, filterByBatchId, searchText],
+		300
+	);
 
 	// first fetch
 	useEffect(() => {
