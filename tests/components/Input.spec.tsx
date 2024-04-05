@@ -1,5 +1,6 @@
 import { Input } from "components/Input";
 import { render, screen } from "tests/setupTests";
+jest.useFakeTimers();
 
 describe("Input", () => {
 	it("should render the component", () => {
