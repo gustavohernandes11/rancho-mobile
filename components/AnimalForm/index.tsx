@@ -152,10 +152,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					}
 					items={[
 						...serializeAnimals(
-							filterPossiblePaternity(
-								animals!,
-								formik.values.birthdate
-							)
+							filterPossiblePaternity(animals!, formik.values)
 						),
 						{ key: "Selecione um animal", value: "" },
 					]}
@@ -172,10 +169,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					}
 					items={[
 						...(serializeAnimals(
-							filterPossibleMaternity(
-								animals!,
-								formik.values.birthdate
-							)
+							filterPossibleMaternity(animals!, formik.values)
 						) || []),
 						{ key: "Selecione um animal", value: "" },
 					]}
