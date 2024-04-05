@@ -20,12 +20,16 @@ export default function ViewAnimalDetailsScreen() {
 	const [animal, setAnimal] = useState<PopulatedAnimal>();
 	const [isLoading, setIsLoading] = useState(true);
 
-	const fetchPopulatedAnimal = () => {
-		setIsLoading(() => true);
-		StorageService.loadPopulatedAnimal(Number(id))
-			.then((animal) => setAnimal(animal))
-			.then(() => setIsLoading(() => false));
+	const fetchPopulatedAnimal = async () => {
+		await StorageService.loadPopulatedAnimal(Number(id)).then((animal) =>
+			setAnimal(animal)
+		);
 	};
+
+	useEffect(() => {
+		setIsLoading(() => true);
+		fetchPopulatedAnimal().then(() => setIsLoading(() => false));
+	}, []);
 
 	useEffect(() => {
 		fetchPopulatedAnimal();

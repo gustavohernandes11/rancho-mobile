@@ -27,17 +27,19 @@ export default function ViewBatchDetailsScreen() {
 	const table = useAnimalTable();
 
 	const fetchBatch = async () => {
-		setIsLoading(true);
-		await StorageService.loadBatch(Number(id))
-			.then((populatedBatch) => setBatch(populatedBatch))
-			.then(() => setIsLoading(false));
+		await StorageService.loadBatch(Number(id)).then((populatedBatch) =>
+			setBatch(populatedBatch)
+		);
 	};
 
-	useFocusEffect(
-		useCallback(() => {
-			fetchBatch();
-		}, [id, batches])
-	);
+	useEffect(() => {
+		setIsLoading(() => true);
+		fetchBatch().then(() => setIsLoading(() => false));
+	}, []);
+
+	useEffect(() => {
+		fetchBatch();
+	}, [batches]);
 
 	useEffect(() => {
 		table.clearSelection();
