@@ -18,11 +18,13 @@ export default function ViewAnimalDetailsScreen() {
 	const { id } = useLocalSearchParams<{ id: string }>();
 	const { refreshAll, animals } = useGlobalState();
 	const [animal, setAnimal] = useState<PopulatedAnimal>();
+	const [isLoading, setIsLoading] = useState(true);
 
 	const fetchPopulatedAnimal = () => {
-		StorageService.loadPopulatedAnimal(Number(id)).then((animal) =>
-			setAnimal(animal)
-		);
+		setIsLoading(() => true);
+		StorageService.loadPopulatedAnimal(Number(id))
+			.then((animal) => setAnimal(animal))
+			.then(() => setIsLoading(() => false));
 	};
 
 	useEffect(() => {
@@ -37,10 +39,12 @@ export default function ViewAnimalDetailsScreen() {
 				}}
 			/>
 			<Heading>{animal?.name}</Heading>
-			<Span direction="column">
-				<Heading size="small">Informações gerais</Heading>
-				<SimpleTable data={serializeAnimalInfo(animal)} />
-			</Span>
+			{animal && (
+				<Span direction="column">
+					<Heading size="small">Informações gerais</Heading>
+					<SimpleTable data={serializeAnimalInfo(animal)} />
+				</Span>
+			)}
 			{animal && animal?.batch && (
 				<Span direction="column">
 					<Heading size="small">Lote</Heading>
@@ -84,12 +88,6 @@ export default function ViewAnimalDetailsScreen() {
 					))}
 				</Span>
 			)}
-			{animal && animal.observation && (
-				<Span direction="column">
-					<Heading size="small">Observação</Heading>
-					<Input value={animal.observation} multiline disabled />
-				</Span>
-			)}
 			<Span justify="flex-end" py={8}>
 				<Button
 					type="danger"
@@ -100,10 +98,12 @@ export default function ViewAnimalDetailsScreen() {
 							router.back();
 						})
 					}
+					disabled={isLoading}
 				/>
 				<Button
 					title="Editar"
 					onPress={() => router.push(`/(screens)/animals/edit/${id}`)}
+					disabled={isLoading}
 				/>
 			</Span>
 		</ContainerView>

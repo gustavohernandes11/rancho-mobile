@@ -65,6 +65,7 @@ export default function ViewBatchDetailsScreen() {
 							router.back();
 						})
 					}
+					disabled={isLoading}
 				/>
 				<Button
 					type="danger"
@@ -75,12 +76,14 @@ export default function ViewBatchDetailsScreen() {
 							router.back();
 						})
 					}
+					disabled={isLoading}
 				/>
 				<Button
 					title="Editar"
 					onPress={() =>
 						router.push(`/(screens)/batches/edit/${batch!.id}`)
 					}
+					disabled={isLoading}
 				/>
 			</Span>
 
