@@ -52,7 +52,7 @@ export default function ViewAnimalsScreen() {
 	useFocusEffect(
 		useCallback(() => {
 			fetchFilteredAnimals();
-		}, [animals])
+		}, [animals, orderBy, filterByBatchId, searchText])
 	);
 
 	return (
