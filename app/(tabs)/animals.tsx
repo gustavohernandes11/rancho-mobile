@@ -55,6 +55,13 @@ export default function ViewAnimalsScreen() {
 		}, [animals, orderBy, filterByBatchId, searchText])
 	);
 
+	function getDisplayInfo() {
+		const totalCount = animals ? animals.length : 0;
+		const filteredCount = filteredAnimals ? filteredAnimals.length : 0;
+
+		return `Exibindo ${filteredCount} de ${totalCount}`;
+	}
+
 	return (
 		<ContainerView>
 			<Stack.Screen
@@ -67,14 +74,7 @@ export default function ViewAnimalsScreen() {
 			/>
 			<Span justify="space-between" my={4} align="center">
 				<Heading>Todos seus animais</Heading>
-				<SubTitle>
-					{`total: ${animals?.length || "0"} ${
-						filteredAnimals &&
-						filteredAnimals.length !== animals.length
-							? ` | filtrado: ${filteredAnimals.length}`
-							: ""
-					}`}
-				</SubTitle>
+				<SubTitle>{getDisplayInfo()}</SubTitle>
 			</Span>
 			<SearchBar
 				onChangeText={(text) => setSearchText(text)}
@@ -116,7 +116,9 @@ export default function ViewAnimalsScreen() {
 			{isLoading ? (
 				<Loading />
 			) : (
-				<AnimalTable animals={filteredAnimals} />
+				<Span>
+					<AnimalTable animals={filteredAnimals} />
+				</Span>
 			)}
 
 			{animals.length === 0 ? (
