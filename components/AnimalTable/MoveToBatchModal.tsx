@@ -20,6 +20,7 @@ import {
 } from "react-native-gesture-handler";
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Batch } from "types/Batch";
+import { showToast } from "utils/displayToast";
 
 interface MoveToBatchModalProps {
 	visible: boolean;
@@ -65,7 +66,7 @@ export const MoveToBatchModal: React.FC<
 	const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
 	const { refreshAnimals, batches, refreshBatches } = useGlobalState();
 
-	const moveAllAnimalsTo = () => {
+	const handleMoveSelected = () => {
 		StorageService.moveAnimalsToBatch(
 			selectedIDs,
 			selectedBatch?.id || null
@@ -73,12 +74,8 @@ export const MoveToBatchModal: React.FC<
 			.then(() => {
 				setIsBatchModalVisible(() => false);
 				selectedBatch?.id === null
-					? Alert.alert(
-							"Ok!",
-							"Animais desvinculados de qualquer lote."
-					  )
-					: Alert.alert(
-							"Ok!",
+					? showToast("Animais desvinculados de qualquer lote.")
+					: showToast(
 							"Animais movidos para o lote " +
 								selectedBatch!.name +
 								"."
@@ -187,7 +184,7 @@ export const MoveToBatchModal: React.FC<
 								<Button
 									title="Mover"
 									disabled={!selectedBatch}
-									onPress={moveAllAnimalsTo}
+									onPress={handleMoveSelected}
 								/>
 							</Span>
 						</TouchableWithoutFeedback>

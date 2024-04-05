@@ -6,9 +6,10 @@ import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
+import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useGlobalState } from "hooks/useGlobalState";
 import moment from "moment";
-import React, { useEffect } from "react";
+import React from "react";
 import { Alert, View } from "react-native";
 import { Animal } from "types";
 import {
@@ -20,7 +21,7 @@ import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
+import { showToast } from "utils/displayToast";
 
 interface AnimalFormProps {
 	initialValues?: Animal;
@@ -37,6 +38,9 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 							refreshAll();
 							formik.resetForm();
 							router.back();
+							showToast(
+								values.name + " foi atualizado(a) com sucesso."
+							);
 						})
 						.catch((error) => Alert.alert("Error", error))
 				: StorageService.insertAnimal(values)
@@ -44,6 +48,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 							refreshAll();
 							formik.resetForm();
 							router.back();
+							showToast(values.name + " foi adicionado.");
 						})
 						.catch((error) => Alert.alert("Error", error));
 		},

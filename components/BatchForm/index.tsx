@@ -18,6 +18,7 @@ import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
+import { showToast } from "utils/displayToast";
 
 interface BatchFormProps {
 	initialValues?: Batch;
@@ -66,6 +67,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						refreshAll();
 						table.clearSelection();
 						formik.resetForm();
+						showToast("Lote " + values.name + " foi adicionado.");
 					})
 					.then(() => router.replace("/(tabs)/batches"))
 
@@ -102,6 +104,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 						refreshAll();
 						table.clearSelection();
 						formik.resetForm();
+						showToast("Lote " + values.name + " foi atualizado.");
 					})
 					.then(() => router.back())
 					.catch((error) => Alert.alert("Error", error));

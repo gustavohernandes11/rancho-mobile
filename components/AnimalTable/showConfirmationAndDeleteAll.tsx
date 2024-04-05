@@ -5,9 +5,12 @@ export const showConfirmationAndDeleteAll = (
 	selectedIDs: number[],
 	onDeleteCallback?: () => void
 ) => {
+	const count = selectedIDs.length;
 	Alert.alert(
 		`Deletar animais?`,
-		`Você têm certeza que deseja deletar ${selectedIDs.length} animais?`,
+		`Você têm certeza que deseja deletar ${count} ${
+			count > 1 ? "animais" : "animal"
+		}?`,
 		[
 			{
 				text: "Cancelar",

@@ -13,6 +13,7 @@ import { Animal } from "types";
 import { Header } from "./Header";
 import { Row } from "./Row";
 import { SelectionBanner } from "./SelectionBanner";
+import { showToast } from "utils/displayToast";
 
 type AnimalTableProps = {
 	animals: Animal[];
@@ -32,19 +33,23 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const handleCheck = (id: number) => {
 		controller.toggleCheckID(id);
 	};
+
 	const handleLongPress = (id: number) => {
 		if (!controller.isSelectionMode) {
 			controller.setIsSelectionMode(true);
 			controller.toggleCheckID(id);
 		}
 	};
+
 	const handleSelectAll = () => {
 		controller.setSelectedIDs(animals.map((al) => al.id));
 	};
+
 	const handleDeleteMany = () => {
 		StorageService.deleteManyAnimals(controller.selectedIDs).then(() => {
 			refreshAll();
 			controller.clearSelection();
+			showToast("Animais removidos com sucesso.");
 		});
 	};
 
