@@ -66,7 +66,7 @@ export const Select: React.FC<
 					},
 				]}
 				rowTextStyle={sharedStyles.text}
-				dropdownStyle={styles.dropdown}
+				dropdownStyle={sharedStyles.inputAspect}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
 				data={items}
 				onSelect={onSelect}
@@ -84,13 +84,13 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	dropdown: {
-		borderRadius: 4,
+		borderRadius: 8,
 	},
 	button: {
 		width: "auto",
 		borderWidth: 1,
 		borderColor: Colors.border,
-		borderRadius: 4,
+		borderRadius: 8,
 		padding: 8,
 	},
 	row: {

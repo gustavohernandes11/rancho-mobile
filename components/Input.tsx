@@ -24,10 +24,12 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 			)}
 			<TextInput
 				mode="outlined"
-				outlineStyle={{
-					borderColor: getInputBorderColor(!!errorText),
-					borderWidth: 1,
-				}}
+				outlineStyle={[
+					{
+						borderColor: getInputBorderColor(!!errorText),
+					},
+					sharedStyles.inputAspect,
+				]}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
 				textColor={Colors.darkGray}
@@ -37,7 +39,10 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				multiline={multiline}
 				style={[
 					sharedStyles.inputAspect,
-					{ height: multiline ? 80 : 50, borderWidth: 0 },
+					{
+						height: multiline ? 80 : 50,
+						borderWidth: 0,
+					},
 				]}
 				{...props}
 			/>

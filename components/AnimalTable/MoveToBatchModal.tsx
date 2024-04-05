@@ -105,7 +105,9 @@ export const MoveToBatchModal: React.FC<
 				<TouchableOpacity style={styles.blur} onPress={onDismiss}>
 					<View onStartShouldSetResponder={() => true}>
 						<TouchableWithoutFeedback style={styles.modal}>
-							<Heading>Selecione um lote de destino</Heading>
+							<Span>
+								<Heading>Selecione um lote de destino</Heading>
+							</Span>
 							<RadioButton.Group
 								onValueChange={(id) => {
 									if (id == null) {
@@ -200,8 +202,9 @@ const styles = StyleSheet.create({
 		marginHorizontal: 16,
 		marginVertical: "20%",
 		backgroundColor: Colors.white,
-		padding: 16,
-		borderRadius: 4,
+		paddingHorizontal: 16,
+		paddingTop: 16,
+		borderRadius: 8,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		zIndex: 5,

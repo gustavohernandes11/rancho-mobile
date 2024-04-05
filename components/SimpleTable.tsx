@@ -39,7 +39,7 @@ const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
 
 const styles = StyleSheet.create({
 	tableContainer: {
-		borderRadius: 4,
+		borderRadius: 8,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		borderTopWidth: 0,

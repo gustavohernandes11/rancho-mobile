@@ -19,7 +19,7 @@ export const SearchBar: React.FC<SearchbarProps> = ({ ...props }) => {
 const styles = StyleSheet.create({
 	searchbar: {
 		flex: 1,
-		borderRadius: 4,
+		borderRadius: 8,
 		backgroundColor: Colors.white,
 		borderColor: Colors.border,
 		borderWidth: 1,

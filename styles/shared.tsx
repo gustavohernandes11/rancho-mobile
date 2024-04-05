@@ -15,7 +15,7 @@ export const sharedStyles = StyleSheet.create({
 		paddingLeft: 0,
 	},
 	inputAspect: {
-		borderRadius: 4,
+		borderRadius: 8,
 		backgroundColor: Colors.lightGray,
 		borderColor: Colors.border,
 		borderWidth: 1,
@@ -36,7 +36,7 @@ export const sharedStyles = StyleSheet.create({
 		backgroundColor: Colors.lightGray,
 		borderColor: Colors.border,
 		borderStyle: "dashed",
-		borderRadius: 4,
+		borderRadius: 8,
 		borderWidth: 1,
 	},
 	textDisabled: {
@@ -52,7 +52,7 @@ export const sharedStyles = StyleSheet.create({
 		maxWidth: 250,
 		aspectRatio: 1.6 / 1,
 		backgroundColor: Colors.green,
-		borderRadius: 4,
+		borderRadius: 8,
 		padding: 16,
 		flexDirection: "row",
 		alignItems: "center",

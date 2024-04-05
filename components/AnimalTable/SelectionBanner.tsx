@@ -99,7 +99,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		borderRadius: 4,
+		borderRadius: 8,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		backgroundColor: Colors.green,

@@ -25,10 +25,12 @@ export const DatePicker: React.FC<
 			<DatePickerInput
 				iconColor={Colors.darkGray}
 				mode="outlined"
-				outlineStyle={{
-					borderColor: getInputBorderColor(!!errorText),
-					borderWidth: 1,
-				}}
+				outlineStyle={[
+					{
+						borderColor: getInputBorderColor(!!errorText),
+					},
+					sharedStyles.inputAspect,
+				]}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
 				textColor={Colors.darkGray}
@@ -49,7 +51,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	input: {
-		borderRadius: 4,
+		borderRadius: 8,
 		height: 50,
 		fontSize: 14,
 		fontFamily: Fonts.primaryFamily,

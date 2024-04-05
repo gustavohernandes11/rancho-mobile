@@ -86,7 +86,11 @@ export default function ViewAnimalDetailsScreen() {
 				<Span direction="column">
 					<Heading size="small">Prole</Heading>
 					{animal.offspring.map((calf) => (
-						<Link href={`/(screens)/animals/${calf.id}`} asChild>
+						<Link
+							key={calf.id}
+							href={`/(screens)/animals/${calf.id}`}
+							asChild
+						>
 							<AnimalBanner animal={calf} />
 						</Link>
 					))}

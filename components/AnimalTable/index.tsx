@@ -99,7 +99,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const renderEmptyList = useCallback(
 		() => (
 			<Span justify="center">
-				<Text>Nenhum animal encontrado.</Text>
+				<Text style={{ padding: 16 }}>Nenhum animal encontrado.</Text>
 			</Span>
 		),
 		[animals]

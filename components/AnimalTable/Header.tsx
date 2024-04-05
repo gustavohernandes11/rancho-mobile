@@ -1,3 +1,4 @@
+import Colors from "constants/Colors";
 import React from "react";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";

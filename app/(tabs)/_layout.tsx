@@ -27,6 +27,7 @@ export default function TabLayout() {
 				headerTintColor: Colors.white,
 				tabBarStyle: {
 					overflow: "hidden",
+					backgroundColor: Colors.green,
 				},
 				headerStyle: {
 					backgroundColor: Colors.green,
@@ -36,6 +37,7 @@ export default function TabLayout() {
 					fontFamily: Fonts.primaryFamily,
 				},
 				tabBarActiveBackgroundColor: Colors.darkGreen,
+				tabBarItemStyle: { borderRadius: 8 },
 				tabBarInactiveBackgroundColor: Colors.green,
 			}}
 		>

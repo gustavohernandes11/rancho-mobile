@@ -52,6 +52,7 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 const styles = StyleSheet.create({
 	button: {
 		borderWidth: 1,
-		borderRadius: 4,
+		borderRadius: 8,
+		elevation: 4,
 	},
 });
