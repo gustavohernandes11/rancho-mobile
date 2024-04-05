@@ -5,32 +5,34 @@ import Colors from "constants/Colors";
 
 describe("Button", () => {
 	it("should render the component", () => {
-		render(<Button title="any-button-title" />);
-		const sut = screen.getByText("any-button-title");
+		render(<Button title="button_title" />);
+		const sut = screen.getByText("button_title");
 		expect(sut).toBeTruthy();
 	});
+
 	it("should render the text title", () => {
-		render(<Button title="any-button-title" />);
-		const sut = screen.getByText("any-button-title");
-		expect(sut).toHaveTextContent("any-button-title");
+		render(<Button title="button_title" />);
+		const sut = screen.getByText("button_title");
+		expect(sut).toHaveTextContent("button_title");
 	});
+
 	describe("Type", () => {
-		it("should render a white text when type danger", () => {
+		it("should render a white text when type primary", () => {
 			const { getByText } = render(
-				<Button type="primary" title="any-title" />
+				<Button type="primary" title="white_text_title" />
 			);
 
-			expect(getByText("any-title")).toHaveStyle({
+			expect(getByText("white_text_title")).toHaveStyle({
 				color: Colors.white,
 			});
 		});
 
 		it("should render a red text when type danger", () => {
 			const { getByText } = render(
-				<Button type="danger" title="any-title" />
+				<Button type="danger" title="red_text_title" />
 			);
 
-			expect(getByText("any-title")).toHaveStyle({
+			expect(getByText("red_text_title")).toHaveStyle({
 				color: Colors.red,
 			});
 		});

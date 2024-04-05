@@ -2,15 +2,16 @@ import { nullifyFalsyFields } from "utils/serializers";
 
 describe("nullifyFalsyFields", () => {
 	it("should turn empty string into null", () => {
-		let obj = { name: "A", description: "" };
+		let obj = { name: "fake_name", description: "" };
 		const result = nullifyFalsyFields(obj);
-		expect(result.name).toBe("A");
+		expect(result.name).toBe("fake_name");
 		expect(result.description).toBeNull();
 	});
+
 	it("should turn undefined string into null", () => {
-		let obj = { name: "A", description: undefined };
+		let obj = { name: "fake_name", description: undefined };
 		const result = nullifyFalsyFields(obj);
-		expect(result.name).toBe("A");
+		expect(result.name).toBe("fake_name");
 		expect(result.description).toBeNull();
 	});
 });

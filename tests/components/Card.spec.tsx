@@ -11,24 +11,25 @@ describe("Card", () => {
 			<Card
 				href="/"
 				iconSource={cowIcon}
-				testID="card-id"
-				alt="alternative-text"
-				title="title-text"
+				testID="card_id"
+				alt="alternative_text"
+				title="title_text"
 			/>
 		);
-		const sut = screen.getByTestId("card-id");
+		const sut = screen.getByTestId("card_id");
 		expect(sut).toBeOnTheScreen();
 	});
+
 	it("should render the title", () => {
 		render(
 			<Card
 				href="/"
 				iconSource={cowIcon}
-				alt="alternative-text"
-				title="title-text"
+				alt="alternative_text"
+				title="title_text"
 			/>
 		);
-		const title = screen.getByText("title-text");
+		const title = screen.getByText("title_text");
 		expect(title).toBeOnTheScreen();
 	});
 
@@ -38,11 +39,11 @@ describe("Card", () => {
 				href="/"
 				iconSource={cowIcon}
 				alt=""
-				title="default-card"
-				testID="default-card"
+				title="default_card"
+				testID="default_card"
 			/>
 		);
-		const cardGreen = screen.getByTestId("default-card");
+		const cardGreen = screen.getByTestId("default_card");
 		expect(cardGreen).toHaveStyle({ backgroundColor: Colors.green });
 	});
 
@@ -52,12 +53,12 @@ describe("Card", () => {
 				href="/"
 				iconSource={cowIcon}
 				alt=""
-				title="green-card"
-				testID="green-card"
+				title="green_card"
+				testID="green_card"
 				color="green"
 			/>
 		);
-		const cardGreen = screen.getByTestId("green-card");
+		const cardGreen = screen.getByTestId("green_card");
 		expect(cardGreen).toHaveStyle({ backgroundColor: Colors.green });
 	});
 
@@ -67,12 +68,12 @@ describe("Card", () => {
 				href="/"
 				iconSource={cowIcon}
 				alt=""
-				title="blue-card"
-				testID="blue-card"
+				title="blue_card"
+				testID="blue_card"
 				color="blue"
 			/>
 		);
-		const cardBlue = screen.getByTestId("blue-card");
+		const cardBlue = screen.getByTestId("blue_card");
 		expect(cardBlue).toHaveStyle({ backgroundColor: Colors.blue });
 	});
 
@@ -82,12 +83,12 @@ describe("Card", () => {
 				href="/"
 				iconSource={cowIcon}
 				alt=""
-				title="purple-card"
-				testID="purple-card"
+				title="purple_card"
+				testID="purple_card"
 				color="purple"
 			/>
 		);
-		const cardPurple = screen.getByTestId("purple-card");
+		const cardPurple = screen.getByTestId("purple_card");
 		expect(cardPurple).toHaveStyle({ backgroundColor: Colors.purple });
 	});
 });
