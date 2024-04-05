@@ -1,7 +1,7 @@
 import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import { Animal } from "types/Animal";
@@ -44,7 +44,7 @@ export const Row: React.FC<RowProps> = memo(
 					style={isChecked ? styles.checked : null}
 					onLongPress={onLongPress}
 				>
-					<DataTable.Row>
+					<DataTable.Row style={styles.row}>
 						<Cell flex={4}>
 							{getGenderIcon(animal.gender)}
 							{" " + animal.name}
@@ -76,5 +76,9 @@ export const Row: React.FC<RowProps> = memo(
 const styles = StyleSheet.create({
 	checked: {
 		backgroundColor: Colors.gray,
+	},
+	row: {
+		borderBottomWidth: 1,
+		borderColor: Colors.border,
 	},
 });

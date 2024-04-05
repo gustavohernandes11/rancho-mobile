@@ -60,4 +60,8 @@ export const sharedStyles = StyleSheet.create({
 		gap: 8,
 		elevation: 3,
 	},
+	border: {
+		borderWidth: 1,
+		borderColor: Colors.border,
+	},
 });

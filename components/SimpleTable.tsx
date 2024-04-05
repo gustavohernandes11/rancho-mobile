@@ -39,7 +39,6 @@ const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
 
 const styles = StyleSheet.create({
 	tableContainer: {
-		borderRadius: 8,
 		borderWidth: 1,
 		borderColor: Colors.border,
 		borderTopWidth: 0,
@@ -51,6 +50,5 @@ const styles = StyleSheet.create({
 		paddingVertical: 16,
 		paddingHorizontal: 8,
 		justifyContent: "space-between",
-		gap: 8,
 	},
 });

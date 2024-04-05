@@ -14,6 +14,8 @@ import { Header } from "./Header";
 import { Row } from "./Row";
 import { SelectionBanner } from "./SelectionBanner";
 import { showToast } from "utils/displayToast";
+import Colors from "constants/Colors";
+import { sharedStyles } from "styles/shared";
 
 type AnimalTableProps = {
 	animals: Animal[];
@@ -120,10 +122,12 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 				</Span>
 			)}
 			<View
-				style={{
-					minHeight: 300,
-					width: Dimensions.get("screen").width,
-				}}
+				style={[
+					{
+						width: Dimensions.get("screen").width - 16,
+					},
+					sharedStyles.border,
+				]}
 			>
 				<FlashList
 					removeClippedSubviews={true}

@@ -1,5 +1,6 @@
 import Colors from "constants/Colors";
 import React from "react";
+import { StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 
@@ -10,7 +11,7 @@ interface HeaderProps {
 export const Header = ({ leaveSpaceAtRight }: HeaderProps) => {
 	return (
 		<DataTable>
-			<DataTable.Header>
+			<DataTable.Header style={styles.tableHeader}>
 				<DataTable.Title
 					style={{ flex: 4 }}
 					textStyle={sharedStyles.text}
@@ -41,3 +42,11 @@ export const Header = ({ leaveSpaceAtRight }: HeaderProps) => {
 		</DataTable>
 	);
 };
+
+const styles = StyleSheet.create({
+	tableHeader: {
+		borderBottomWidth: 1,
+		borderColor: Colors.border,
+		backgroundColor: Colors.lightGray,
+	},
+});
