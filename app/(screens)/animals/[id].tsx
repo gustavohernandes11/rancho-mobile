@@ -4,6 +4,7 @@ import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { SimpleTable } from "components/SimpleTable";
+import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { Link, Stack, router, useLocalSearchParams } from "expo-router";
@@ -44,7 +45,11 @@ export default function ViewAnimalDetailsScreen() {
 
 	return (
 		<ContainerView immediateContent={<StackScreen />}>
-			<Heading>{animal?.name}</Heading>
+			{isLoading ? (
+				<Skeleton width={300} />
+			) : (
+				<Heading>{animal?.name}</Heading>
+			)}
 			<Span flexWrap="wrap">
 				<Button
 					type="danger"
@@ -77,23 +82,39 @@ export default function ViewAnimalDetailsScreen() {
 					/>
 				)}
 			</Span>
-			{animal && (
+			{isLoading ? (
+				<>
+					<Skeleton width={250} />
+					<Skeleton height={40} />
+					<Skeleton height={40} />
+					<Skeleton height={40} />
+				</>
+			) : (
 				<Span direction="column">
 					<Heading size="small">Informações gerais</Heading>
 					<SimpleTable data={serializeAnimalInfo(animal)} />
 				</Span>
 			)}
-			{animal && animal?.batch && (
-				<Span direction="column">
-					<Heading size="small">Lote</Heading>
-					<Link
-						href={`/(screens)/batches/${animal.batch.id}`}
-						asChild
-					>
-						<BatchBanner batch={animal.batch} />
-					</Link>
-				</Span>
+
+			{isLoading ? (
+				<>
+					<Skeleton width={250} />
+					<Skeleton height={40} />
+				</>
+			) : (
+				animal?.batch && (
+					<Span direction="column">
+						<Heading size="small">Lote</Heading>
+						<Link
+							href={`/(screens)/batches/${animal.batch.id}`}
+							asChild
+						>
+							<BatchBanner batch={animal.batch} />
+						</Link>
+					</Span>
+				)
 			)}
+
 			{animal && animal?.paternity && (
 				<Span direction="column">
 					<Heading size="small">Paternidade</Heading>

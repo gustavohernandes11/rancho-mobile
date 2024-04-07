@@ -4,6 +4,7 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
 import { SimpleTable } from "components/SimpleTable";
+import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
 import { Stack, router, useLocalSearchParams } from "expo-router";
@@ -53,7 +54,11 @@ export default function ViewBatchDetailsScreen() {
 
 	return (
 		<ContainerView immediateContent={<StackScreen />}>
-			<Heading>{batch?.name}</Heading>
+			{isLoading ? (
+				<Skeleton width={300} />
+			) : (
+				<Heading>{batch?.name}</Heading>
+			)}
 
 			<Span flexWrap="wrap">
 				<Button
@@ -102,12 +107,20 @@ export default function ViewBatchDetailsScreen() {
 				/>
 			</Span>
 
-			{batch && (
-				<Span direction="column">
-					<Heading size="small">Informações Gerais</Heading>
-					<SimpleTable data={serializeBatchInfo(batch)} />
-				</Span>
+			{isLoading ? (
+				<>
+					<Skeleton width={200} />
+					<Skeleton height={200} />
+				</>
+			) : (
+				batch && (
+					<Span direction="column">
+						<Heading size="small">Informações Gerais</Heading>
+						<SimpleTable data={serializeBatchInfo(batch)} />
+					</Span>
+				)
 			)}
+
 			<Span direction="column">
 				<Heading size="small">Animais do lote</Heading>
 				{isLoading ? (
