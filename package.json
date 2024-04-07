@@ -9,7 +9,8 @@
 		"web": "expo start --web",
 		"test:watch": "jest --watchAll",
 		"test": "jest",
-		"prepare": "husky install"
+		"prepare": "husky install",
+		"deploy:preview": "eas build -p android --profile preview"
 	},
 	"dependencies": {
 		"@expo/vector-icons": "^13.0.0",
