@@ -34,29 +34,31 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		defaultValues,
 		initialValues
 	);
+	const onSubmit = (values: Animal) => {
+		initialValues.id
+			? StorageService.updateAnimal(values)
+					.then(() => {
+						refreshAll();
+						formik.resetForm();
+						router.back();
+						showToast(
+							values.name + " foi atualizado(a) com sucesso."
+						);
+					})
+					.catch((error) => Alert.alert("Error", error))
+			: StorageService.insertAnimal(values)
+					.then(() => {
+						refreshAll();
+						formik.resetForm();
+						router.back();
+						showToast(values.name + " foi adicionado.");
+					})
+					.catch((error) => Alert.alert("Error", error));
+	};
+
 	const formik = useFormik({
 		initialValues: mergedInitialValues,
-		onSubmit: (values: Animal) => {
-			initialValues.id
-				? StorageService.updateAnimal(values)
-						.then(() => {
-							refreshAll();
-							formik.resetForm();
-							router.back();
-							showToast(
-								values.name + " foi atualizado(a) com sucesso."
-							);
-						})
-						.catch((error) => Alert.alert("Error", error))
-				: StorageService.insertAnimal(values)
-						.then(() => {
-							refreshAll();
-							formik.resetForm();
-							router.back();
-							showToast(values.name + " foi adicionado.");
-						})
-						.catch((error) => Alert.alert("Error", error));
-		},
+		onSubmit,
 		validationSchema,
 	});
 	const { animals, batches, refreshAll } = useGlobalState();
