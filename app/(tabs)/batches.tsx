@@ -23,7 +23,10 @@ export default function ViewBatchesScreen() {
 				options={{
 					headerTitle: "Lotes",
 					headerRight: () => (
-						<AddButton href="/(screens)/batches/add" />
+						<AddButton
+							icon="add-batch"
+							href="/(screens)/batches/add"
+						/>
 					),
 				}}
 			/>

@@ -4,9 +4,11 @@ import { IconButton, IconButtonProps } from "react-native-paper";
 
 type AddButtonProps = {
 	href: any;
+	icon: "add-batch" | "add-animal";
 };
 export const AddButton = ({
 	href,
+	icon,
 	...props
 }: AddButtonProps & Omit<IconButtonProps, "icon">) => {
 	return (
@@ -17,7 +19,11 @@ export const AddButton = ({
 				accessibilityLabel="Add animal icon"
 				style={{ marginRight: 11, marginLeft: 0 }}
 				{...props}
-				icon={require("../assets/images/AddAnimalIcon.png")}
+				icon={
+					icon === "add-batch"
+						? require("../assets/images/AddBatchIconWhite.png")
+						: require("../assets/images/AddAnimalIcon.png")
+				}
 			/>
 		</Link>
 	);

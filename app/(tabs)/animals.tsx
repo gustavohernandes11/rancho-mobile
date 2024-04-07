@@ -73,7 +73,10 @@ export default function ViewAnimalsScreen() {
 				options={{
 					headerTitle: "Rebanho",
 					headerRight: () => (
-						<AddButton href="/(screens)/animals/add" />
+						<AddButton
+							icon="add-animal"
+							href="/(screens)/animals/add"
+						/>
 					),
 				}}
 			/>
