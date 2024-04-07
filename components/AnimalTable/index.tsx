@@ -1,14 +1,14 @@
 import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
 import { StorageService } from "database/StorageService";
-import { useFocusEffect } from "expo-router";
 import {
 	ControlledAnimalTableProps,
 	useAnimalTable,
 } from "hooks/useAnimalTable";
+import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
-import { BackHandler, Dimensions, Text, View } from "react-native";
+import { Dimensions, Text, View } from "react-native";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
 import { showToast } from "utils/displayToast";
@@ -30,6 +30,8 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	const { refreshAll } = useGlobalState();
 	const localController = useAnimalTable();
 	const controller = liftedController || localController;
+
+	useClearSelectionOnHardwareBack({ controller });
 
 	const handleCheck = (id: number) => {
 		controller.toggleCheckID(id);
@@ -53,26 +55,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 			showToast("Animais removidos com sucesso.");
 		});
 	};
-
-	useFocusEffect(
-		React.useCallback(() => {
-			const backAction = () => {
-				if (controller.isSelectionMode) {
-					controller.clearSelection();
-					return true;
-				} else {
-					return false;
-				}
-			};
-
-			const backHandler = BackHandler.addEventListener(
-				"hardwareBackPress",
-				backAction
-			);
-
-			return () => backHandler.remove();
-		}, [controller.isSelectionMode, controller.selectedIDs])
-	);
 
 	const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
 	const renderItem = ({ item }: { item: Animal }) => (

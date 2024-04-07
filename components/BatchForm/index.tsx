@@ -8,17 +8,16 @@ import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useAnimalTable } from "hooks/useAnimalTable";
-import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
 import { Alert, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
+import { showToast } from "utils/displayToast";
 import { getFieldError } from "utils/forms";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { showToast } from "utils/displayToast";
 
 interface BatchFormProps {
 	initialValues?: Batch;
@@ -36,7 +35,6 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		validationSchema,
 	});
 
-	useClearSelectionOnHardwareBack(table.clearSelection);
 	useAlertUnsavedChanges({
 		formik,
 	});
