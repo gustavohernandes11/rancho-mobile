@@ -12,7 +12,7 @@ Aplicativo offline para gerenciamento de gado!
 Funcionalidades:
 - Registrar animais.
 - Registrar hereditariedade (maternidade e paternidade).
-- Registrar e separar por lotes.
+- Agrupar por lotes.
 - Acompanhar idade.
 - Fazer observações importantes.
 
