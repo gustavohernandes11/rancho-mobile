@@ -12,6 +12,7 @@ import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { Animal, PopulatedAnimal } from "types";
+import { atLeastOneYearOld } from "utils/filters";
 import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
@@ -69,18 +70,20 @@ export default function ViewAnimalDetailsScreen() {
 					onPress={() => router.push(`/(screens)/animals/edit/${id}`)}
 					disabled={isLoading}
 				/>
-				{animal && animal.gender === "F" && (
-					<Button
-						icon={require("../../../assets/images/AddAnimalIcon.png")}
-						title="Novo filhote"
-						onPress={() =>
-							router.push(
-								`/(screens)/animals/register-new-born/${animal.id}`
-							)
-						}
-						disabled={isLoading}
-					/>
-				)}
+				{animal &&
+					animal.gender === "F" &&
+					atLeastOneYearOld(animal) && (
+						<Button
+							icon={require("../../../assets/images/AddAnimalIcon.png")}
+							title="Novo filhote"
+							onPress={() =>
+								router.push(
+									`/(screens)/animals/register-new-born/${animal.id}`
+								)
+							}
+							disabled={isLoading}
+						/>
+					)}
 			</Span>
 			{isLoading ? (
 				<>

@@ -1,7 +1,7 @@
 import moment from "moment";
 import { Animal } from "types/Animal";
 
-const atLeastOneYearOld = (animal: Animal) =>
+export const atLeastOneYearOld = (animal: Animal) =>
 	animal.birthdate ? moment().diff(animal.birthdate, "years") > 1 : true;
 const oneYearOlderThenChild = (animal: Animal, childBirthdate?: string) =>
 	animal.birthdate
