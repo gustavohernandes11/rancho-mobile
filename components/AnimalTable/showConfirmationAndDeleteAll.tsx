@@ -1,5 +1,5 @@
-import { StorageService } from "database/StorageService";
 import { Alert } from "react-native";
+import { StorageService } from "services/StorageService";
 
 export const showConfirmationAndDeleteAll = (
 	selectedIDs: number[],

@@ -1,5 +1,5 @@
 import { BatchBanner } from "components/BatchBanner";
-import { render, screen } from "tests/setupTests";
+import { render } from "tests/setupTests";
 
 describe("BatchBanner", () => {
 	it("should render the batch information on the screen", () => {

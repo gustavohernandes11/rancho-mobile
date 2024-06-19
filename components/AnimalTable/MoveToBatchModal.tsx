@@ -3,7 +3,6 @@ import { CustomDivider } from "components/CustomDivider";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
-import { StorageService } from "database/StorageService";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { Fragment, useState } from "react";
 import {
@@ -19,6 +18,7 @@ import {
 	TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
+import { StorageService } from "services/StorageService";
 import { Batch } from "types/Batch";
 import { showToast } from "utils/displayToast";
 

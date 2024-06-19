@@ -1,7 +1,6 @@
-import { render, screen } from "tests/setupTests";
-
 import { Button } from "components/Button";
 import Colors from "constants/Colors";
+import { render, screen } from "tests/setupTests";
 
 describe("Button", () => {
 	it("should render the component", () => {

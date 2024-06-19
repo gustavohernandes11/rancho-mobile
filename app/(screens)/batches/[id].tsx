@@ -6,12 +6,12 @@ import { Loading } from "components/Loading";
 import { SimpleTable } from "components/SimpleTable";
 import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
-import { StorageService } from "database/StorageService";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
+import { StorageService } from "services/StorageService";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 

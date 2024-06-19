@@ -1,4 +1,4 @@
-import { StorageService } from "database/StorageService";
+import { StorageService } from "services/StorageService";
 import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { create } from "zustand";

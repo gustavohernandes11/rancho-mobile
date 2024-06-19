@@ -1,6 +1,5 @@
 import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
-import { StorageService } from "database/StorageService";
 import {
 	ControlledAnimalTableProps,
 	useAnimalTable,
@@ -9,6 +8,7 @@ import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwa
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
 import { Dimensions, Text, View } from "react-native";
+import { StorageService } from "services/StorageService";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
 import { showToast } from "utils/displayToast";
@@ -25,6 +25,7 @@ type AnimalTableProps = {
 export const AnimalTable: React.FC<AnimalTableProps> = ({
 	animals,
 	onlySelectionMode = false,
+	// an optional controller for the table, when it is needed to control it one level up
 	liftedController = null,
 }) => {
 	const { refreshAll } = useGlobalState();
@@ -123,6 +124,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					estimatedItemSize={50}
 					ListHeaderComponent={renderHeader}
 					ListEmptyComponent={renderEmptyList}
+					testID="animal-table"
 				/>
 			</View>
 		</>

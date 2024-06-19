@@ -1,9 +1,9 @@
 import { BatchForm } from "components/BatchForm";
 import { ContainerView } from "components/ContainerView";
-import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
+import { StorageService } from "services/StorageService";
 import { PopulatedBatch } from "types/Batch";
 
 export default function EditAnimalScreen() {

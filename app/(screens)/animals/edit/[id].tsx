@@ -1,8 +1,8 @@
 import { AnimalForm } from "components/AnimalForm";
 import { ContainerView } from "components/ContainerView";
-import { StorageService } from "database/StorageService";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useLayoutEffect, useState } from "react";
+import { StorageService } from "services/StorageService";
 import { Animal } from "types/Animal";
 
 export default function EditAnimalScreen() {

@@ -3,9 +3,9 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { Span } from "components/Span";
-import { StorageService } from "database/StorageService";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
+import { StorageService } from "services/StorageService";
 import { Count } from "types/Count";
 
 export default function TabOneScreen() {

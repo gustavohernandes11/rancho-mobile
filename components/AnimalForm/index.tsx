@@ -3,7 +3,6 @@ import { DatePicker } from "components/DatePicker";
 import { Input } from "components/Input";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
-import { StorageService } from "database/StorageService";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
@@ -11,7 +10,9 @@ import { useGlobalState } from "hooks/useGlobalState";
 import moment from "moment";
 import React from "react";
 import { Alert, View } from "react-native";
+import { StorageService } from "services/StorageService";
 import { Animal } from "types";
+import { showToast } from "utils/displayToast";
 import {
 	filterPossibleMaternity,
 	filterPossiblePaternity,
@@ -21,7 +22,6 @@ import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
-import { showToast } from "utils/displayToast";
 
 interface AnimalFormProps {
 	initialValues?: Partial<Animal>;
