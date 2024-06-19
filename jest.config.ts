@@ -12,6 +12,8 @@ const config: Config = {
 		"<rootDir>/components/**/*.tsx",
 		"<rootDir>/components/*.tsx",
 	],
+	testEnvironment: "node",
+	setupFilesAfterEnv: ["<rootDir>/tests/setupTests.ts"],
 };
 
 export default config;

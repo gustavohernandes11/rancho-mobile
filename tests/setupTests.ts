@@ -10,4 +10,3 @@ jest.mock("expo-router");
 jest.mock("expo-sqlite");
 jest.useFakeTimers();
 jest.mock("database/repositories/SqliteRepository");
-jest.mock("services/StorageService");
