@@ -6,7 +6,7 @@ import { Heading } from "components/Heading";
 import { SimpleTable } from "components/SimpleTable";
 import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
-import { Link, Stack, router, useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -20,6 +20,7 @@ export default function ViewAnimalDetailsScreen() {
 	const { refreshAll, animals } = useGlobalState();
 	const [animal, setAnimal] = useState<PopulatedAnimal>();
 	const [isLoading, setIsLoading] = useState(true);
+	const router = useRouter();
 
 	const fetchPopulatedAnimal = async () => {
 		await StorageService.loadPopulatedAnimal(Number(id)).then((animal) =>
@@ -108,12 +109,10 @@ export default function ViewAnimalDetailsScreen() {
 				animal?.batch && (
 					<Span direction="column">
 						<Heading size="small">Lote</Heading>
-						<Link
+						<BatchBanner
 							href={`/(screens)/batches/${animal.batch.id}`}
-							asChild
-						>
-							<BatchBanner batch={animal.batch} />
-						</Link>
+							batch={animal.batch}
+						/>
 					</Span>
 				)
 			)}
@@ -121,36 +120,29 @@ export default function ViewAnimalDetailsScreen() {
 			{animal && animal?.paternity && (
 				<Span direction="column">
 					<Heading size="small">Paternidade</Heading>
-					<Link
+					<AnimalBanner
 						href={`/(screens)/animals/${animal.paternityId}`}
-						asChild
-					>
-						<AnimalBanner animal={animal.paternity} />
-					</Link>
+						animal={animal.paternity}
+					/>
 				</Span>
 			)}
 			{animal && animal?.maternity && (
 				<Span direction="column">
 					<Heading size="small">Maternidade</Heading>
-					<Link
+					<AnimalBanner
 						href={`/(screens)/animals/${animal.maternityId}`}
-						asChild
-					>
-						<AnimalBanner animal={animal.maternity} />
-					</Link>
+						animal={animal.maternity}
+					/>
 				</Span>
 			)}
 			{animal && animal.offspring.length > 0 && (
 				<Span direction="column">
 					<Heading size="small">Prole</Heading>
 					{animal.offspring.map((calf) => (
-						<Link
-							key={calf.id}
+						<AnimalBanner
 							href={`/(screens)/animals/${calf.id}`}
-							asChild
-						>
-							<AnimalBanner animal={calf} />
-						</Link>
+							animal={calf}
+						/>
 					))}
 				</Span>
 			)}

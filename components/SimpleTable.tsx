@@ -3,7 +3,6 @@ import React from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import { sharedStyles } from "styles/shared";
 import { Item } from "types";
-import { getRowColor } from "utils/conditionalStyles";
 
 interface SimpleTableProps {
 	data: Item[];
@@ -30,8 +29,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 	</ScrollView>
 );
 
-const Row: React.FC<RowProps<Item>> = ({ item, index }) => (
-	<View style={[styles.row, { backgroundColor: getRowColor(index) }]}>
+const Row: React.FC<RowProps<Item>> = ({ item }) => (
+	<View style={styles.row}>
 		<Text style={sharedStyles.text}>{item.key}</Text>
 		<Text style={sharedStyles.text}>{item.value}</Text>
 	</View>

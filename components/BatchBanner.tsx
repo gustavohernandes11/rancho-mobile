@@ -5,6 +5,7 @@ import { Banner } from "./Banner";
 
 interface BatchBannerProps {
 	batch: Batch;
+	href: string;
 }
 const getCountText = (count: number) => {
 	if (count === 0) return "Vazio";
@@ -22,7 +23,7 @@ export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
 			iconSource={require("../assets/images/RoundedBatchIcon.png")}
 			title={batch.name}
 			description={batch.description}
-			cornerDescription={getCountText(batch.count)}
+			rightDescription={getCountText(batch.count)}
 			{...props}
 		/>
 	);

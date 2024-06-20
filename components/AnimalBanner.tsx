@@ -6,6 +6,7 @@ import { Banner } from "./Banner";
 
 interface AnimalBannerProps {
 	animal: Animal;
+	href: string;
 }
 
 export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
@@ -22,7 +23,7 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
 					{" " + animal.name}
 				</>
 			}
-			cornerDescription={
+			rightDescription={
 				animal.birthdate && getFormattedAge(animal.birthdate)
 			}
 			{...props}

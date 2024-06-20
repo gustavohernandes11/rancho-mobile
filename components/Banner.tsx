@@ -1,5 +1,6 @@
 import Colors from "constants/Colors";
 import Fonts from "constants/Fonts";
+import { Link } from "expo-router";
 import React from "react";
 import {
 	Image,
@@ -17,7 +18,8 @@ interface BannerProps {
 	iconAlt: string;
 	title: string | React.ReactNode;
 	description?: string;
-	cornerDescription?: string;
+	rightDescription?: string;
+	href: string;
 }
 
 export const Banner: React.FC<BannerProps & ViewProps> = ({
@@ -25,35 +27,41 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
 	iconSource,
 	title,
 	description,
-	cornerDescription,
+	rightDescription,
+	href = "",
 	...props
 }) => {
 	return (
-		<Pressable style={styles.container} {...props}>
-			<View style={styles.iconSpan}>
-				<Image
-					style={sharedStyles.icon}
-					source={iconSource}
-					alt={iconAlt}
-				/>
-			</View>
-			<View style={styles.left}>
-				<Text style={styles.title}>{title}</Text>
-				{description && (
-					<Text style={styles.description}>{description}</Text>
-				)}
-			</View>
-			<View style={styles.right}>
-				{cornerDescription && (
-					<Text style={styles.description}>{cornerDescription}</Text>
-				)}
-			</View>
-		</Pressable>
+		<Link style={styles.container} href={href} asChild>
+			<Pressable {...props}>
+				<View style={styles.iconSpan}>
+					<Image
+						style={sharedStyles.icon}
+						source={iconSource}
+						alt={iconAlt}
+					/>
+				</View>
+				<View style={styles.left}>
+					<Text style={styles.title}>{title}</Text>
+					{description && (
+						<Text style={styles.description}>{description}</Text>
+					)}
+				</View>
+				<View style={styles.right}>
+					{rightDescription && (
+						<Text style={styles.description}>
+							{rightDescription}
+						</Text>
+					)}
+				</View>
+			</Pressable>
+		</Link>
 	);
 };
 
 const styles = StyleSheet.create({
 	container: {
+		flex: 1,
 		flexDirection: "row",
 		alignItems: "center",
 		borderRadius: 8,
