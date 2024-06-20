@@ -10,7 +10,7 @@ import { useGlobalState } from "hooks/useGlobalState";
 import moment from "moment";
 import React from "react";
 import { Alert, View } from "react-native";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Animal } from "types";
 import { showToast } from "utils/displayToast";
 import {
@@ -36,7 +36,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 	);
 	const onSubmit = (values: Animal) => {
 		initialValues.id
-			? StorageService.updateAnimal(values)
+			? Storage.updateAnimal(values)
 					.then(() => {
 						refreshAll();
 						formik.resetForm();
@@ -46,7 +46,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						);
 					})
 					.catch((error) => Alert.alert("Error", error))
-			: StorageService.insertAnimal(values)
+			: Storage.insertAnimal(values)
 					.then(() => {
 						refreshAll();
 						formik.resetForm();
@@ -81,8 +81,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 				<Select
 					label="Gênero*"
 					items={[
-						{ key: "♀ Fêmea", value: "F" },
-						{ key: "♂ Macho", value: "M" },
+						{ key: "Fêmea", value: "F" },
+						{ key: "Macho", value: "M" },
 					]}
 					defaultButtonText={
 						initialValues.gender
@@ -133,12 +133,12 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 					{ key: "Selecione um lote", value: "" },
 				]}
 				defaultButtonText={
-					batches?.find((b) => b.id === initialValues.batchId)
+					batches?.find((b) => b.id === initialValues.batchID)
 						?.name || "Selecione um lote"
 				}
-				errorText={getFieldError("batchId", formik)}
+				errorText={getFieldError("batchID", formik)}
 				onSelect={(option) =>
-					formik.setFieldValue("batchId", option.value)
+					formik.setFieldValue("batchID", option.value)
 				}
 				label="Lote"
 			/>
@@ -154,7 +154,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 			<Span>
 				<Select
 					defaultButtonText={
-						animals?.find((a) => a.id === initialValues.paternityId)
+						animals?.find((a) => a.id === initialValues.paternityID)
 							?.name || "Selecione um animal"
 					}
 					items={[
@@ -163,15 +163,15 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						),
 						{ key: "Selecione um animal", value: "" },
 					]}
-					errorText={getFieldError("paternityId", formik)}
+					errorText={getFieldError("paternityID", formik)}
 					onSelect={(option) =>
-						formik.setFieldValue("paternityId", option.value)
+						formik.setFieldValue("paternityID", option.value)
 					}
 					label="Paternidade"
 				/>
 				<Select
 					defaultButtonText={
-						animals?.find((a) => a.id === initialValues.maternityId)
+						animals?.find((a) => a.id === initialValues.maternityID)
 							?.name || "Selecione um animal"
 					}
 					items={[
@@ -180,11 +180,11 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 						) || []),
 						{ key: "Selecione um animal", value: "" },
 					]}
-					errorText={getFieldError("maternityId", formik)}
-					defaultValue={formik.initialValues.maternityId?.toString()}
+					errorText={getFieldError("maternityID", formik)}
+					defaultValue={formik.initialValues.maternityID?.toString()}
 					onSelect={(option) =>
 						formik.setFieldValue(
-							"maternityId",
+							"maternityID",
 							Number(option.value)
 						)
 					}

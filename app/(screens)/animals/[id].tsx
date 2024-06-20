@@ -10,7 +10,7 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Animal, PopulatedAnimal } from "types";
 import { atLeastOneYearOld } from "utils/filters";
 import { serializeAnimalInfo } from "utils/serializers";
@@ -23,7 +23,7 @@ export default function ViewAnimalDetailsScreen() {
 	const router = useRouter();
 
 	const fetchPopulatedAnimal = async () => {
-		await StorageService.loadPopulatedAnimal(Number(id)).then((animal) =>
+		await Storage.getPopulatedAnimal(Number(id)).then((animal) =>
 			setAnimal(animal)
 		);
 	};
@@ -121,7 +121,7 @@ export default function ViewAnimalDetailsScreen() {
 				<Span direction="column">
 					<Heading size="small">Paternidade</Heading>
 					<AnimalBanner
-						href={`/(screens)/animals/${animal.paternityId}`}
+						href={`/(screens)/animals/${animal.paternityID}`}
 						animal={animal.paternity}
 					/>
 				</Span>
@@ -130,7 +130,7 @@ export default function ViewAnimalDetailsScreen() {
 				<Span direction="column">
 					<Heading size="small">Maternidade</Heading>
 					<AnimalBanner
-						href={`/(screens)/animals/${animal.maternityId}`}
+						href={`/(screens)/animals/${animal.maternityID}`}
 						animal={animal.maternity}
 					/>
 				</Span>
@@ -164,7 +164,7 @@ const showConfirmationAndDelete = (
 			{
 				text: "Deletar",
 				onPress: () =>
-					StorageService.deleteAnimal(animal.id).then(() =>
+					Storage.deleteAnimal(animal.id).then(() =>
 						onDeleteCallback()
 					),
 				style: "destructive",

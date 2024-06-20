@@ -9,29 +9,28 @@ export type QueryOptions = {
 	searchText?: string;
 };
 
-export interface StorageRepository {
+export interface StorageServicesMethods {
 	count(): Promise<Count>;
-	clearDatabase(): Promise<boolean>;
-	initDatabase(): Promise<void>;
 
 	insertAnimal(animal: AddAnimal): Promise<number | undefined>;
 	insertBatch(batch: AddBatch): Promise<number | undefined>;
 
 	getAnimal(animalID: number): Promise<Animal>;
-	getPopulatedBatch(batchID: number): Promise<PopulatedBatch>;
 	getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal>;
+	getPopulatedBatch(batchID: number): Promise<PopulatedBatch>;
 
 	listAnimals(query?: QueryOptions): Promise<Animal[]>;
 	listBatches(): Promise<Batch[]>;
 
 	updateAnimal(updateData: UpdateAnimal | UpdateAnimal[]): Promise<boolean>;
-	updateBatch(updateData: UpdateBatch | UpdateBatch[]): Promise<boolean>;
+	updateBatch(updateData: UpdateBatch): Promise<boolean>;
 
 	deleteAnimal(animalID: number | number[]): Promise<boolean>;
 	deleteBatch(batchID: number): Promise<boolean>;
+	deleteBatchWithAnimals(batchID: number): Promise<boolean>;
 
-	setAnimalBatch(
-		animalID: number | number[],
+	moveAnimalToBatch(
+		animalIDsToMove: number | number[],
 		batchID: number | null
 	): Promise<boolean>;
 }

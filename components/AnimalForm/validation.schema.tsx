@@ -22,9 +22,9 @@ export const validationSchema = Yup.object({
 				!!value ? moment(value).isAfter(moment().year(1950)) : true
 		)
 		.nullable(),
-	batchId: Yup.string().nullable(),
+	batchID: Yup.string().nullable(),
 	code: Yup.string().nullable(),
-	paternityId: Yup.string().nullable(),
-	maternityId: Yup.string().nullable(),
+	paternityID: Yup.string().nullable(),
+	maternityID: Yup.string().nullable(),
 	observation: Yup.string().nullable(),
 });

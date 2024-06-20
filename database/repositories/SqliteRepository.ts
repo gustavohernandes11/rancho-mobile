@@ -1,4 +1,4 @@
-import { SQLResultSet, openDatabase } from "expo-sqlite";
+import { SQLiteExecuteAsyncResult, openDatabaseSync } from "expo-sqlite";
 import {
 	AddAnimal,
 	AddBatch,
@@ -15,31 +15,47 @@ import { Count } from "types/Count";
 import { nullifyFalsyFields } from "utils/serializers";
 
 export class SqliteRepository implements StorageRepository {
-	private db = openDatabase("rancho.db");
+	private db = openDatabaseSync("rancho.db");
 
-	constructor() {
-		this.initDatabase();
-	}
-
-	private executeQuery = async (
+	private execute = async (
 		query: string,
 		params: (string | number | null)[] = []
-	): Promise<SQLResultSet> => {
-		return new Promise((resolve, reject) => {
-			this.db.transaction(
-				async (tx) => {
-					tx.executeSql(query, params, (_, result) =>
-						resolve(result)
-					);
-				},
-				(error) => reject(error)
-			);
-		});
+	): Promise<SQLiteExecuteAsyncResult<any>> => {
+		const statement = await this.db.prepareAsync(query);
+		try {
+			return statement.executeAsync(params);
+		} catch (error) {
+			throw error;
+		}
 	};
-	initDatabase = async () => {
+
+	private getOne = async <T>(
+		query: string,
+		params: (string | number | null)[] = []
+	): Promise<T | null> => {
+		try {
+			return this.db.getFirstAsync<T>(query, params);
+		} catch (error) {
+			throw error;
+		}
+	};
+
+	private getAll = async <T>(
+		query: string,
+		params: (string | number | null)[] = []
+	): Promise<T[]> => {
+		try {
+			return this.db.getAllAsync<T>(query, params);
+		} catch (error) {
+			throw error;
+		}
+	};
+
+	async initDatabase() {
 		await this.ensureAnimalTableExists();
 		await this.ensureBatchTableExists();
-	};
+	}
+
 	private ensureAnimalTableExists = async () => {
 		const query = `
 		CREATE TABLE IF NOT EXISTS Animals (
@@ -47,15 +63,16 @@ export class SqliteRepository implements StorageRepository {
             name TEXT NOT NULL,
             gender TEXT CHECK(gender IN ('F', 'M')) NOT NULL,
             birthdate TEXT,
-            batchId INTEGER REFERENCES Batches(id),
+            batchID INTEGER REFERENCES Batches(id),
             code TEXT,
-            paternityId INTEGER REFERENCES Animals(id),
-            maternityId INTEGER REFERENCES Animals(id),
+            paternityID INTEGER REFERENCES Animals(id),
+            maternityID INTEGER REFERENCES Animals(id),
             observation TEXT
         );`;
 
-		await this.executeQuery(query, []);
+		await this.execute(query, []);
 	};
+
 	private ensureBatchTableExists = async () => {
 		const query = `
 		CREATE TABLE IF NOT EXISTS Batches (
@@ -65,8 +82,9 @@ export class SqliteRepository implements StorageRepository {
         );
 		`;
 
-		await this.executeQuery(query, []);
+		await this.execute(query, []);
 	};
+
 	async count(): Promise<Count> {
 		const countAnimalsQuery = `
 		SELECT COUNT(id)
@@ -79,20 +97,40 @@ export class SqliteRepository implements StorageRepository {
 		FROM Batches
 		`;
 
-		const [animalsResult, batchesResult] = await Promise.all([
-			this.executeQuery(countAnimalsQuery, []),
-			this.executeQuery(countBatchesQuery, []),
+		const [animals, batches] = await Promise.all([
+			this.getOne<{ animal: number }>(countAnimalsQuery, []),
+			this.getOne<{ batches: number }>(countBatchesQuery, []),
 		]);
 
 		return {
-			animals: animalsResult.rows.item(0).animals,
-			batches: batchesResult.rows.item(0).batches,
-		};
+			...animals,
+			...batches,
+		} as Count;
 	}
+
+	async clearDatabase(): Promise<boolean> {
+		const dropAnimalsQuery = `
+		DROP TABLE IF EXISTS Animals
+		`;
+
+		const dropBatchesQuery = `
+		DROP TABLE IF EXISTS Batches
+		`;
+
+		const operations = [
+			this.execute(dropAnimalsQuery),
+			this.execute(dropBatchesQuery),
+		];
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
+	}
+
 	async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
 		const query = `
 		INSERT INTO Animals 
-			(name, gender, birthdate, batchId, code, paternityId, maternityId, observation)
+			(name, gender, birthdate, batchID, code, paternityID, maternityID, observation)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 		`;
 
@@ -101,17 +139,18 @@ export class SqliteRepository implements StorageRepository {
 			parsed.name,
 			parsed.gender,
 			parsed.birthdate,
-			parsed.batchId,
+			parsed.batchID,
 			parsed.code,
-			parsed.paternityId,
-			parsed.maternityId,
+			parsed.paternityID,
+			parsed.maternityID,
 			parsed.observation,
 		];
 
-		return this.executeQuery(query, params).then(
-			({ insertId }) => insertId
+		return this.execute(query, params).then(
+			({ lastInsertRowId }) => lastInsertRowId
 		);
 	}
+
 	async insertBatch(batch: AddBatch): Promise<number | undefined> {
 		const query = `
 		INSERT INTO Batches 
@@ -122,118 +161,36 @@ export class SqliteRepository implements StorageRepository {
 		const parsed = nullifyFalsyFields(batch);
 		const params = [parsed.name, parsed.description];
 
-		return this.executeQuery(query, params).then(
-			({ insertId }) => insertId
+		return this.execute(query, params).then(
+			({ lastInsertRowId }) => lastInsertRowId
 		);
 	}
-	async deleteAnimal(animalID: number): Promise<boolean> {
-		const deleteQuery = `
-		DELETE FROM Animals 
-		WHERE id = ?
-		`;
-		const unlinkPaternityQuery = `
-		UPDATE Animals
-		SET paternityId = NULL
-		WHERE paternityId = ?
-		`;
-		const unlinkMaternityQuery = `
-		UPDATE Animals
-		SET maternityId = NULL
-		WHERE maternityId = ?
-		`;
 
-		const operations = [
-			this.executeQuery(deleteQuery, [animalID]),
-			this.executeQuery(unlinkPaternityQuery, [animalID]),
-			this.executeQuery(unlinkMaternityQuery, [animalID]),
-		];
-
-		return Promise.all(operations)
-			.then(() => true)
-			.catch(() => false);
-	}
-	async deleteBatch(batchID: number): Promise<boolean> {
-		const deleteBatchQuery = `
-		DELETE FROM Batches 
-		WHERE id = ?;
-		`;
-
-		const unlinkAnimalsQuery = `
-		UPDATE Animals 
-		SET batchId = NULL 
-		WHERE batchId = ?;
-		`;
-
-		const operations = [
-			this.executeQuery(deleteBatchQuery, [batchID]),
-			this.executeQuery(unlinkAnimalsQuery, [batchID]),
-		];
-
-		return Promise.all(operations)
-			.then(() => true)
-			.catch(() => false);
-	}
-	async deleteBatchAndItsAnimals(batchID: number): Promise<boolean> {
-		const deleteBatchQuery = `
-		DELETE FROM Batches 
-		WHERE id = ?;
-		`;
-
-		const deleteAnimals = `
-		DELETE FROM Animals 
-		WHERE batchId = ?;
-		`;
-
-		const operations = [
-			this.executeQuery(deleteBatchQuery, [batchID]),
-			this.executeQuery(deleteAnimals, [batchID]),
-		];
-
-		return Promise.all(operations)
-			.then(() => true)
-			.catch(() => false);
-	}
-	private async listOffspring(animalID: number): Promise<Animal[]> {
-		const query = `
-		SELECT 
-			id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
-		FROM Animals 
-		WHERE paternityId = ? OR maternityId = ?
-		`;
-
-		return this.executeQuery(query, [animalID]).then(
-			({ rows }) => rows._array
-		);
-	}
-	async loadAnimal(animalID: number): Promise<Animal> {
+	async getAnimal(animalID: number): Promise<Animal> {
 		const query = `
 			SELECT 
-				id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation
 			FROM Animals 
 			WHERE id = ?
 		`;
 
-		const animal = await this.executeQuery(query, [animalID]).then(
-			({ rows }) => rows.item(0) as Animal
-		);
-
-		return animal;
+		return (await this.getOne<Animal>(query, [animalID])) as Animal;
 	}
 
-	async loadPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
-		const animal = await this.loadAnimal(animalID);
+	async getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
+		const animal = await this.getAnimal(animalID);
 
 		const offspring = await this.listOffspring(animalID);
-		const batch = animal?.batchId
-			? await this.loadBatchInfo(animal.batchId)
+		const batch = animal?.batchID
+			? await this.getPopulatedBatch(animal.batchID)
 			: null;
 
-		const maternity = animal?.maternityId
-			? await this.loadAnimal(animal.maternityId)
+		const maternity = animal?.maternityID
+			? await this.getAnimal(animal.maternityID)
 			: null;
 
-		const paternity = animal?.paternityId
-			? await this.loadAnimal(animal.paternityId)
+		const paternity = animal?.paternityID
+			? await this.getAnimal(animal.paternityID)
 			: null;
 
 		return {
@@ -245,31 +202,42 @@ export class SqliteRepository implements StorageRepository {
 		};
 	}
 
-	async listAnimals({
-		orderBy = "alfabetic",
-		batchId,
-		searchText,
-	}: QueryOptions): Promise<Animal[]> {
+	private async listOffspring(animalID: number): Promise<Animal[]> {
+		const query = `
+		SELECT 
+			id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation
+		FROM Animals 
+		WHERE paternityID = ? OR maternityID = ?
+		`;
+
+		return this.getAll<Animal>(query, [animalID, animalID]);
+	}
+
+	async listAnimals(queryOptions: QueryOptions = {}): Promise<Animal[]> {
 		let query = `
 			SELECT 
-				id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
+				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation
 			FROM Animals
 		`;
 
 		const params: (string | number)[] = [];
 
-		if (batchId !== undefined) {
-			query += ` WHERE batchId = ?`;
-			params.push(batchId);
+		if (queryOptions.batchID !== undefined) {
+			query += ` WHERE batchID = ?`;
+			params.push(queryOptions.batchID);
 		}
 
-		if (searchText !== undefined) {
-			query += batchId !== undefined ? ` AND` : ` WHERE`;
+		if (queryOptions.searchText !== undefined) {
+			query += queryOptions.batchID !== undefined ? ` AND` : ` WHERE`;
 			query += ` (name LIKE '%' || ? || '%' OR code LIKE '%' || ? || '%' OR observation LIKE '%' || ? || '%')`;
-			params.push(searchText, searchText, searchText);
+			params.push(
+				queryOptions.searchText,
+				queryOptions.searchText,
+				queryOptions.searchText
+			);
 		}
 
-		switch (orderBy) {
+		switch (queryOptions.orderBy) {
 			case "alfabetic":
 				query += ` ORDER BY name`;
 				break;
@@ -281,98 +249,59 @@ export class SqliteRepository implements StorageRepository {
 				break;
 		}
 
-		return this.executeQuery(query, params).then(({ rows }) => rows._array);
+		return this.getAll<Animal>(query, params);
 	}
-	async loadBatchInfo(batchID: number): Promise<Batch> {
-		const loadBatchQuery = `
-		SELECT 
-			id, name, description
-		FROM Batches 
-		WHERE id = ?
-		`;
 
-		const countQuery = `
-		SELECT COUNT(id)
-		AS count 
-		FROM Animals 
-		WHERE batchId = ?`;
-
-		const [batchInfoResult, countResult] = await Promise.all([
-			this.executeQuery(loadBatchQuery, [batchID]),
-			this.executeQuery(countQuery, [batchID]),
-		]);
-
-		const batchInfo = batchInfoResult.rows.item(0);
-		const count = countResult.rows.item(0).count;
-
-		return { ...batchInfo, count };
-	}
-	async loadBatch(batchID: number): Promise<PopulatedBatch> {
+	async getPopulatedBatch(batchID: number): Promise<PopulatedBatch> {
 		const loadBatchQuery = `
         SELECT 
             Batches.id, Batches.name, Batches.description,
             COUNT(Animals.id) AS count
         FROM Batches
-        LEFT JOIN Animals ON Batches.id = Animals.batchId
+        LEFT JOIN Animals ON Batches.id = Animals.batchID
         WHERE Batches.id = ?
         GROUP BY Batches.id, Batches.name, Batches.description
     `;
 
-		const loadAnimalsQuery = `
-        SELECT
-            id, name, gender, birthdate, batchId, code, paternityId, maternityId, observation
-        FROM Animals 
-        WHERE batchId = ?
-        ORDER BY name
-    `;
-
-		const [batchResult, animalsResult] = await Promise.all([
-			this.executeQuery(loadBatchQuery, [batchID]),
-			this.executeQuery(loadAnimalsQuery, [batchID]),
+		const [batchInfo, animals] = await Promise.all([
+			this.getOne<Batch>(loadBatchQuery, [batchID]),
+			this.listAnimals({ batchID }),
 		]);
-
-		const batchInfo = batchResult.rows.item(0);
-		const animals = animalsResult.rows._array;
 
 		return {
 			...batchInfo,
 			animals,
-		};
+		} as PopulatedBatch;
 	}
-	async listAllBatchesInfo(): Promise<Batch[]> {
+
+	async listBatches(): Promise<Batch[]> {
 		const query = `
 		SELECT 
         	Batches.id, Batches.name, Batches.description,
-        COUNT(Animals.id) AS count
+        	COUNT(Animals.id) AS count
     	FROM Batches
-    	LEFT JOIN Animals ON Batches.id = Animals.batchId
+    	LEFT JOIN Animals ON Batches.id = Animals.batchID
     	GROUP BY Batches.id, Batches.name, Batches.description
 		`;
 
-		return this.executeQuery(query, []).then(({ rows }) => rows._array);
+		return this.getAll<Batch>(query, []);
 	}
-	async clearDatabase(): Promise<boolean> {
-		const dropAnimalsQuery = `
-		DROP TABLE IF EXISTS Animals
-		`;
 
-		const dropBatchesQuery = `
-		DROP TABLE IF EXISTS Batches
-		`;
+	async updateAnimal(
+		updateData: UpdateAnimal | UpdateAnimal[]
+	): Promise<boolean> {
+		if (Array.isArray(updateData)) {
+			const operations = updateData.map((data) =>
+				this.updateAnimal(data)
+			);
+			return Promise.all(operations)
+				.then(() => true)
+				.catch(() => false);
+		}
 
-		const operations = [
-			this.executeQuery(dropAnimalsQuery),
-			this.executeQuery(dropBatchesQuery),
-		];
-
-		return Promise.all(operations)
-			.then(() => true)
-			.catch(() => false);
-	}
-	async updateAnimal(updateData: UpdateAnimal): Promise<Animal> {
 		const query = `
 		UPDATE Animals SET 
-			name = ?, gender = ?, birthdate = ?, batchId = ?, code = ?, paternityId = ?, maternityId = ?, observation = ?
+			name = ?, gender = ?, birthdate = ?, batchID = ?, code = ?, paternityID = ?, maternityID = ?, observation = ?
 		WHERE id = ?
 		`;
 
@@ -381,19 +310,29 @@ export class SqliteRepository implements StorageRepository {
 			parsed.name,
 			parsed.gender,
 			parsed.birthdate,
-			parsed.batchId,
+			parsed.batchID,
 			parsed.code,
-			parsed.paternityId,
-			parsed.maternityId,
+			parsed.paternityID,
+			parsed.maternityID,
 			parsed.observation,
 			parsed.id,
 		];
 
-		return this.executeQuery(query, params).then(() =>
-			this.loadAnimal(updateData.id)
-		);
+		return this.execute(query, params)
+			.then(() => true)
+			.catch(() => false);
 	}
-	async updateBatch(updateData: UpdateBatch): Promise<Batch> {
+
+	async updateBatch(
+		updateData: UpdateBatch | UpdateBatch[]
+	): Promise<boolean> {
+		if (Array.isArray(updateData)) {
+			const operations = updateData.map((data) => this.updateBatch(data));
+			return Promise.all(operations)
+				.then(() => true)
+				.catch(() => false);
+		}
+
 		const query = `
 		UPDATE Batches SET 
 			name = ?, description = ?
@@ -403,47 +342,87 @@ export class SqliteRepository implements StorageRepository {
 		const parsed = nullifyFalsyFields(updateData);
 		const params = [parsed.name, parsed.description, parsed.id];
 
-		return this.executeQuery(query, params).then(() =>
-			this.loadBatchInfo(updateData.id)
-		);
+		return this.execute(query, params)
+			.then(() => true)
+			.catch(() => false);
 	}
-	async updateManyAnimals(updateDataList: UpdateAnimal[]): Promise<Animal[]> {
-		const operations = updateDataList.map((updateData) =>
-			this.updateAnimal(updateData)
-		);
 
-		return Promise.all(operations);
-	}
-	async deleteManyAnimals(animalIDsToDelete: number[]): Promise<boolean> {
-		const operations = animalIDsToDelete.map((id) => this.deleteAnimal(id));
+	async deleteAnimal(animalID: number | number[]): Promise<boolean> {
+		if (Array.isArray(animalID)) {
+			const operations = animalID.map((id) => this.deleteAnimal(id));
+			return Promise.all(operations)
+				.then(() => true)
+				.catch(() => false);
+		}
+
+		const deleteQuery = `
+		DELETE FROM Animals 
+		WHERE id = ?
+		`;
+		const unlinkPaternityQuery = `
+		UPDATE Animals
+		SET paternityID = NULL
+		WHERE paternityID = ?
+		`;
+		const unlinkMaternityQuery = `
+		UPDATE Animals
+		SET maternityID = NULL
+		WHERE maternityID = ?
+		`;
+
+		const operations = [
+			this.execute(deleteQuery, [animalID]),
+			this.execute(unlinkPaternityQuery, [animalID]),
+			this.execute(unlinkMaternityQuery, [animalID]),
+		];
 
 		return Promise.all(operations)
 			.then(() => true)
 			.catch(() => false);
 	}
-	async moveAnimalToBatch(
-		animalId: number,
+
+	async deleteBatch(batchID: number): Promise<boolean> {
+		const deleteBatchQuery = `
+		DELETE FROM Batches 
+		WHERE id = ?;
+		`;
+
+		const unlinkAnimalsQuery = `
+		UPDATE Animals 
+		SET batchID = NULL 
+		WHERE batchID = ?;
+		`;
+
+		const operations = [
+			this.execute(deleteBatchQuery, [batchID]),
+			this.execute(unlinkAnimalsQuery, [batchID]),
+		];
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
+	}
+
+	async setAnimalBatch(
+		animalID: number | number[],
 		batchID: number | null
 	): Promise<boolean> {
+		if (Array.isArray(animalID)) {
+			const operations = animalID.map((id) =>
+				this.setAnimalBatch(id, batchID)
+			);
+			return Promise.all(operations)
+				.then(() => true)
+				.catch(() => false);
+		}
+
 		const query = `
 		UPDATE Animals SET 
-			batchId = ?
+			batchID = ?
 		WHERE id = ?
 		`;
 
-		return this.executeQuery(query, [batchID, animalId])
-			.then(() => true)
-			.catch(() => false);
-	}
-	async moveAnimalsToBatch(
-		animalIDsToMove: number[],
-		batchID: number | null
-	): Promise<boolean> {
-		const operations = animalIDsToMove.map((animalId) =>
-			this.moveAnimalToBatch(animalId, batchID)
-		);
-
-		return Promise.all(operations)
+		return this.execute(query, [batchID, animalID])
 			.then(() => true)
 			.catch(() => false);
 	}

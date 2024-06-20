@@ -11,7 +11,7 @@ import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
@@ -23,7 +23,7 @@ export default function ViewBatchDetailsScreen() {
 	const table = useAnimalTable();
 
 	const fetchBatch = async () => {
-		await StorageService.loadBatch(Number(id)).then((populatedBatch) =>
+		await Storage.getPopulatedBatch(Number(id)).then((populatedBatch) =>
 			setBatch(populatedBatch)
 		);
 	};
@@ -151,7 +151,7 @@ export const showConfirmationAndDeleteAll = (
 			{
 				text: "Deletar tudo",
 				onPress: () =>
-					StorageService.deleteBatchAndItsAnimals(batch.id).then(() =>
+					Storage.deleteBatchWithAnimals(batch.id).then(() =>
 						onConfirmCallback()
 					),
 				style: "destructive",
@@ -178,7 +178,7 @@ export const showConfirmationAndDeleteOnlyBatch = (
 			{
 				text: "Deletar",
 				onPress: () =>
-					StorageService.deleteBatch(batch.id).then(() =>
+					Storage.deleteBatch(batch.id).then(() =>
 						onConfirmCallback()
 					),
 				style: "destructive",

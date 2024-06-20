@@ -3,17 +3,18 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { Span } from "components/Span";
+import { useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Count } from "types/Count";
 
 export default function TabOneScreen() {
 	const [count, setCount] = useState<Count>();
 	const { refreshAll } = useGlobalState();
 
-	useEffect(() => {
-		StorageService.count().then((count) => setCount(count));
+	useFocusEffect(() => {
+		Storage.count().then((count) => setCount(count));
 	});
 
 	useEffect(() => {

@@ -3,7 +3,7 @@ import { ContainerView } from "components/ContainerView";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { PopulatedBatch } from "types/Batch";
 
 export default function EditAnimalScreen() {
@@ -13,7 +13,7 @@ export default function EditAnimalScreen() {
 
 	useEffect(() => {
 		const fetchData = async () => {
-			await StorageService.loadBatch(Number(id)).then((batch) =>
+			await Storage.getPopulatedBatch(Number(id)).then((batch) =>
 				setBatch(batch)
 			);
 			refreshAnimals();

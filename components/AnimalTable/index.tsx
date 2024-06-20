@@ -8,7 +8,7 @@ import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwa
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
 import { Dimensions, Text, View } from "react-native";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { sharedStyles } from "styles/shared";
 import { Animal } from "types";
 import { showToast } from "utils/displayToast";
@@ -50,7 +50,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	};
 
 	const handleDeleteMany = () => {
-		StorageService.deleteManyAnimals(controller.selectedIDs).then(() => {
+		Storage.deleteAnimal(controller.selectedIDs).then(() => {
 			refreshAll();
 			controller.clearSelection();
 			showToast("Animais removidos com sucesso.");

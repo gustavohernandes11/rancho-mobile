@@ -4,7 +4,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import moment from "moment";
 
 export default function RegisterAnimalBornScreen() {
-	const { maternityId } = useLocalSearchParams<{ maternityId: string }>();
+	const { maternityID } = useLocalSearchParams<{ maternityID: string }>();
 
 	const StackScreen = () => (
 		<Stack.Screen options={{ headerTitle: "Registrar nascimento" }} />
@@ -14,7 +14,7 @@ export default function RegisterAnimalBornScreen() {
 		<ContainerView immediateContent={<StackScreen />}>
 			<AnimalForm
 				initialValues={{
-					maternityId: Number(maternityId),
+					maternityID: Number(maternityID),
 					birthdate: moment().toISOString(),
 				}}
 			/>

@@ -2,7 +2,7 @@ import { AnimalForm } from "components/AnimalForm";
 import { ContainerView } from "components/ContainerView";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useLayoutEffect, useState } from "react";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Animal } from "types/Animal";
 
 export default function EditAnimalScreen() {
@@ -11,7 +11,7 @@ export default function EditAnimalScreen() {
 
 	useLayoutEffect(() => {
 		const fetchData = async () => {
-			const animal = await StorageService.loadAnimal(Number(id));
+			const animal = await Storage.getAnimal(Number(id));
 			setAnimal(animal);
 		};
 		fetchData();

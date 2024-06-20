@@ -5,10 +5,10 @@ export type Animal = {
 	name: string;
 	gender: "F" | "M";
 	birthdate?: string;
-	batchId?: number;
+	batchID?: number;
 	code?: string | number;
-	paternityId?: number;
-	maternityId?: number;
+	paternityID?: number;
+	maternityID?: number;
 	observation?: string;
 };
 export type PopulatedAnimal = Animal & {

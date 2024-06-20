@@ -11,7 +11,7 @@ import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
 import { Alert, Text, View } from "react-native";
 import { List } from "react-native-paper";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { sharedStyles } from "styles/shared";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { showToast } from "utils/displayToast";
@@ -41,8 +41,8 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 
 	useEffect(() => {
 		if (initialValues.id) {
-			StorageService.listAnimals({
-				batchId: initialValues.id,
+			Storage.listAnimals({
+				batchID: initialValues.id,
 			}).then((batchAnimals) => {
 				table.setSelectedIDs(batchAnimals.map((a) => a.id));
 			});
@@ -54,11 +54,11 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		isNewBatch: boolean
 	) => {
 		isNewBatch
-			? StorageService.insertBatch(values)
-					.then((insertedId) =>
-						StorageService.moveAnimalsToBatch(
+			? Storage.insertBatch(values)
+					.then((insertedID) =>
+						Storage.moveAnimalToBatch(
 							table.selectedIDs,
-							insertedId || null
+							insertedID || null
 						)
 					)
 					.then(() => {
@@ -70,26 +70,26 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					.then(() => router.replace("/(tabs)/batches"))
 
 					.catch((error) => Alert.alert("Error", error))
-			: StorageService.updateBatch(values)
-					.then((batch: Batch) => {
+			: Storage.updateBatch(values)
+					.then(async () => {
+						const batch = await Storage.getPopulatedBatch(
+							values.id
+						);
 						let promises: Promise<boolean>[] = [];
 
 						animals.forEach(async (animal) => {
 							const isSelected = table.selectedIDs.includes(
 								animal.id
 							);
-							const isSameBatch = animal.batchId === batch.id;
+							const isSameBatch = animal.batchID === batch.id;
 
 							if (isSameBatch && !isSelected) {
 								promises.push(
-									StorageService.moveAnimalToBatch(
-										animal.id,
-										null
-									)
+									Storage.moveAnimalToBatch(animal.id, null)
 								);
 							} else if (!isSameBatch && isSelected) {
 								promises.push(
-									StorageService.moveAnimalToBatch(
+									Storage.moveAnimalToBatch(
 										animal.id,
 										batch.id
 									)

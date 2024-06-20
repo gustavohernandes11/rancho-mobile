@@ -1,5 +1,6 @@
 import Colors from "constants/Colors";
-import { Link, LinkProps } from "expo-router";
+import { Link } from "expo-router";
+import { LinkProps } from "expo-router/build/link/Link";
 import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import { TouchableRipple } from "react-native-paper";
@@ -15,7 +16,7 @@ interface CardProps {
 	href?: any;
 }
 
-export const Card: React.FC<LinkProps<any> & CardProps> = ({
+export const Card: React.FC<LinkProps & CardProps> = ({
 	title,
 	alt,
 	iconSource,

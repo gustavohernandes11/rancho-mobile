@@ -22,14 +22,14 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 		prevProps.isChecked === nextProps.isChecked &&
 		prevProps.animal.name === nextProps.animal.name &&
 		prevProps.animal?.birthdate === nextProps.animal?.birthdate &&
-		prevProps.animal?.batchId === nextProps.animal?.batchId
+		prevProps.animal?.batchID === nextProps.animal?.batchID
 	);
 };
 
 export const Row: React.FC<RowProps> = memo(
 	({ animal, showCheckbox, isChecked = false, onCheck, onLongPress }) => {
 		const { batches } = useGlobalState();
-		const batch = batches.find((batch) => batch.id === animal.batchId);
+		const batch = batches.find((batch) => batch.id === animal.batchID);
 
 		return (
 			<Link
@@ -50,7 +50,7 @@ export const Row: React.FC<RowProps> = memo(
 							{" " + animal.name}
 						</Cell>
 						<Cell flex={4}>
-							{animal.batchId && batch && batch.name}
+							{animal.batchID && batch && batch.name}
 						</Cell>
 						<Cell flex={2}>
 							{animal.birthdate &&

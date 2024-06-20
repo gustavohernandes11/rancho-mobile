@@ -1,4 +1,4 @@
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Animal } from "types/Animal";
 import { Batch } from "types/Batch";
 import { create } from "zustand";
@@ -15,14 +15,10 @@ export const useGlobalState = create<GlobalState>()((set, get) => ({
 	animals: [],
 	batches: [],
 	refreshBatches: async () => {
-		StorageService.listAllBatchesInfo().then((batches) =>
-			set(() => ({ batches }))
-		);
+		Storage.listBatches().then((batches) => set(() => ({ batches })));
 	},
 	refreshAnimals: async () => {
-		StorageService.listAnimals({}).then((animals) =>
-			set(() => ({ animals }))
-		);
+		Storage.listAnimals({}).then((animals) => set(() => ({ animals })));
 	},
 	refreshAll: async () => {
 		get().refreshBatches();

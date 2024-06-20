@@ -1,5 +1,5 @@
 import { Alert } from "react-native";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 
 export const showConfirmationAndDeleteAll = (
 	selectedIDs: number[],
@@ -19,7 +19,7 @@ export const showConfirmationAndDeleteAll = (
 			{
 				text: "Deletar",
 				onPress: () =>
-					StorageService.deleteManyAnimals(selectedIDs).then(() => {
+					Storage.deleteAnimal(selectedIDs).then(() => {
 						if (onDeleteCallback) onDeleteCallback();
 					}),
 				style: "destructive",

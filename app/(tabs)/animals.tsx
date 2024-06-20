@@ -12,7 +12,7 @@ import { Stack, router, useFocusEffect } from "expo-router";
 import useDebounce from "hooks/useDebounce";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
-import { StorageService } from "services/StorageService";
+import { Storage } from "services/StorageService";
 import { Animal } from "types/Animal";
 import { OrderByOptions } from "types/StorageRepository";
 import { serializeBatches } from "utils/serializers";
@@ -28,19 +28,18 @@ export default function ViewAnimalsScreen() {
 	const [filteredAnimals, setFilteredAnimals] = useState<Animal[]>([]);
 
 	const fetchFilteredAnimals = () => {
-		StorageService.listAnimals({
+		Storage.listAnimals({
 			orderBy,
-			batchId: filterByBatchId,
+			batchID: filterByBatchId,
 			searchText,
 		})
 			.then((animals) => setFilteredAnimals(() => animals))
-			.then(() => setIsLoading(false));
+			.finally(() => setIsLoading(false));
 	};
 
 	// when changing filters
 	useDebounce(
 		() => {
-			setIsLoading(true);
 			fetchFilteredAnimals();
 		},
 		[orderBy, filterByBatchId, searchText],
@@ -129,14 +128,12 @@ export default function ViewAnimalsScreen() {
 				</Span>
 			)}
 
-			{animals.length === 0 ? (
-				<Span justify="center" py={8}>
-					<Button
-						title="Registrar novo animal"
-						onPress={() => router.push("/(screens)/animals/add")}
-					/>
-				</Span>
-			) : null}
+			<Span justify="flex-end" direction="row" py={8}>
+				<Button
+					title="Registrar animal"
+					onPress={() => router.push("/(screens)/animals/add")}
+				/>
+			</Span>
 		</ContainerView>
 	);
 }
