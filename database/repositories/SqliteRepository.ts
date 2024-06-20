@@ -180,18 +180,28 @@ export class SqliteRepository implements StorageRepository {
 	async getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
 		const animal = await this.getAnimal(animalID);
 
-		const offspring = await this.listOffspring(animalID);
-		const batch = animal?.batchID
-			? await this.getPopulatedBatch(animal.batchID)
-			: null;
+		const operations: Promise<any>[] = [this.listOffspring(animalID)];
+		const resolveNull = () => Promise.resolve(null);
 
-		const maternity = animal?.maternityID
-			? await this.getAnimal(animal.maternityID)
-			: null;
+		operations.push(
+			animal.batchID
+				? this.getPopulatedBatch(animal.batchID)
+				: resolveNull()
+		);
+		operations.push(
+			animal.maternityID
+				? this.getAnimal(animal.maternityID)
+				: resolveNull()
+		);
+		operations.push(
+			animal.paternityID
+				? this.getAnimal(animal.paternityID)
+				: resolveNull()
+		);
 
-		const paternity = animal?.paternityID
-			? await this.getAnimal(animal.paternityID)
-			: null;
+		const [offspring, batch, maternity, paternity] = await Promise.all(
+			operations
+		);
 
 		return {
 			...animal,
