@@ -22,7 +22,7 @@ export default function ViewAnimalsScreen() {
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
 	const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
-	const [filterByBatchId, setFilterByBatchId] = useState<
+	const [filterByBatchID, setFilterByBatchID] = useState<
 		number | undefined
 	>();
 	const [filteredAnimals, setFilteredAnimals] = useState<Animal[]>([]);
@@ -30,7 +30,7 @@ export default function ViewAnimalsScreen() {
 	const fetchFilteredAnimals = () => {
 		Storage.listAnimals({
 			orderBy,
-			batchID: filterByBatchId,
+			batchID: filterByBatchID,
 			searchText,
 		})
 			.then((animals) => setFilteredAnimals(() => animals))
@@ -42,7 +42,7 @@ export default function ViewAnimalsScreen() {
 		() => {
 			fetchFilteredAnimals();
 		},
-		[orderBy, filterByBatchId, searchText],
+		[orderBy, filterByBatchID, searchText],
 		300
 	);
 
@@ -56,7 +56,7 @@ export default function ViewAnimalsScreen() {
 	useFocusEffect(
 		useCallback(() => {
 			fetchFilteredAnimals();
-		}, [animals, orderBy, filterByBatchId, searchText])
+		}, [animals, orderBy, filterByBatchID, searchText])
 	);
 
 	function getDisplayInfo() {
@@ -114,7 +114,7 @@ export default function ViewAnimalsScreen() {
 					]}
 					defaultValue={"Todos"}
 					defaultButtonText={"Todos"}
-					onSelect={(option) => setFilterByBatchId(option.value)}
+					onSelect={(option) => setFilterByBatchID(option.value)}
 					size="small"
 					backgroundColor="transparent"
 				/>

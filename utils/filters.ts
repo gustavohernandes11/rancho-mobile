@@ -12,8 +12,8 @@ const oneYearOlderThenChild = (animal: Animal, childBirthdate?: string) =>
 
 const isNotParent = (animal: Animal, childAnimal: Animal) => {
 	return !(
-		animal.paternityId === childAnimal.id ||
-		animal.maternityId === childAnimal.id
+		animal.paternityID === childAnimal.id ||
+		animal.maternityID === childAnimal.id
 	);
 };
 
