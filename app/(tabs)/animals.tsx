@@ -79,7 +79,7 @@ export default function ViewAnimalsScreen() {
 					),
 				}}
 			/>
-			<Span justify="space-between" my={4} align="center">
+			<Span justify="space-between" my={8} align="center">
 				<Heading>Todos seus animais</Heading>
 				<SubTitle>{getDisplayInfo()}</SubTitle>
 			</Span>

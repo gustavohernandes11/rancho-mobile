@@ -16,7 +16,10 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 	<ScrollView horizontal={false}>
 		<ScrollView
 			horizontal={true}
-			contentContainerStyle={{ width: "100%", height: "100%" }}
+			contentContainerStyle={{
+				width: "100%",
+				height: "100%",
+			}}
 		>
 			<FlatList
 				style={styles.tableContainer}

@@ -28,7 +28,10 @@ export default function TabLayout() {
 				tabBarStyle: {
 					overflow: "hidden",
 					backgroundColor: Colors.green,
+					height: 60,
 				},
+				tabBarItemStyle: { paddingVertical: 8, gap: 8 },
+
 				headerStyle: {
 					backgroundColor: Colors.green,
 				},
@@ -37,14 +40,13 @@ export default function TabLayout() {
 					fontFamily: Fonts.primaryFamily,
 				},
 				tabBarActiveBackgroundColor: Colors.darkGreen,
-				tabBarItemStyle: { borderRadius: 8 },
 				tabBarInactiveBackgroundColor: Colors.green,
 			}}
 		>
 			<Tabs.Screen
 				name="index"
 				options={{
-					tabBarShowLabel: false,
+					tabBarLabel: "Início",
 					tabBarIcon: () => (
 						<Image
 							style={tabIconSize}
@@ -57,7 +59,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="animals"
 				options={{
-					tabBarShowLabel: false,
+					tabBarLabel: "Rebanho",
 					tabBarIcon: () => (
 						<Image
 							style={tabIconSize}
@@ -70,7 +72,7 @@ export default function TabLayout() {
 			<Tabs.Screen
 				name="batches"
 				options={{
-					tabBarShowLabel: false,
+					tabBarLabel: "Lotes",
 					tabBarIcon: () => (
 						<Image
 							style={tabIconSize}

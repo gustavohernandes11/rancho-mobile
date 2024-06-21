@@ -11,7 +11,7 @@ import { Item } from "types/Item";
 import { getInputBorderColor } from "utils/conditionalStyles";
 
 const DropdownIcon = () => (
-	<FontAwesome style={{ marginRight: 8 }} size={18} name="angle-down" />
+	<FontAwesome style={{ marginRight: 8 }} size={16} name="angle-down" />
 );
 
 interface SelectProps {
@@ -50,7 +50,7 @@ export const Select: React.FC<
 			</HelperText>
 			<SelectDropdown
 				renderDropdownIcon={DropdownIcon}
-				buttonTextStyle={sharedStyles.text}
+				buttonTextStyle={sharedStyles.label}
 				buttonStyle={[
 					styles.button,
 					{

@@ -32,7 +32,7 @@ export const Card: React.FC<LinkProps & CardProps> = ({
 			{...props}
 		>
 			<TouchableRipple>
-				<Span align="center" justify="center" flexWrap="nowrap">
+				<Span direction="column" justify="center" flexWrap="nowrap">
 					<Image
 						style={sharedStyles.icon}
 						source={iconSource}
@@ -50,5 +50,6 @@ const styles = StyleSheet.create({
 		...sharedStyles.text,
 		flexShrink: 1,
 		color: Colors.white,
+		marginTop: 8,
 	},
 });

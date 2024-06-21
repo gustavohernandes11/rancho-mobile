@@ -10,7 +10,7 @@ export const SearchBar: React.FC<SearchbarProps> = ({ ...props }) => {
 			style={styles.searchbar}
 			inputStyle={styles.input}
 			iconColor={Colors.darkGray}
-			placeholderTextColor={Colors.darkSurface}
+			placeholderTextColor={Colors.darkGray}
 			{...props}
 		/>
 	);

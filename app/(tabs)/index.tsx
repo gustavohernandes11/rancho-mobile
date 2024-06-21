@@ -25,13 +25,13 @@ export default function TabOneScreen() {
 		<ContainerView>
 			<Heading>Início</Heading>
 			<Span py={4}>
-				{count && count.animals !== undefined ? (
+				{count ? (
 					<InfoCard
 						title={count.animals.toString() || "?"}
 						description="Animais registrados"
 					/>
 				) : null}
-				{count && count.batches !== undefined ? (
+				{count ? (
 					<InfoCard
 						title={count.batches.toString() || "?"}
 						description="Lotes registrados"
@@ -44,7 +44,7 @@ export default function TabOneScreen() {
 					href="/animals/add"
 					alt="alt"
 					iconSource={require("assets/images/AddAnimalIcon.png")}
-					title="Adicionar animal"
+					title="Registrar animal"
 				/>
 				<Card
 					href="/(tabs)/animals"
@@ -56,14 +56,14 @@ export default function TabOneScreen() {
 					href="/batches/add"
 					alt="alt"
 					iconSource={require("assets/images/AddBatchIcon.png")}
-					title="Adicionar lote"
+					title="Registrar lote"
 					color="blue"
 				/>
 				<Card
 					href="/(tabs)/batches"
 					alt="alt"
 					iconSource={require("assets/images/FenceIcon.png")}
-					title="Ver lotes"
+					title="Lotes"
 					color="blue"
 				/>
 			</Span>
