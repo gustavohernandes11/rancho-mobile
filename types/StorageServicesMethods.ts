@@ -33,4 +33,9 @@ export interface StorageServicesMethods {
 		animalIDsToMove: number | number[],
 		batchID: number | null
 	): Promise<boolean>;
+
+	compareBatchAnimalsWithSelectedAndUpdate(
+		animalIDsToCompare: number[],
+		batchID: number
+	): Promise<boolean>;
 }

@@ -106,6 +106,29 @@ export class StorageServices implements StorageServicesMethods {
 	): Promise<boolean> {
 		return this.DbRepository.setAnimalBatch(animalID, batchID);
 	}
+
+	async compareBatchAnimalsWithSelectedAndUpdate(
+		selectedIDs: number[],
+		batchID: number
+	): Promise<boolean> {
+		const batch = await this.DbRepository.getPopulatedBatch(batchID);
+		const animals = await this.DbRepository.listAnimals();
+
+		let operations = animals.map((animal) => {
+			const isSelected = selectedIDs.includes(animal.id);
+			const belongsToBatch = animal.batchID === batch.id;
+
+			if (belongsToBatch && !isSelected) {
+				return this.DbRepository.setAnimalBatch(animal.id, null);
+			} else if (!belongsToBatch && isSelected) {
+				return this.DbRepository.setAnimalBatch(animal.id, batch.id);
+			}
+		});
+
+		return Promise.all(operations)
+			.then(() => true)
+			.catch(() => false);
+	}
 }
 
 const sqliteRepository = new SqliteRepository();

@@ -34,26 +34,31 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		defaultValues,
 		initialValues
 	);
+
+	const onSucess = (message: string) => {
+		refreshAll();
+		formik.resetForm();
+		router.back();
+		showToast(message);
+	};
+	const handleError = (e: string) => Alert.alert("Erro!", e);
+
 	const onSubmit = (values: Animal) => {
 		initialValues.id
 			? Storage.updateAnimal(values)
-					.then(() => {
-						refreshAll();
-						formik.resetForm();
-						router.back();
-						showToast(
-							values.name + " foi atualizado(a) com sucesso."
-						);
-					})
-					.catch((error) => Alert.alert("Error", error))
+					.then(() =>
+						onSucess(
+							`${values.name} foi atualizado(a) com sucesso.`
+						)
+					)
+					.catch(handleError)
 			: Storage.insertAnimal(values)
-					.then(() => {
-						refreshAll();
-						formik.resetForm();
-						router.back();
-						showToast(values.name + " foi adicionado.");
-					})
-					.catch((error) => Alert.alert("Error", error));
+					.then(() =>
+						onSucess(
+							`${values.name} foi adicionado(a) com sucesso.`
+						)
+					)
+					.catch(handleError);
 	};
 
 	const formik = useFormik({

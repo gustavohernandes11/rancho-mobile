@@ -35,10 +35,6 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		validationSchema,
 	});
 
-	useAlertUnsavedChanges({
-		formik,
-	});
-
 	useEffect(() => {
 		if (initialValues.id) {
 			Storage.listAnimals({
@@ -48,6 +44,18 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 			});
 		}
 	}, [initialValues.id]);
+
+	const onSucess = (message: string) => {
+		refreshAll();
+		table.clearSelection();
+		formik.resetForm();
+		showToast(message);
+	};
+	const handleError = (e: string) => Alert.alert("Erro!", e);
+
+	useAlertUnsavedChanges({
+		formik,
+	});
 
 	const handleSubmit = (
 		values: AddBatch & UpdateBatch,
@@ -61,51 +69,19 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 							insertedID || null
 						)
 					)
-					.then(() => {
-						refreshAll();
-						table.clearSelection();
-						formik.resetForm();
-						showToast("Lote " + values.name + " foi adicionado.");
-					})
+					.then(() => onSucess(`Lote ${values.name} foi adicionado`))
 					.then(() => router.replace("/(tabs)/batches"))
-
-					.catch((error) => Alert.alert("Error", error))
+					.catch(handleError)
 			: Storage.updateBatch(values)
-					.then(async () => {
-						const batch = await Storage.getPopulatedBatch(
+					.then(() =>
+						Storage.compareBatchAnimalsWithSelectedAndUpdate(
+							table.selectedIDs,
 							values.id
-						);
-						let promises: Promise<boolean>[] = [];
-
-						animals.forEach(async (animal) => {
-							const isSelected = table.selectedIDs.includes(
-								animal.id
-							);
-							const isSameBatch = animal.batchID === batch.id;
-
-							if (isSameBatch && !isSelected) {
-								promises.push(
-									Storage.moveAnimalToBatch(animal.id, null)
-								);
-							} else if (!isSameBatch && isSelected) {
-								promises.push(
-									Storage.moveAnimalToBatch(
-										animal.id,
-										batch.id
-									)
-								);
-							}
-						});
-						return Promise.all(promises);
-					})
-					.then(() => {
-						refreshAll();
-						table.clearSelection();
-						formik.resetForm();
-						showToast("Lote " + values.name + " foi atualizado.");
-					})
+						)
+					)
+					.then(() => onSucess(`Lote ${values.name} foi atualizado`))
 					.then(() => router.back())
-					.catch((error) => Alert.alert("Error", error));
+					.catch(handleError);
 	};
 
 	return (
