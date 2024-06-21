@@ -23,7 +23,7 @@ export default function TabLayout() {
 					/>
 				),
 				tabBarActiveTintColor: Colors.white,
-				tabBarInactiveTintColor: Colors.gray,
+				tabBarInactiveTintColor: Colors.surface,
 				headerTintColor: Colors.white,
 				tabBarStyle: {
 					overflow: "hidden",
@@ -31,12 +31,16 @@ export default function TabLayout() {
 					height: 60,
 				},
 				tabBarItemStyle: { paddingVertical: 8, gap: 8 },
-
 				headerStyle: {
 					backgroundColor: Colors.green,
 				},
 				headerTitleStyle: {
 					fontWeight: "bold",
+					fontFamily: Fonts.primaryFamily,
+				},
+				tabBarLabelStyle: {
+					fontSize: 12,
+					color: Colors.white,
 					fontFamily: Fonts.primaryFamily,
 				},
 				tabBarActiveBackgroundColor: Colors.darkGreen,

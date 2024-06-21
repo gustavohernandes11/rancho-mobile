@@ -35,12 +35,10 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	useClearSelectionOnHardwareBack({ controller });
 
 	const handleCheck = (id: number) => {
-		controller.toggleCheckID(id);
-	};
-
-	const handleLongPress = (id: number) => {
 		if (!controller.isSelectionMode) {
 			controller.setIsSelectionMode(true);
+			controller.toggleCheckID(id);
+		} else {
 			controller.toggleCheckID(id);
 		}
 	};
@@ -62,24 +60,10 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 		<Row
 			isChecked={controller.selectedIDs.includes(item.id)}
 			onCheck={() => handleCheck(item.id)}
-			onLongPress={() => handleLongPress(item.id)}
-			showCheckbox={
-				onlySelectionMode || (controller.isSelectionMode ?? false)
-			}
 			animal={item}
 		/>
 	);
 
-	const renderHeader = useCallback(
-		() => (
-			<Header
-				leaveSpaceAtRight={
-					onlySelectionMode || !!controller.isSelectionMode
-				}
-			/>
-		),
-		[]
-	);
 	const renderEmptyList = useCallback(
 		() => (
 			<Span justify="center">
@@ -91,7 +75,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 
 	return (
 		<>
-			{controller.isSelectionMode && (
+			{controller.isSelectionMode && !onlySelectionMode && (
 				<Span>
 					<SelectionBanner
 						showActions={true}
@@ -122,7 +106,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 					]}
 					renderItem={renderItem}
 					estimatedItemSize={50}
-					ListHeaderComponent={renderHeader}
+					ListHeaderComponent={Header}
 					ListEmptyComponent={renderEmptyList}
 					testID="animal-table"
 				/>

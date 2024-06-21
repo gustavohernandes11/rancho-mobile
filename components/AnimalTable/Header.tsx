@@ -4,11 +4,7 @@ import { StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
 import { sharedStyles } from "styles/shared";
 
-interface HeaderProps {
-	leaveSpaceAtRight: boolean;
-}
-
-export const Header = ({ leaveSpaceAtRight }: HeaderProps) => {
+export const Header = () => {
 	return (
 		<DataTable>
 			<DataTable.Header style={styles.tableHeader}>
@@ -30,14 +26,12 @@ export const Header = ({ leaveSpaceAtRight }: HeaderProps) => {
 				>
 					Idade
 				</DataTable.Title>
-				{leaveSpaceAtRight && (
-					<DataTable.Title
-						style={{ flex: 1 }}
-						textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
-					>
-						{" "}
-					</DataTable.Title>
-				)}
+				<DataTable.Title
+					style={{ flex: 1, justifyContent: "center" }}
+					textStyle={[{ flexShrink: 1 }, sharedStyles.text]}
+				>
+					{"✓"}
+				</DataTable.Title>
 			</DataTable.Header>
 		</DataTable>
 	);

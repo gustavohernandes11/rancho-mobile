@@ -10,15 +10,12 @@ import { Cell } from "./Cell";
 
 interface RowProps {
 	animal: Animal;
-	showCheckbox: boolean;
 	onCheck: () => void;
-	onLongPress: () => void;
 	isChecked: boolean;
 }
 
 const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 	return (
-		prevProps.showCheckbox === nextProps.showCheckbox &&
 		prevProps.isChecked === nextProps.isChecked &&
 		prevProps.animal.name === nextProps.animal.name &&
 		prevProps.animal?.birthdate === nextProps.animal?.birthdate &&
@@ -27,7 +24,7 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 };
 
 export const Row: React.FC<RowProps> = memo(
-	({ animal, showCheckbox, isChecked = false, onCheck, onLongPress }) => {
+	({ animal, isChecked = false, onCheck }) => {
 		const { batches } = useGlobalState();
 		const batch = batches.find((batch) => batch.id === animal.batchID);
 
@@ -40,10 +37,7 @@ export const Row: React.FC<RowProps> = memo(
 				key={animal.id}
 				asChild
 			>
-				<TouchableRipple
-					style={isChecked ? styles.checked : null}
-					onLongPress={onLongPress}
-				>
+				<TouchableRipple style={isChecked ? styles.checked : null}>
 					<DataTable.Row style={styles.row}>
 						<Cell flex={4}>
 							{getGenderIcon(animal.gender)}
@@ -56,15 +50,14 @@ export const Row: React.FC<RowProps> = memo(
 							{animal.birthdate &&
 								getFormattedAge(animal.birthdate)}
 						</Cell>
-						{showCheckbox && (
-							<Cell flex={1}>
-								<Checkbox
-									color={Colors.green}
-									status={isChecked ? "checked" : "unchecked"}
-									onPress={onCheck}
-								/>
-							</Cell>
-						)}
+						<Cell flex={1}>
+							<Checkbox
+								color={Colors.green}
+								uncheckedColor={Colors.gray}
+								status={isChecked ? "checked" : "unchecked"}
+								onPress={onCheck}
+							/>
+						</Cell>
 					</DataTable.Row>
 				</TouchableRipple>
 			</Link>
@@ -75,7 +68,7 @@ export const Row: React.FC<RowProps> = memo(
 
 const styles = StyleSheet.create({
 	checked: {
-		backgroundColor: Colors.gray,
+		backgroundColor: Colors.surface,
 	},
 	row: {
 		borderBottomWidth: 1,
