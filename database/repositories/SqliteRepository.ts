@@ -232,13 +232,13 @@ export class SqliteRepository implements StorageRepository {
 
 		const params: (string | number)[] = [];
 
-		if (queryOptions.batchID !== undefined) {
+		if (queryOptions.batchID) {
 			query += ` WHERE batchID = ?`;
 			params.push(queryOptions.batchID);
 		}
 
-		if (queryOptions.searchText !== undefined) {
-			query += queryOptions.batchID !== undefined ? ` AND` : ` WHERE`;
+		if (queryOptions.searchText) {
+			query += queryOptions.batchID ? ` AND` : ` WHERE`;
 			query += ` (name LIKE '%' || ? || '%' OR code LIKE '%' || ? || '%' OR observation LIKE '%' || ? || '%')`;
 			params.push(
 				queryOptions.searchText,

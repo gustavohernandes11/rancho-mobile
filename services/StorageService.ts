@@ -11,7 +11,7 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
-import { StorageServicesMethods } from "types/StorageServices";
+import { StorageServicesMethods } from "types/StorageServicesMethods";
 import { SqliteRepository } from "../database/repositories/SqliteRepository";
 
 export class StorageServices implements StorageServicesMethods {
