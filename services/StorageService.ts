@@ -69,7 +69,9 @@ export class StorageServices implements StorageServicesMethods {
 	}
 
 	async deleteAnimal(animalID: number | number[]): Promise<boolean> {
-		return this.DbRepository.deleteAnimal(animalID);
+		return this.DbRepository.nullifyParentalIds(animalID).then(() =>
+			this.DbRepository.deleteAnimal(animalID)
+		);
 	}
 
 	async deleteBatch(batchID: number): Promise<boolean> {
@@ -91,7 +93,7 @@ export class StorageServices implements StorageServicesMethods {
 			batchID,
 		});
 		const operations = animalsToDelete.map((animal) =>
-			this.DbRepository.deleteAnimal(animal.id)
+			this.deleteAnimal(animal.id)
 		);
 		operations.push(this.DbRepository.deleteBatch(batchID));
 

@@ -369,24 +369,8 @@ export class SqliteRepository implements StorageRepository {
 		DELETE FROM Animals 
 		WHERE id = ?
 		`;
-		const unlinkPaternityQuery = `
-		UPDATE Animals
-		SET paternityID = NULL
-		WHERE paternityID = ?
-		`;
-		const unlinkMaternityQuery = `
-		UPDATE Animals
-		SET maternityID = NULL
-		WHERE maternityID = ?
-		`;
 
-		const operations = [
-			this.execute(deleteQuery, [animalID]),
-			this.execute(unlinkPaternityQuery, [animalID]),
-			this.execute(unlinkMaternityQuery, [animalID]),
-		];
-
-		return Promise.all(operations)
+		return this.execute(deleteQuery, [animalID])
 			.then(() => true)
 			.catch(() => false);
 	}
@@ -433,6 +417,37 @@ export class SqliteRepository implements StorageRepository {
 		`;
 
 		return this.execute(query, [batchID, animalID])
+			.then(() => true)
+			.catch(() => false);
+	}
+
+	async nullifyParentalIds(parentID: number | number[]): Promise<boolean> {
+		if (Array.isArray(parentID)) {
+			const operations = parentID.map((id) =>
+				this.nullifyParentalIds(id)
+			);
+			return Promise.all(operations)
+				.then(() => true)
+				.catch(() => false);
+		}
+
+		const nullifyPaternityQuery = `
+		UPDATE Animals
+		SET paternityID = NULL
+		WHERE paternityID = ?
+		`;
+		const nullifyMaternityQuery = `
+		UPDATE Animals
+		SET maternityID = NULL
+		WHERE maternityID = ?
+		`;
+
+		const operations = [
+			this.execute(nullifyPaternityQuery, [parentID]),
+			this.execute(nullifyMaternityQuery, [parentID]),
+		];
+
+		return Promise.all(operations)
 			.then(() => true)
 			.catch(() => false);
 	}
