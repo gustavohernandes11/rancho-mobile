@@ -86,6 +86,19 @@ export default function TabLayout() {
 					),
 				}}
 			/>
+			<Tabs.Screen
+				name="production"
+				options={{
+					tabBarLabel: "Produção",
+					tabBarIcon: () => (
+						<Image
+							style={{ height: 24, width: 16 }}
+							source={require("../../assets/images/GallonIcon.png")}
+							alt={"production page"}
+						/>
+					),
+				}}
+			/>
 		</Tabs>
 	);
 }

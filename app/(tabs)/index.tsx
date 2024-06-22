@@ -42,29 +42,36 @@ export default function TabOneScreen() {
 			<Span flexWrap="wrap" py={4}>
 				<Card
 					href="/animals/add"
-					alt="alt"
+					alt="Registrar animal"
 					iconSource={require("assets/images/AddAnimalIcon.png")}
 					title="Registrar animal"
 				/>
 				<Card
 					href="/(tabs)/animals"
-					alt="alt"
+					alt="Rebanho"
 					iconSource={require("assets/images/CowIcon.png")}
 					title="Rebanho"
 				/>
 				<Card
 					href="/batches/add"
-					alt="alt"
+					alt="Registrar lote"
 					iconSource={require("assets/images/AddBatchIcon.png")}
 					title="Registrar lote"
 					color="blue"
 				/>
 				<Card
 					href="/(tabs)/batches"
-					alt="alt"
+					alt="Lotes"
 					iconSource={require("assets/images/FenceIcon.png")}
 					title="Lotes"
 					color="blue"
+				/>
+				<Card
+					href="/(tabs)/production"
+					alt="Production"
+					iconSource={require("assets/images/FenceIcon.png")}
+					title="Produção do mês"
+					color="purple"
 				/>
 			</Span>
 		</ContainerView>
