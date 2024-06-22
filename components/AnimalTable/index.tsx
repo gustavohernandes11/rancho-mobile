@@ -35,9 +35,9 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	useClearSelectionOnHardwareBack({ controller });
 
 	const handleCheck = (id: number) => {
-		if (!controller.isSelectionMode) {
-			controller.setIsSelectionMode(true);
+		if (controller.isSelectionMode === false) {
 			controller.toggleCheckID(id);
+			controller.setIsSelectionMode(() => true);
 		} else {
 			controller.toggleCheckID(id);
 		}

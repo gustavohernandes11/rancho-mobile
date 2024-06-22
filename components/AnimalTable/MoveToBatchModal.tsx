@@ -117,6 +117,7 @@ export const MoveToBatchModal: React.FC<
 									<Span direction="column">
 										{batches?.map((batch) => (
 											<BannerRadio
+												key={batch.id}
 												title={batch.name}
 												description={batch.description}
 												iconAlt="batch icon"
@@ -131,6 +132,7 @@ export const MoveToBatchModal: React.FC<
 									</Span>
 
 									<EmptyBatchOption
+										key={0}
 										checked={selectedBatch?.id === null}
 									/>
 								</ScrollView>
