@@ -1,5 +1,3 @@
-import Colors from "constants/Colors";
-import Fonts from "constants/Fonts";
 import { Link } from "expo-router";
 import React from "react";
 import {
@@ -11,7 +9,9 @@ import {
 	View,
 	ViewProps,
 } from "react-native";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
+import Fonts from "styles/Fonts";
 
 interface BannerProps {
 	iconSource: ImageSourcePropType;

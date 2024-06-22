@@ -4,7 +4,7 @@ import {
 	Button as PaperButton,
 	ButtonProps as PaperButtonProps,
 } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import { sharedStyles } from "styles/Common";
 import { ButtonTypes } from "types/ButtonTypes";
 import {
 	getButtonBackgroundColor,

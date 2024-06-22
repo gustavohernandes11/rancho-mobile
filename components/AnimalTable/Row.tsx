@@ -1,9 +1,9 @@
-import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
+import Colors from "styles/Colors";
 import { Animal } from "types/Animal";
 import { getFormattedAge, getGenderIcon } from "utils/formatters";
 import { Cell } from "./Cell";

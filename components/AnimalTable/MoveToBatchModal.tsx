@@ -2,7 +2,6 @@ import { BannerRadio } from "components/BannerRadio";
 import { Button } from "components/Button";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
-import Colors from "constants/Colors";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useState } from "react";
 import {
@@ -16,6 +15,7 @@ import {
 } from "react-native";
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
+import Colors from "styles/Colors";
 import { Batch } from "types/Batch";
 import { showToast } from "utils/displayToast";
 

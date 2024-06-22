@@ -12,7 +12,7 @@ import React, { useEffect } from "react";
 import { Alert, Text, View } from "react-native";
 import { List } from "react-native-paper";
 import { Storage } from "services/StorageService";
-import { sharedStyles } from "styles/shared";
+import { sharedStyles } from "styles/Common";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { showToast } from "utils/displayToast";
 import { getFieldError } from "utils/forms";

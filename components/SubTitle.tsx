@@ -1,7 +1,7 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { TextProps } from "react-native-paper";
+import Colors from "styles/Colors";
 
 export const SubTitle: React.FC<TextProps<any>> = ({ children, ...props }) => {
 	return (

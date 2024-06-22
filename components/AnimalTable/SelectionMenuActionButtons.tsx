@@ -1,7 +1,7 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { IconButton, Tooltip } from "react-native-paper";
+import Colors from "styles/Colors";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
 type SelectionMenuActionButtonsProps = {

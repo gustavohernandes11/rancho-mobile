@@ -1,8 +1,8 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HelperText, TextInput, TextInputProps } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
 import { getInputBorderColor } from "utils/conditionalStyles";
 
 interface InputProps {

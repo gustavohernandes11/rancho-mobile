@@ -1,6 +1,6 @@
-import Colors from "constants/Colors";
-import Fonts from "constants/Fonts";
 import { StyleSheet } from "react-native";
+import Colors from "styles/Colors";
+import Fonts from "styles/Fonts";
 
 export const sharedStyles = StyleSheet.create({
 	text: {

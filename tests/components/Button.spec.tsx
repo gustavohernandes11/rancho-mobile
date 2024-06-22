@@ -1,5 +1,5 @@
 import { Button } from "components/Button";
-import Colors from "constants/Colors";
+import Colors from "styles/Colors";
 import { render, screen } from "tests/setupTests";
 
 describe("Button", () => {

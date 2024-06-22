@@ -1,8 +1,8 @@
 import { Tabs } from "expo-router";
 
-import Colors from "constants/Colors";
-import Fonts from "constants/Fonts";
 import { Image } from "react-native";
+import Colors from "styles/Colors";
+import Fonts from "styles/Fonts";
 
 const tabIconSize = {
 	height: 24,

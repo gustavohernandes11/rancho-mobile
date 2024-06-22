@@ -1,12 +1,12 @@
 import { FontAwesome } from "@expo/vector-icons";
-import Colors from "constants/Colors";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HelperText } from "react-native-paper";
 import SelectDropdown, {
 	SelectDropdownProps,
 } from "react-native-select-dropdown";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
 import { Item } from "types/Item";
 import { getInputBorderColor } from "utils/conditionalStyles";
 

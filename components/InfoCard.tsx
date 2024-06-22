@@ -1,4 +1,3 @@
-import Colors from "constants/Colors";
 import React from "react";
 import {
 	Image,
@@ -7,7 +6,8 @@ import {
 	View,
 	ViewProps,
 } from "react-native";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
 import { Heading } from "./Heading";
 import { SubTitle } from "./SubTitle";
 

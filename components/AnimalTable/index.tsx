@@ -9,7 +9,7 @@ import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
 import { Dimensions, Text, View } from "react-native";
 import { Storage } from "services/StorageService";
-import { sharedStyles } from "styles/shared";
+import { sharedStyles } from "styles/Common";
 import { Animal } from "types";
 import { showToast } from "utils/displayToast";
 import { Header } from "./Header";

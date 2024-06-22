@@ -1,4 +1,3 @@
-import Colors from "constants/Colors";
 import React from "react";
 import {
 	ActivityIndicator,
@@ -6,6 +5,7 @@ import {
 	StyleSheet,
 	View,
 } from "react-native";
+import Colors from "styles/Colors";
 
 type CustomLoadingProps = {
 	height?: number;

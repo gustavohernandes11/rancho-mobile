@@ -1,11 +1,11 @@
-import Colors from "constants/Colors";
-import Fonts from "constants/Fonts";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HelperText } from "react-native-paper";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
+import Fonts from "styles/Fonts";
 import { getInputBorderColor } from "utils/conditionalStyles";
 
 interface DatePickerProps {

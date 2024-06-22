@@ -1,8 +1,8 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
 
 export const Header = () => {
 	return (

@@ -1,6 +1,6 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { View } from "react-native";
+import Colors from "styles/Colors";
 
 type SkeletonProps = {
 	width?: number;

@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TextProps } from "react-native";
-import { sharedStyles } from "styles/shared";
+import { sharedStyles } from "styles/Common";
 
 type HeadingSizes = "big" | "medium" | "small";
 interface HeadingProps {

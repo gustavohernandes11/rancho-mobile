@@ -1,10 +1,10 @@
-import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { LinkProps } from "expo-router/build/link/Link";
 import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import { TouchableRipple } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
 import { Span } from "./Span";
 
 type ColorOptions = "green" | "blue" | "purple";

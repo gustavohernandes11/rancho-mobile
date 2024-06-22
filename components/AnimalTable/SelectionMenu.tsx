@@ -1,8 +1,8 @@
 import { Span } from "components/Span";
-import Colors from "constants/Colors";
 import React, { useState } from "react";
 import { Text, View, ViewProps } from "react-native";
 import { IconButton } from "react-native-paper";
+import Colors from "styles/Colors";
 import { MoveToBatchModal } from "./MoveToBatchModal";
 import {
 	SelectionMenuActionButtons,

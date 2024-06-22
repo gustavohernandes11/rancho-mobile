@@ -1,5 +1,3 @@
-import Colors from "constants/Colors";
-import Fonts from "constants/Fonts";
 import React from "react";
 import {
 	Image,
@@ -11,7 +9,9 @@ import {
 	ViewProps,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
+import Fonts from "styles/Fonts";
 
 interface BannerRadioProps {
 	iconSource: ImageSourcePropType;

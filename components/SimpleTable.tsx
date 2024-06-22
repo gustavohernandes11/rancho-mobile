@@ -1,7 +1,7 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { sharedStyles } from "styles/Common";
 import { Item } from "types";
 
 interface SimpleTableProps {

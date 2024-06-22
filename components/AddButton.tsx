@@ -1,6 +1,6 @@
-import Colors from "constants/Colors";
 import { Link } from "expo-router";
 import { IconButton, IconButtonProps } from "react-native-paper";
+import Colors from "styles/Colors";
 
 type AddButtonProps = {
 	href: any;

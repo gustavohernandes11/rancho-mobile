@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
-import Colors from "constants/Colors";
 import moment from "moment";
+import Colors from "styles/Colors";
 
 export const getFormattedAge = (input: string): string => {
 	const duration = moment.duration(moment().diff(moment(input)));

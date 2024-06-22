@@ -1,4 +1,4 @@
-import Colors from "constants/Colors";
+import Colors from "styles/Colors";
 import { ButtonTypes } from "types";
 
 export const getButtonBackgroundColor = (type: ButtonTypes) =>
