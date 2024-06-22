@@ -22,9 +22,13 @@ export default function TabLayout() {
 						alt={"Logo"}
 					/>
 				),
+				headerTintColor: Colors.white,
+				headerTitleStyle: {
+					fontWeight: "bold",
+					fontFamily: Fonts.primaryFamily,
+				},
 				tabBarActiveTintColor: Colors.white,
 				tabBarInactiveTintColor: Colors.surface,
-				headerTintColor: Colors.white,
 				tabBarStyle: {
 					overflow: "hidden",
 					backgroundColor: Colors.green,
@@ -33,10 +37,6 @@ export default function TabLayout() {
 				tabBarItemStyle: { paddingVertical: 8, gap: 8 },
 				headerStyle: {
 					backgroundColor: Colors.green,
-				},
-				headerTitleStyle: {
-					fontWeight: "bold",
-					fontFamily: Fonts.primaryFamily,
 				},
 				tabBarLabelStyle: {
 					fontSize: 12,
