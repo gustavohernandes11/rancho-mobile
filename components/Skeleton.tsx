@@ -26,6 +26,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
 				width,
 				marginVertical: my,
 				marginHorizontal: mx,
+				borderRadius: 8,
 			}}
 			{...props}
 		/>

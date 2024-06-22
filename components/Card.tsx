@@ -48,8 +48,9 @@ export const Card: React.FC<LinkProps & CardProps> = ({
 const styles = StyleSheet.create({
 	title: {
 		...sharedStyles.text,
+		fontSize: 16,
 		flexShrink: 1,
 		color: Colors.white,
-		marginTop: 8,
+		marginTop: 4,
 	},
 });
