@@ -1,22 +1,19 @@
+import { BannerRadio } from "components/BannerRadio";
 import { Button } from "components/Button";
-import { CustomDivider } from "components/CustomDivider";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import Colors from "constants/Colors";
 import { useGlobalState } from "hooks/useGlobalState";
-import React, { Fragment, useState } from "react";
+import React, { useState } from "react";
 import {
 	Alert,
+	AlertButton,
 	Modal,
+	ScrollView,
 	StyleSheet,
-	Text,
 	TouchableOpacity,
 	View,
 } from "react-native";
-import {
-	ScrollView,
-	TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import { Batch } from "types/Batch";
@@ -31,26 +28,14 @@ interface MoveToBatchModalProps {
 }
 
 const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
-	<Fragment>
-		<Span
-			onStartShouldSetResponder={() => true}
-			justify="space-between"
-			align="center"
-		>
-			<View onStartShouldSetResponder={() => true}>
-				<Text>Nenhum lote</Text>
-				<Text style={styles.description}>
-					Desvincular animal de qualquer lote
-				</Text>
-			</View>
-			<RadioButton
-				color={Colors.green}
-				value={null as any}
-				status={checked ? "checked" : "unchecked"}
-			/>
-		</Span>
-		<CustomDivider />
-	</Fragment>
+	<BannerRadio
+		iconSource={0}
+		iconAlt={"null batch"}
+		title={"Nenhum"}
+		description="Desvincular de qualquer lote"
+		value={null as any}
+		isChecked={checked}
+	/>
 );
 
 export const MoveToBatchModal: React.FC<
@@ -64,31 +49,48 @@ export const MoveToBatchModal: React.FC<
 	...props
 }) => {
 	const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
-	const { refreshAnimals, batches, refreshBatches } = useGlobalState();
+	const { batches, refreshAll } = useGlobalState();
 
-	const handleMoveSelected = () => {
+	const handleMoveAnimals = () => {
+		const isDestinationNull = selectedBatch?.id === null;
 		Storage.moveAnimalToBatch(selectedIDs, selectedBatch?.id || null)
-			.then(() => {
-				setIsBatchModalVisible(() => false);
-				selectedBatch?.id === null
-					? showToast("Animais desvinculados de qualquer lote.")
-					: showToast(
-							"Animais movidos para o lote " +
-								selectedBatch!.name +
-								"."
-					  );
-				onClearSelection();
-				refreshAnimals();
-				refreshBatches();
-			})
-			.catch((error) => {
-				Alert.alert(
-					"Oops!",
-					"Houve um erro ao mover os animais.",
-					error
-				);
-			});
+			.then(() =>
+				onSuccess(
+					isDestinationNull
+						? `Animais desvinculados de qualquer lote.`
+						: `Animais movidos para o lote ${selectedBatch!.name}.`
+				)
+			)
+			.catch(onFail);
 	};
+
+	const onSuccess = (message: string) => {
+		setIsBatchModalVisible(false);
+		showToast(message);
+		onClearSelection();
+		refreshAll();
+	};
+
+	const onFail = (error: AlertButton[]) => {
+		Alert.alert("Oops!", "Houve um erro ao mover os animais.", error);
+	};
+
+	const onValueChange = (id: string) => {
+		if (id === null) {
+			setSelectedBatch({
+				id: null as unknown as number,
+				name: "None",
+				count: 0,
+			});
+		} else {
+			setSelectedBatch(batches?.find((b) => b.id === Number(id)));
+		}
+	};
+
+	const getValue =
+		selectedBatch?.id === null
+			? (null as any)
+			: selectedBatch?.id.toString();
 
 	return (
 		<Portal>
@@ -97,75 +99,37 @@ export const MoveToBatchModal: React.FC<
 				onRequestClose={onDismiss}
 				dismissable={true}
 				transparent={true}
+				onDismiss={onDismiss}
+				style={styles.blur}
 				{...props}
 			>
 				<TouchableOpacity style={styles.blur} onPress={onDismiss}>
-					<View onStartShouldSetResponder={() => true}>
-						<TouchableWithoutFeedback style={styles.modal}>
+					<View style={styles.modal}>
+						<>
 							<Span>
 								<Heading>Selecione um lote de destino</Heading>
 							</Span>
 							<RadioButton.Group
-								onValueChange={(id) => {
-									if (id == null) {
-										setSelectedBatch({
-											id: null as unknown as number,
-											name: "Null dummy batch",
-											count: 0,
-										});
-									} else {
-										setSelectedBatch(
-											batches?.find(
-												(b) => b.id === Number(id)
-											)
-										);
-									}
-								}}
-								value={
-									selectedBatch?.id === null
-										? (null as any)
-										: selectedBatch?.id.toString() || ""
-								}
+								onValueChange={onValueChange}
+								value={getValue}
 							>
-								<CustomDivider />
 								<ScrollView style={{ height: "75%" }}>
-									{batches?.map((batch) => (
-										<Fragment key={batch.id}>
-											<Span
-												onStartShouldSetResponder={() =>
-													true
+									<Span direction="column">
+										{batches?.map((batch) => (
+											<BannerRadio
+												title={batch.name}
+												description={batch.description}
+												iconAlt="batch icon"
+												iconSource={require("../../assets/images/RoundedBatchIcon.png")}
+												value={batch.id.toString()}
+												isChecked={
+													selectedBatch?.id ===
+													batch.id
 												}
-												justify="space-between"
-												align="center"
-											>
-												<View
-													onStartShouldSetResponder={() =>
-														true
-													}
-												>
-													<Text>{batch.name}</Text>
-													<Text
-														style={
-															styles.description
-														}
-													>
-														{batch.description}
-													</Text>
-												</View>
-												<RadioButton
-													color={Colors.green}
-													value={batch.id.toString()}
-													status={
-														selectedBatch?.id ===
-														batch.id
-															? "checked"
-															: "unchecked"
-													}
-												/>
-											</Span>
-											<CustomDivider />
-										</Fragment>
-									))}
+											/>
+										))}
+									</Span>
+
 									<EmptyBatchOption
 										checked={selectedBatch?.id === null}
 									/>
@@ -183,10 +147,10 @@ export const MoveToBatchModal: React.FC<
 								<Button
 									title="Mover"
 									disabled={!selectedBatch}
-									onPress={handleMoveSelected}
+									onPress={handleMoveAnimals}
 								/>
 							</Span>
-						</TouchableWithoutFeedback>
+						</>
 					</View>
 				</TouchableOpacity>
 			</Modal>
@@ -197,7 +161,7 @@ export const MoveToBatchModal: React.FC<
 const styles = StyleSheet.create({
 	modal: {
 		marginHorizontal: 16,
-		marginVertical: "20%",
+		marginVertical: "10%",
 		backgroundColor: Colors.white,
 		paddingHorizontal: 16,
 		paddingTop: 16,
