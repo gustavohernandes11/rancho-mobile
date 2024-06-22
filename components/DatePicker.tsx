@@ -39,6 +39,7 @@ export const DatePicker: React.FC<
 				locale="pt"
 				placeholderTextColor={Colors.darkGray}
 				style={styles.input}
+				withModal={false}
 				{...props}
 			/>
 			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
