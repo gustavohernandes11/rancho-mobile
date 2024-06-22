@@ -4,18 +4,18 @@ import { StyleSheet, View } from "react-native";
 import { IconButton, Tooltip } from "react-native-paper";
 import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
 
-type SelectionActionButtonsProps = {
+type SelectionMenuActionButtonsProps = {
 	selectedIDs: number[];
 	onSelectAll: () => void;
 	onDeleteMany: () => void;
 	onMove: () => void;
 };
-export const SelectionActionButtons = ({
+export const SelectionMenuActionButtons = ({
 	onDeleteMany,
 	onSelectAll,
 	selectedIDs,
 	onMove,
-}: SelectionActionButtonsProps) => (
+}: SelectionMenuActionButtonsProps) => (
 	<View style={{ flexDirection: "row", gap: 4 }}>
 		<Tooltip title="Deletar">
 			<IconButton

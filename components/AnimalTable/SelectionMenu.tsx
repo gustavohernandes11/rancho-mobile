@@ -4,9 +4,12 @@ import React, { useState } from "react";
 import { Text, View, ViewProps } from "react-native";
 import { IconButton } from "react-native-paper";
 import { MoveToBatchModal } from "./MoveToBatchModal";
-import { SelectionActionButtons, styles } from "./SelectionActionButtons";
+import {
+	SelectionMenuActionButtons,
+	styles,
+} from "./SelectionMenuActionButtons";
 
-interface SelectionBannerProps {
+interface SelectionMenuProps {
 	showActions?: boolean;
 	showCloseButton?: boolean;
 	onClearSelection: () => void;
@@ -15,7 +18,7 @@ interface SelectionBannerProps {
 	onDeleteMany: () => void;
 }
 
-export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
+export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
 	showActions = true,
 	showCloseButton = true,
 	onClearSelection,
@@ -55,7 +58,7 @@ export const SelectionBanner: React.FC<SelectionBannerProps & ViewProps> = ({
 						{selectedIDs.length} selecionado(s).
 					</Text>
 					{showActions && (
-						<SelectionActionButtons
+						<SelectionMenuActionButtons
 							onDeleteMany={onDeleteMany}
 							onSelectAll={onSelectAll}
 							selectedIDs={selectedIDs}

@@ -14,7 +14,7 @@ import { Animal } from "types";
 import { showToast } from "utils/displayToast";
 import { Header } from "./Header";
 import { Row } from "./Row";
-import { SelectionBanner } from "./SelectionBanner";
+import { SelectionMenu } from "./SelectionMenu";
 
 type AnimalTableProps = {
 	animals: Animal[];
@@ -35,7 +35,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 	useClearSelectionOnHardwareBack({ controller });
 
 	const handleCheck = (id: number) => {
-		if (controller.isSelectionMode === false) {
+		if (!controller.isSelectionMode || !!controller.selectedIDs) {
 			controller.toggleCheckID(id);
 			controller.setIsSelectionMode(() => true);
 		} else {
@@ -77,7 +77,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 		<>
 			{controller.isSelectionMode && !onlySelectionMode && (
 				<Span>
-					<SelectionBanner
+					<SelectionMenu
 						showActions={true}
 						showCloseButton={true}
 						onClearSelection={controller.clearSelection}
