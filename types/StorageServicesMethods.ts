@@ -1,6 +1,7 @@
 import { AddAnimal, Animal, PopulatedAnimal, UpdateAnimal } from "./Animal";
 import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
+import { DayProduction } from "./Production";
 
 export type OrderByOptions = "alfabetic" | "age";
 export type QueryOptions = {
@@ -18,12 +19,15 @@ export interface StorageServicesMethods {
 	getAnimal(animalID: number): Promise<Animal>;
 	getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal>;
 	getPopulatedBatch(batchID: number): Promise<PopulatedBatch>;
+	getDayProduction(date: Date): Promise<DayProduction | null>;
 
 	listAnimals(query?: QueryOptions): Promise<Animal[]>;
 	listBatches(): Promise<Batch[]>;
+	listProductionAroundMonth(month: Date): Promise<DayProduction[]>;
 
 	updateAnimal(updateData: UpdateAnimal | UpdateAnimal[]): Promise<boolean>;
 	updateBatch(updateData: UpdateBatch): Promise<boolean>;
+	upsertDayProduction(production: DayProduction): Promise<boolean>;
 
 	deleteAnimal(animalID: number | number[]): Promise<boolean>;
 	deleteBatch(batchID: number): Promise<boolean>;

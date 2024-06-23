@@ -11,11 +11,14 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
+import { DayProduction } from "types/Production";
 import { StorageServicesMethods } from "types/StorageServicesMethods";
 import { SqliteRepository } from "../database/repositories/SqliteRepository";
 
 export class StorageServices implements StorageServicesMethods {
-	constructor(private readonly DbRepository: StorageRepository) {}
+	constructor(private readonly DbRepository: StorageRepository) {
+		this.DbRepository.initDatabase();
+	}
 
 	async count(): Promise<Count> {
 		return this.DbRepository.count();
@@ -130,6 +133,27 @@ export class StorageServices implements StorageServicesMethods {
 		return Promise.all(operations)
 			.then(() => true)
 			.catch(() => false);
+	}
+
+	async upsertDayProduction(production: DayProduction): Promise<boolean> {
+		return this.DbRepository.upsertDayProduction(production);
+	}
+
+	async listProductionAroundMonth(month: Date): Promise<DayProduction[]> {
+		const oneWeekBefore = new Date(month);
+		oneWeekBefore.setDate(oneWeekBefore.getDate() - 7);
+
+		const oneWeekAfter = new Date(month);
+		oneWeekAfter.setDate(oneWeekAfter.getDate() + 7);
+
+		return this.DbRepository.listTimespanProduction(
+			oneWeekBefore,
+			oneWeekAfter
+		);
+	}
+
+	async getDayProduction(date: Date): Promise<DayProduction | null> {
+		return this.DbRepository.getDayProduction(date);
 	}
 }
 
