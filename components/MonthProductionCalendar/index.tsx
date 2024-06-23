@@ -1,11 +1,15 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+import { Item } from "types/Item";
 import { Cell } from "./Cell";
+import { MonthAndYearSelect } from "./MonthAndYearSelect";
 import { WeekDayHeader } from "./WeekDayHeader";
 
 interface MonthProductionCalendarProps {
 	onSelectDate: (date: string) => void;
+	onSelectMonth: (item: Item) => void;
+	onSelectYear: (item: Item) => void;
 	selectedDate: Date | null;
 	month: number;
 	year: number;
@@ -20,7 +24,14 @@ export type DayItem = {
 
 export const MonthProductionCalendar: React.FC<
 	MonthProductionCalendarProps
-> = ({ onSelectDate, selectedDate, month, year }) => {
+> = ({
+	onSelectDate,
+	selectedDate,
+	onSelectMonth,
+	onSelectYear,
+	month,
+	year,
+}) => {
 	const [days, setDays] = useState<DayItem[]>([]);
 
 	useEffect(() => {
@@ -66,6 +77,12 @@ export const MonthProductionCalendar: React.FC<
 
 	return (
 		<View>
+			<MonthAndYearSelect
+				month={month}
+				year={year}
+				onSelectMonth={onSelectMonth}
+				onSelectYear={onSelectYear}
+			/>
 			<WeekDayHeader />
 			<FlatList
 				data={days}
