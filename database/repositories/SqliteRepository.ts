@@ -12,6 +12,7 @@ import {
 	UpdateBatch,
 } from "types";
 import { Count } from "types/Count";
+import { DayProduction } from "types/Production";
 import { nullifyFalsyFields } from "utils/serializers";
 
 export class SqliteRepository implements StorageRepository {
@@ -54,6 +55,7 @@ export class SqliteRepository implements StorageRepository {
 	async initDatabase() {
 		await this.ensureAnimalTableExists();
 		await this.ensureBatchTableExists();
+		await this.ensureProductionTableExists(); // Ensure production table exists on initialization
 	}
 
 	private ensureAnimalTableExists = async () => {
@@ -84,6 +86,19 @@ export class SqliteRepository implements StorageRepository {
 
 		await this.execute(query, []);
 	};
+
+	private ensureProductionTableExists = async () => {
+		const query = `
+		  CREATE TABLE IF NOT EXISTS DayProduction (
+			day TEXT PRIMARY KEY,
+			quantity INTEGER
+		  );
+		`;
+
+		await this.execute(query, []);
+	};
+
+	private formatDate = (date: Date) => date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
 
 	async count(): Promise<Count> {
 		const countAnimalsQuery = `
@@ -450,5 +465,61 @@ export class SqliteRepository implements StorageRepository {
 		return Promise.all(operations)
 			.then(() => true)
 			.catch(() => false);
+	}
+
+	async upsertDayProduction(production: DayProduction): Promise<boolean> {
+		const { day, quantity } = production;
+		const formattedDay = day.split("T")[0];
+		const query = `
+		  INSERT INTO DayProduction (day, quantity)
+		  VALUES (?, ?)
+		  ON CONFLICT(day) DO UPDATE SET quantity = excluded.quantity;
+		`;
+
+		const params = [formattedDay, quantity];
+
+		try {
+			await this.execute(query, params);
+			return true;
+		} catch {
+			return false;
+		}
+	}
+
+	async listTimespanProduction(
+		start: Date,
+		end: Date
+	): Promise<DayProduction[]> {
+		const query = `
+		  SELECT day, quantity
+		  FROM DayProduction
+		  WHERE day BETWEEN ? AND ?
+		  ORDER BY day;
+		`;
+
+		const formattedStart = this.formatDate(start);
+		const formattedEnd = this.formatDate(end);
+		const params = [formattedStart, formattedEnd];
+
+		try {
+			const productions = await this.getAll<DayProduction>(query, params);
+			return productions;
+		} catch {
+			return [];
+		}
+	}
+
+	async getDayProduction(date: Date): Promise<DayProduction | null> {
+		const query = `
+		  SELECT day, quantity
+		  FROM DayProduction
+		  WHERE day = ?;
+		`;
+
+		const formattedDate = this.formatDate(date);
+		const params = [formattedDate];
+
+		const production = await this.getOne<DayProduction>(query, params);
+		return production || null;
 	}
 }
