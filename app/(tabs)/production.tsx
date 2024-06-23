@@ -1,11 +1,9 @@
-import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
-import { DatePicker } from "components/DatePicker";
 import { Heading } from "components/Heading";
-import { Input } from "components/Input";
 import MonthProductionCalendar from "components/MonthProductionCalendar";
 import { monthItems } from "components/MonthProductionCalendar/monthItems";
 import { serializeLastTenYears } from "components/MonthProductionCalendar/serializeLastTenYears";
+import ProductionForm from "components/ProductionForm";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
@@ -19,15 +17,6 @@ export default function ViewProductionScreen() {
 		moment(selectedDate).month() + 1
 	);
 	const [year, setYear] = useState<number>(selectedDate.getFullYear());
-
-	console.log(selectedDate);
-	console.log(month);
-	console.log(year);
-
-	// To do
-	// build the new calendar when changing month
-	// implement Storage services to production
-	// add month production chart
 
 	useEffect(() => {
 		if (month && selectedDate) {
@@ -49,16 +38,11 @@ export default function ViewProductionScreen() {
 
 	const handleSelectYear = ({ value }: Item) => setYear(+value);
 
-	const handleSelectDate = (date: Date) => {
-		setMonth(date.getMonth() + 1);
-		setSelectedDate(date);
-	};
+	const handleSelectDate = (date: string) =>
+		setSelectedDate(moment(date).toDate());
 
-	const actualMonth = monthItems
-		.find((item) => item.value === moment().month() + 1)
-		?.key.toString();
-
-	const actualYear = moment().year().toString();
+	const getMonthName = () =>
+		monthItems.find((item) => item.value === month)?.key.toString() || " ";
 
 	return (
 		<ContainerView>
@@ -67,47 +51,40 @@ export default function ViewProductionScreen() {
 					headerTitle: "Produção mensal",
 				}}
 			/>
-			<Heading>{`Produção de ${actualMonth}/${year}`}</Heading>
+			<Heading>{`Produção de ${moment(selectedDate).format(
+				"MM"
+			)}/${year}`}</Heading>
 			<Span direction="row">
 				<Select
 					label="Mês"
 					items={monthItems}
-					defaultValue={actualMonth}
+					defaultValue={`${month}`}
 					onSelect={handleSelectMonth}
-					defaultButtonText={actualMonth}
+					defaultButtonText={getMonthName()}
 				/>
 				<Select
 					label="Ano"
 					items={serializeLastTenYears()}
-					defaultValue={actualYear}
+					defaultValue={`${year}`}
 					onSelect={handleSelectYear}
-					defaultButtonText={actualYear}
+					defaultButtonText={`${year}`}
 				/>
 			</Span>
 
 			<Span direction="row">
 				<MonthProductionCalendar
+					year={year}
 					month={month}
 					onSelectDate={handleSelectDate}
 					selectedDate={selectedDate}
 				/>
 			</Span>
 
-			<Span direction="column">
-				<Heading size="small">
-					Atualizar litros de leite produzidos
-				</Heading>
-				<DatePicker
-					label="Dia"
-					inputMode={"start"}
-					value={selectedDate}
-					onChange={(date) => setSelectedDate(moment(date).toDate())}
-				/>
-				<Input label="Litros" keyboardType="numeric" />
-				<Span direction="row" justify="flex-end">
-					<Button onPress={() => {}} title="Salvar" />
-				</Span>
-			</Span>
+			<ProductionForm
+				initialQuantity={0}
+				selectedDate={selectedDate}
+				setSelectedDate={setSelectedDate}
+			/>
 		</ContainerView>
 	);
 }
