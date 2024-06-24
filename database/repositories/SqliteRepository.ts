@@ -55,7 +55,7 @@ export class SqliteRepository implements StorageRepository {
 	async initDatabase() {
 		await this.ensureAnimalTableExists();
 		await this.ensureBatchTableExists();
-		await this.ensureProductionTableExists(); // Ensure production table exists on initialization
+		await this.ensureProductionTableExists();
 	}
 
 	private ensureAnimalTableExists = async () => {

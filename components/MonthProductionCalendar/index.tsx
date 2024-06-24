@@ -1,22 +1,16 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
-import { Item } from "types/Item";
 import { Cell } from "./Cell";
 import { MonthAndYearSelect } from "./MonthAndYearSelect";
 import { WeekDayHeader } from "./WeekDayHeader";
 
 interface MonthProductionCalendarProps {
-	onSelectDate: (date: string) => void;
-	onSelectMonth: (item: Item) => void;
-	onSelectYear: (item: Item) => void;
-	selectedDate: Date | null;
-	month: number;
-	year: number;
+	onSelectDate: (date: Date) => void;
+	selectedDate: Date;
 }
 
 export type DayItem = {
-	key: string;
 	value: string;
 	date: string;
 	isCurrentMonth: boolean;
@@ -24,41 +18,44 @@ export type DayItem = {
 
 export const MonthProductionCalendar: React.FC<
 	MonthProductionCalendarProps
-> = ({
-	onSelectDate,
-	selectedDate,
-	onSelectMonth,
-	onSelectYear,
-	month,
-	year,
-}) => {
+> = ({ onSelectDate, selectedDate }) => {
 	const [days, setDays] = useState<DayItem[]>([]);
 
 	useEffect(() => {
 		generateCalendar();
-	}, [month, year]);
+	}, [selectedDate]);
 
 	const makeDayItem = (day: moment.Moment): DayItem => ({
-		key: day.format("D"),
 		value: day.format("D"),
 		date: day.toISOString(),
 		isCurrentMonth: true,
 	});
 
-	const generateCalendar = () => {
-		const startOfMonth = moment(`${month}-${year}`, "MM-YYYY").startOf(
-			"month"
+	const shouldRebuild = () => {
+		const prev = moment(days[0].date);
+
+		return (
+			!moment(selectedDate).isSame(prev, "month") ||
+			!moment(selectedDate).isSame(prev, "year")
 		);
-		const daysInMonth = startOfMonth.daysInMonth();
+	};
 
-		let calendarDays: DayItem[] = [];
+	const generateCalendar = () => {
+		if (shouldRebuild()) {
+			const startOfMonth = moment(selectedDate.toISOString()).startOf(
+				"month"
+			);
+			const daysInMonth = startOfMonth.daysInMonth();
 
-		for (let i = 1; i <= daysInMonth; i++) {
-			const day = moment(startOfMonth).add(i - 1, "days");
-			calendarDays.push(makeDayItem(day));
+			let calendarDays: DayItem[] = [];
+
+			for (let i = 1; i <= daysInMonth; i++) {
+				const day = moment(startOfMonth).add(i - 1, "days");
+				calendarDays.push(makeDayItem(day));
+			}
+
+			setDays(calendarDays);
 		}
-
-		setDays(calendarDays);
 	};
 
 	const renderItem = ({ item }: { item: DayItem }) => {
@@ -70,7 +67,7 @@ export const MonthProductionCalendar: React.FC<
 						? moment(item.date).isSame(selectedDate, "day")
 						: false
 				}
-				onSelect={() => onSelectDate(item.date)}
+				onSelect={() => onSelectDate(moment(item.date).toDate())}
 			/>
 		);
 	};
@@ -78,20 +75,16 @@ export const MonthProductionCalendar: React.FC<
 	return (
 		<View>
 			<MonthAndYearSelect
-				month={month}
-				year={year}
-				onSelectMonth={onSelectMonth}
-				onSelectYear={onSelectYear}
+				selectedDate={selectedDate!}
+				setSelectedDate={onSelectDate}
 			/>
 			<WeekDayHeader />
 			<FlatList
 				data={days}
 				numColumns={7}
-				keyExtractor={(item) => item.key}
+				keyExtractor={(item) => item.value}
 				renderItem={renderItem}
 			/>
 		</View>
 	);
 };
-
-export default MonthProductionCalendar;

@@ -1,42 +1,16 @@
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import MonthProductionCalendar from "components/MonthProductionCalendar";
+import { MonthProductionCalendar } from "components/MonthProductionCalendar";
 import ProductionForm from "components/ProductionForm";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
-import { Item } from "types/Item";
+import React, { useState } from "react";
 
 export default function ViewProductionScreen() {
-	const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-	const [month, setMonth] = useState<number>(
-		moment(selectedDate).month() + 1
-	);
-	const [year, setYear] = useState<number>(selectedDate.getFullYear());
+	const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
 
-	useEffect(() => {
-		if (month && selectedDate) {
-			const newDate = moment(selectedDate)
-				.month(month - 1)
-				.toDate();
-			setSelectedDate(newDate);
-		}
-	}, [month]);
-
-	useEffect(() => {
-		if (year && selectedDate) {
-			const newDate = moment(selectedDate).year(year).toDate();
-			setSelectedDate(newDate);
-		}
-	}, [year]);
-
-	const handleSelectMonth = ({ value }: Item) => setMonth(+value);
-
-	const handleSelectYear = ({ value }: Item) => setYear(+value);
-
-	const handleSelectDate = (date: string) =>
-		setSelectedDate(moment(date).toDate());
+	const handleSelectDate = (date: Date) => setSelectedDate(date);
 
 	return (
 		<ContainerView>
@@ -45,16 +19,12 @@ export default function ViewProductionScreen() {
 					headerTitle: "Produção mensal",
 				}}
 			/>
-			<Heading>{`Salve seu histórico de produção`}</Heading>
+			<Heading>{`Produção mensal`}</Heading>
 
 			<Span direction="row">
 				<MonthProductionCalendar
 					onSelectDate={handleSelectDate}
-					onSelectMonth={handleSelectMonth}
-					onSelectYear={handleSelectYear}
 					selectedDate={selectedDate}
-					year={year}
-					month={month}
 				/>
 			</Span>
 			<Span direction="column">
