@@ -68,12 +68,3 @@ const styles = StyleSheet.create({
 		color: Colors.white,
 	},
 });
-
-const isEqual = (
-	prevProps: CellProps<DayItem>,
-	nextProps: CellProps<DayItem>
-) => {
-	return prevProps.isSelected === nextProps.isSelected;
-};
-
-export const MemoizedCell = React.memo(Cell, isEqual);

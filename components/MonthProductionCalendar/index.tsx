@@ -13,7 +13,7 @@ interface MonthProductionCalendarProps {
 
 export type DayItem = {
 	value: string;
-	date: string;
+	date: Date;
 };
 
 export const MonthProductionCalendar: React.FC<
@@ -25,9 +25,9 @@ export const MonthProductionCalendar: React.FC<
 		generateCells();
 	}, [selectedDate]);
 
-	const makeDayItem = (day: moment.Moment): DayItem => ({
-		value: day.format("D"),
-		date: day.toISOString(),
+	const makeDayItem = (day: Date): DayItem => ({
+		value: moment(day).format("D"),
+		date: moment(day).toDate(),
 	});
 
 	const generateCells = () => {
@@ -39,7 +39,7 @@ export const MonthProductionCalendar: React.FC<
 
 		for (let i = 1; i <= daysInMonth; i++) {
 			const day = moment(startOfMonth).add(i - 1, "days");
-			calendarDays.push(makeDayItem(day));
+			calendarDays.push(makeDayItem(day.toDate()));
 		}
 
 		setDays(calendarDays);
@@ -68,7 +68,7 @@ export const MonthProductionCalendar: React.FC<
 			>
 				{days.map((item) => (
 					<Cell
-						key={item.date}
+						key={item.date.toISOString()}
 						item={item}
 						isSelected={
 							selectedDate
