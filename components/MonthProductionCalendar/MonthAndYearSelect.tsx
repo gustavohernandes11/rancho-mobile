@@ -1,14 +1,14 @@
-import { Select } from "components/Select";
 import { Span } from "components/Span";
 import moment from "moment";
 import { useState } from "react";
 import { Item } from "types/Item";
+import { CalendarDropdown } from "./CalendarDropdown";
 import { monthItems } from "./monthItems";
 import { serializeLastTenYears } from "./serializeLastTenYears";
 
 type MonthAndYearSelectProps = {
 	selectedDate: Date;
-	setSelectedDate: (date: Date) => void;
+	setSelectedDate: (props: any) => void;
 };
 
 export const MonthAndYearSelect = ({
@@ -21,26 +21,19 @@ export const MonthAndYearSelect = ({
 	);
 
 	const handleSelectMonth = ({ value }: Item) => {
-		setMonth(() => Number(value));
+		const newMonth = +value;
+		setMonth(newMonth);
 
-		if (month) {
-			const newDate = moment(`${month}-${year}`, "MM-YYYY")
-				.month(month - 1)
-				.toDate();
-
-			setSelectedDate(newDate);
-		}
+		const newDate = new Date(year, newMonth - 1, selectedDate.getDate());
+		setSelectedDate(newDate);
 	};
 
 	const handleSelectYear = ({ value }: Item) => {
-		setYear(() => Number(value));
+		const newYear = +value;
+		setYear(newYear);
 
-		if (year) {
-			const newDate = moment(`${month}-${year}`, "MM-YYYY")
-				.year(year)
-				.toDate();
-			setSelectedDate(newDate);
-		}
+		const newDate = new Date(newYear, month - 1, selectedDate.getDate());
+		setSelectedDate(newDate);
 	};
 
 	const getMonthName = () =>
@@ -48,15 +41,13 @@ export const MonthAndYearSelect = ({
 
 	return (
 		<Span direction="row">
-			<Select
-				backgroundColor="transparent"
+			<CalendarDropdown
 				items={monthItems}
 				defaultValue={`${month}`}
 				onSelect={handleSelectMonth}
 				defaultButtonText={getMonthName()}
 			/>
-			<Select
-				backgroundColor="transparent"
+			<CalendarDropdown
 				items={serializeLastTenYears()}
 				defaultValue={`${year}`}
 				onSelect={handleSelectYear}

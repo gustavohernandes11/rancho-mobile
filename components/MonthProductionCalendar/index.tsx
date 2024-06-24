@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { FlatList, View } from "react-native";
+import Colors from "styles/Colors";
 import { Cell } from "./Cell";
 import { MonthAndYearSelect } from "./MonthAndYearSelect";
 import { WeekDayHeader } from "./WeekDayHeader";
@@ -13,7 +14,6 @@ interface MonthProductionCalendarProps {
 export type DayItem = {
 	value: string;
 	date: string;
-	isCurrentMonth: boolean;
 };
 
 export const MonthProductionCalendar: React.FC<
@@ -28,34 +28,24 @@ export const MonthProductionCalendar: React.FC<
 	const makeDayItem = (day: moment.Moment): DayItem => ({
 		value: day.format("D"),
 		date: day.toISOString(),
-		isCurrentMonth: true,
 	});
 
-	const shouldRebuild = () => {
-		const prev = moment(days[0].date);
-
-		return (
-			!moment(selectedDate).isSame(prev, "month") ||
-			!moment(selectedDate).isSame(prev, "year")
-		);
-	};
-
 	const generateCalendar = () => {
-		if (shouldRebuild()) {
-			const startOfMonth = moment(selectedDate.toISOString()).startOf(
-				"month"
-			);
-			const daysInMonth = startOfMonth.daysInMonth();
+		console.log("build calendar");
+		console.log("selected date: " + selectedDate);
+		const startOfMonth = moment(selectedDate.toISOString()).startOf(
+			"month"
+		);
+		const daysInMonth = startOfMonth.daysInMonth();
 
-			let calendarDays: DayItem[] = [];
+		let calendarDays: DayItem[] = [];
 
-			for (let i = 1; i <= daysInMonth; i++) {
-				const day = moment(startOfMonth).add(i - 1, "days");
-				calendarDays.push(makeDayItem(day));
-			}
-
-			setDays(calendarDays);
+		for (let i = 1; i <= daysInMonth; i++) {
+			const day = moment(startOfMonth).add(i - 1, "days");
+			calendarDays.push(makeDayItem(day));
 		}
+
+		setDays(calendarDays);
 	};
 
 	const renderItem = ({ item }: { item: DayItem }) => {
@@ -67,22 +57,31 @@ export const MonthProductionCalendar: React.FC<
 						? moment(item.date).isSame(selectedDate, "day")
 						: false
 				}
-				onSelect={() => onSelectDate(moment(item.date).toDate())}
+				onSelect={() => onSelectDate(new Date(item.date))}
 			/>
 		);
 	};
 
 	return (
-		<View>
+		<View
+			style={{
+				borderColor: Colors.border,
+				borderWidth: 1,
+				borderRadius: 8,
+				shadowColor: "black",
+				shadowOpacity: 0.1,
+				elevation: 2,
+			}}
+		>
 			<MonthAndYearSelect
-				selectedDate={selectedDate!}
+				selectedDate={selectedDate}
 				setSelectedDate={onSelectDate}
 			/>
 			<WeekDayHeader />
 			<FlatList
 				data={days}
 				numColumns={7}
-				keyExtractor={(item) => item.value}
+				keyExtractor={(item) => item.date}
 				renderItem={renderItem}
 			/>
 		</View>

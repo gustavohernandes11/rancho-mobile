@@ -57,3 +57,14 @@ export const getGenderIcon = (gender: "F" | "M") =>
 			name="venus"
 		/>
 	);
+
+export const getFormattedPtBRDate = (date: Date) => {
+	const options = {
+		day: "numeric",
+		month: "long",
+		year: "numeric",
+	};
+
+	const formatter = new Intl.DateTimeFormat("pt-BR", options as any);
+	return formatter.format(date);
+};

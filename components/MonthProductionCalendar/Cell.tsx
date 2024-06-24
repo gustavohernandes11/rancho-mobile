@@ -28,35 +28,44 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 	const cellStyles = StyleSheet.flatten([
 		styles.cell,
 		isSelected && styles.selectedCell,
-		!item.isCurrentMonth && styles.nonCurrentMonthCell,
+	]);
+	const textStyles = StyleSheet.flatten([
+		sharedStyles.text,
+		isSelected && styles.selectedText,
+	]);
+	const boldStyles = StyleSheet.flatten([
+		styles.boldText,
+		isSelected && styles.selectedCell,
 	]);
 
 	return (
 		<TouchableOpacity onPress={onSelect} style={cellStyles}>
-			<Text style={sharedStyles.text}>{item.value}</Text>
-			<Text style={styles.boldText}>{quantity || " "}</Text>
+			<Text style={textStyles}>{item.value}</Text>
+			<Text style={boldStyles}>{quantity || " "}</Text>
 		</TouchableOpacity>
 	);
 };
 const styles = StyleSheet.create({
 	cell: {
-		borderWidth: 1,
 		flexBasis: (Dimensions.get("window").width - 16) / 7,
 		borderColor: Colors.border,
 		padding: 4,
 		paddingVertical: 8,
 		gap: 4,
 		justifyContent: "center",
+		alignItems: "center",
 	},
 	selectedCell: {
-		borderColor: Colors.purple,
-		borderBottomWidth: 2,
-	},
-	nonCurrentMonthCell: {
-		backgroundColor: Colors.lightGray,
+		borderColor: Colors.green,
+		backgroundColor: Colors.green,
+		color: Colors.white,
+		borderRadius: 16,
 	},
 	boldText: {
 		...sharedStyles.text,
 		fontWeight: "bold",
+	},
+	selectedText: {
+		color: Colors.white,
 	},
 });

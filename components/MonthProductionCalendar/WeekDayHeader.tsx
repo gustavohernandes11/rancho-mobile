@@ -18,8 +18,6 @@ const styles = StyleSheet.create({
 	daysOfWeekContainer: {
 		flexDirection: "row",
 		justifyContent: "space-between",
-		borderColor: Colors.border,
-		borderWidth: 1,
 	},
 	dayOfWeek: {
 		flex: 1,
