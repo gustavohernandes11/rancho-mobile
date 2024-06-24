@@ -16,6 +16,7 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 	item,
 	isSelected,
 	onSelect,
+	...props
 }) => {
 	const [quantity, setQuantity] = useState<number | null>();
 
@@ -39,7 +40,7 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 	]);
 
 	return (
-		<TouchableOpacity onPress={onSelect} style={cellStyles}>
+		<TouchableOpacity onPress={onSelect} style={cellStyles} {...props}>
 			<Text style={textStyles}>{item.value}</Text>
 			<Text style={boldStyles}>{quantity || " "}</Text>
 		</TouchableOpacity>
@@ -48,15 +49,13 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 const styles = StyleSheet.create({
 	cell: {
 		flexBasis: (Dimensions.get("window").width - 16) / 7,
-		borderColor: Colors.border,
-		padding: 4,
+		paddingHorizontal: 4,
 		paddingVertical: 8,
 		gap: 4,
 		justifyContent: "center",
 		alignItems: "center",
 	},
 	selectedCell: {
-		borderColor: Colors.green,
 		backgroundColor: Colors.green,
 		color: Colors.white,
 		borderRadius: 16,
@@ -69,3 +68,12 @@ const styles = StyleSheet.create({
 		color: Colors.white,
 	},
 });
+
+const isEqual = (
+	prevProps: CellProps<DayItem>,
+	nextProps: CellProps<DayItem>
+) => {
+	return prevProps.isSelected === nextProps.isSelected;
+};
+
+export const MemoizedCell = React.memo(Cell, isEqual);

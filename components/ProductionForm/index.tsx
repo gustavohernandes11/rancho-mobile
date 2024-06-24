@@ -16,6 +16,7 @@ import { initialValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
 interface ProductionFormProps {
+	onSubmitCallback: Function;
 	selectedDate: Date;
 	setSelectedDate: (date: Date) => void;
 }
@@ -24,12 +25,14 @@ const handleSubmit = async (
 	production: DayProduction,
 	formikHelpers: FormikHelpers<{
 		quantity: number;
-	}>
+	}>,
+	onSubmitCallback: Function
 ) => {
 	Storage.upsertDayProduction(production)
 		.then(() => {
 			showToast("Produção inserida com sucesso.");
 			formikHelpers.resetForm();
+			onSubmitCallback();
 		})
 		.catch(() => {
 			Alert.alert("Erro!", "Ocorreu um erro ao salvar a produção.");
@@ -38,6 +41,7 @@ const handleSubmit = async (
 
 export const ProductionForm: React.FC<ProductionFormProps> = ({
 	selectedDate,
+	onSubmitCallback,
 }) => {
 	const formik = useFormik({
 		initialValues,
@@ -47,7 +51,8 @@ export const ProductionForm: React.FC<ProductionFormProps> = ({
 					day: selectedDate.toISOString(),
 					quantity: values.quantity,
 				},
-				formikHelpers
+				formikHelpers,
+				onSubmitCallback
 			),
 		validationSchema,
 	});

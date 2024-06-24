@@ -4,6 +4,7 @@ import { MonthProductionCalendar } from "components/MonthProductionCalendar";
 import { ProductionForm } from "components/ProductionForm";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
+import { useForceUpdate } from "hooks/useForceUpdate";
 import moment from "moment";
 import React, { useState } from "react";
 import { Text } from "react-native-paper";
@@ -11,6 +12,7 @@ import { getFormattedPtBRDate } from "utils/formatters";
 
 export default function ViewProductionScreen() {
 	const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
+	const forceUpdate = useForceUpdate();
 
 	const handleSelectDate = (date: Date) => {
 		setSelectedDate(date);
@@ -41,6 +43,7 @@ export default function ViewProductionScreen() {
 				<ProductionForm
 					selectedDate={selectedDate}
 					setSelectedDate={setSelectedDate}
+					onSubmitCallback={forceUpdate}
 				/>
 			</Span>
 		</ContainerView>

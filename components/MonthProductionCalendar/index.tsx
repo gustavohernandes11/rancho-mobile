@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { FlatList, View } from "react-native";
+import { View } from "react-native";
 import Colors from "styles/Colors";
 import { Cell } from "./Cell";
 import { MonthAndYearSelect } from "./MonthAndYearSelect";
@@ -22,7 +22,7 @@ export const MonthProductionCalendar: React.FC<
 	const [days, setDays] = useState<DayItem[]>([]);
 
 	useEffect(() => {
-		generateCalendar();
+		generateCells();
 	}, [selectedDate]);
 
 	const makeDayItem = (day: moment.Moment): DayItem => ({
@@ -30,14 +30,11 @@ export const MonthProductionCalendar: React.FC<
 		date: day.toISOString(),
 	});
 
-	const generateCalendar = () => {
-		console.log("build calendar");
-		console.log("selected date: " + selectedDate);
+	const generateCells = () => {
 		const startOfMonth = moment(selectedDate.toISOString()).startOf(
 			"month"
 		);
 		const daysInMonth = startOfMonth.daysInMonth();
-
 		let calendarDays: DayItem[] = [];
 
 		for (let i = 1; i <= daysInMonth; i++) {
@@ -48,28 +45,11 @@ export const MonthProductionCalendar: React.FC<
 		setDays(calendarDays);
 	};
 
-	const renderItem = ({ item }: { item: DayItem }) => {
-		return (
-			<Cell
-				item={item}
-				isSelected={
-					selectedDate
-						? moment(item.date).isSame(selectedDate, "day")
-						: false
-				}
-				onSelect={() => onSelectDate(new Date(item.date))}
-			/>
-		);
-	};
-
 	return (
 		<View
 			style={{
 				borderColor: Colors.border,
-				borderWidth: 1,
 				borderRadius: 8,
-				shadowColor: "black",
-				shadowOpacity: 0.1,
 				elevation: 2,
 			}}
 		>
@@ -78,12 +58,27 @@ export const MonthProductionCalendar: React.FC<
 				setSelectedDate={onSelectDate}
 			/>
 			<WeekDayHeader />
-			<FlatList
-				data={days}
-				numColumns={7}
-				keyExtractor={(item) => item.date}
-				renderItem={renderItem}
-			/>
+
+			<View
+				style={{
+					display: "flex",
+					flexDirection: "row",
+					flexWrap: "wrap",
+				}}
+			>
+				{days.map((item) => (
+					<Cell
+						key={item.date}
+						item={item}
+						isSelected={
+							selectedDate
+								? moment(item.date).isSame(selectedDate, "day")
+								: false
+						}
+						onSelect={() => onSelectDate(new Date(item.date))}
+					/>
+				))}
+			</View>
 		</View>
 	);
 };
