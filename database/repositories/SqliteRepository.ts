@@ -56,6 +56,23 @@ export class SqliteRepository implements StorageRepository {
 		await this.ensureAnimalTableExists();
 		await this.ensureBatchTableExists();
 		await this.ensureProductionTableExists();
+		await this.updateAnimalTableColumnNames();
+	}
+
+	private async updateAnimalTableColumnNames() {
+		const queries = [
+			`ALTER TABLE Animals RENAME COLUMN maternityId TO maternityID;`,
+			`ALTER TABLE Animals RENAME COLUMN paternityId TO paternityID;`,
+			`ALTER TABLE Animals RENAME COLUMN batchId TO batchID;`,
+		];
+
+		for (const query of queries) {
+			try {
+				await this.execute(query, []);
+			} catch (error) {
+				console.log(error);
+			}
+		}
 	}
 
 	private ensureAnimalTableExists = async () => {
