@@ -5,7 +5,6 @@ import { ProductionChart } from "components/ProductionChart";
 import { ProductionForm } from "components/ProductionForm";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
-import { useForceUpdate } from "hooks/useForceUpdate";
 import moment from "moment";
 import React, { useState } from "react";
 import { Text } from "react-native-paper";
@@ -14,17 +13,16 @@ import {
 	getFormattedPtBRDate,
 } from "utils/formatters";
 
-const exampleData = [
-	1, 5, 3, 5, 12, 4, 2, 3, 12, 23, 1, 5, 3, 5, 12, 1, 5, 3, 5, 12, 4, 2, 3,
-	12, 23, 1, 5, 3, 5, 12, 12,
-];
-
 export default function ViewProductionScreen() {
 	const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
-	const forceUpdate = useForceUpdate();
+	const [updateUINumber, setUpdateUINumber] = useState(0);
 
 	const handleSelectDate = (date: Date) => {
 		setSelectedDate(date);
+	};
+
+	const updateUI = () => {
+		setUpdateUINumber(updateUINumber + 1);
 	};
 
 	return (
@@ -52,7 +50,7 @@ export default function ViewProductionScreen() {
 				<ProductionForm
 					selectedDate={selectedDate}
 					setSelectedDate={setSelectedDate}
-					onSubmitCallback={forceUpdate}
+					onSubmitCallback={updateUI}
 				/>
 			</Span>
 			<Span direction="row">
@@ -60,7 +58,13 @@ export default function ViewProductionScreen() {
 					{"Gráfico de produção " +
 						getFormattedMonthAndYear(selectedDate)}
 				</Heading>
-				<ProductionChart data={exampleData} />
+				<Span>
+					<ProductionChart
+						key={updateUINumber}
+						yearNumber={Number(moment(selectedDate).year())}
+						monthNumber={Number(moment(selectedDate).month() + 1)}
+					/>
+				</Span>
 			</Span>
 		</ContainerView>
 	);

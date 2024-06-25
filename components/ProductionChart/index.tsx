@@ -1,12 +1,18 @@
+import { Loading } from "components/Loading";
+import React, { useEffect, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
+import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
+import { DayProduction } from "types/Production";
+import { chartConfig } from "./chartConfig";
 
 type ProductionChartProps = {
-	data: number[];
+	monthNumber: number;
+	yearNumber: number;
 };
 
-const countDays = (n: number) => {
+const serializeDays = (n: number) => {
 	const labels = [];
 	for (let i = 0; i < n; i++) {
 		labels.push((i + 1).toString());
@@ -14,57 +20,73 @@ const countDays = (n: number) => {
 	return labels;
 };
 
-export const ProductionChart = ({ data = [] }: ProductionChartProps) => (
-	<View
-		style={{
-			borderRadius: 8,
-		}}
-	>
-		<ScrollView horizontal={true}>
-			<BarChart
-				data={{
-					labels: countDays(data.length),
-					datasets: [
-						{
-							color: () => Colors.green,
-							data,
-						},
-					],
-				}}
-				width={850}
-				height={240}
-				yAxisSuffix="L"
-				yAxisInterval={1}
-				yAxisLabel=""
-				chartConfig={{
-					backgroundColor: Colors.white,
-					backgroundGradientFrom: Colors.white,
-					backgroundGradientTo: Colors.white,
-					decimalPlaces: 0,
-					color: () => Colors.darkGreen,
-					fillShadowGradient: Colors.green,
-					fillShadowGradientTo: Colors.darkGreen,
-					fillShadowGradientOpacity: 1,
-					fillShadowGradientToOpacity: 1,
-					labelColor: () => Colors.text,
-					style: {
-						display: "flex",
-						borderRadius: 16,
-						borderWidth: 1,
-						alignSelf: "flex-start",
-					},
+export const ProductionChart = ({
+	monthNumber,
+	yearNumber,
+}: ProductionChartProps) => {
+	const [monthProduction, setMonthProduction] = useState<DayProduction[]>([]);
+	const [isLoading, setIsLoading] = useState(true);
 
-					barPercentage: 0.75,
-					barRadius: 2,
-				}}
-				style={{
-					borderBottomRightRadius: 15,
-					paddingRight: 0,
-				}}
-				showBarTops={false}
-				withInnerLines={false}
-				showValuesOnTopOfBars={true}
-			/>
-		</ScrollView>
-	</View>
-);
+	const generateData = (): number[] => {
+		const daysInMonth = new Date(yearNumber, monthNumber, 0).getDate();
+		const data = Array(daysInMonth).fill(0);
+
+		monthProduction.forEach((prod) => {
+			const day = parseInt(prod.day.split("-")[2], 10);
+			data[day - 1] = prod.quantity;
+		});
+
+		return data;
+	};
+
+	useEffect(() => {
+		const date = new Date(yearNumber, monthNumber - 1);
+		setIsLoading(true);
+		Storage.listMonthProduction(date)
+			.then((prod) => {
+				setMonthProduction(prod);
+			})
+			.finally(() => setIsLoading(false));
+	}, [monthNumber, yearNumber]);
+
+	if (isLoading) {
+		return <Loading />;
+	}
+
+	return (
+		<View
+			style={{
+				borderRadius: 8,
+			}}
+		>
+			<ScrollView horizontal={true}>
+				<BarChart
+					data={{
+						labels: serializeDays(
+							new Date(yearNumber, monthNumber, 0).getDate()
+						),
+						datasets: [
+							{
+								color: () => Colors.green,
+								data: generateData(),
+							},
+						],
+					}}
+					width={850}
+					height={240}
+					yAxisSuffix="L"
+					yAxisInterval={1}
+					yAxisLabel=""
+					chartConfig={chartConfig}
+					style={{
+						borderBottomRightRadius: 15,
+						paddingRight: 0,
+					}}
+					showBarTops={false}
+					withInnerLines={false}
+					showValuesOnTopOfBars={true}
+				/>
+			</ScrollView>
+		</View>
+	);
+};
