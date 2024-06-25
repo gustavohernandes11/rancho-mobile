@@ -53,10 +53,12 @@ export class SqliteRepository implements StorageRepository {
 	};
 
 	async initDatabase() {
-		await this.ensureAnimalTableExists();
-		await this.ensureBatchTableExists();
-		await this.ensureProductionTableExists();
-		await this.updateAnimalTableColumnNames();
+		await Promise.all([
+			this.ensureAnimalTableExists(),
+			this.ensureBatchTableExists(),
+			this.ensureProductionTableExists(),
+			this.updateAnimalTableColumnNames(),
+		]);
 	}
 
 	private async updateAnimalTableColumnNames() {
@@ -519,8 +521,7 @@ export class SqliteRepository implements StorageRepository {
 		const params = [formattedStart, formattedEnd];
 
 		try {
-			const productions = await this.getAll<DayProduction>(query, params);
-			return productions;
+			return this.getAll<DayProduction>(query, params);
 		} catch {
 			return [];
 		}

@@ -1,3 +1,4 @@
+import moment from "moment";
 import {
 	AddAnimal,
 	AddBatch,
@@ -139,16 +140,13 @@ export class StorageServices implements StorageServicesMethods {
 		return this.DbRepository.upsertDayProduction(production);
 	}
 
-	async listProductionAroundMonth(month: Date): Promise<DayProduction[]> {
-		const oneWeekBefore = new Date(month);
-		oneWeekBefore.setDate(oneWeekBefore.getDate() - 7);
-
-		const oneWeekAfter = new Date(month);
-		oneWeekAfter.setDate(oneWeekAfter.getDate() + 7);
+	async listMonthProduction(month: Date): Promise<DayProduction[]> {
+		const startOfMonth = moment(month).startOf("month").toDate();
+		const endOfMonth = moment(month).endOf("month").toDate();
 
 		return this.DbRepository.listTimespanProduction(
-			oneWeekBefore,
-			oneWeekAfter
+			startOfMonth,
+			endOfMonth
 		);
 	}
 

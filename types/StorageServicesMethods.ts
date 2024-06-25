@@ -23,7 +23,7 @@ export interface StorageServicesMethods {
 
 	listAnimals(query?: QueryOptions): Promise<Animal[]>;
 	listBatches(): Promise<Batch[]>;
-	listProductionAroundMonth(month: Date): Promise<DayProduction[]>;
+	listMonthProduction(month: Date): Promise<DayProduction[]>;
 
 	updateAnimal(updateData: UpdateAnimal | UpdateAnimal[]): Promise<boolean>;
 	updateBatch(updateData: UpdateBatch): Promise<boolean>;
