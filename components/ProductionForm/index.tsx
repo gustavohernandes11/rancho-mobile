@@ -11,6 +11,7 @@ import {
 import { Storage } from "services/StorageService";
 import { DayProduction } from "types/Production";
 import { showToast } from "utils/displayToast";
+import { getFormattedPtBRDate } from "utils/formatters";
 import { getFieldError } from "utils/forms";
 import { initialValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
@@ -74,10 +75,14 @@ export const ProductionForm: React.FC<ProductionFormProps> = ({
 		formik.submitForm();
 	};
 
+	const quantityLabel = `Litros produzidos em ${getFormattedPtBRDate(
+		selectedDate
+	)}`;
+
 	return (
 		<Span direction="column">
 			<Input
-				label="Litros de leite produzidos"
+				label={quantityLabel}
 				keyboardType="numeric"
 				value={formik.values.quantity.toString()}
 				onChangeText={handleChangeText}
