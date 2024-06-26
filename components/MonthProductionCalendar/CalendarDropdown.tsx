@@ -11,7 +11,9 @@ interface CalendarDropdownProps {
 	defaultButtonText: string;
 }
 
-const SmallDropdownIcon = () => <FontAwesome size={12} name="angle-down" />;
+const SmallDropdownIcon = () => (
+	<FontAwesome style={{ marginRight: 24 }} size={12} name="angle-down" />
+);
 
 export const CalendarDropdown = ({
 	defaultButtonText = "Selecione uma opção",
