@@ -1,6 +1,6 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Colors from "styles/Colors";
 import { Cell } from "./Cell";
 import { MonthAndYearSelect } from "./MonthAndYearSelect";
@@ -46,26 +46,13 @@ export const MonthProductionCalendar: React.FC<
 	};
 
 	return (
-		<View
-			style={{
-				borderColor: Colors.border,
-				borderRadius: 8,
-				elevation: 2,
-			}}
-		>
+		<View style={styles.calendar}>
 			<MonthAndYearSelect
 				selectedDate={selectedDate}
 				setSelectedDate={onSelectDate}
 			/>
 			<WeekDayHeader />
-
-			<View
-				style={{
-					display: "flex",
-					flexDirection: "row",
-					flexWrap: "wrap",
-				}}
-			>
+			<View style={styles.daysContainer}>
 				{days.map((item) => (
 					<Cell
 						key={item.date.toISOString()}
@@ -82,3 +69,16 @@ export const MonthProductionCalendar: React.FC<
 		</View>
 	);
 };
+
+const styles = StyleSheet.create({
+	calendar: {
+		borderColor: Colors.border,
+		borderRadius: 8,
+		elevation: 1,
+	},
+	daysContainer: {
+		display: "flex",
+		flexDirection: "row",
+		flexWrap: "wrap",
+	},
+});

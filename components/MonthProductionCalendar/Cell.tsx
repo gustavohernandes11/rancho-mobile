@@ -1,4 +1,3 @@
-import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Storage } from "services/StorageService";
@@ -21,7 +20,7 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 	const [quantity, setQuantity] = useState<number | null>();
 
 	useEffect(() => {
-		Storage.getDayProduction(moment(item.date).toDate()).then((prod) =>
+		Storage.getDayProduction(item.date).then((prod) =>
 			setQuantity(prod?.quantity || null)
 		);
 	});
@@ -36,7 +35,7 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 	]);
 	const boldStyles = StyleSheet.flatten([
 		styles.boldText,
-		isSelected && styles.selectedCell,
+		isSelected && styles.selectedText,
 	]);
 
 	return (
@@ -57,7 +56,6 @@ const styles = StyleSheet.create({
 	},
 	selectedCell: {
 		backgroundColor: Colors.green,
-		color: Colors.white,
 		borderRadius: 16,
 	},
 	boldText: {
