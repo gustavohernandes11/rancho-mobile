@@ -1,3 +1,4 @@
+import { FontAwesome } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
 import { Image } from "react-native";
@@ -22,6 +23,7 @@ export default function TabLayout() {
 						alt={"Logo"}
 					/>
 				),
+
 				headerTintColor: Colors.white,
 				headerTitleStyle: {
 					fontWeight: "bold",
@@ -95,6 +97,21 @@ export default function TabLayout() {
 							style={{ height: 24, width: 16 }}
 							source={require("../../assets/images/GallonIcon.png")}
 							alt={"production page"}
+						/>
+					),
+				}}
+			/>
+			<Tabs.Screen
+				name="annotations"
+				options={{
+					tabBarLabel: "Anotações",
+					tabBarIcon: () => (
+						<FontAwesome
+							style={{
+								color: Colors.white,
+							}}
+							size={22}
+							name="book"
 						/>
 					),
 				}}

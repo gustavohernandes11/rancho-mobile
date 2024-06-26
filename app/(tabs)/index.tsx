@@ -69,9 +69,16 @@ export default function TabOneScreen() {
 				<Card
 					href="/(tabs)/production"
 					alt="Production"
-					iconSource={require("assets/images/FenceIcon.png")}
+					iconSource={require("assets/images/GallonIcon.png")}
 					title="Produção do mês"
 					color="purple"
+				/>
+				<Card
+					href="/(tabs)/annotations"
+					alt="Annotations"
+					iconSource={require("assets/images/FenceIcon.png")}
+					title="Anotações"
+					color="cian"
 				/>
 			</Span>
 		</ContainerView>

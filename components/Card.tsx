@@ -7,7 +7,7 @@ import Colors from "styles/Colors";
 import { sharedStyles } from "styles/Common";
 import { Span } from "./Span";
 
-type ColorOptions = "green" | "blue" | "purple";
+type ColorOptions = "green" | "blue" | "purple" | "cian";
 interface CardProps {
 	title: string;
 	alt: string;
