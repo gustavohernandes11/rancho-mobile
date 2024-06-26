@@ -1,17 +1,17 @@
-import { AddButton } from "components/AddButton";
 import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
-import { Stack, router } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect } from "react";
 import { Text, View } from "react-native";
 
 export default function ViewBatchesScreen() {
 	const { batches, refreshBatches } = useGlobalState();
+	const router = useRouter();
 
 	useEffect(() => {
 		refreshBatches();
@@ -23,9 +23,12 @@ export default function ViewBatchesScreen() {
 				options={{
 					headerTitle: "Lotes",
 					headerRight: () => (
-						<AddButton
-							icon="add-batch"
-							href="/(screens)/batches/add"
+						<Button
+							title="Novo lote"
+							icon={require("../../assets/images/AddBatchIconWhite.png")}
+							onPress={() =>
+								router.push("/(screens)/batches/add")
+							}
 						/>
 					),
 				}}

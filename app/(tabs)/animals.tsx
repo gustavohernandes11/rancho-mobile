@@ -1,4 +1,3 @@
-import { AddButton } from "components/AddButton";
 import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
@@ -8,7 +7,7 @@ import { SearchBar } from "components/SearchBar";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { SubTitle } from "components/SubTitle";
-import { Stack, router, useFocusEffect } from "expo-router";
+import { Stack, useFocusEffect, useRouter } from "expo-router";
 import useDebounce from "hooks/useDebounce";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
@@ -18,6 +17,7 @@ import { OrderByOptions } from "types/StorageRepository";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
+	const router = useRouter();
 	const { animals, batches } = useGlobalState();
 	const [searchText, setSearchText] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
@@ -72,9 +72,12 @@ export default function ViewAnimalsScreen() {
 				options={{
 					headerTitle: "Rebanho",
 					headerRight: () => (
-						<AddButton
-							icon="add-animal"
-							href="/(screens)/animals/add"
+						<Button
+							title="Novo animal"
+							icon={require("../../assets/images/AddAnimalIcon.png")}
+							onPress={() =>
+								router.push("/(screens)/animals/add")
+							}
 						/>
 					),
 				}}

@@ -28,7 +28,7 @@ export default function ViewProductionScreen() {
 					headerTitle: "Produção mensal",
 				}}
 			/>
-			<Heading>{`Calendário de produção`}</Heading>
+			<Heading>Calendário de produção</Heading>
 			<Span direction="row">
 				<MonthProductionCalendar
 					updateUINumber={updateUINumber}
