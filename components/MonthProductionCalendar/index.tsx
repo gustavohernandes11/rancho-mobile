@@ -1,14 +1,14 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import Colors from "styles/Colors";
-import { Cell } from "./Cell";
+import { MemoizedCell } from "./Cell";
 import { MonthAndYearSelect } from "./MonthAndYearSelect";
-import { WeekDayHeader } from "./WeekDayHeader";
 
 interface MonthProductionCalendarProps {
 	onSelectDate: (date: Date) => void;
 	selectedDate: Date;
+	updateUINumber: number;
 }
 
 export type DayItem = {
@@ -18,32 +18,32 @@ export type DayItem = {
 
 export const MonthProductionCalendar: React.FC<
 	MonthProductionCalendarProps
-> = ({ onSelectDate, selectedDate }) => {
+> = ({ onSelectDate, selectedDate, updateUINumber }) => {
 	const [days, setDays] = useState<DayItem[]>([]);
 
 	useEffect(() => {
 		generateCells();
 	}, [selectedDate]);
 
-	const makeDayItem = (day: Date): DayItem => ({
-		value: moment(day).format("D"),
-		date: moment(day).toDate(),
-	});
+	const month = selectedDate.getMonth();
+	const year = selectedDate.getFullYear();
 
-	const generateCells = () => {
-		const startOfMonth = moment(selectedDate.toISOString()).startOf(
-			"month"
-		);
+	const generateCells = useCallback(() => {
+		const startOfMonth = moment(new Date(year, month)).startOf("month");
 		const daysInMonth = startOfMonth.daysInMonth();
 		let calendarDays: DayItem[] = [];
 
 		for (let i = 1; i <= daysInMonth; i++) {
 			const day = moment(startOfMonth).add(i - 1, "days");
-			calendarDays.push(makeDayItem(day.toDate()));
+
+			calendarDays.push({
+				value: day.format("D"),
+				date: day.toDate(),
+			});
 		}
 
 		setDays(calendarDays);
-	};
+	}, [month, year]);
 
 	return (
 		<View style={styles.calendar}>
@@ -51,18 +51,19 @@ export const MonthProductionCalendar: React.FC<
 				selectedDate={selectedDate}
 				setSelectedDate={onSelectDate}
 			/>
-			<WeekDayHeader />
+			{/* <WeekDayHeader />  need adjust */}
 			<View style={styles.daysContainer}>
 				{days.map((item) => (
-					<Cell
+					<MemoizedCell
 						key={item.date.toISOString()}
+						updateUINumber={updateUINumber}
 						item={item}
 						isSelected={
 							selectedDate
 								? moment(item.date).isSame(selectedDate, "day")
 								: false
 						}
-						onSelect={() => onSelectDate(new Date(item.date))}
+						onSelect={onSelectDate}
 					/>
 				))}
 			</View>

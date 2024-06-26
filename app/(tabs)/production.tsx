@@ -31,6 +31,7 @@ export default function ViewProductionScreen() {
 			<Heading>{`Calendário de produção`}</Heading>
 			<Span direction="row">
 				<MonthProductionCalendar
+					updateUINumber={updateUINumber}
 					onSelectDate={handleSelectDate}
 					selectedDate={selectedDate}
 				/>
@@ -42,7 +43,6 @@ export default function ViewProductionScreen() {
 			<Span direction="column">
 				<ProductionForm
 					selectedDate={selectedDate}
-					setSelectedDate={setSelectedDate}
 					onSubmitCallback={updateUI}
 				/>
 			</Span>

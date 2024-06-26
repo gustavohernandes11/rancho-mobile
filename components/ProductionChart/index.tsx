@@ -1,6 +1,6 @@
 import { Loading } from "components/Loading";
 import React, { useEffect, useState } from "react";
-import { ScrollView, View } from "react-native";
+import { ScrollView, Text, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
@@ -27,6 +27,16 @@ export const ProductionChart = ({
 	const [monthProduction, setMonthProduction] = useState<DayProduction[]>([]);
 	const [isLoading, setIsLoading] = useState(true);
 
+	useEffect(() => {
+		const date = new Date(yearNumber, monthNumber - 1);
+		setIsLoading(true);
+		Storage.listMonthProduction(date)
+			.then((prod) => {
+				setMonthProduction(prod);
+			})
+			.finally(() => setIsLoading(false));
+	}, [monthNumber, yearNumber]);
+
 	const generateData = (): number[] => {
 		const daysInMonth = new Date(yearNumber, monthNumber, 0).getDate();
 		const data = Array(daysInMonth).fill(0);
@@ -39,15 +49,9 @@ export const ProductionChart = ({
 		return data;
 	};
 
-	useEffect(() => {
-		const date = new Date(yearNumber, monthNumber - 1);
-		setIsLoading(true);
-		Storage.listMonthProduction(date)
-			.then((prod) => {
-				setMonthProduction(prod);
-			})
-			.finally(() => setIsLoading(false));
-	}, [monthNumber, yearNumber]);
+	const getTotal = () => {
+		return monthProduction.reduce((acc, prod) => acc + prod.quantity, 0);
+	};
 
 	if (isLoading) {
 		return <Loading />;
@@ -59,6 +63,7 @@ export const ProductionChart = ({
 				borderRadius: 8,
 			}}
 		>
+			<Text>{`Total de ${getTotal()} litros produzidos.`}</Text>
 			<ScrollView horizontal={true}>
 				<BarChart
 					data={{

@@ -8,13 +8,15 @@ import { DayItem } from "./index";
 export type CellProps<T> = {
 	item: T;
 	isSelected: boolean;
-	onSelect: () => void;
+	onSelect: (date: Date) => void;
+	updateUINumber: number;
 };
 
 export const Cell: React.FC<CellProps<DayItem>> = ({
 	item,
 	isSelected,
 	onSelect,
+	updateUINumber,
 	...props
 }) => {
 	const [quantity, setQuantity] = useState<number | null>();
@@ -39,12 +41,26 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 	]);
 
 	return (
-		<TouchableOpacity onPress={onSelect} style={cellStyles} {...props}>
+		<TouchableOpacity
+			onPress={() => onSelect(item.date)}
+			style={cellStyles}
+			{...props}
+		>
 			<Text style={textStyles}>{item.value}</Text>
 			<Text style={boldStyles}>{quantity || " "}</Text>
 		</TouchableOpacity>
 	);
 };
+
+const isEqual = (
+	prevProps: CellProps<DayItem>,
+	nextProps: CellProps<DayItem>
+) =>
+	prevProps.isSelected === nextProps.isSelected &&
+	prevProps.updateUINumber === nextProps.updateUINumber;
+
+export const MemoizedCell = React.memo(Cell, isEqual);
+
 const styles = StyleSheet.create({
 	cell: {
 		flexBasis: (Dimensions.get("window").width - 16) / 7,

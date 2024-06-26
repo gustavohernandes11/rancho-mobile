@@ -19,7 +19,6 @@ import { validationSchema } from "./validation.schema";
 interface ProductionFormProps {
 	onSubmitCallback: Function;
 	selectedDate: Date;
-	setSelectedDate: (date: Date) => void;
 }
 
 const handleSubmit = async (
