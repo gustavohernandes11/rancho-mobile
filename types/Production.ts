@@ -1,4 +1,4 @@
 export type DayProduction = {
-	day: string;
+	day: string; // "DD/MM/YYYY"
 	quantity: number;
 };

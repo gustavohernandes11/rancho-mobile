@@ -51,7 +51,7 @@ export default function ViewBatchesScreen() {
 						<Text>Nenhum lote adicionado.</Text>
 					</Span>
 				)}
-				<Span justify="center" py={8}>
+				<Span justify="center">
 					<Button
 						title="Adicionar novo lote"
 						onPress={() => router.push("/(screens)/batches/add")}

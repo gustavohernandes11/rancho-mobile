@@ -11,8 +11,10 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
+import { AddAnnotation, Annotation, UpdateAnnotation } from "types/Annotation";
 import { Count } from "types/Count";
 import { DayProduction } from "types/Production";
+import { AnnotationQueryOptions } from "types/StorageServicesMethods";
 import { nullifyFalsyFields } from "utils/serializers";
 
 export class SqliteRepository implements StorageRepository {
@@ -57,8 +59,25 @@ export class SqliteRepository implements StorageRepository {
 			this.ensureAnimalTableExists(),
 			this.ensureBatchTableExists(),
 			this.ensureProductionTableExists(),
+			this.ensureAnnotationTableExists(),
 		]);
 	}
+
+	private ensureAnnotationTableExists = async () => {
+		const query = `
+        CREATE TABLE IF NOT EXISTS Annotations (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            type TEXT NOT NULL,
+            description TEXT,
+            date TEXT,
+            animalIDs TEXT,
+            dosage TEXT,
+            medicineName TEXT
+        );
+        `;
+		await this.execute(query, []);
+	};
 
 	private ensureAnimalTableExists = async () => {
 		const query = `
@@ -72,7 +91,7 @@ export class SqliteRepository implements StorageRepository {
             paternityID INTEGER REFERENCES Animals(id),
             maternityID INTEGER REFERENCES Animals(id),
             observation TEXT
-        );`;
+			);`;
 
 		await this.execute(query, []);
 	};
@@ -522,5 +541,131 @@ export class SqliteRepository implements StorageRepository {
 
 		const production = await this.getOne<DayProduction>(query, params);
 		return production || null;
+	}
+	private convertAnimalIDsToString(animalIDs: number[]): string {
+		return animalIDs.join(",");
+	}
+	async insertAnnotation(
+		annotation: AddAnnotation
+	): Promise<number | undefined> {
+		const query = `
+			INSERT INTO Annotations (title, type, description, date, animalIDs, dosage, medicineName)
+			VALUES (?, ?, ?, ?, ?, ?, ?);
+		`;
+
+		const parsed = nullifyFalsyFields(annotation);
+
+		const params = [
+			parsed.title,
+			parsed.type,
+			parsed.description,
+			parsed.date ? parsed.date.toISOString() : null,
+			parsed.animalIDs
+				? this.convertAnimalIDsToString(parsed.animalIDs)
+				: null,
+			parsed.dosage,
+			parsed.medicineName,
+		];
+
+		return this.execute(query, params).then(
+			({ lastInsertRowId }) => lastInsertRowId
+		);
+	}
+	private convertStringToAnimalIDs(animalIDsString: string): number[] {
+		return animalIDsString.split(",").map(Number);
+	}
+	async getAnnotation(id: number): Promise<Annotation | null> {
+		const query = `
+            SELECT id, title, type, description, date, animalIDs, dosage, medicineName
+            FROM Annotations
+            WHERE id = ?;
+        `;
+
+		const annotation = await this.getOne<Annotation>(query, [id]);
+
+		if (!annotation) {
+			return null;
+		}
+
+		return {
+			...annotation,
+			animalIDs: annotation.animalIDs
+				? this.convertStringToAnimalIDs(
+						annotation.animalIDs as unknown as string
+				  )
+				: [],
+		} as Annotation;
+	}
+	async listAnnotations(
+		query?: AnnotationQueryOptions
+	): Promise<Annotation[]> {
+		let sqlQuery = `
+            SELECT id, title, type, description, date, animalIDs, dosage, medicineName
+            FROM Annotations
+        `;
+
+		const params: (string | number)[] = [];
+		if (query?.types && query.types.length > 0) {
+			const placeholders = query.types.map(() => "?").join(", ");
+			sqlQuery += ` WHERE type IN (${placeholders})`;
+			params.push(...query.types);
+		}
+
+		const annotations = await this.getAll<Annotation>(sqlQuery, params);
+
+		return annotations.map((annotation) => ({
+			...annotation,
+			animalIDs: annotation.animalIDs
+				? this.convertStringToAnimalIDs(
+						annotation.animalIDs as unknown as string
+				  )
+				: [],
+		}));
+	}
+	async updateAnnotation(
+		updateData: UpdateAnnotation | UpdateAnnotation[]
+	): Promise<boolean> {
+		if (Array.isArray(updateData)) {
+			const operations = updateData.map((data) =>
+				this.updateAnnotation(data)
+			);
+			return Promise.all(operations)
+				.then(() => true)
+				.catch(() => false);
+		}
+
+		const query = `
+            UPDATE Annotations SET 
+                title = ?, type = ?, description = ?, date = ?, animalIDs = ?, dosage = ?, medicineName = ?
+            WHERE id = ?;
+        `;
+
+		const parsed = nullifyFalsyFields(updateData);
+
+		const params = [
+			parsed.title,
+			parsed.type,
+			parsed.description,
+			parsed.date ? parsed.date?.toISOString() : null,
+			parsed.animalIDs
+				? this.convertAnimalIDsToString(parsed.animalIDs)
+				: null,
+			parsed.dosage,
+			parsed.medicineName,
+			updateData.id,
+		];
+
+		await this.execute(query, params);
+		return true;
+	}
+	async deleteAnnotation(id: number): Promise<boolean> {
+		const query = `
+            DELETE FROM Annotations
+            WHERE id = ?;
+        `;
+
+		return this.execute(query, [id])
+			.then(() => true)
+			.catch(() => false);
 	}
 }

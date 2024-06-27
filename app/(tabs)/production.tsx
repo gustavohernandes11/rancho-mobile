@@ -1,7 +1,6 @@
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { MonthProductionCalendar } from "components/MonthProductionCalendar";
-import { ProductionChart } from "components/ProductionChart";
 import { ProductionForm } from "components/ProductionForm";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
@@ -51,13 +50,13 @@ export default function ViewProductionScreen() {
 					{"Gráfico de produção " +
 						getFormattedMonthAndYear(selectedDate)}
 				</Heading>
-				<Span>
+				{/* <Span>
 					<ProductionChart
 						key={updateUINumber}
 						yearNumber={Number(moment(selectedDate).year())}
 						monthNumber={Number(moment(selectedDate).month() + 1)}
 					/>
-				</Span>
+				</Span>  performance issue */}
 			</Span>
 		</ContainerView>
 	);

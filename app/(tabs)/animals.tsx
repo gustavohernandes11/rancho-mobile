@@ -89,7 +89,7 @@ export default function ViewAnimalsScreen() {
 			<SearchBar
 				onChangeText={(text) => setSearchText(text)}
 				value={searchText}
-				placeholder="Busque por nome, observação ou código."
+				placeholder="Busque por nome, código ou observação"
 			/>
 			<Span direction="row" my={4}>
 				<Select
@@ -98,7 +98,7 @@ export default function ViewAnimalsScreen() {
 						{ key: "Alfabética", value: "alfabetic" },
 						{ key: "Idade", value: "age" },
 					]}
-					defaultValue={"Alfabética"}
+					defaultValue="Alfabética"
 					defaultButtonText="Alfabética"
 					onSelect={(option) => {
 						setOrderBy(option.value);
@@ -115,8 +115,8 @@ export default function ViewAnimalsScreen() {
 						},
 						...serializeBatches(batches),
 					]}
-					defaultValue={"Todos"}
-					defaultButtonText={"Todos"}
+					defaultValue="Todos"
+					defaultButtonText="Todos"
 					onSelect={(option) => setFilterByBatchID(option.value)}
 					size="small"
 					backgroundColor="transparent"
@@ -126,12 +126,12 @@ export default function ViewAnimalsScreen() {
 			{isLoading ? (
 				<Loading />
 			) : (
-				<Span py={16}>
+				<Span py={8}>
 					<AnimalTable animals={filteredAnimals} />
 				</Span>
 			)}
 
-			<Span justify="flex-end" direction="row" py={8}>
+			<Span justify="flex-end" direction="row">
 				<Button
 					title="Registrar animal"
 					onPress={() => router.push("/(screens)/animals/add")}

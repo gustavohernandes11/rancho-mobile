@@ -4,9 +4,23 @@ import { Heading } from "components/Heading";
 import { SearchBar } from "components/SearchBar";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { Storage } from "services/StorageService";
+import { Annotation } from "types/Annotation";
 
 export default function ViewAnnotationsPage() {
+	const [annotations, setAnnotations] = useState<Annotation[]>();
+
+	useEffect(() => {
+		fetchAnnotations();
+	}, []);
+
+	const fetchAnnotations = () => {
+		Storage.listAnnotations().then((annotations) =>
+			setAnnotations(annotations)
+		);
+	};
+
 	return (
 		<ContainerView>
 			<Stack.Screen

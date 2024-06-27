@@ -12,6 +12,7 @@ interface SpanProps {
 	flexWrap?: "wrap" | "nowrap";
 	my?: number;
 	direction?: "row" | "column";
+	gap?: number;
 }
 
 export const Span: React.FC<SpanProps & ViewProps> = ({
@@ -24,6 +25,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 	my = 8,
 	flexWrap = "wrap",
 	direction = "row",
+	gap = 8,
 	...props
 }) => {
 	return (
@@ -39,6 +41,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 					marginVertical: my,
 					flexDirection: direction,
 					flexWrap,
+					gap,
 				},
 			]}
 			{...props}
@@ -50,7 +53,6 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
 
 const styles = StyleSheet.create({
 	span: {
-		gap: 8,
 		width: "100%",
 	},
 });

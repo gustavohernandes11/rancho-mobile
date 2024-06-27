@@ -12,8 +12,12 @@ import {
 	UpdateAnimal,
 	UpdateBatch,
 } from "types";
+import { AddAnnotation, Annotation, UpdateAnnotation } from "types/Annotation";
 import { DayProduction } from "types/Production";
-import { StorageServicesMethods } from "types/StorageServicesMethods";
+import {
+	AnnotationQueryOptions,
+	StorageServicesMethods,
+} from "types/StorageServicesMethods";
 import { SqliteRepository } from "../database/repositories/SqliteRepository";
 
 export class StorageServices implements StorageServicesMethods {
@@ -21,41 +25,63 @@ export class StorageServices implements StorageServicesMethods {
 		this.DbRepository.initDatabase();
 	}
 
-	async count(): Promise<Count> {
+	insertAnnotation(annotation: AddAnnotation): Promise<number | undefined> {
+		return this.DbRepository.insertAnnotation(annotation);
+	}
+
+	getAnnotation(id: number): Promise<Annotation | null> {
+		return this.DbRepository.getAnnotation(id);
+	}
+
+	listAnnotations(
+		query?: AnnotationQueryOptions | undefined
+	): Promise<Annotation[]> {
+		return this.DbRepository.listAnnotations(query);
+	}
+
+	updateAnnotation(
+		updateData: UpdateAnnotation | UpdateAnnotation[]
+	): Promise<boolean> {
+		return this.DbRepository.updateAnnotation(updateData);
+	}
+
+	deleteAnnotation(id: number): Promise<boolean> {
+		return this.DbRepository.deleteAnnotation(id);
+	}
+
+	count(): Promise<Count> {
 		return this.DbRepository.count();
 	}
 
-	async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
+	insertAnimal(animal: AddAnimal): Promise<number | undefined> {
 		return this.DbRepository.insertAnimal(animal);
 	}
 
-	async insertBatch(batch: AddBatch): Promise<number | undefined> {
+	insertBatch(batch: AddBatch): Promise<number | undefined> {
 		return this.DbRepository.insertBatch(batch);
 	}
 
-	async getAnimal(animalID: number): Promise<Animal> {
+	getAnimal(animalID: number): Promise<Animal> {
 		return this.DbRepository.getAnimal(animalID);
 	}
 
-	async getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
+	getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
 		return this.DbRepository.getPopulatedAnimal(animalID);
 	}
 
-	async getPopulatedBatch(batchID: number): Promise<PopulatedBatch> {
+	getPopulatedBatch(batchID: number): Promise<PopulatedBatch> {
 		return this.DbRepository.getPopulatedBatch(batchID);
 	}
 
-	async listAnimals(query?: QueryOptions): Promise<Animal[]> {
+	listAnimals(query?: QueryOptions): Promise<Animal[]> {
 		return this.DbRepository.listAnimals(query);
 	}
 
-	async listBatches(): Promise<Batch[]> {
+	listBatches(): Promise<Batch[]> {
 		return this.DbRepository.listBatches();
 	}
 
-	async updateAnimal(
-		updateData: UpdateAnimal | UpdateAnimal[]
-	): Promise<boolean> {
+	updateAnimal(updateData: UpdateAnimal | UpdateAnimal[]): Promise<boolean> {
 		return this.DbRepository.updateAnimal(updateData);
 	}
 
@@ -72,7 +98,7 @@ export class StorageServices implements StorageServicesMethods {
 		return true;
 	}
 
-	async deleteAnimal(animalID: number | number[]): Promise<boolean> {
+	deleteAnimal(animalID: number | number[]): Promise<boolean> {
 		return this.DbRepository.nullifyParentalIds(animalID).then(() =>
 			this.DbRepository.deleteAnimal(animalID)
 		);
@@ -106,7 +132,7 @@ export class StorageServices implements StorageServicesMethods {
 			.catch(() => false);
 	}
 
-	async moveAnimalToBatch(
+	moveAnimalToBatch(
 		animalID: number | number[],
 		batchID: number | null
 	): Promise<boolean> {
@@ -136,11 +162,11 @@ export class StorageServices implements StorageServicesMethods {
 			.catch(() => false);
 	}
 
-	async upsertDayProduction(production: DayProduction): Promise<boolean> {
+	upsertDayProduction(production: DayProduction): Promise<boolean> {
 		return this.DbRepository.upsertDayProduction(production);
 	}
 
-	async listMonthProduction(month: Date): Promise<DayProduction[]> {
+	listMonthProduction(month: Date): Promise<DayProduction[]> {
 		const startOfMonth = moment(month).startOf("month").toDate();
 		const endOfMonth = moment(month).endOf("month").toDate();
 
@@ -150,7 +176,7 @@ export class StorageServices implements StorageServicesMethods {
 		);
 	}
 
-	async getDayProduction(date: Date): Promise<DayProduction | null> {
+	getDayProduction(date: Date): Promise<DayProduction | null> {
 		return this.DbRepository.getDayProduction(date);
 	}
 }
