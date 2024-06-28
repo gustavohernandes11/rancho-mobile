@@ -1,6 +1,7 @@
 import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
 import { Input } from "components/Input";
+import { ListAccordion } from "components/ListAccordion";
 import { Loading } from "components/Loading";
 import { Span } from "components/Span";
 import { router, useNavigation } from "expo-router";
@@ -9,10 +10,8 @@ import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
-import { Alert, Text, View } from "react-native";
-import { List } from "react-native-paper";
+import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
-import { sharedStyles } from "styles/Common";
 import { AddBatch, Batch, UpdateBatch } from "types/Batch";
 import { showToast } from "utils/displayToast";
 import { getFieldError } from "utils/forms";
@@ -51,7 +50,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 		formik.resetForm();
 		showToast(message);
 	};
-	const handleError = (e: string) => Alert.alert("Erro!", e);
+	const onError = (e: Error) => Alert.alert("Erro!", e.message);
 
 	useAlertUnsavedChanges({
 		formik,
@@ -71,7 +70,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					)
 					.then(() => onSucess(`Lote ${values.name} foi adicionado`))
 					.then(() => router.replace("/(tabs)/batches"))
-					.catch(handleError)
+					.catch(onError)
 			: Storage.updateBatch(values)
 					.then(() =>
 						Storage.compareBatchAnimalsWithSelectedAndUpdate(
@@ -81,7 +80,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 					)
 					.then(() => onSucess(`Lote ${values.name} foi atualizado`))
 					.then(() => router.back())
-					.catch(handleError);
+					.catch(onError);
 	};
 
 	return (
@@ -106,25 +105,21 @@ export const BatchForm: React.FC<BatchFormProps> = ({
 				/>
 			</Span>
 			<Span>
-				<Text style={sharedStyles.label}>
-					Selecione os animais (você pode fazer isso depois)
-				</Text>
+				<ListAccordion
+					title={`${table.selectedIDs.length} selecionado(s)`}
+					label="Selecione os animais - ou faça isso depois"
+				>
+					{animals ? (
+						<AnimalTable
+							onlySelectionMode={true}
+							liftedController={table}
+							animals={animals}
+						/>
+					) : (
+						<Loading />
+					)}
+				</ListAccordion>
 			</Span>
-			<List.Accordion
-				style={[sharedStyles.inputAspect, { padding: 0 }]}
-				titleStyle={sharedStyles.text}
-				title={`${table.selectedIDs.length} selecionado(s)`}
-			>
-				{animals ? (
-					<AnimalTable
-						onlySelectionMode={true}
-						liftedController={table}
-						animals={animals}
-					/>
-				) : (
-					<Loading />
-				)}
-			</List.Accordion>
 			<Span justify="flex-end" py={16}>
 				<Button
 					type="light"

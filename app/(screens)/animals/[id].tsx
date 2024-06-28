@@ -9,8 +9,9 @@ import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Text } from "react-native";
 import { Storage } from "services/StorageService";
+import { sharedStyles } from "styles/Common";
 import { Animal, PopulatedAnimal } from "types";
 import { atLeastOneYearOld } from "utils/filters";
 import { serializeAnimalInfo } from "utils/serializers";
@@ -50,7 +51,10 @@ export default function ViewAnimalDetailsScreen() {
 			{isLoading ? (
 				<Skeleton width={300} />
 			) : (
-				<Heading>{animal?.name}</Heading>
+				<>
+					<Text style={sharedStyles.label}>Nome</Text>
+					<Heading size="big">{animal?.name}</Heading>
+				</>
 			)}
 			<Span flexWrap="wrap">
 				<Button

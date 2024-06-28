@@ -75,9 +75,7 @@ export default function ViewAnnotationDetailsScreen() {
 	);
 
 	const handleDelete = () => {
-		showConfirmationAndDelete(annotation!, () => {
-			router.back();
-		});
+		showConfirmationAndDelete(annotation!, router.back);
 	};
 	const handleEdit = () => {
 		router.push(`/(screens)/annotations/edit/${id}`);

@@ -25,15 +25,15 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 			<TextInput
 				mode="outlined"
 				outlineStyle={[
+					sharedStyles.inputAspect,
 					{
 						borderColor: getInputBorderColor(!!errorText),
 					},
-					sharedStyles.inputAspect,
 				]}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
 				textColor={Colors.darkGray}
-				placeholderTextColor={Colors.darkGray}
+				placeholderTextColor={Colors.gray}
 				cursorColor={Colors.darkGray}
 				error={!!errorText}
 				multiline={multiline}

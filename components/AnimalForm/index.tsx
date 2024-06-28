@@ -41,7 +41,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 		router.back();
 		showToast(message);
 	};
-	const handleError = (e: string) => Alert.alert("Erro!", e);
+	const onError = (e: Error) => Alert.alert("Erro!", e.message);
 
 	const onSubmit = (values: Animal) => {
 		initialValues.id
@@ -51,14 +51,14 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 							`${values.name} foi atualizado(a) com sucesso.`
 						)
 					)
-					.catch(handleError)
+					.catch(onError)
 			: Storage.insertAnimal(values)
 					.then(() =>
 						onSucess(
 							`${values.name} foi adicionado(a) com sucesso.`
 						)
 					)
-					.catch(handleError);
+					.catch(onError);
 	};
 
 	const formik = useFormik({

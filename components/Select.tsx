@@ -54,9 +54,9 @@ export const Select: React.FC<
 				buttonStyle={[
 					styles.button,
 					{
-						borderColor: getInputBorderColor(!!errorText),
 						height: getSelectHeight(),
 						backgroundColor: getBackgroundColor(),
+						borderColor: getInputBorderColor(!!errorText),
 					},
 				]}
 				rowStyle={[

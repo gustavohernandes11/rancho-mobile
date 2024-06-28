@@ -61,7 +61,7 @@ export const MoveToBatchModal: React.FC<
 						: `Animais movidos para o lote ${selectedBatch!.name}.`
 				)
 			)
-			.catch(onFail);
+			.catch(onError);
 	};
 
 	const onSuccess = (message: string) => {
@@ -71,7 +71,7 @@ export const MoveToBatchModal: React.FC<
 		refreshAll();
 	};
 
-	const onFail = (error: AlertButton[]) => {
+	const onError = (error: AlertButton[]) => {
 		Alert.alert("Oops!", "Houve um erro ao mover os animais.", error);
 	};
 

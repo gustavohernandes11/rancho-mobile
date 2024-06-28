@@ -3,8 +3,8 @@ import { View } from "react-native";
 import Colors from "styles/Colors";
 
 type SkeletonProps = {
-	width?: number;
-	height?: number;
+	width?: number | "100%";
+	height?: number | "100%";
 	my?: number;
 	mx?: number;
 	flex?: number;

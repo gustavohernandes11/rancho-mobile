@@ -26,18 +26,18 @@ export const DatePicker: React.FC<
 				iconColor={Colors.darkGray}
 				mode="outlined"
 				outlineStyle={[
+					sharedStyles.inputAspect,
 					{
 						borderColor: getInputBorderColor(!!errorText),
 					},
-					sharedStyles.inputAspect,
 				]}
 				outlineColor={Colors.border}
-				activeOutlineColor={Colors.black}
+				activeOutlineColor={Colors.darkGray}
 				textColor={Colors.darkGray}
 				startYear={1990}
 				endYear={2025}
 				locale="pt"
-				placeholderTextColor={Colors.darkGray}
+				placeholderTextColor={Colors.gray}
 				style={styles.input}
 				withModal={false}
 				{...props}
