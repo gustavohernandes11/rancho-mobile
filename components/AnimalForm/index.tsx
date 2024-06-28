@@ -12,14 +12,14 @@ import React from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { Animal } from "types";
-import { showToast } from "utils/displayToast";
 import {
     filterPossibleMaternity,
     filterPossiblePaternity,
 } from "utils/filters";
-import { getFormattedGender } from "utils/formatters";
+import { formatGender } from "utils/formatters";
 import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
+import { showToast } from "utils/showToast";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
@@ -87,7 +87,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                     ]}
                     defaultButtonText={
                         initialValues.gender
-                            ? getFormattedGender(initialValues.gender)
+                            ? formatGender(initialValues.gender)
                             : "Escolha um gênero"
                     }
                     defaultValue={initialValues.gender}

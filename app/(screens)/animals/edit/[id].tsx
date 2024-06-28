@@ -3,7 +3,7 @@ import { ContainerView } from "components/ContainerView";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useLayoutEffect, useState } from "react";
 import { Storage } from "services/StorageService";
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 
 export default function EditAnimalScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();

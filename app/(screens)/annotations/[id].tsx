@@ -12,8 +12,7 @@ import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import { Animal } from "types/Animal";
-import { Annotation } from "types/Annotation";
+import { Animal, Annotation } from "types";
 import { serializeAnimalPreview, serializeAnnotation } from "utils/serializers";
 
 export default function ViewAnnotationDetailsScreen() {

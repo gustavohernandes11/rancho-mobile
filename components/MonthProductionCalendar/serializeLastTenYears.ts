@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Item } from "types/Item";
+import { Item } from "types";
 
 export const serializeLastTenYears = (): Item[] => {
     const currentYear = moment().year();

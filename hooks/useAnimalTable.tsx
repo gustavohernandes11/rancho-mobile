@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 
 export type ControlledAnimalTableProps = {
     selectedIDs: number[];

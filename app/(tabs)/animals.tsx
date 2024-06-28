@@ -12,8 +12,7 @@ import useDebounce from "hooks/useDebounce";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
-import { Animal } from "types/Animal";
-import { OrderByOptions } from "types/StorageRepository";
+import { Animal, OrderByOptions } from "types";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {

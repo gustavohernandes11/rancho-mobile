@@ -7,7 +7,7 @@ import { useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
-import { Count } from "types/Count";
+import { Count } from "types";
 
 export default function TabOneScreen() {
     const [count, setCount] = useState<Count>();

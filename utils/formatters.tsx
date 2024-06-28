@@ -1,9 +1,9 @@
 import { FontAwesome } from "@expo/vector-icons";
 import moment from "moment";
 import Colors from "styles/Colors";
-import { AnnotationTypeOption } from "types/Annotation";
+import { AnnotationTypeOption } from "types";
 
-export const getFormattedAge = (isoString: string): string => {
+export const formatAge = (isoString: string): string => {
     const duration = moment.duration(moment().diff(moment(isoString)));
 
     const years = duration.years();
@@ -41,7 +41,7 @@ export const getFormattedAge = (isoString: string): string => {
     }
 };
 
-export const getFormattedGender = (gender: "F" | "M") =>
+export const formatGender = (gender: "F" | "M") =>
     gender === "M" ? "♂ Macho" : "♀ Fêmea";
 
 export const getGenderIcon = (gender: "F" | "M") =>
@@ -59,7 +59,7 @@ export const getGenderIcon = (gender: "F" | "M") =>
         />
     );
 
-export const getFormattedPtBRDate = (date: Date) => {
+export const formatDateToLongPtBR = (date: Date) => {
     const options = {
         day: "numeric",
         month: "long",
@@ -68,12 +68,6 @@ export const getFormattedPtBRDate = (date: Date) => {
 
     const formatter = new Intl.DateTimeFormat("pt-BR", options as any);
     return formatter.format(date);
-};
-
-export const getFormattedMonthAndYear = (date: Date): string => {
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${month}/${year}`;
 };
 
 export const formatAnnotationType = (type: AnnotationTypeOption) => {

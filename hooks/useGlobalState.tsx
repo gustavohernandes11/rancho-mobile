@@ -1,6 +1,5 @@
 import { Storage } from "services/StorageService";
-import { Animal } from "types/Animal";
-import { Batch } from "types/Batch";
+import { Animal, Batch } from "types";
 import { create } from "zustand";
 
 interface GlobalState {

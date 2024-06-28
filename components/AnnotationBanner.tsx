@@ -4,8 +4,8 @@ import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
-import { AnnotationTypeOption } from "types/Annotation";
-import { formatAnnotationType, getFormattedPtBRDate } from "utils/formatters";
+import { AnnotationTypeOption } from "types";
+import { formatAnnotationType, formatDateToLongPtBR } from "utils/formatters";
 
 type AnnotationBannerProps = {
     title: string;
@@ -34,7 +34,7 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
                         {formatAnnotationType(type)}
                     </Text>
                     <Text style={styles.date}>
-                        {date ? getFormattedPtBRDate(date) : " "}
+                        {date ? formatDateToLongPtBR(date) : " "}
                     </Text>
                 </View>
                 <View style={styles.main}>

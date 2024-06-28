@@ -1,7 +1,7 @@
 import React from "react";
 import { ViewProps } from "react-native";
-import { Animal } from "types/Animal";
-import { getFormattedAge, getGenderIcon } from "utils/formatters";
+import { Animal } from "types";
+import { formatAge, getGenderIcon } from "utils/formatters";
 import { Banner } from "./Banner";
 
 interface AnimalBannerProps {
@@ -23,9 +23,7 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
                     {" " + animal.name}
                 </>
             }
-            rightDescription={
-                animal.birthdate && getFormattedAge(animal.birthdate)
-            }
+            rightDescription={animal.birthdate && formatAge(animal.birthdate)}
             {...props}
         />
     );

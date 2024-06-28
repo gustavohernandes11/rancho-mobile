@@ -1,7 +1,7 @@
 import { render, screen } from "tests/setupTests";
 
 import { SimpleTable } from "components/SimpleTable";
-import { Item } from "types/Item";
+import { Item } from "types";
 
 describe("SimpleTable", () => {
     const mockItems: Item[] = [

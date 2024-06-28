@@ -4,8 +4,8 @@ import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import Colors from "styles/Colors";
-import { Animal } from "types/Animal";
-import { getFormattedAge, getGenderIcon } from "utils/formatters";
+import { Animal } from "types";
+import { formatAge, getGenderIcon } from "utils/formatters";
 import { Cell } from "./Cell";
 
 interface RowProps {
@@ -47,8 +47,7 @@ export const Row: React.FC<RowProps> = memo(
                             {animal.batchID && batch && batch.name}
                         </Cell>
                         <Cell flex={2}>
-                            {animal.birthdate &&
-                                getFormattedAge(animal.birthdate)}
+                            {animal.birthdate && formatAge(animal.birthdate)}
                         </Cell>
                         <Cell flex={1}>
                             <Checkbox

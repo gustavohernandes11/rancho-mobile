@@ -9,10 +9,10 @@ import {
     TextInputSubmitEditingEventData,
 } from "react-native";
 import { Storage } from "services/StorageService";
-import { DayProduction } from "types/Production";
-import { showToast } from "utils/displayToast";
-import { getFormattedPtBRDate } from "utils/formatters";
+import { DayProduction } from "types";
+import { formatDateToLongPtBR } from "utils/formatters";
 import { getFieldError } from "utils/forms";
+import { showToast } from "utils/showToast";
 import { initialValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
@@ -74,7 +74,7 @@ export const ProductionForm: React.FC<ProductionFormProps> = ({
         formik.submitForm();
     };
 
-    const quantityLabel = `Litros produzidos em ${getFormattedPtBRDate(
+    const quantityLabel = `Litros produzidos em ${formatDateToLongPtBR(
         selectedDate
     )}`;
 

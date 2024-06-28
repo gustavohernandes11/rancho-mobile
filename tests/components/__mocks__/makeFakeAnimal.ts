@@ -1,4 +1,4 @@
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 
 export const makeFakeAnimal = (override?: Partial<Animal>): Animal =>
     Object.assign(

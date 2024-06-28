@@ -12,9 +12,9 @@ import { useGlobalState } from "hooks/useGlobalState";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
-import { AddBatch, Batch, UpdateBatch } from "types/Batch";
-import { showToast } from "utils/displayToast";
+import { AddBatch, Batch, UpdateBatch } from "types";
 import { getFieldError } from "utils/forms";
+import { showToast } from "utils/showToast";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 

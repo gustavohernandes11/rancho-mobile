@@ -1,10 +1,9 @@
-import { Animal, Batch, Item } from "types";
-import { Annotation } from "types/Annotation";
+import { Animal, Annotation, Batch, Item } from "types";
 import {
+    formatAge,
     formatAnnotationType,
-    getFormattedAge,
-    getFormattedGender,
-    getFormattedPtBRDate,
+    formatDateToLongPtBR,
+    formatGender,
 } from "./formatters";
 
 export const serializeAnimals = (animals: Animal[]): Item[] =>
@@ -19,16 +18,6 @@ export const serializeBatches = (batches: Batch[]): Item[] =>
         value: b.id,
     })) || [];
 
-export const nullifyFalsyFields = (obj: any) => {
-    const clone = { ...obj };
-    for (const key in clone) {
-        if (clone.hasOwnProperty(key) && !clone[key]) {
-            clone[key] = null;
-        }
-    }
-    return clone;
-};
-
 export const serializeAnimalInfo = (animal?: Animal): Item[] => {
     let items: Item[] = [];
     if (!animal) return items;
@@ -37,14 +26,14 @@ export const serializeAnimalInfo = (animal?: Animal): Item[] => {
     if (animal.gender)
         items.push({
             key: "Gênero",
-            value: getFormattedGender(animal.gender),
+            value: formatGender(animal.gender),
         });
     if (animal.code)
         items.push({ key: "Código", value: animal.code.toString() });
     if (animal.birthdate) {
         items.push({
             key: "Idade",
-            value: getFormattedAge(animal.birthdate),
+            value: formatAge(animal.birthdate),
         });
         items.push({
             key: "Data de nascimento",
@@ -68,7 +57,7 @@ export const serializeAnnotation = (annotation?: Annotation): Item[] => {
     if (annotation.date)
         items.push({
             key: "Data",
-            value: getFormattedPtBRDate(annotation.date),
+            value: formatDateToLongPtBR(annotation.date),
         });
     if (annotation.medicineName)
         items.push({ key: "Vacina/Medicação", value: annotation.medicineName });
@@ -102,7 +91,7 @@ export const serializeAnimalPreview = (animal?: Animal): Item[] => {
     if (animal.gender)
         items.push({
             key: "Gênero",
-            value: getFormattedGender(animal.gender),
+            value: formatGender(animal.gender),
         });
     if (animal.code)
         items.push({ key: "Código", value: animal.code.toString() });

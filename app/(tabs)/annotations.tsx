@@ -10,7 +10,7 @@ import { useFocus } from "hooks/useFocus";
 import React, { useState } from "react";
 import { Text } from "react-native";
 import { Storage } from "services/StorageService";
-import { Annotation } from "types/Annotation";
+import { Annotation } from "types";
 
 export default function ViewAnnotationsPage() {
     const [annotations, setAnnotations] = useState<Annotation[]>([]);

@@ -4,7 +4,7 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
-import { PopulatedBatch } from "types/Batch";
+import { PopulatedBatch } from "types";
 
 export default function EditAnimalScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();

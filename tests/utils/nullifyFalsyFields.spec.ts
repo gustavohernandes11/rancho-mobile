@@ -1,4 +1,4 @@
-import { nullifyFalsyFields } from "utils/serializers";
+import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
 
 describe("nullifyFalsyFields", () => {
     it("should turn empty string into null", () => {

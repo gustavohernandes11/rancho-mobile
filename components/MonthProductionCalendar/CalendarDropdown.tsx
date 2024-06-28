@@ -2,7 +2,7 @@ import { FontAwesome } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
 import { commonStyles } from "styles/Common";
-import { Item } from "types/Item";
+import { Item } from "types";
 
 interface CalendarDropdownProps {
     items: Item[];

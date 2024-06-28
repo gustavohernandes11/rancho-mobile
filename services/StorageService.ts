@@ -1,23 +1,24 @@
 import moment from "moment";
 import {
     AddAnimal,
+    AddAnnotation,
     AddBatch,
     Animal,
+    Annotation,
+    AnnotationQueryOptions,
     Batch,
     Count,
+    DayProduction,
     PopulatedAnimal,
     PopulatedBatch,
     QueryOptions,
     StorageRepository,
+    StorageServicesMethods,
     UpdateAnimal,
+    UpdateAnnotation,
     UpdateBatch,
 } from "types";
-import { AddAnnotation, Annotation, UpdateAnnotation } from "types/Annotation";
-import { DayProduction } from "types/Production";
-import {
-    AnnotationQueryOptions,
-    StorageServicesMethods,
-} from "types/StorageServicesMethods";
+
 import { SqliteRepository } from "../database/repositories/SqliteRepository";
 
 export class StorageServices implements StorageServicesMethods {

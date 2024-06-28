@@ -3,7 +3,7 @@ import { ContainerView } from "components/ContainerView";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useLayoutEffect, useState } from "react";
 import { Storage } from "services/StorageService";
-import { Annotation } from "types/Annotation";
+import { Annotation } from "types";
 
 export default function EditAnnotationScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();

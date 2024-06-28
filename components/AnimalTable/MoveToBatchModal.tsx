@@ -16,8 +16,8 @@ import {
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { Batch } from "types/Batch";
-import { showToast } from "utils/displayToast";
+import { Batch } from "types";
+import { showToast } from "utils/showToast";
 
 interface MoveToBatchModalProps {
     visible: boolean;

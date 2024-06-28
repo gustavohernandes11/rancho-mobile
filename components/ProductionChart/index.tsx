@@ -4,7 +4,7 @@ import { ScrollView, Text, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { DayProduction } from "types/Production";
+import { DayProduction } from "types";
 import { chartConfig } from "./chartConfig";
 
 type ProductionChartProps = {

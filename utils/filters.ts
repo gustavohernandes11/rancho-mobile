@@ -1,5 +1,5 @@
 import moment from "moment";
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 
 const atLeastOneYearOld = (animal: Animal) =>
     animal.birthdate ? moment().diff(animal.birthdate, "years") > 1 : true;

@@ -1,4 +1,4 @@
-import { Annotation } from "types/Annotation";
+import { Annotation } from "types";
 
 export const defaultValues: Annotation = {
     id: "",

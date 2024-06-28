@@ -15,9 +15,3 @@ export const getButtonTextColor = (type: ButtonTypes) => {
 
 export const getInputBorderColor = (hasError: boolean) =>
     hasError ? Colors.red : Colors.border;
-
-export const getOnPressedColor = (type: ButtonTypes) =>
-    type === "primary" ? Colors.darkGreen : Colors.darkSurface;
-
-export const getRowColor = (index: number) =>
-    index % 2 === 0 ? Colors.white : Colors.lightGray;

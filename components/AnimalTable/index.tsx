@@ -11,7 +11,7 @@ import { Dimensions, Text, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { commonStyles } from "styles/Common";
 import { Animal } from "types";
-import { showToast } from "utils/displayToast";
+import { showToast } from "utils/showToast";
 import { Header } from "./Header";
 import { Row } from "./Row";
 import { SelectionMenu } from "./SelectionMenu";

@@ -1,7 +1,7 @@
 import { Span } from "components/Span";
 import moment from "moment";
 import { useState } from "react";
-import { Item } from "types/Item";
+import { Item } from "types";
 import { CalendarDropdown } from "./CalendarDropdown";
 import { monthItems } from "./monthItems";
 import { serializeLastTenYears } from "./serializeLastTenYears";

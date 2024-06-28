@@ -6,7 +6,7 @@ import SelectDropdown, {
 } from "react-native-select-dropdown";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import { Item } from "types/Item";
+import { Item } from "types";
 import { getInputBorderColor } from "utils/conditionalStyles";
 import { Label } from "./Label";
 

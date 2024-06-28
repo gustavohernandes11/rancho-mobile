@@ -2,21 +2,23 @@ import { SQLiteExecuteAsyncResult, openDatabaseSync } from "expo-sqlite";
 import moment from "moment";
 import {
     AddAnimal,
+    AddAnnotation,
     AddBatch,
     Animal,
+    Annotation,
+    AnnotationQueryOptions,
     Batch,
+    Count,
+    DayProduction,
     PopulatedAnimal,
     PopulatedBatch,
     QueryOptions,
     StorageRepository,
     UpdateAnimal,
+    UpdateAnnotation,
     UpdateBatch,
 } from "types";
-import { AddAnnotation, Annotation, UpdateAnnotation } from "types/Annotation";
-import { Count } from "types/Count";
-import { DayProduction } from "types/Production";
-import { AnnotationQueryOptions } from "types/StorageServicesMethods";
-import { nullifyFalsyFields } from "utils/serializers";
+import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
 
 export class SqliteRepository implements StorageRepository {
     private db = openDatabaseSync("rancho.db");
@@ -236,8 +238,9 @@ export class SqliteRepository implements StorageRepository {
                 : resolveNull()
         );
 
-        const [offspring, batch, maternity, paternity] =
-            await Promise.all(operations);
+        const [offspring, batch, maternity, paternity] = await Promise.all(
+            operations
+        );
 
         return {
             ...animal,

@@ -3,9 +3,11 @@ import { AddAnnotation, Annotation, UpdateAnnotation } from "./Annotation";
 import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
 import { DayProduction } from "./Production";
-import { AnnotationQueryOptions } from "./StorageServicesMethods";
+import {
+    AnnotationQueryOptions,
+    OrderByOptions,
+} from "./StorageServicesMethods";
 
-export type OrderByOptions = "alfabetic" | "age";
 export type QueryOptions = {
     orderBy?: OrderByOptions;
     batchID?: number;
