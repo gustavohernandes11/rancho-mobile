@@ -6,7 +6,8 @@ import { Span } from "components/Span";
 import { Stack } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
-import { getFormattedMonthAndYear } from "utils/formatters";
+import { Text } from "react-native";
+import { sharedStyles } from "styles/Common";
 
 export default function ViewProductionScreen() {
 	const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
@@ -35,28 +36,15 @@ export default function ViewProductionScreen() {
 					selectedDate={selectedDate}
 				/>
 			</Span>
-			<Heading size="small">
+			<Text style={sharedStyles.text}>
 				Selecione uma data no calendário e insira a quantidade
 				produzida.
-			</Heading>
+			</Text>
 			<Span direction="column">
 				<ProductionForm
 					selectedDate={selectedDate}
 					onSubmitCallback={updateUI}
 				/>
-			</Span>
-			<Span direction="row">
-				<Heading>
-					{"Gráfico de produção " +
-						getFormattedMonthAndYear(selectedDate)}
-				</Heading>
-				{/* <Span>
-					<ProductionChart
-						key={updateUINumber}
-						yearNumber={Number(moment(selectedDate).year())}
-						monthNumber={Number(moment(selectedDate).month() + 1)}
-					/>
-				</Span>  performance issue */}
 			</Span>
 		</ContainerView>
 	);
