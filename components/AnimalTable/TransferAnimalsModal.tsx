@@ -10,7 +10,6 @@ import {
     Modal,
     ScrollView,
     StyleSheet,
-    TouchableOpacity,
     View,
 } from "react-native";
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
@@ -19,7 +18,7 @@ import Colors from "styles/Colors";
 import { Batch } from "types";
 import { showToast } from "utils/showToast";
 
-interface MoveToBatchModalProps {
+interface TransferAnimalsModalProps {
     visible: boolean;
     onDismiss: () => void;
     setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
@@ -38,8 +37,8 @@ const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
     />
 );
 
-export const MoveToBatchModal: React.FC<
-    MoveToBatchModalProps & Omit<ModalProps, "children">
+export const TransferAnimalsModal: React.FC<
+    TransferAnimalsModalProps & Omit<ModalProps, "children">
 > = ({
     visible,
     onDismiss,
@@ -103,7 +102,7 @@ export const MoveToBatchModal: React.FC<
                 style={styles.blur}
                 {...props}
             >
-                <TouchableOpacity style={styles.blur} onPress={onDismiss}>
+                <View style={styles.blur}>
                     <View style={styles.modal}>
                         <>
                             <Span>
@@ -114,7 +113,7 @@ export const MoveToBatchModal: React.FC<
                                 value={getValue}
                             >
                                 <ScrollView style={{ height: "75%" }}>
-                                    <Span direction="column">
+                                    <Span direction="column" gap={4}>
                                         {batches?.map(batch => (
                                             <BannerRadio
                                                 key={batch.id}
@@ -129,12 +128,11 @@ export const MoveToBatchModal: React.FC<
                                                 }
                                             />
                                         ))}
+                                        <EmptyBatchOption
+                                            key={0}
+                                            checked={selectedBatch?.id === null}
+                                        />
                                     </Span>
-
-                                    <EmptyBatchOption
-                                        key={0}
-                                        checked={selectedBatch?.id === null}
-                                    />
                                 </ScrollView>
                             </RadioButton.Group>
 
@@ -154,7 +152,7 @@ export const MoveToBatchModal: React.FC<
                             </Span>
                         </>
                     </View>
-                </TouchableOpacity>
+                </View>
             </Modal>
         </Portal>
     );

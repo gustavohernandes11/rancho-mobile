@@ -76,6 +76,14 @@ export default function ViewAnnotationsPage() {
                             animalIds={annotation.animalIDs}
                         />
                     ))}
+                <Span justify="center" py={8}>
+                    <Button
+                        title="Nova anotação"
+                        onPress={() =>
+                            router.push("/(screens)/annotations/add")
+                        }
+                    />
+                </Span>
             </Span>
         </ContainerView>
     );

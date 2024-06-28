@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { Text, View, ViewProps } from "react-native";
 import { IconButton } from "react-native-paper";
 import Colors from "styles/Colors";
-import { MoveToBatchModal } from "./MoveToBatchModal";
 import {
     SelectionMenuActionButtons,
     styles,
 } from "./SelectionMenuActionButtons";
+import { TransferAnimalsModal } from "./TransferAnimalsModal";
 
 interface SelectionMenuProps {
     showActions?: boolean;
@@ -35,7 +35,7 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
                 style={[styles.container, !showActions && { padding: 12 }]}
                 {...props}
             >
-                <MoveToBatchModal
+                <TransferAnimalsModal
                     visible={isBatchModalVisible}
                     onDismiss={() => setIsBatchModalVisible(false)}
                     setIsBatchModalVisible={setIsBatchModalVisible}
