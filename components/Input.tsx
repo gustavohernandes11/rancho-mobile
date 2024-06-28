@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { HelperText, TextInput, TextInputProps } from "react-native-paper";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { getInputBorderColor } from "utils/conditionalStyles";
 
 interface InputProps {
@@ -18,14 +18,14 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 	return (
 		<View style={styles.inputContainer}>
 			{label && (
-				<HelperText style={sharedStyles.label} type="info">
+				<HelperText style={commonStyles.label} type="info">
 					{label}
 				</HelperText>
 			)}
 			<TextInput
 				mode="outlined"
 				outlineStyle={[
-					sharedStyles.inputAspect,
+					commonStyles.inputAspect,
 					{
 						borderColor: getInputBorderColor(!!errorText),
 					},
@@ -38,7 +38,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				error={!!errorText}
 				multiline={multiline}
 				style={[
-					sharedStyles.inputAspect,
+					commonStyles.inputAspect,
 					{
 						height: multiline ? 80 : 50,
 						borderWidth: 0,
@@ -46,7 +46,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				]}
 				{...props}
 			/>
-			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
+			{errorText && <Text style={commonStyles.error}>{errorText}</Text>}
 		</View>
 	);
 };

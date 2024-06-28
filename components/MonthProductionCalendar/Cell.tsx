@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { DayItem } from "./index";
 
 export type CellProps<T> = {
@@ -32,7 +32,7 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 		isSelected && styles.selectedCell,
 	]);
 	const textStyles = StyleSheet.flatten([
-		sharedStyles.text,
+		commonStyles.text,
 		isSelected && styles.selectedText,
 	]);
 	const boldStyles = StyleSheet.flatten([
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 		borderRadius: 16,
 	},
 	boldText: {
-		...sharedStyles.text,
+		...commonStyles.text,
 		fontWeight: "bold",
 	},
 	selectedText: {

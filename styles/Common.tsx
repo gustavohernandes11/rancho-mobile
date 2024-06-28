@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 import Colors from "styles/Colors";
 import Fonts from "styles/Fonts";
 
-export const sharedStyles = StyleSheet.create({
+export const commonStyles = StyleSheet.create({
 	text: {
 		fontSize: 14,
 		color: Colors.darkGray,

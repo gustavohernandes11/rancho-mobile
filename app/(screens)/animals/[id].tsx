@@ -12,7 +12,7 @@ import { Alert, Text } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Animal, PopulatedAnimal } from "types";
 import { serializeAnimalInfo } from "utils/serializers";
 
@@ -73,7 +73,7 @@ export default function ViewAnimalDetailsScreen() {
 				<Skeleton width={300} />
 			) : (
 				<>
-					<Text style={sharedStyles.label}>Nome</Text>
+					<Text style={commonStyles.label}>Nome</Text>
 					<Heading size="big">{animal?.name}</Heading>
 				</>
 			)}

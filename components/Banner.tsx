@@ -10,7 +10,7 @@ import {
 	ViewProps,
 } from "react-native";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 
 interface BannerProps {
@@ -36,7 +36,7 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
 			<Pressable {...props}>
 				<View style={styles.iconSpan}>
 					<Image
-						style={sharedStyles.icon}
+						style={commonStyles.icon}
 						source={iconSource}
 						alt={iconAlt}
 					/>
@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	description: {
-		...sharedStyles.text,
+		...commonStyles.text,
 		fontSize: 12,
 		textAlign: "right",
 	},

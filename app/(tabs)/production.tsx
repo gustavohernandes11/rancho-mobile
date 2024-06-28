@@ -7,7 +7,7 @@ import { Stack } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
 import { Text } from "react-native";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 
 export default function ViewProductionScreen() {
 	const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
@@ -36,7 +36,7 @@ export default function ViewProductionScreen() {
 					selectedDate={selectedDate}
 				/>
 			</Span>
-			<Text style={sharedStyles.text}>
+			<Text style={commonStyles.text}>
 				Selecione uma data no calendário e insira a quantidade
 				produzida.
 			</Text>

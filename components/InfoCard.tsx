@@ -7,9 +7,9 @@ import {
 	ViewProps,
 } from "react-native";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Heading } from "./Heading";
-import { SubTitle } from "./SubTitle";
+import { Paragraph } from "./Paragraph";
 
 type ColorOptions = "green" | "blue" | "purple";
 interface InfoCardProps {
@@ -34,7 +34,7 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 		<View {...props} style={styles.card}>
 			{iconSource ? (
 				<Image
-					style={sharedStyles.icon}
+					style={commonStyles.icon}
 					source={iconSource}
 					alt={alt}
 				/>
@@ -42,14 +42,14 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 			<Heading size="big" shrink={1}>
 				{title}
 			</Heading>
-			<SubTitle>{description}</SubTitle>
+			<Paragraph>{description}</Paragraph>
 		</View>
 	);
 };
 
 const styles = StyleSheet.create({
 	card: {
-		...sharedStyles.card,
+		...commonStyles.card,
 		gap: 0,
 		flexDirection: "column",
 		alignItems: "flex-start",

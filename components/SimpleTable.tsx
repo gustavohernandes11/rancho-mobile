@@ -1,7 +1,7 @@
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Item } from "types";
 
 interface SimpleTableProps {
@@ -34,8 +34,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 
 const Row: React.FC<RowProps<Item>> = ({ item }) => (
 	<View style={styles.row}>
-		<Text style={sharedStyles.text}>{item.key}</Text>
-		<Text style={sharedStyles.text}>{item.value}</Text>
+		<Text style={commonStyles.text}>{item.key}</Text>
+		<Text style={commonStyles.text}>{item.value}</Text>
 	</View>
 );
 

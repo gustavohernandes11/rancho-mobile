@@ -4,7 +4,7 @@ import { HelperText } from "react-native-paper";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 import { getInputBorderColor } from "utils/conditionalStyles";
 
@@ -18,7 +18,7 @@ export const DatePicker: React.FC<
 	return (
 		<View style={styles.inputContainer}>
 			{label && (
-				<HelperText style={sharedStyles.label} type="info">
+				<HelperText style={commonStyles.label} type="info">
 					{label}
 				</HelperText>
 			)}
@@ -26,7 +26,7 @@ export const DatePicker: React.FC<
 				iconColor={Colors.darkGray}
 				mode="outlined"
 				outlineStyle={[
-					sharedStyles.inputAspect,
+					commonStyles.inputAspect,
 					{
 						borderColor: getInputBorderColor(!!errorText),
 					},
@@ -42,7 +42,7 @@ export const DatePicker: React.FC<
 				withModal={false}
 				{...props}
 			/>
-			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
+			{errorText && <Text style={commonStyles.error}>{errorText}</Text>}
 		</View>
 	);
 };

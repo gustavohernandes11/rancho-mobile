@@ -6,7 +6,7 @@ import SelectDropdown, {
 	SelectDropdownProps,
 } from "react-native-select-dropdown";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Item } from "types/Item";
 import { getInputBorderColor } from "utils/conditionalStyles";
 
@@ -42,7 +42,7 @@ export const Select: React.FC<
 	return (
 		<View style={styles.inputContainer}>
 			<HelperText
-				style={sharedStyles.label}
+				style={commonStyles.label}
 				visible={!!label}
 				type="info"
 			>
@@ -50,7 +50,7 @@ export const Select: React.FC<
 			</HelperText>
 			<SelectDropdown
 				renderDropdownIcon={DropdownIcon}
-				buttonTextStyle={sharedStyles.label}
+				buttonTextStyle={commonStyles.label}
 				buttonStyle={[
 					styles.button,
 					{
@@ -65,8 +65,8 @@ export const Select: React.FC<
 						height: getSelectHeight(),
 					},
 				]}
-				rowTextStyle={sharedStyles.text}
-				dropdownStyle={sharedStyles.inputAspect}
+				rowTextStyle={commonStyles.text}
+				dropdownStyle={commonStyles.inputAspect}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
 				data={items}
 				onSelect={onSelect}
@@ -74,7 +74,7 @@ export const Select: React.FC<
 				rowTextForSelection={(item: Item) => item.key}
 				{...props}
 			/>
-			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
+			{errorText && <Text style={commonStyles.error}>{errorText}</Text>}
 		</View>
 	);
 };

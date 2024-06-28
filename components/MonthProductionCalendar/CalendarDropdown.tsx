@@ -1,7 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Item } from "types/Item";
 
 interface CalendarDropdownProps {
@@ -24,11 +24,11 @@ export const CalendarDropdown = ({
 	return (
 		<SelectDropdown
 			renderDropdownIcon={SmallDropdownIcon}
-			buttonTextStyle={sharedStyles.text}
+			buttonTextStyle={commonStyles.text}
 			buttonStyle={styles.buttonStyle}
 			rowStyle={styles.rowStyle}
-			rowTextStyle={sharedStyles.text}
-			dropdownStyle={sharedStyles.inputAspect}
+			rowTextStyle={commonStyles.text}
+			dropdownStyle={commonStyles.inputAspect}
 			data={items}
 			onSelect={onSelect}
 			buttonTextAfterSelection={(selectedItem) => selectedItem.key}

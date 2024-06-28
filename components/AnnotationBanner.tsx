@@ -2,7 +2,7 @@ import { Link } from "expo-router";
 import React from "react";
 import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 import { AnnotationTypeOption } from "types/Annotation";
 import { formatAnnotationType, getFormattedPtBRDate } from "utils/formatters";
@@ -30,7 +30,7 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
 		<Link href={href} style={styles.container} asChild>
 			<Pressable {...props} style={styles.container}>
 				<View style={styles.top}>
-					<Text style={sharedStyles.text}>
+					<Text style={commonStyles.text}>
 						{formatAnnotationType(type)}
 					</Text>
 					<Text style={styles.date}>
@@ -40,7 +40,7 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
 				<View style={styles.main}>
 					<Text style={styles.title}>{title}</Text>
 					{description && (
-						<Text style={sharedStyles.text}>{description}</Text>
+						<Text style={commonStyles.text}>{description}</Text>
 					)}
 				</View>
 			</Pressable>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	date: {
-		...sharedStyles.text,
+		...commonStyles.text,
 		textAlign: "right",
 	},
 });

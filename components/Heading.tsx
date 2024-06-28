@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, TextProps } from "react-native";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 
 type HeadingSizes = "big" | "medium" | "small";
 interface HeadingProps {
@@ -24,7 +24,7 @@ export const Heading: React.FC<TextProps & HeadingProps> = ({
 	return (
 		<Text
 			style={[
-				sharedStyles.heading,
+				commonStyles.heading,
 				{ fontSize: getFontSize(size), flexShrink: shrink },
 			]}
 			{...props}

@@ -2,8 +2,8 @@ import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
-import { SubTitle } from "components/SubTitle";
 import { Stack, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect } from "react";
@@ -35,7 +35,7 @@ export default function ViewBatchesScreen() {
 			/>
 			<Span justify="space-between" align="center">
 				<Heading>Crie e edite seus lotes</Heading>
-				<SubTitle>{`Total: ${batches?.length || "0"}`}</SubTitle>
+				<Paragraph>{`Total: ${batches?.length || "0"}`}</Paragraph>
 			</Span>
 			<View style={{ gap: 4 }}>
 				{batches.length > 0 ? (

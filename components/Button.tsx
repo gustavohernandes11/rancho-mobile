@@ -4,7 +4,7 @@ import {
 	Button as PaperButton,
 	ButtonProps as PaperButtonProps,
 } from "react-native-paper";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { ButtonTypes } from "types/ButtonTypes";
 import {
 	getButtonBackgroundColor,
@@ -32,7 +32,7 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 					borderColor: getButtonBorderColor(type),
 					overflow: "hidden",
 				},
-				disabled && sharedStyles.disabled,
+				disabled && commonStyles.disabled,
 			]}
 			disabled={disabled}
 			onPress={onPress}
@@ -40,9 +40,9 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 		>
 			<Text
 				style={[
-					sharedStyles.text,
+					commonStyles.text,
 					{ color: getButtonTextColor(type) },
-					disabled && sharedStyles.textDisabled,
+					disabled && commonStyles.textDisabled,
 				]}
 			>
 				{title}

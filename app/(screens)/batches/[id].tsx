@@ -13,7 +13,7 @@ import { Alert, Text } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Storage } from "services/StorageService";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
@@ -92,7 +92,7 @@ export default function ViewBatchDetailsScreen() {
 				<Skeleton width={300} />
 			) : (
 				<>
-					<Text style={sharedStyles.label}>Título</Text>
+					<Text style={commonStyles.label}>Título</Text>
 					<Heading>{batch?.name}</Heading>
 				</>
 			)}

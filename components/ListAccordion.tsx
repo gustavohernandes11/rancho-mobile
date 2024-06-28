@@ -1,6 +1,6 @@
 import { StyleSheet, View } from "react-native";
 import { HelperText, List } from "react-native-paper";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 
 type ListAccordionProps = {
 	children: React.ReactNode;
@@ -16,13 +16,13 @@ export const ListAccordion = ({
 	return (
 		<View style={styles.inputContainer}>
 			{label && (
-				<HelperText style={sharedStyles.label} type="info">
+				<HelperText style={commonStyles.label} type="info">
 					{label}
 				</HelperText>
 			)}
 			<List.Accordion
-				style={[sharedStyles.inputAspect, { padding: 0 }]}
-				titleStyle={sharedStyles.text}
+				style={[commonStyles.inputAspect, { padding: 0 }]}
+				titleStyle={commonStyles.text}
 				title={title}
 			>
 				{children}

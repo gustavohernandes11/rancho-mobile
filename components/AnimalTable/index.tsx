@@ -9,7 +9,7 @@ import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
 import { Dimensions, Text, View } from "react-native";
 import { Storage } from "services/StorageService";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Animal } from "types";
 import { showToast } from "utils/displayToast";
 import { Header } from "./Header";
@@ -93,7 +93,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 						minHeight: 20,
 						width: Dimensions.get("screen").width - 16,
 					},
-					sharedStyles.border,
+					commonStyles.border,
 				]}
 			>
 				<FlashList

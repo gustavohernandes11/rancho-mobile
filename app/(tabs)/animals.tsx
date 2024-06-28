@@ -3,10 +3,10 @@ import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
+import { Paragraph } from "components/Paragraph";
 import { SearchBar } from "components/SearchBar";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
-import { SubTitle } from "components/SubTitle";
 import { Stack, useFocusEffect, useRouter } from "expo-router";
 import useDebounce from "hooks/useDebounce";
 import { useGlobalState } from "hooks/useGlobalState";
@@ -84,7 +84,7 @@ export default function ViewAnimalsScreen() {
 			/>
 			<Span justify="space-between" my={8} align="center">
 				<Heading>Todos seus animais</Heading>
-				<SubTitle>{getDisplayInfo()}</SubTitle>
+				<Paragraph>{getDisplayInfo()}</Paragraph>
 			</Span>
 			<SearchBar
 				onChangeText={(text) => setSearchText(text)}

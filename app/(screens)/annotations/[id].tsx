@@ -11,7 +11,7 @@ import { Alert, Text } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Animal } from "types/Animal";
 import { Annotation } from "types/Annotation";
 import { serializeAnimalPreview, serializeAnnotation } from "utils/serializers";
@@ -88,10 +88,10 @@ export default function ViewAnnotationDetailsScreen() {
 			) : (
 				<>
 					<Span direction="column">
-						<Text style={sharedStyles.label}>Título</Text>
+						<Text style={commonStyles.label}>Título</Text>
 						<Heading size="big">{annotation?.title}</Heading>
 						{annotation?.description && (
-							<Text style={sharedStyles.text}>
+							<Text style={commonStyles.text}>
 								{annotation?.description}
 							</Text>
 						)}

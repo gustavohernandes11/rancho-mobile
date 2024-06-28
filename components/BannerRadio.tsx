@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { RadioButton } from "react-native-paper";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 
 interface BannerRadioProps {
@@ -35,7 +35,7 @@ export const BannerRadio: React.FC<BannerRadioProps & ViewProps> = ({
 		<Pressable style={styles.container} {...props}>
 			<View style={styles.iconSpan}>
 				<Image
-					style={sharedStyles.icon}
+					style={commonStyles.icon}
 					source={iconSource}
 					alt={iconAlt}
 				/>
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	description: {
-		...sharedStyles.text,
+		...commonStyles.text,
 		fontSize: 12,
 		textAlign: "right",
 	},

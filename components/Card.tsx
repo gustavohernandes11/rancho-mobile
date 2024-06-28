@@ -4,7 +4,7 @@ import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import { TouchableRipple } from "react-native-paper";
 import Colors from "styles/Colors";
-import { sharedStyles } from "styles/Common";
+import { commonStyles } from "styles/Common";
 import { Span } from "./Span";
 
 type ColorOptions = "green" | "blue" | "purple" | "cian";
@@ -27,14 +27,14 @@ export const Card: React.FC<LinkProps & CardProps> = ({
 	return (
 		<Link
 			href={href}
-			style={[sharedStyles.card, { backgroundColor: Colors[color] }]}
+			style={[commonStyles.card, { backgroundColor: Colors[color] }]}
 			asChild
 			{...props}
 		>
 			<TouchableRipple>
 				<Span direction="column" justify="center" flexWrap="nowrap">
 					<Image
-						style={sharedStyles.icon}
+						style={commonStyles.icon}
 						source={iconSource}
 						alt={alt}
 					/>
@@ -47,7 +47,7 @@ export const Card: React.FC<LinkProps & CardProps> = ({
 
 const styles = StyleSheet.create({
 	title: {
-		...sharedStyles.text,
+		...commonStyles.text,
 		fontSize: 16,
 		flexShrink: 1,
 		color: Colors.white,
