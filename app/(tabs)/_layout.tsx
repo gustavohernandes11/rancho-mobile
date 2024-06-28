@@ -6,8 +6,8 @@ import Colors from "styles/Colors";
 import Fonts from "styles/Fonts";
 
 const tabIconSize = {
-    height: 24,
-    width: 24,
+    height: 28,
+    width: 28,
 };
 
 export default function TabLayout() {
@@ -27,7 +27,6 @@ export default function TabLayout() {
 
                 headerTintColor: Colors.white,
                 headerTitleStyle: {
-                    fontWeight: "bold",
                     fontFamily: Fonts.primaryFamily,
                 },
                 tabBarActiveTintColor: Colors.white,
@@ -37,7 +36,7 @@ export default function TabLayout() {
                     backgroundColor: Colors.green,
                     height: 60,
                 },
-                tabBarItemStyle: { paddingVertical: 8, gap: 8 },
+                tabBarItemStyle: { paddingVertical: 4 },
                 headerStyle: {
                     backgroundColor: Colors.green,
                 },
@@ -95,7 +94,7 @@ export default function TabLayout() {
                     tabBarLabel: "Produção",
                     tabBarIcon: () => (
                         <Image
-                            style={{ height: 24, width: 16 }}
+                            style={{ height: 28, width: 18 }}
                             source={require("../../assets/images/GallonIcon.png")}
                             alt={"production page"}
                         />
@@ -111,7 +110,7 @@ export default function TabLayout() {
                             style={{
                                 color: Colors.white,
                             }}
-                            size={22}
+                            size={28}
                             name="book"
                         />
                     ),

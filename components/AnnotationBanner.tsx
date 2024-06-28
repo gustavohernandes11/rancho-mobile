@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
     container: {
         width: "100%",
         gap: 8,
-        borderRadius: 8,
         padding: 16,
+        borderRadius: 8,
+        backgroundColor: Colors.lightGray,
         borderWidth: 1,
         borderColor: Colors.border,
     },
