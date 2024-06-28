@@ -1,45 +1,45 @@
 type BaseAnnotation = {
-	id: number;
-	title: string;
-	type: AnnotationTypeOption;
-	description?: string;
-	date?: Date;
+    id: number;
+    title: string;
+    type: AnnotationTypeOption;
+    description?: string;
+    date?: Date;
 };
 export type AnnotationTypeOption =
-	| "simple"
-	| "death"
-	| "purchase"
-	| "heath care"
-	| "sell";
+    | "simple"
+    | "death"
+    | "purchase"
+    | "heath care"
+    | "sell";
 interface AnimalRelatedAnnotation extends BaseAnnotation {
-	animalIDs?: number[];
+    animalIDs?: number[];
 }
 export interface SimpleAnnotation extends BaseAnnotation {
-	type: "simple";
+    type: "simple";
 }
 export interface AnimalPurchaseAnnotation extends AnimalRelatedAnnotation {
-	type: "purchase";
+    type: "purchase";
 }
 export interface AnimalSellAnnotation extends AnimalRelatedAnnotation {
-	type: "sell";
+    type: "sell";
 }
 export interface AnimalDeathAnnotation extends AnimalRelatedAnnotation {
-	type: "death";
+    type: "death";
 }
 export interface HealthManagementAnnotation extends AnimalRelatedAnnotation {
-	type: "heath care";
-	dosage?: string;
-	medicineName?: string;
+    type: "heath care";
+    dosage?: string;
+    medicineName?: string;
 }
 export type Annotation = {
-	id: number;
-	title: string;
-	type: AnnotationTypeOption;
-	description?: string;
-	date?: Date;
-	animalIDs?: number[];
-	dosage?: string;
-	medicineName?: string;
+    id: number;
+    title: string;
+    type: AnnotationTypeOption;
+    description?: string;
+    date?: Date;
+    animalIDs?: number[];
+    dosage?: string;
+    medicineName?: string;
 };
 
 export type AddAnnotation = Omit<Annotation, "id">;

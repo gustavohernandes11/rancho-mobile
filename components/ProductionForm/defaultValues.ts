@@ -1,3 +1,3 @@
 export const initialValues = {
-	quantity: 0,
+    quantity: 0,
 };

@@ -1,4 +1,4 @@
 export type Count = {
-	animals: number;
-	batches: number;
+    animals: number;
+    batches: number;
 };

@@ -17,150 +17,152 @@ import { Animal, PopulatedAnimal } from "types";
 import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
-	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAll, animals } = useGlobalState();
-	const [animal, setAnimal] = useState<PopulatedAnimal>();
-	const [isLoading, setIsLoading] = useState(true);
-	const router = useRouter();
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const { refreshAll, animals } = useGlobalState();
+    const [animal, setAnimal] = useState<PopulatedAnimal>();
+    const [isLoading, setIsLoading] = useState(true);
+    const router = useRouter();
 
-	const fetchPopulatedAnimal = async () => {
-		await Storage.getPopulatedAnimal(Number(id)).then((animal) =>
-			setAnimal(animal)
-		);
-	};
+    const fetchPopulatedAnimal = async () => {
+        await Storage.getPopulatedAnimal(Number(id)).then(animal =>
+            setAnimal(animal)
+        );
+    };
 
-	useEffect(() => {
-		setIsLoading(() => true);
-		fetchPopulatedAnimal().then(() => setIsLoading(() => false));
-	}, []);
+    useEffect(() => {
+        setIsLoading(() => true);
+        fetchPopulatedAnimal().then(() => setIsLoading(() => false));
+    }, []);
 
-	useEffect(() => {
-		fetchPopulatedAnimal();
-	}, [animals]);
+    useEffect(() => {
+        fetchPopulatedAnimal();
+    }, [animals]);
 
-	const StackScreen = () => (
-		<Stack.Screen
-			options={{
-				headerTitle: "Ver animal",
-				headerRight: () => (
-					<>
-						<IconButton
-							icon="pencil"
-							iconColor={Colors.white}
-							onPress={handleEdit}
-						/>
-						<IconButton
-							icon="delete"
-							iconColor={Colors.white}
-							onPress={handleDelete}
-						/>
-					</>
-				),
-			}}
-		/>
-	);
+    const StackScreen = () => (
+        <Stack.Screen
+            options={{
+                headerTitle: "Ver animal",
+                headerRight: () => (
+                    <>
+                        <IconButton
+                            icon="pencil"
+                            iconColor={Colors.white}
+                            onPress={handleEdit}
+                        />
+                        <IconButton
+                            icon="delete"
+                            iconColor={Colors.white}
+                            onPress={handleDelete}
+                        />
+                    </>
+                ),
+            }}
+        />
+    );
 
-	const handleEdit = () => router.push(`/(screens)/animals/edit/${id}`);
-	const handleDelete = () =>
-		showConfirmationAndDelete(animal!, () => {
-			refreshAll();
-			router.back();
-		});
+    const handleEdit = () => router.push(`/(screens)/animals/edit/${id}`);
+    const handleDelete = () =>
+        showConfirmationAndDelete(animal!, () => {
+            refreshAll();
+            router.back();
+        });
 
-	return (
-		<ContainerView immediateContent={<StackScreen />}>
-			{isLoading ? (
-				<Skeleton width={300} />
-			) : (
-				<>
-					<Text style={commonStyles.label}>Nome</Text>
-					<Heading size="big">{animal?.name}</Heading>
-				</>
-			)}
+    return (
+        <ContainerView immediateContent={<StackScreen />}>
+            {isLoading ? (
+                <Skeleton width={300} />
+            ) : (
+                <>
+                    <Text style={commonStyles.label}>Nome</Text>
+                    <Heading size="big">{animal?.name}</Heading>
+                </>
+            )}
 
-			{isLoading ? (
-				<>
-					<Skeleton width={250} />
-					<Skeleton height={40} />
-					<Skeleton height={40} />
-					<Skeleton height={40} />
-				</>
-			) : (
-				<Span direction="column">
-					<Heading size="small">Informações gerais</Heading>
-					<SimpleTable data={serializeAnimalInfo(animal)} />
-				</Span>
-			)}
+            {isLoading ? (
+                <>
+                    <Skeleton width={250} />
+                    <Skeleton height={40} />
+                    <Skeleton height={40} />
+                    <Skeleton height={40} />
+                </>
+            ) : (
+                <Span direction="column">
+                    <Heading size="small">Informações gerais</Heading>
+                    <SimpleTable data={serializeAnimalInfo(animal)} />
+                </Span>
+            )}
 
-			{isLoading ? (
-				<>
-					<Skeleton width={250} />
-					<Skeleton height={40} />
-				</>
-			) : (
-				animal?.batch && (
-					<Span direction="column">
-						<Heading size="small">Lote</Heading>
-						<BatchBanner
-							href={`/(screens)/batches/${animal.batch.id}`}
-							batch={animal.batch}
-						/>
-					</Span>
-				)
-			)}
+            {isLoading ? (
+                <>
+                    <Skeleton width={250} />
+                    <Skeleton height={40} />
+                </>
+            ) : (
+                animal?.batch && (
+                    <Span direction="column">
+                        <Heading size="small">Lote</Heading>
+                        <BatchBanner
+                            href={`/(screens)/batches/${animal.batch.id}`}
+                            batch={animal.batch}
+                        />
+                    </Span>
+                )
+            )}
 
-			{animal && animal?.paternity && (
-				<Span direction="column">
-					<Heading size="small">Paternidade</Heading>
-					<AnimalBanner
-						href={`/(screens)/animals/${animal.paternityID}`}
-						animal={animal.paternity}
-					/>
-				</Span>
-			)}
-			{animal && animal?.maternity && (
-				<Span direction="column">
-					<Heading size="small">Maternidade</Heading>
-					<AnimalBanner
-						href={`/(screens)/animals/${animal.maternityID}`}
-						animal={animal.maternity}
-					/>
-				</Span>
-			)}
-			{animal && animal.offspring.length > 0 && (
-				<Span direction="column">
-					<Heading size="small">Prole</Heading>
-					{animal.offspring.map((calf) => (
-						<AnimalBanner
-							href={`/(screens)/animals/${calf.id}`}
-							animal={calf}
-						/>
-					))}
-				</Span>
-			)}
-		</ContainerView>
-	);
+            {animal && animal?.paternity && (
+                <Span direction="column">
+                    <Heading size="small">Paternidade</Heading>
+                    <AnimalBanner
+                        href={`/(screens)/animals/${animal.paternityID}`}
+                        animal={animal.paternity}
+                    />
+                </Span>
+            )}
+
+            {animal && animal?.maternity && (
+                <Span direction="column">
+                    <Heading size="small">Maternidade</Heading>
+                    <AnimalBanner
+                        href={`/(screens)/animals/${animal.maternityID}`}
+                        animal={animal.maternity}
+                    />
+                </Span>
+            )}
+
+            {animal && animal.offspring.length > 0 && (
+                <Span direction="column">
+                    <Heading size="small">Prole</Heading>
+                    {animal.offspring.map(calf => (
+                        <AnimalBanner
+                            href={`/(screens)/animals/${calf.id}`}
+                            animal={calf}
+                        />
+                    ))}
+                </Span>
+            )}
+        </ContainerView>
+    );
 }
 const showConfirmationAndDelete = (
-	animal: Animal,
-	onDeleteCallback: () => void
+    animal: Animal,
+    onDeleteCallback: () => void
 ) => {
-	Alert.alert(
-		`Deletar animal?`,
-		`Você têm certeza que deseja deletar o animal "${animal.name}"?`,
-		[
-			{
-				text: "Cancelar",
-				style: "cancel",
-			},
-			{
-				text: "Deletar",
-				onPress: () =>
-					Storage.deleteAnimal(animal.id).then(() =>
-						onDeleteCallback()
-					),
-				style: "destructive",
-			},
-		]
-	);
+    Alert.alert(
+        `Deletar animal?`,
+        `Você têm certeza que deseja deletar o animal "${animal.name}"?`,
+        [
+            {
+                text: "Cancelar",
+                style: "cancel",
+            },
+            {
+                text: "Deletar",
+                onPress: () =>
+                    Storage.deleteAnimal(animal.id).then(() =>
+                        onDeleteCallback()
+                    ),
+                style: "destructive",
+            },
+        ]
+    );
 };

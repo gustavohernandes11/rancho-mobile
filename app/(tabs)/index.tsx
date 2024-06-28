@@ -10,77 +10,77 @@ import { Storage } from "services/StorageService";
 import { Count } from "types/Count";
 
 export default function TabOneScreen() {
-	const [count, setCount] = useState<Count>();
-	const { refreshAll } = useGlobalState();
+    const [count, setCount] = useState<Count>();
+    const { refreshAll } = useGlobalState();
 
-	useFocusEffect(() => {
-		Storage.count().then((count) => setCount(count));
-	});
+    useFocusEffect(() => {
+        Storage.count().then(count => setCount(count));
+    });
 
-	useEffect(() => {
-		refreshAll();
-	}, []);
+    useEffect(() => {
+        refreshAll();
+    }, []);
 
-	return (
-		<ContainerView>
-			<Heading>Início</Heading>
-			<Span py={4}>
-				{count ? (
-					<InfoCard
-						title={count.animals.toString() || "?"}
-						description="Animais registrados"
-					/>
-				) : null}
-				{count ? (
-					<InfoCard
-						title={count.batches.toString() || "?"}
-						description="Lotes registrados"
-					/>
-				) : null}
-			</Span>
-			<Heading size="small">O que você quer fazer?</Heading>
-			<Span flexWrap="wrap" py={4}>
-				<Card
-					href="/animals/add"
-					alt="Registrar animal"
-					iconSource={require("assets/images/AddAnimalIcon.png")}
-					title="Registrar animal"
-				/>
-				<Card
-					href="/(tabs)/animals"
-					alt="Rebanho"
-					iconSource={require("assets/images/CowIcon.png")}
-					title="Rebanho"
-				/>
-				<Card
-					href="/batches/add"
-					alt="Registrar lote"
-					iconSource={require("assets/images/AddBatchIcon.png")}
-					title="Registrar lote"
-					color="blue"
-				/>
-				<Card
-					href="/(tabs)/batches"
-					alt="Lotes"
-					iconSource={require("assets/images/FenceIcon.png")}
-					title="Lotes"
-					color="blue"
-				/>
-				<Card
-					href="/(tabs)/production"
-					alt="Production"
-					iconSource={require("assets/images/GallonIcon.png")}
-					title="Produção do mês"
-					color="purple"
-				/>
-				<Card
-					href="/(tabs)/annotations"
-					alt="Annotations"
-					iconSource={require("assets/images/FenceIcon.png")}
-					title="Anotações"
-					color="cian"
-				/>
-			</Span>
-		</ContainerView>
-	);
+    return (
+        <ContainerView>
+            <Heading>Início</Heading>
+            <Span py={4}>
+                {count ? (
+                    <InfoCard
+                        title={count.animals.toString() || "?"}
+                        description="Animais registrados"
+                    />
+                ) : null}
+                {count ? (
+                    <InfoCard
+                        title={count.batches.toString() || "?"}
+                        description="Lotes registrados"
+                    />
+                ) : null}
+            </Span>
+            <Heading size="small">O que você quer fazer?</Heading>
+            <Span flexWrap="wrap" py={4}>
+                <Card
+                    href="/animals/add"
+                    alt="Registrar animal"
+                    iconSource={require("assets/images/AddAnimalIcon.png")}
+                    title="Registrar animal"
+                />
+                <Card
+                    href="/(tabs)/animals"
+                    alt="Rebanho"
+                    iconSource={require("assets/images/CowIcon.png")}
+                    title="Rebanho"
+                />
+                <Card
+                    href="/batches/add"
+                    alt="Registrar lote"
+                    iconSource={require("assets/images/AddBatchIcon.png")}
+                    title="Registrar lote"
+                    color="blue"
+                />
+                <Card
+                    href="/(tabs)/batches"
+                    alt="Lotes"
+                    iconSource={require("assets/images/FenceIcon.png")}
+                    title="Lotes"
+                    color="blue"
+                />
+                <Card
+                    href="/(tabs)/production"
+                    alt="Production"
+                    iconSource={require("assets/images/GallonIcon.png")}
+                    title="Produção do mês"
+                    color="purple"
+                />
+                <Card
+                    href="/(tabs)/annotations"
+                    alt="Annotations"
+                    iconSource={require("assets/images/FenceIcon.png")}
+                    title="Anotações"
+                    color="cian"
+                />
+            </Span>
+        </ContainerView>
+    );
 }

@@ -3,13 +3,13 @@ import { ContainerView } from "components/ContainerView";
 import { Stack } from "expo-router";
 
 export default function AddBatchScreen() {
-	const StackScreen = () => (
-		<Stack.Screen options={{ headerTitle: "Adicionar lote" }} />
-	);
+    const StackScreen = () => (
+        <Stack.Screen options={{ headerTitle: "Adicionar lote" }} />
+    );
 
-	return (
-		<ContainerView immediateContent={<StackScreen />}>
-			<BatchForm />
-		</ContainerView>
-	);
+    return (
+        <ContainerView immediateContent={<StackScreen />}>
+            <BatchForm />
+        </ContainerView>
+    );
 }

@@ -1,3 +1,3 @@
 export default {
-	primaryFamily: "OpenSans",
+    primaryFamily: "OpenSans",
 };

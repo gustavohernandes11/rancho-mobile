@@ -1,8 +1,8 @@
 import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
 import {
-	ControlledAnimalTableProps,
-	useAnimalTable,
+    ControlledAnimalTableProps,
+    useAnimalTable,
 } from "hooks/useAnimalTable";
 import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
 import { useGlobalState } from "hooks/useGlobalState";
@@ -17,100 +17,100 @@ import { Row } from "./Row";
 import { SelectionMenu } from "./SelectionMenu";
 
 type AnimalTableProps = {
-	animals: Animal[];
-	onlySelectionMode?: boolean;
-	liftedController?: ControlledAnimalTableProps | null;
+    animals: Animal[];
+    onlySelectionMode?: boolean;
+    liftedController?: ControlledAnimalTableProps | null;
 };
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
-	animals,
-	onlySelectionMode = false,
-	// an optional controller for the table, when it is needed to control it one level up
-	liftedController = null,
+    animals,
+    onlySelectionMode = false,
+    // an optional controller for the table, when it is needed to control it one level up
+    liftedController = null,
 }) => {
-	const { refreshAll } = useGlobalState();
-	const localController = useAnimalTable();
-	const controller = liftedController || localController;
+    const { refreshAll } = useGlobalState();
+    const localController = useAnimalTable();
+    const controller = liftedController || localController;
 
-	useClearSelectionOnHardwareBack({ controller });
+    useClearSelectionOnHardwareBack({ controller });
 
-	const handleCheck = (id: number) => {
-		if (!controller.isSelectionMode || !!controller.selectedIDs) {
-			controller.toggleCheckID(id);
-			controller.setIsSelectionMode(() => true);
-		} else {
-			controller.toggleCheckID(id);
-		}
-	};
+    const handleCheck = (id: number) => {
+        if (!controller.isSelectionMode || !!controller.selectedIDs) {
+            controller.toggleCheckID(id);
+            controller.setIsSelectionMode(() => true);
+        } else {
+            controller.toggleCheckID(id);
+        }
+    };
 
-	const handleSelectAll = () => {
-		controller.setSelectedIDs(animals.map((al) => al.id));
-	};
+    const handleSelectAll = () => {
+        controller.setSelectedIDs(animals.map(al => al.id));
+    };
 
-	const handleDeleteMany = () => {
-		Storage.deleteAnimal(controller.selectedIDs).then(() => {
-			refreshAll();
-			controller.clearSelection();
-			showToast("Animais removidos com sucesso.");
-		});
-	};
+    const handleDeleteMany = () => {
+        Storage.deleteAnimal(controller.selectedIDs).then(() => {
+            refreshAll();
+            controller.clearSelection();
+            showToast("Animais removidos com sucesso.");
+        });
+    };
 
-	const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
-	const renderItem = ({ item }: { item: Animal }) => (
-		<Row
-			isChecked={controller.selectedIDs.includes(item.id)}
-			onCheck={() => handleCheck(item.id)}
-			animal={item}
-		/>
-	);
+    const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
+    const renderItem = ({ item }: { item: Animal }) => (
+        <Row
+            isChecked={controller.selectedIDs.includes(item.id)}
+            onCheck={() => handleCheck(item.id)}
+            animal={item}
+        />
+    );
 
-	const renderEmptyList = useCallback(
-		() => (
-			<Span justify="center">
-				<Text style={{ padding: 16 }}>Nenhum animal encontrado.</Text>
-			</Span>
-		),
-		[animals]
-	);
+    const renderEmptyList = useCallback(
+        () => (
+            <Span justify="center">
+                <Text style={{ padding: 16 }}>Nenhum animal encontrado.</Text>
+            </Span>
+        ),
+        [animals]
+    );
 
-	return (
-		<>
-			{controller.isSelectionMode && !onlySelectionMode && (
-				<Span>
-					<SelectionMenu
-						showActions={true}
-						showCloseButton={true}
-						onClearSelection={controller.clearSelection}
-						onSelectAll={handleSelectAll}
-						selectedIDs={controller.selectedIDs}
-						onDeleteMany={handleDeleteMany}
-					/>
-				</Span>
-			)}
-			<View
-				style={[
-					{
-						minHeight: 20,
-						width: Dimensions.get("screen").width - 16,
-					},
-					commonStyles.border,
-				]}
-			>
-				<FlashList
-					removeClippedSubviews={true}
-					data={animals}
-					keyExtractor={keyExtractor}
-					extraData={[
-						controller.selectedIDs,
-						controller.isSelectionMode,
-					]}
-					renderItem={renderItem}
-					estimatedItemSize={50}
-					ListHeaderComponent={Header}
-					ListEmptyComponent={renderEmptyList}
-					testID="animal-table"
-				/>
-			</View>
-		</>
-	);
+    return (
+        <>
+            {controller.isSelectionMode && !onlySelectionMode && (
+                <Span>
+                    <SelectionMenu
+                        showActions={true}
+                        showCloseButton={true}
+                        onClearSelection={controller.clearSelection}
+                        onSelectAll={handleSelectAll}
+                        selectedIDs={controller.selectedIDs}
+                        onDeleteMany={handleDeleteMany}
+                    />
+                </Span>
+            )}
+            <View
+                style={[
+                    {
+                        minHeight: 20,
+                        width: Dimensions.get("screen").width - 16,
+                    },
+                    commonStyles.border,
+                ]}
+            >
+                <FlashList
+                    removeClippedSubviews={true}
+                    data={animals}
+                    keyExtractor={keyExtractor}
+                    extraData={[
+                        controller.selectedIDs,
+                        controller.isSelectionMode,
+                    ]}
+                    renderItem={renderItem}
+                    estimatedItemSize={50}
+                    ListHeaderComponent={Header}
+                    ListEmptyComponent={renderEmptyList}
+                    testID="animal-table"
+                />
+            </View>
+        </>
+    );
 };

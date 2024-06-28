@@ -5,52 +5,52 @@ import { commonStyles } from "styles/Common";
 import { Item } from "types";
 
 interface SimpleTableProps {
-	data: Item[];
+    data: Item[];
 }
 type RowProps<T> = {
-	item: T;
-	index: number;
+    item: T;
+    index: number;
 };
 
 export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
-	<ScrollView horizontal={false}>
-		<ScrollView
-			horizontal={true}
-			contentContainerStyle={{
-				width: "100%",
-				height: "100%",
-			}}
-		>
-			<FlatList
-				style={styles.tableContainer}
-				data={data}
-				keyExtractor={(item: Item) => item.key}
-				renderItem={(props: RowProps<Item>) => <Row {...props} />}
-				{...props}
-			/>
-		</ScrollView>
-	</ScrollView>
+    <ScrollView horizontal={false}>
+        <ScrollView
+            horizontal={true}
+            contentContainerStyle={{
+                width: "100%",
+                height: "100%",
+            }}
+        >
+            <FlatList
+                style={styles.tableContainer}
+                data={data}
+                keyExtractor={(item: Item) => item.key}
+                renderItem={(props: RowProps<Item>) => <Row {...props} />}
+                {...props}
+            />
+        </ScrollView>
+    </ScrollView>
 );
 
 const Row: React.FC<RowProps<Item>> = ({ item }) => (
-	<View style={styles.row}>
-		<Text style={commonStyles.text}>{item.key}</Text>
-		<Text style={commonStyles.text}>{item.value}</Text>
-	</View>
+    <View style={styles.row}>
+        <Text style={commonStyles.text}>{item.key}</Text>
+        <Text style={commonStyles.text}>{item.value}</Text>
+    </View>
 );
 
 const styles = StyleSheet.create({
-	tableContainer: {
-		borderWidth: 1,
-		borderColor: Colors.border,
-		borderTopWidth: 0,
-	},
-	row: {
-		flexDirection: "row",
-		borderTopWidth: 1,
-		borderColor: Colors.border,
-		paddingVertical: 16,
-		paddingHorizontal: 8,
-		justifyContent: "space-between",
-	},
+    tableContainer: {
+        borderWidth: 1,
+        borderColor: Colors.border,
+        borderTopWidth: 0,
+    },
+    row: {
+        flexDirection: "row",
+        borderTopWidth: 1,
+        borderColor: Colors.border,
+        paddingVertical: 16,
+        paddingHorizontal: 8,
+        justifyContent: "space-between",
+    },
 });

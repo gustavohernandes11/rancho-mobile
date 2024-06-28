@@ -7,30 +7,30 @@ import { Storage } from "services/StorageService";
 import { PopulatedBatch } from "types/Batch";
 
 export default function EditAnimalScreen() {
-	const { id } = useLocalSearchParams<{ id: string }>();
-	const { refreshAnimals } = useGlobalState();
-	const [batch, setBatch] = useState<PopulatedBatch>();
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const { refreshAnimals } = useGlobalState();
+    const [batch, setBatch] = useState<PopulatedBatch>();
 
-	useEffect(() => {
-		const fetchData = async () => {
-			await Storage.getPopulatedBatch(Number(id)).then((batch) =>
-				setBatch(batch)
-			);
-			refreshAnimals();
-		};
-		fetchData();
-	}, []);
+    useEffect(() => {
+        const fetchData = async () => {
+            await Storage.getPopulatedBatch(Number(id)).then(batch =>
+                setBatch(batch)
+            );
+            refreshAnimals();
+        };
+        fetchData();
+    }, []);
 
-	const StackScreen = () => (
-		<Stack.Screen
-			options={{
-				headerTitle: `Editando lote "${batch?.name || ""}"`,
-			}}
-		/>
-	);
-	return (
-		<ContainerView immediateContent={<StackScreen />}>
-			{batch && <BatchForm initialValues={batch} />}
-		</ContainerView>
-	);
+    const StackScreen = () => (
+        <Stack.Screen
+            options={{
+                headerTitle: `Editando lote "${batch?.name || ""}"`,
+            }}
+        />
+    );
+    return (
+        <ContainerView immediateContent={<StackScreen />}>
+            {batch && <BatchForm initialValues={batch} />}
+        </ContainerView>
+    );
 }

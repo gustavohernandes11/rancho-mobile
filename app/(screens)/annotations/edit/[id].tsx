@@ -6,28 +6,28 @@ import { Storage } from "services/StorageService";
 import { Annotation } from "types/Annotation";
 
 export default function EditAnnotationScreen() {
-	const { id } = useLocalSearchParams<{ id: string }>();
-	const [annotation, setAnnotation] = useState<Annotation | null>();
+    const { id } = useLocalSearchParams<{ id: string }>();
+    const [annotation, setAnnotation] = useState<Annotation | null>();
 
-	useLayoutEffect(() => {
-		const fetchData = async () => {
-			const annotation = await Storage.getAnnotation(Number(id));
-			setAnnotation(annotation);
-		};
-		fetchData();
-	}, []);
+    useLayoutEffect(() => {
+        const fetchData = async () => {
+            const annotation = await Storage.getAnnotation(Number(id));
+            setAnnotation(annotation);
+        };
+        fetchData();
+    }, []);
 
-	const StackScreen = () => (
-		<Stack.Screen
-			options={{
-				headerTitle: `Editando nota "${annotation?.title || ""}"`,
-			}}
-		/>
-	);
+    const StackScreen = () => (
+        <Stack.Screen
+            options={{
+                headerTitle: `Editando nota "${annotation?.title || ""}"`,
+            }}
+        />
+    );
 
-	return (
-		<ContainerView immediateContent={<StackScreen />}>
-			{annotation && <AnnotationForm initialValues={annotation} />}
-		</ContainerView>
-	);
+    return (
+        <ContainerView immediateContent={<StackScreen />}>
+            {annotation && <AnnotationForm initialValues={annotation} />}
+        </ContainerView>
+    );
 }

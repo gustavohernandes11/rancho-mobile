@@ -5,28 +5,28 @@ import { getFormattedAge, getGenderIcon } from "utils/formatters";
 import { Banner } from "./Banner";
 
 interface AnimalBannerProps {
-	animal: Animal;
-	href: string;
+    animal: Animal;
+    href: string;
 }
 
 export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
-	animal,
-	...props
+    animal,
+    ...props
 }) => {
-	return (
-		<Banner
-			iconAlt="Rounded animal icon"
-			iconSource={require("../assets/images/RoundedAnimalIcon.png")}
-			title={
-				<>
-					{getGenderIcon(animal.gender)}
-					{" " + animal.name}
-				</>
-			}
-			rightDescription={
-				animal.birthdate && getFormattedAge(animal.birthdate)
-			}
-			{...props}
-		/>
-	);
+    return (
+        <Banner
+            iconAlt="Rounded animal icon"
+            iconSource={require("../assets/images/RoundedAnimalIcon.png")}
+            title={
+                <>
+                    {getGenderIcon(animal.gender)}
+                    {" " + animal.name}
+                </>
+            }
+            rightDescription={
+                animal.birthdate && getFormattedAge(animal.birthdate)
+            }
+            {...props}
+        />
+    );
 };

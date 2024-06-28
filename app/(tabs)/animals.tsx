@@ -17,126 +17,126 @@ import { OrderByOptions } from "types/StorageRepository";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
-	const router = useRouter();
-	const { animals, batches } = useGlobalState();
-	const [searchText, setSearchText] = useState("");
-	const [isLoading, setIsLoading] = useState(true);
-	const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
-	const [filterByBatchID, setFilterByBatchID] = useState<
-		number | undefined
-	>();
-	const [filteredAnimals, setFilteredAnimals] = useState<Animal[]>([]);
+    const router = useRouter();
+    const { animals, batches } = useGlobalState();
+    const [searchText, setSearchText] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
+    const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
+    const [filterByBatchID, setFilterByBatchID] = useState<
+        number | undefined
+    >();
+    const [filteredAnimals, setFilteredAnimals] = useState<Animal[]>([]);
 
-	const fetchFilteredAnimals = () => {
-		Storage.listAnimals({
-			orderBy,
-			batchID: filterByBatchID,
-			searchText,
-		})
-			.then((animals) => setFilteredAnimals(() => animals))
-			.finally(() => setIsLoading(false));
-	};
+    const fetchFilteredAnimals = () => {
+        Storage.listAnimals({
+            orderBy,
+            batchID: filterByBatchID,
+            searchText,
+        })
+            .then(animals => setFilteredAnimals(() => animals))
+            .finally(() => setIsLoading(false));
+    };
 
-	// when changing filters
-	useDebounce(
-		() => {
-			fetchFilteredAnimals();
-		},
-		[orderBy, filterByBatchID, searchText],
-		300
-	);
+    // when changing filters
+    useDebounce(
+        () => {
+            fetchFilteredAnimals();
+        },
+        [orderBy, filterByBatchID, searchText],
+        300
+    );
 
-	// first fetch
-	useEffect(() => {
-		setIsLoading(true);
-		fetchFilteredAnimals();
-	}, []);
+    // first fetch
+    useEffect(() => {
+        setIsLoading(true);
+        fetchFilteredAnimals();
+    }, []);
 
-	// update when going back to table
-	useFocusEffect(
-		useCallback(() => {
-			fetchFilteredAnimals();
-		}, [animals, orderBy, filterByBatchID, searchText])
-	);
+    // update when going back to table
+    useFocusEffect(
+        useCallback(() => {
+            fetchFilteredAnimals();
+        }, [animals, orderBy, filterByBatchID, searchText])
+    );
 
-	function getDisplayInfo() {
-		const totalCount = animals ? animals.length : 0;
-		const filteredCount = filteredAnimals ? filteredAnimals.length : 0;
+    function getDisplayInfo() {
+        const totalCount = animals ? animals.length : 0;
+        const filteredCount = filteredAnimals ? filteredAnimals.length : 0;
 
-		return `Exibindo ${filteredCount} de ${totalCount}`;
-	}
+        return `Exibindo ${filteredCount} de ${totalCount}`;
+    }
 
-	return (
-		<ContainerView>
-			<Stack.Screen
-				options={{
-					headerTitle: "Rebanho",
-					headerRight: () => (
-						<Button
-							title="Novo animal"
-							icon={require("../../assets/images/AddAnimalIcon.png")}
-							onPress={() =>
-								router.push("/(screens)/animals/add")
-							}
-						/>
-					),
-				}}
-			/>
-			<Span justify="space-between" my={8} align="center">
-				<Heading>Todos seus animais</Heading>
-				<Paragraph>{getDisplayInfo()}</Paragraph>
-			</Span>
-			<SearchBar
-				onChangeText={(text) => setSearchText(text)}
-				value={searchText}
-				placeholder="Busque por nome, código ou observação"
-			/>
-			<Span direction="row" my={4}>
-				<Select
-					label="Ordenar por"
-					items={[
-						{ key: "Alfabética", value: "alfabetic" },
-						{ key: "Idade", value: "age" },
-					]}
-					defaultValue="Alfabética"
-					defaultButtonText="Alfabética"
-					onSelect={(option) => {
-						setOrderBy(option.value);
-					}}
-					size="small"
-					backgroundColor="transparent"
-				/>
-				<Select
-					label="Lote"
-					items={[
-						{
-							key: "Todos",
-							value: undefined as unknown as string,
-						},
-						...serializeBatches(batches),
-					]}
-					defaultValue="Todos"
-					defaultButtonText="Todos"
-					onSelect={(option) => setFilterByBatchID(option.value)}
-					size="small"
-					backgroundColor="transparent"
-				/>
-			</Span>
+    return (
+        <ContainerView>
+            <Stack.Screen
+                options={{
+                    headerTitle: "Rebanho",
+                    headerRight: () => (
+                        <Button
+                            title="Novo animal"
+                            icon={require("../../assets/images/AddAnimalIcon.png")}
+                            onPress={() =>
+                                router.push("/(screens)/animals/add")
+                            }
+                        />
+                    ),
+                }}
+            />
+            <Span justify="space-between" my={8} align="center">
+                <Heading>Todos seus animais</Heading>
+                <Paragraph>{getDisplayInfo()}</Paragraph>
+            </Span>
+            <SearchBar
+                onChangeText={text => setSearchText(text)}
+                value={searchText}
+                placeholder="Busque por nome, código ou observação"
+            />
+            <Span direction="row" my={4}>
+                <Select
+                    label="Ordenar por"
+                    items={[
+                        { key: "Alfabética", value: "alfabetic" },
+                        { key: "Idade", value: "age" },
+                    ]}
+                    defaultValue="Alfabética"
+                    defaultButtonText="Alfabética"
+                    onSelect={option => {
+                        setOrderBy(option.value);
+                    }}
+                    size="small"
+                    backgroundColor="transparent"
+                />
+                <Select
+                    label="Lote"
+                    items={[
+                        {
+                            key: "Todos",
+                            value: undefined as unknown as string,
+                        },
+                        ...serializeBatches(batches),
+                    ]}
+                    defaultValue="Todos"
+                    defaultButtonText="Todos"
+                    onSelect={option => setFilterByBatchID(option.value)}
+                    size="small"
+                    backgroundColor="transparent"
+                />
+            </Span>
 
-			{isLoading ? (
-				<Loading />
-			) : (
-				<Span py={8}>
-					<AnimalTable animals={filteredAnimals} />
-				</Span>
-			)}
+            {isLoading ? (
+                <Loading />
+            ) : (
+                <Span py={8}>
+                    <AnimalTable animals={filteredAnimals} />
+                </Span>
+            )}
 
-			<Span justify="flex-end" direction="row">
-				<Button
-					title="Registrar animal"
-					onPress={() => router.push("/(screens)/animals/add")}
-				/>
-			</Span>
-		</ContainerView>
-	);
+            <Span justify="flex-end" direction="row">
+                <Button
+                    title="Registrar animal"
+                    onPress={() => router.push("/(screens)/animals/add")}
+                />
+            </Span>
+        </ContainerView>
+    );
 }

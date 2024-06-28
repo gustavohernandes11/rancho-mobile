@@ -9,48 +9,48 @@ import { Span } from "./Span";
 
 type ColorOptions = "green" | "blue" | "purple" | "cian";
 interface CardProps {
-	title: string;
-	alt: string;
-	iconSource: ImageURISource;
-	color?: ColorOptions;
-	href?: any;
+    title: string;
+    alt: string;
+    iconSource: ImageURISource;
+    color?: ColorOptions;
+    href?: any;
 }
 
 export const Card: React.FC<LinkProps & CardProps> = ({
-	title,
-	alt,
-	iconSource,
-	color = "green",
-	href,
-	...props
+    title,
+    alt,
+    iconSource,
+    color = "green",
+    href,
+    ...props
 }) => {
-	const containerStyle = [
-		commonStyles.card,
-		{ backgroundColor: Colors[color] },
-	];
+    const containerStyle = [
+        commonStyles.card,
+        { backgroundColor: Colors[color] },
+    ];
 
-	return (
-		<Link href={href} style={containerStyle} asChild {...props}>
-			<TouchableRipple>
-				<Span direction="column" justify="center" flexWrap="nowrap">
-					<Image
-						style={commonStyles.icon}
-						source={iconSource}
-						alt={alt}
-					/>
-					<Text style={styles.title}>{title}</Text>
-				</Span>
-			</TouchableRipple>
-		</Link>
-	);
+    return (
+        <Link href={href} style={containerStyle} asChild {...props}>
+            <TouchableRipple>
+                <Span direction="column" justify="center" flexWrap="nowrap">
+                    <Image
+                        style={commonStyles.icon}
+                        source={iconSource}
+                        alt={alt}
+                    />
+                    <Text style={styles.title}>{title}</Text>
+                </Span>
+            </TouchableRipple>
+        </Link>
+    );
 };
 
 const styles = StyleSheet.create({
-	title: {
-		...commonStyles.text,
-		fontSize: 16,
-		flexShrink: 1,
-		color: Colors.white,
-		marginTop: 4,
-	},
+    title: {
+        ...commonStyles.text,
+        fontSize: 16,
+        flexShrink: 1,
+        color: Colors.white,
+        marginTop: 4,
+    },
 });

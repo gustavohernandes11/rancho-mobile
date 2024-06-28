@@ -7,6 +7,7 @@ Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento d
 ## Capturas de Tela
 
 ### Listagem e Seleção de Animais
+
 <details>
   <summary>Mostrar Capturas</summary>
   
@@ -16,6 +17,7 @@ Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento d
 </details>
 
 ### Detalhes de um Animal
+
 <details>
   <summary>Mostrar Captura</summary>
   
@@ -24,6 +26,7 @@ Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento d
 </details>
 
 ### Detalhes de um Lote
+
 <details>
   <summary>Mostrar Captura</summary>
   
@@ -32,6 +35,7 @@ Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento d
 </details>
 
 ### Listagem de Lotes
+
 <details>
   <summary>Mostrar Captura</summary>
   
@@ -40,4 +44,5 @@ Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento d
 </details>
 
 ## Instalação
+
 Em breve
