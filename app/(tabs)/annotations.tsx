@@ -4,24 +4,36 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { SearchBar } from "components/SearchBar";
 import { Span } from "components/Span";
-import { Stack, useFocusEffect, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
+import useDebounce from "hooks/useDebounce";
+import { useFocus } from "hooks/useFocus";
 import React, { useState } from "react";
+import { Text } from "react-native";
 import { Storage } from "services/StorageService";
 import { Annotation } from "types/Annotation";
 
 export default function ViewAnnotationsPage() {
-	const [annotations, setAnnotations] = useState<Annotation[]>();
+	const [annotations, setAnnotations] = useState<Annotation[]>([]);
+	const [searchText, setSearchText] = useState<string>("");
 	const router = useRouter();
 
-	useFocusEffect(() => {
-		fetchAnnotations();
-	});
-
-	const fetchAnnotations = () => {
-		Storage.listAnnotations().then((annotations) =>
+	const loadAnnotations = () => {
+		Storage.listAnnotations({ searchText }).then((annotations) =>
 			setAnnotations(annotations)
 		);
 	};
+
+	useFocus(loadAnnotations);
+
+	useDebounce(
+		() => {
+			loadAnnotations();
+		},
+		[searchText],
+		300
+	);
+
+	const handleChangeSearchText = (text: string) => setSearchText(text);
 
 	return (
 		<ContainerView>
@@ -42,11 +54,16 @@ export default function ViewAnnotationsPage() {
 				<Heading>Faça suas anotações aqui</Heading>
 			</Span>
 			<SearchBar
-				onChangeText={() => ""}
-				value={""}
+				onChangeText={handleChangeSearchText}
+				value={searchText}
 				placeholder="Busque suas anotações"
 			/>
 			<Span direction="column" py={16}>
+				{annotations.length === 0 && (
+					<Span justify="center">
+						<Text>Nenhuma nota encontrada.</Text>
+					</Span>
+				)}
 				{annotations &&
 					annotations.map((annotation) => (
 						<AnnotationBanner

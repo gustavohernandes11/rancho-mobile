@@ -3,8 +3,8 @@ import moment from "moment";
 import Colors from "styles/Colors";
 import { AnnotationTypeOption } from "types/Annotation";
 
-export const getFormattedAge = (input: string): string => {
-	const duration = moment.duration(moment().diff(moment(input)));
+export const getFormattedAge = (isoString: string): string => {
+	const duration = moment.duration(moment().diff(moment(isoString)));
 
 	const years = duration.years();
 	const months = duration.months();

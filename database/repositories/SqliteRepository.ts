@@ -598,7 +598,7 @@ export class SqliteRepository implements StorageRepository {
 		} as Annotation;
 	}
 	async listAnnotations(
-		query?: AnnotationQueryOptions
+		queryOptions?: AnnotationQueryOptions
 	): Promise<Annotation[]> {
 		let sqlQuery = `
             SELECT id, title, type, description, date, animalIDs, dosage, medicineName
@@ -606,10 +606,19 @@ export class SqliteRepository implements StorageRepository {
         `;
 
 		const params: (string | number)[] = [];
-		if (query?.types && query.types.length > 0) {
-			const placeholders = query.types.map(() => "?").join(", ");
+		if (queryOptions?.types && queryOptions.types.length > 0) {
+			const placeholders = queryOptions.types.map(() => "?").join(", ");
 			sqlQuery += ` WHERE type IN (${placeholders})`;
-			params.push(...query.types);
+			params.push(...queryOptions.types);
+		}
+
+		if (queryOptions?.searchText) {
+			sqlQuery +=
+				queryOptions.types && queryOptions.types.length > 0
+					? ` AND`
+					: ` WHERE`;
+			sqlQuery += ` (title LIKE '%' || ? || '%' OR description LIKE '%' || ? || '%')`;
+			params.push(queryOptions.searchText, queryOptions.searchText);
 		}
 
 		const annotations = await this.getAll<Annotation>(sqlQuery, params);
