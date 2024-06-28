@@ -1,5 +1,4 @@
 import { AnimalTable } from "components/AnimalTable";
-import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
@@ -10,8 +9,11 @@ import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, Text } from "react-native";
+import { IconButton } from "react-native-paper";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Storage } from "services/StorageService";
+import { sharedStyles } from "styles/Common";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
@@ -48,64 +50,52 @@ export default function ViewBatchDetailsScreen() {
 
 	const StackScreen = () => (
 		<Stack.Screen
-			options={{ headerTitle: `Lote "${batch?.name || ""}"` }}
+			options={{
+				headerTitle: "Ver lote",
+				headerRight: () => (
+					<>
+						<IconButton
+							icon="pencil"
+							iconColor={Colors.white}
+							onPress={handleEdit}
+						/>
+						<IconButton
+							icon="delete"
+							iconColor={Colors.white}
+							onPress={handleDelete}
+						/>
+
+						<IconButton
+							icon={require("../../../assets/images/AddAnimalIcon.png")}
+							iconColor={Colors.white}
+							onPress={handleAddAnimal}
+						/>
+					</>
+				),
+			}}
 		/>
 	);
+
+	const handleDelete = () =>
+		showConfirmationAndDeleteOnlyBatch(batch!, () => {
+			refreshAll();
+			router.back();
+		});
+	const handleEdit = () =>
+		router.push(`/(screens)/batches/edit/${batch!.id}`);
+	const handleAddAnimal = () =>
+		router.push(`/(screens)/batches/register-animal-to-batch/${batch!.id}`);
 
 	return (
 		<ContainerView immediateContent={<StackScreen />}>
 			{isLoading ? (
 				<Skeleton width={300} />
 			) : (
-				<Heading>{batch?.name}</Heading>
+				<>
+					<Text style={sharedStyles.label}>Título</Text>
+					<Heading>{batch?.name}</Heading>
+				</>
 			)}
-
-			<Span flexWrap="wrap">
-				<Button
-					type="danger"
-					icon="exclamation"
-					title="Deletar tudo"
-					onPress={() =>
-						showConfirmationAndDeleteAll(batch!, () => {
-							refreshAll();
-							router.back();
-						})
-					}
-					disabled={isLoading}
-				/>
-				<Button
-					type="danger"
-					icon="delete"
-					title="Deletar lote"
-					onPress={() =>
-						showConfirmationAndDeleteOnlyBatch(batch!, () => {
-							refreshAll();
-							router.back();
-						})
-					}
-					disabled={isLoading}
-				/>
-				<Button
-					title="Editar"
-					icon="pencil"
-					onPress={() =>
-						router.push(`/(screens)/batches/edit/${batch!.id}`)
-					}
-					disabled={isLoading}
-				/>
-				<Button
-					title="Novo animal"
-					icon={require("../../../assets/images/AddAnimalIcon.png")}
-					onPress={() =>
-						router.push(
-							`/(screens)/batches/register-animal-to-batch/${
-								batch!.id
-							}`
-						)
-					}
-					disabled={isLoading}
-				/>
-			</Span>
 
 			{isLoading ? (
 				<>
@@ -172,16 +162,25 @@ export const showConfirmationAndDeleteOnlyBatch = (
 
 		[
 			{
-				text: "Cancelar",
-				style: "cancel",
-			},
-			{
 				text: "Deletar",
+				isPreferred: true,
 				onPress: () =>
 					Storage.deleteBatch(batch.id).then(() =>
 						onConfirmCallback()
 					),
+				style: "default",
+			},
+			{
+				text: "Deletar lote e animais",
+				onPress: () =>
+					Storage.deleteBatchWithAnimals(batch.id).then(() =>
+						onConfirmCallback()
+					),
 				style: "destructive",
+			},
+			{
+				text: "Cancelar",
+				style: "cancel",
 			},
 		]
 	);

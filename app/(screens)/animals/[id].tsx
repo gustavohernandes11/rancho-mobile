@@ -1,6 +1,5 @@
 import { AnimalBanner } from "components/AnimalBanner";
 import { BatchBanner } from "components/BatchBanner";
-import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { SimpleTable } from "components/SimpleTable";
@@ -10,10 +9,11 @@ import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Alert, Text } from "react-native";
+import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
+import Colors from "styles/Colors";
 import { sharedStyles } from "styles/Common";
 import { Animal, PopulatedAnimal } from "types";
-import { atLeastOneYearOld } from "utils/filters";
 import { serializeAnimalInfo } from "utils/serializers";
 
 export default function ViewAnimalDetailsScreen() {
@@ -41,10 +41,31 @@ export default function ViewAnimalDetailsScreen() {
 	const StackScreen = () => (
 		<Stack.Screen
 			options={{
-				headerTitle: `Detalhes do animal`,
+				headerTitle: "Ver animal",
+				headerRight: () => (
+					<>
+						<IconButton
+							icon="pencil"
+							iconColor={Colors.white}
+							onPress={handleEdit}
+						/>
+						<IconButton
+							icon="delete"
+							iconColor={Colors.white}
+							onPress={handleDelete}
+						/>
+					</>
+				),
 			}}
 		/>
 	);
+
+	const handleEdit = () => router.push(`/(screens)/animals/edit/${id}`);
+	const handleDelete = () =>
+		showConfirmationAndDelete(animal!, () => {
+			refreshAll();
+			router.back();
+		});
 
 	return (
 		<ContainerView immediateContent={<StackScreen />}>
@@ -56,40 +77,7 @@ export default function ViewAnimalDetailsScreen() {
 					<Heading size="big">{animal?.name}</Heading>
 				</>
 			)}
-			<Span flexWrap="wrap">
-				<Button
-					type="danger"
-					icon="delete"
-					title="Deletar"
-					onPress={() =>
-						showConfirmationAndDelete(animal!, () => {
-							refreshAll();
-							router.back();
-						})
-					}
-					disabled={isLoading}
-				/>
-				<Button
-					title="Editar"
-					icon="pencil"
-					onPress={() => router.push(`/(screens)/animals/edit/${id}`)}
-					disabled={isLoading}
-				/>
-				{animal &&
-					animal.gender === "F" &&
-					atLeastOneYearOld(animal) && (
-						<Button
-							icon={require("../../../assets/images/AddAnimalIcon.png")}
-							title="Novo filhote"
-							onPress={() =>
-								router.push(
-									`/(screens)/animals/register-new-born/${animal.id}`
-								)
-							}
-							disabled={isLoading}
-						/>
-					)}
-			</Span>
+
 			{isLoading ? (
 				<>
 					<Skeleton width={250} />
