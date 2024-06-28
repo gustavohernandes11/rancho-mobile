@@ -1,4 +1,5 @@
 import { SQLiteExecuteAsyncResult, openDatabaseSync } from "expo-sqlite";
+import moment from "moment";
 import {
 	AddAnimal,
 	AddBatch,
@@ -559,14 +560,13 @@ export class SqliteRepository implements StorageRepository {
 			parsed.title,
 			parsed.type,
 			parsed.description,
-			parsed.date ? parsed.date.toISOString() : null,
+			parsed.date ? moment(parsed.date).toISOString() : null,
 			parsed.animalIDs
 				? this.convertAnimalIDsToString(parsed.animalIDs)
 				: null,
 			parsed.dosage,
 			parsed.medicineName,
 		];
-
 		return this.execute(query, params).then(
 			({ lastInsertRowId }) => lastInsertRowId
 		);
@@ -589,6 +589,7 @@ export class SqliteRepository implements StorageRepository {
 
 		return {
 			...annotation,
+			date: annotation.date ? new Date(annotation.date) : null,
 			animalIDs: annotation.animalIDs
 				? this.convertStringToAnimalIDs(
 						annotation.animalIDs as unknown as string
@@ -615,6 +616,7 @@ export class SqliteRepository implements StorageRepository {
 
 		return annotations.map((annotation) => ({
 			...annotation,
+			date: annotation.date ? new Date(annotation.date) : undefined,
 			animalIDs: annotation.animalIDs
 				? this.convertStringToAnimalIDs(
 						annotation.animalIDs as unknown as string
@@ -646,7 +648,7 @@ export class SqliteRepository implements StorageRepository {
 			parsed.title,
 			parsed.type,
 			parsed.description,
-			parsed.date ? parsed.date?.toISOString() : null,
+			parsed.date ? moment(parsed.date).toISOString() : null,
 			parsed.animalIDs
 				? this.convertAnimalIDsToString(parsed.animalIDs)
 				: null,

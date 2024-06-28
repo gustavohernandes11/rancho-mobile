@@ -1,6 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
 import moment from "moment";
 import Colors from "styles/Colors";
+import { AnnotationTypeOption } from "types/Annotation";
 
 export const getFormattedAge = (input: string): string => {
 	const duration = moment.duration(moment().diff(moment(input)));
@@ -73,4 +74,22 @@ export const getFormattedMonthAndYear = (date: Date): string => {
 	const month = String(date.getMonth() + 1).padStart(2, "0");
 	const year = date.getFullYear();
 	return `${month}/${year}`;
+};
+
+export const formatAnnotationType = (type: AnnotationTypeOption) => {
+	switch (type) {
+		case "simple":
+			return "Simples";
+		case "sell":
+			return "Venda";
+		case "death":
+			return "Morte";
+		case "purchase":
+			return "Compra";
+		case "heath care":
+			return "Manejo Sanitário";
+
+		default:
+			return "";
+	}
 };

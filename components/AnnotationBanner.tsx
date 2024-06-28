@@ -5,6 +5,7 @@ import Colors from "styles/Colors";
 import { sharedStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 import { AnnotationTypeOption } from "types/Annotation";
+import { formatAnnotationType, getFormattedPtBRDate } from "utils/formatters";
 
 type AnnotationBannerProps = {
 	title: string;
@@ -26,12 +27,20 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
 	...props
 }) => {
 	return (
-		<Link style={styles.container} href={href} asChild>
-			<Pressable {...props}>
-				<View style={styles.left}>
+		<Link href={href} style={styles.container} asChild>
+			<Pressable {...props} style={styles.container}>
+				<View style={styles.top}>
+					<Text style={sharedStyles.text}>
+						{formatAnnotationType(type)}
+					</Text>
+					<Text style={styles.date}>
+						{date ? getFormattedPtBRDate(date) : " "}
+					</Text>
+				</View>
+				<View style={styles.main}>
 					<Text style={styles.title}>{title}</Text>
 					{description && (
-						<Text style={styles.description}>{description}</Text>
+						<Text style={sharedStyles.text}>{description}</Text>
 					)}
 				</View>
 			</Pressable>
@@ -41,22 +50,22 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
 
 const styles = StyleSheet.create({
 	container: {
-		flex: 1,
-		flexDirection: "row",
-		alignItems: "center",
+		width: "100%",
+		gap: 8,
 		borderRadius: 8,
-		backgroundColor: Colors.lightGray,
+		padding: 16,
 		borderWidth: 1,
 		borderColor: Colors.border,
-		padding: 16,
 	},
-	right: {
+	top: {
 		flex: 1,
+		flexDirection: "row",
 		alignItems: "flex-end",
-		justifyContent: "center",
+		justifyContent: "space-between",
 	},
-	left: {
+	main: {
 		flex: 1,
+		flexDirection: "column",
 		alignItems: "flex-start",
 		gap: 4,
 	},
@@ -65,14 +74,8 @@ const styles = StyleSheet.create({
 		color: Colors.text,
 		fontSize: 16,
 	},
-	description: {
+	date: {
 		...sharedStyles.text,
-		fontSize: 12,
 		textAlign: "right",
-	},
-	iconSpan: {
-		alignItems: "center",
-		justifyContent: "center",
-		paddingRight: 16,
 	},
 });
