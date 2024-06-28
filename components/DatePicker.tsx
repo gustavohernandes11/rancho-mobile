@@ -1,12 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { HelperText } from "react-native-paper";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 import { getInputBorderColor } from "utils/conditionalStyles";
+import { Label } from "./Label";
 
 interface DatePickerProps {
 	errorText?: string;
@@ -15,22 +15,19 @@ interface DatePickerProps {
 export const DatePicker: React.FC<
 	DatePickerProps & Omit<DatePickerInputProps, "locale">
 > = ({ label, errorText, ...props }) => {
+	const outlineStyle = [
+		commonStyles.inputAspect,
+		{
+			borderColor: getInputBorderColor(!!errorText),
+		},
+	];
 	return (
 		<View style={styles.inputContainer}>
-			{label && (
-				<HelperText style={commonStyles.label} type="info">
-					{label}
-				</HelperText>
-			)}
+			{label && <Label>{label}</Label>}
 			<DatePickerInput
 				iconColor={Colors.darkGray}
 				mode="outlined"
-				outlineStyle={[
-					commonStyles.inputAspect,
-					{
-						borderColor: getInputBorderColor(!!errorText),
-					},
-				]}
+				outlineStyle={outlineStyle}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.darkGray}
 				textColor={Colors.darkGray}

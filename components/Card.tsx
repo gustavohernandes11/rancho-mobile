@@ -24,13 +24,13 @@ export const Card: React.FC<LinkProps & CardProps> = ({
 	href,
 	...props
 }) => {
+	const containerStyle = [
+		commonStyles.card,
+		{ backgroundColor: Colors[color] },
+	];
+
 	return (
-		<Link
-			href={href}
-			style={[commonStyles.card, { backgroundColor: Colors[color] }]}
-			asChild
-			{...props}
-		>
+		<Link href={href} style={containerStyle} asChild {...props}>
 			<TouchableRipple>
 				<Span direction="column" justify="center" flexWrap="nowrap">
 					<Image

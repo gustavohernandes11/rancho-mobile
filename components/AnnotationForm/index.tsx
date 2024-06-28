@@ -62,11 +62,13 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
 				.catch(onError);
 		}
 	};
+
 	const formik = useFormik({
 		initialValues: mergedInitialValues,
 		onSubmit,
 		validationSchema,
 	});
+
 	const navigation = useNavigation();
 
 	useAlertUnsavedChanges({

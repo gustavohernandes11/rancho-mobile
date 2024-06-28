@@ -27,18 +27,9 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
 		);
 	});
 
-	const cellStyles = StyleSheet.flatten([
-		styles.cell,
-		isSelected && styles.selectedCell,
-	]);
-	const textStyles = StyleSheet.flatten([
-		commonStyles.text,
-		isSelected && styles.selectedText,
-	]);
-	const boldStyles = StyleSheet.flatten([
-		styles.boldText,
-		isSelected && styles.selectedText,
-	]);
+	const cellStyles = [styles.cell, isSelected && styles.selectedCell];
+	const textStyles = [commonStyles.text, isSelected && styles.selectedText];
+	const boldStyles = [styles.boldText, isSelected && styles.selectedText];
 
 	return (
 		<TouchableOpacity

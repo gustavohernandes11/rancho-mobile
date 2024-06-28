@@ -1,9 +1,10 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { HelperText, TextInput, TextInputProps } from "react-native-paper";
+import { TextInput, TextInputProps } from "react-native-paper";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
 import { getInputBorderColor } from "utils/conditionalStyles";
+import { Label } from "./Label";
 
 interface InputProps {
 	errorText?: string;
@@ -15,21 +16,26 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 	multiline,
 	...props
 }) => {
+	const inputStyle = [
+		commonStyles.inputAspect,
+		{
+			height: multiline ? 80 : 50,
+			borderWidth: 0,
+		},
+	];
+	const outlineStyle = [
+		commonStyles.inputAspect,
+		{
+			borderColor: getInputBorderColor(!!errorText),
+		},
+	];
+
 	return (
 		<View style={styles.inputContainer}>
-			{label && (
-				<HelperText style={commonStyles.label} type="info">
-					{label}
-				</HelperText>
-			)}
+			{label && <Label>{label}</Label>}
 			<TextInput
 				mode="outlined"
-				outlineStyle={[
-					commonStyles.inputAspect,
-					{
-						borderColor: getInputBorderColor(!!errorText),
-					},
-				]}
+				outlineStyle={outlineStyle}
 				outlineColor={Colors.border}
 				activeOutlineColor={Colors.black}
 				textColor={Colors.darkGray}
@@ -37,13 +43,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 				cursorColor={Colors.darkGray}
 				error={!!errorText}
 				multiline={multiline}
-				style={[
-					commonStyles.inputAspect,
-					{
-						height: multiline ? 80 : 50,
-						borderWidth: 0,
-					},
-				]}
+				style={inputStyle}
 				{...props}
 			/>
 			{errorText && <Text style={commonStyles.error}>{errorText}</Text>}

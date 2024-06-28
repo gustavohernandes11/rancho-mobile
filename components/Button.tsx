@@ -21,32 +21,30 @@ type CustomButtonProps = {
 export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
 	const { title, onPress, disabled, type = "primary", ...rest } = props;
 
+	const buttonStyle = [
+		styles.button,
+		{
+			backgroundColor: getButtonBackgroundColor(type),
+			borderColor: getButtonBorderColor(type),
+		},
+		disabled && commonStyles.disabled,
+	];
+	const textStyle = [
+		commonStyles.text,
+		{ color: getButtonTextColor(type) },
+		disabled && commonStyles.textDisabled,
+	];
+
 	return (
 		<PaperButton
 			textColor={getButtonTextColor(type)}
 			ref={ref}
-			style={[
-				styles.button,
-				{
-					backgroundColor: getButtonBackgroundColor(type),
-					borderColor: getButtonBorderColor(type),
-					overflow: "hidden",
-				},
-				disabled && commonStyles.disabled,
-			]}
+			style={buttonStyle}
 			disabled={disabled}
 			onPress={onPress}
 			{...rest}
 		>
-			<Text
-				style={[
-					commonStyles.text,
-					{ color: getButtonTextColor(type) },
-					disabled && commonStyles.textDisabled,
-				]}
-			>
-				{title}
-			</Text>
+			<Text style={textStyle}>{title}</Text>
 		</PaperButton>
 	);
 });

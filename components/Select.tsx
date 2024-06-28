@@ -1,7 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { HelperText } from "react-native-paper";
 import SelectDropdown, {
 	SelectDropdownProps,
 } from "react-native-select-dropdown";
@@ -9,6 +8,7 @@ import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
 import { Item } from "types/Item";
 import { getInputBorderColor } from "utils/conditionalStyles";
+import { Label } from "./Label";
 
 const DropdownIcon = () => (
 	<FontAwesome style={{ marginRight: 8 }} size={16} name="angle-down" />
@@ -39,32 +39,30 @@ export const Select: React.FC<
 	const getSelectHeight = () => (size === "medium" ? 50 : 40);
 	const getBackgroundColor = () =>
 		backgroundColor === "gray" ? Colors.lightGray : "transparent";
+
+	const buttonStyles = [
+		styles.button,
+		{
+			height: getSelectHeight(),
+			backgroundColor: getBackgroundColor(),
+			borderColor: getInputBorderColor(!!errorText),
+		},
+	];
+	const rowStyle = [
+		styles.row,
+		{
+			height: getSelectHeight(),
+		},
+	];
+
 	return (
 		<View style={styles.inputContainer}>
-			<HelperText
-				style={commonStyles.label}
-				visible={!!label}
-				type="info"
-			>
-				{label}
-			</HelperText>
+			{label && <Label>{label}</Label>}
 			<SelectDropdown
 				renderDropdownIcon={DropdownIcon}
 				buttonTextStyle={commonStyles.label}
-				buttonStyle={[
-					styles.button,
-					{
-						height: getSelectHeight(),
-						backgroundColor: getBackgroundColor(),
-						borderColor: getInputBorderColor(!!errorText),
-					},
-				]}
-				rowStyle={[
-					styles.row,
-					{
-						height: getSelectHeight(),
-					},
-				]}
+				buttonStyle={buttonStyles}
+				rowStyle={rowStyle}
 				rowTextStyle={commonStyles.text}
 				dropdownStyle={commonStyles.inputAspect}
 				defaultButtonText={defaultButtonText || "Selecione uma opção"}
