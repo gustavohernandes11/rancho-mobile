@@ -7,7 +7,7 @@ import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 export default function ViewBatchesScreen() {
     const { batches, refreshBatches } = useGlobalState();
@@ -25,7 +25,7 @@ export default function ViewBatchesScreen() {
                     headerRight: () => (
                         <Button
                             title="Novo lote"
-                            icon={require("../../assets/images/AddBatchIconWhite.png")}
+                            icon={require("../../assets/images/FolderPlusIcon.png")}
                             onPress={() =>
                                 router.push("/(screens)/batches/add")
                             }
@@ -37,7 +37,7 @@ export default function ViewBatchesScreen() {
                 <Heading>Crie e edite seus lotes</Heading>
                 <Paragraph>{`Total: ${batches?.length || "0"}`}</Paragraph>
             </Span>
-            <View style={{ gap: 4 }}>
+            <Span direction="column">
                 {batches.length > 0 ? (
                     batches?.map(batch => (
                         <BatchBanner
@@ -51,13 +51,13 @@ export default function ViewBatchesScreen() {
                         <Text>Nenhum lote adicionado.</Text>
                     </Span>
                 )}
-                <Span justify="center">
+                <Span justify="center" py={8}>
                     <Button
                         title="Adicionar novo lote"
                         onPress={() => router.push("/(screens)/batches/add")}
                     />
                 </Span>
-            </View>
+            </Span>
         </ContainerView>
     );
 }

@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         gap: 0,
         flexDirection: "column",
         alignItems: "flex-start",
-        backgroundColor: Colors.surface,
+        backgroundColor: Colors.white,
         borderWidth: 1,
         borderColor: Colors.border,
         elevation: 0,

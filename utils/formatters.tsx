@@ -70,6 +70,17 @@ export const formatDateToLongPtBR = (date: Date) => {
     return formatter.format(date);
 };
 
+export const formatDateToShortPtBR = (date: Date) => {
+    const options = {
+        day: "numeric",
+        month: "numeric",
+        year: "numeric",
+    };
+
+    const formatter = new Intl.DateTimeFormat("pt-BR", options as any);
+    return formatter.format(date);
+};
+
 export const formatAnnotationType = (type: AnnotationTypeOption) => {
     switch (type) {
         case "simple":

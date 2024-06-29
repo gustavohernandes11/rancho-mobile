@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
         borderColor: Colors.border,
         borderRadius: 8,
         elevation: 1,
+        padding: 8,
     },
     daysContainer: {
         display: "flex",

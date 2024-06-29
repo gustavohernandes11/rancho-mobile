@@ -1,11 +1,18 @@
 import { Link } from "expo-router";
 import React from "react";
-import { Pressable, StyleSheet, Text, View, ViewProps } from "react-native";
+import {
+    Image,
+    Pressable,
+    StyleSheet,
+    Text,
+    View,
+    ViewProps,
+} from "react-native";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 import { AnnotationTypeOption } from "types";
-import { formatAnnotationType, formatDateToLongPtBR } from "utils/formatters";
+import { formatAnnotationType, formatDateToShortPtBR } from "utils/formatters";
 
 type AnnotationBannerProps = {
     title: string;
@@ -29,19 +36,28 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
     return (
         <Link href={href} style={styles.container} asChild>
             <Pressable {...props} style={styles.container}>
-                <View style={styles.top}>
-                    <Text style={commonStyles.text}>
-                        {formatAnnotationType(type)}
-                    </Text>
-                    <Text style={styles.date}>
-                        {date ? formatDateToLongPtBR(date) : " "}
-                    </Text>
+                <View style={styles.iconSpan}>
+                    <Image
+                        style={commonStyles.icon}
+                        source={require("../assets/images/AnnotationCircleIcon.png")}
+                        alt="Annotation icon"
+                    />
                 </View>
                 <View style={styles.main}>
-                    <Text style={styles.title}>{title}</Text>
-                    {description && (
-                        <Text style={commonStyles.text}>{description}</Text>
-                    )}
+                    <View style={styles.top}>
+                        <Text style={commonStyles.text}>
+                            {formatAnnotationType(type)}
+                        </Text>
+                        <Text style={styles.date}>
+                            {date ? formatDateToShortPtBR(date) : " "}
+                        </Text>
+                    </View>
+                    <View style={styles.main}>
+                        <Text style={styles.title}>{title}</Text>
+                        {description && (
+                            <Text style={commonStyles.text}>{description}</Text>
+                        )}
+                    </View>
                 </View>
             </Pressable>
         </Link>
@@ -50,6 +66,8 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
 
 const styles = StyleSheet.create({
     container: {
+        display: "flex",
+        flexDirection: "row",
         width: "100%",
         gap: 8,
         padding: 16,
@@ -62,6 +80,7 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         alignItems: "flex-end",
+        width: "100%",
         justifyContent: "space-between",
     },
     main: {
@@ -78,5 +97,10 @@ const styles = StyleSheet.create({
     date: {
         ...commonStyles.text,
         textAlign: "right",
+    },
+    iconSpan: {
+        alignItems: "center",
+        justifyContent: "center",
+        paddingRight: 8,
     },
 });

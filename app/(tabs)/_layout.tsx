@@ -1,13 +1,13 @@
-import { FontAwesome } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
 
-import { Image } from "react-native";
+import { Image, ImageStyle, StyleProp } from "react-native";
 import Colors from "styles/Colors";
 import Fonts from "styles/Fonts";
 
-const tabIconSize = {
+const iconSize: StyleProp<ImageStyle> = {
     height: 28,
     width: 28,
+    resizeMode: "contain",
 };
 
 export default function TabLayout() {
@@ -55,8 +55,8 @@ export default function TabLayout() {
                     tabBarLabel: "Início",
                     tabBarIcon: () => (
                         <Image
-                            style={tabIconSize}
-                            source={require("../../assets/images/BarnIcon.png")}
+                            style={iconSize}
+                            source={require("../../assets/images/HouseIcon.png")}
                             alt={"home page"}
                         />
                     ),
@@ -68,7 +68,7 @@ export default function TabLayout() {
                     tabBarLabel: "Rebanho",
                     tabBarIcon: () => (
                         <Image
-                            style={tabIconSize}
+                            style={iconSize}
                             source={require("../../assets/images/CowIcon.png")}
                             alt={"animals page"}
                         />
@@ -81,8 +81,8 @@ export default function TabLayout() {
                     tabBarLabel: "Lotes",
                     tabBarIcon: () => (
                         <Image
-                            style={tabIconSize}
-                            source={require("../../assets/images/FenceIcon.png")}
+                            style={iconSize}
+                            source={require("../../assets/images/CowFolderIcon.png")}
                             alt={"batches page"}
                         />
                     ),
@@ -94,8 +94,8 @@ export default function TabLayout() {
                     tabBarLabel: "Produção",
                     tabBarIcon: () => (
                         <Image
-                            style={{ height: 28, width: 18 }}
-                            source={require("../../assets/images/GallonIcon.png")}
+                            style={iconSize}
+                            source={require("../../assets/images/ChartIcon.png")}
                             alt={"production page"}
                         />
                     ),
@@ -106,12 +106,10 @@ export default function TabLayout() {
                 options={{
                     tabBarLabel: "Anotações",
                     tabBarIcon: () => (
-                        <FontAwesome
-                            style={{
-                                color: Colors.white,
-                            }}
-                            size={28}
-                            name="book"
+                        <Image
+                            style={iconSize}
+                            source={require("../../assets/images/BookMarkIcon.png")}
+                            alt={"annotation page"}
                         />
                     ),
                 }}

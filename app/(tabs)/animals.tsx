@@ -73,7 +73,7 @@ export default function ViewAnimalsScreen() {
                     headerRight: () => (
                         <Button
                             title="Novo animal"
-                            icon={require("../../assets/images/AddAnimalIcon.png")}
+                            icon={require("../../assets/images/CowIcon.png")}
                             onPress={() =>
                                 router.push("/(screens)/animals/add")
                             }

@@ -28,7 +28,7 @@ interface TransferAnimalsModalProps {
 
 const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
     <BannerRadio
-        iconSource={0}
+        iconSource={require("../../assets/images/NoBatchIcon.png")}
         iconAlt={"null batch"}
         title={"Nenhum"}
         description="Desvincular de qualquer lote"
@@ -120,7 +120,7 @@ export const TransferAnimalsModal: React.FC<
                                                 title={batch.name}
                                                 description={batch.description}
                                                 iconAlt="batch icon"
-                                                iconSource={require("../../assets/images/RoundedBatchIcon.png")}
+                                                iconSource={require("../../assets/images/BatchCircleIcon.png")}
                                                 value={batch.id.toString()}
                                                 isChecked={
                                                     selectedBatch?.id ===

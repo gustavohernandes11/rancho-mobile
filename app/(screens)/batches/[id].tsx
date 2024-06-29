@@ -65,7 +65,7 @@ export default function ViewBatchDetailsScreen() {
                             onPress={handleDelete}
                         />
                         <IconButton
-                            icon={require("../../../assets/images/AddAnimalIcon.png")}
+                            icon={require("../../../assets/images/AddCowIcon.png")}
                             iconColor={Colors.white}
                             onPress={handleAddAnimal}
                         />
@@ -76,7 +76,7 @@ export default function ViewBatchDetailsScreen() {
     );
 
     const handleDelete = () =>
-        showConfirmationAndDeleteOnlyBatch(batch!, () => {
+        showConfirmationAndDelete(batch!, () => {
             refreshAll();
             router.back();
         });
@@ -125,31 +125,7 @@ export default function ViewBatchDetailsScreen() {
     );
 }
 
-export const showConfirmationAndDeleteAll = (
-    batch: Batch,
-    onConfirmCallback: () => void
-) => {
-    Alert.alert(
-        `Deletar tudo?`,
-        `Você têm certeza que deseja deletar o lote "${batch.name}" e todos seus animais?`,
-        [
-            {
-                text: "Cancelar",
-                style: "cancel",
-            },
-            {
-                text: "Deletar tudo",
-                onPress: () =>
-                    Storage.deleteBatchWithAnimals(batch.id).then(() =>
-                        onConfirmCallback()
-                    ),
-                style: "destructive",
-            },
-        ]
-    );
-};
-
-export const showConfirmationAndDeleteOnlyBatch = (
+export const showConfirmationAndDelete = (
     batch: Batch,
     onConfirmCallback: () => void
 ) => {

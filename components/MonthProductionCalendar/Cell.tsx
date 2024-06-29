@@ -54,7 +54,7 @@ export const MemoizedCell = React.memo(Cell, isEqual);
 
 const styles = StyleSheet.create({
     cell: {
-        flexBasis: (Dimensions.get("window").width - 16) / 7,
+        flexBasis: (Dimensions.get("window").width - 32) / 7,
         paddingHorizontal: 4,
         paddingVertical: 8,
         gap: 4,

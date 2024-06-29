@@ -20,7 +20,7 @@ export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
     return (
         <Banner
             iconAlt="batch icon"
-            iconSource={require("../assets/images/RoundedBatchIcon.png")}
+            iconSource={require("../assets/images/BatchCircleIcon.png")}
             title={batch.name}
             description={batch.description}
             rightDescription={getCountText(batch.count)}
