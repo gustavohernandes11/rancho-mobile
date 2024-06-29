@@ -2,6 +2,7 @@ import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
+import { ProductionChart } from "components/ProductionChart";
 import { Span } from "components/Span";
 import { useFocusEffect } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
@@ -24,6 +25,10 @@ export default function TabOneScreen() {
     return (
         <ContainerView>
             <Heading>Início</Heading>
+            <Span>
+                <Heading size="small">Produção do mês atual</Heading>
+            </Span>
+            <ProductionChart monthNumber={6} yearNumber={2024} />
             <Span py={4}>
                 {count ? (
                     <InfoCard
@@ -36,6 +41,9 @@ export default function TabOneScreen() {
                         title={count.batches.toString() || "?"}
                         description="Lotes registrados"
                     />
+                ) : null}
+                {count ? (
+                    <InfoCard title={"1450"} description="Litros produzidos" />
                 ) : null}
             </Span>
             <Heading size="small">O que você quer fazer?</Heading>

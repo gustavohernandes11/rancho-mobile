@@ -6,7 +6,7 @@ export const chartConfig: AbstractChartConfig = {
     backgroundGradientFrom: Colors.white,
     backgroundGradientTo: Colors.white,
     decimalPlaces: 0,
-    color: () => Colors.darkGreen,
+    color: () => Colors.text,
     fillShadowGradient: Colors.green,
     fillShadowGradientTo: Colors.darkGreen,
     fillShadowGradientOpacity: 1,

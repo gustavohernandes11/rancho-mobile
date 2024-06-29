@@ -19,10 +19,11 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
             contentContainerStyle={{
                 width: "100%",
                 height: "100%",
+                overflow: "hidden",
             }}
         >
             <FlatList
-                style={styles.tableContainer}
+                style={styles.table}
                 data={data}
                 keyExtractor={(item: Item) => item.key}
                 renderItem={(props: RowProps<Item>) => <Row {...props} />}
@@ -40,15 +41,18 @@ const Row: React.FC<RowProps<Item>> = ({ item }) => (
 );
 
 const styles = StyleSheet.create({
-    tableContainer: {
+    table: {
         borderWidth: 1,
         borderColor: Colors.border,
-        borderTopWidth: 0,
+        borderRadius: 8,
+        overflow: "hidden",
     },
     row: {
+        overflow: "hidden",
         flexDirection: "row",
-        borderTopWidth: 1,
+        borderBottomWidth: 1,
         borderColor: Colors.border,
+        borderRadius: 8,
         paddingVertical: 16,
         paddingHorizontal: 8,
         justifyContent: "space-between",

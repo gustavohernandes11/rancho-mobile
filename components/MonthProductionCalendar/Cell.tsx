@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     },
     selectedCell: {
         backgroundColor: Colors.green,
-        borderRadius: 16,
+        borderRadius: 8,
     },
     boldText: {
         ...commonStyles.text,

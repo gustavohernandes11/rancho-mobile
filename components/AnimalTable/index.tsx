@@ -92,6 +92,8 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                     {
                         minHeight: 20,
                         width: Dimensions.get("screen").width - 16,
+                        borderRadius: 8,
+                        overflow: "hidden",
                     },
                     commonStyles.border,
                 ]}
@@ -99,6 +101,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                 <FlashList
                     removeClippedSubviews={true}
                     data={animals}
+                    indicatorStyle="white"
                     keyExtractor={keyExtractor}
                     extraData={[
                         controller.selectedIDs,

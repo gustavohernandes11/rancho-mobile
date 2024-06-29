@@ -1,6 +1,6 @@
 import { Loading } from "components/Loading";
 import React, { useEffect, useState } from "react";
-import { ScrollView, Text, View } from "react-native";
+import { ScrollView, StyleSheet, View } from "react-native";
 import { BarChart } from "react-native-chart-kit";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
@@ -49,9 +49,9 @@ export const ProductionChart = ({
         return data;
     };
 
-    const getTotal = () => {
-        return monthProduction.reduce((acc, prod) => acc + prod.quantity, 0);
-    };
+    // const getTotal = () => {
+    //     return monthProduction.reduce((acc, prod) => acc + prod.quantity, 0);
+    // };
 
     if (isLoading) {
         return <Loading />;
@@ -63,7 +63,6 @@ export const ProductionChart = ({
                 borderRadius: 8,
             }}
         >
-            <Text>{`Total de ${getTotal()} litros produzidos.`}</Text>
             <ScrollView horizontal={true}>
                 <BarChart
                     data={{
@@ -83,15 +82,23 @@ export const ProductionChart = ({
                     yAxisInterval={1}
                     yAxisLabel=""
                     chartConfig={chartConfig}
-                    style={{
-                        borderBottomRightRadius: 15,
-                        paddingRight: 0,
-                    }}
+                    style={styles.chartStyle}
                     showBarTops={false}
-                    withInnerLines={false}
+                    withInnerLines={true}
                     showValuesOnTopOfBars={true}
                 />
             </ScrollView>
         </View>
     );
 };
+
+const styles = StyleSheet.create({
+    chartStyle: {
+        borderBottomRightRadius: 15,
+        paddingRight: 0,
+        backgroundColor: Colors.white,
+        borderWidth: 1,
+        borderRadius: 8,
+        borderColor: Colors.border,
+    },
+});

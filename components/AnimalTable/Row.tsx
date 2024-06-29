@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.surface,
     },
     row: {
-        borderBottomWidth: 1,
+        borderTopWidth: 1,
         borderColor: Colors.border,
     },
 });
