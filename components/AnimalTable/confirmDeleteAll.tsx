@@ -1,7 +1,7 @@
 import { Alert } from "react-native";
 import { Storage } from "services/StorageService";
 
-export const showConfirmationAndDeleteAll = (
+export const confirmDeleteAll = (
     selectedIDs: number[],
     onDeleteCallback?: () => void
 ) => {

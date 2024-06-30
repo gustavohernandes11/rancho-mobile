@@ -57,4 +57,16 @@ export interface StorageServicesMethods {
         animalIDsToCompare: number[],
         batchID: number
     ): Promise<boolean>;
+
+    generateDeathAnnotation(animalID: number | number[]): Promise<boolean>;
+    generateSaleAnnotation(animalID: number | number[]): Promise<boolean>;
+
+    writeOffByDeath(
+        animalIDs: number | number[],
+        generateAnnotation: boolean
+    ): Promise<boolean>;
+    writeOffBySell(
+        animalIDs: number | number[],
+        generateAnnotation: boolean
+    ): Promise<boolean>;
 }

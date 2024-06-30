@@ -1,29 +1,42 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { IconButton, Tooltip } from "react-native-paper";
+import { IconButton, Menu, Tooltip } from "react-native-paper";
 import Colors from "styles/Colors";
-import { showConfirmationAndDeleteAll } from "./showConfirmationAndDeleteAll";
+import { commonStyles } from "styles/Common";
+import { confirmDeleteAll } from "./confirmDeleteAll";
 
 type SelectionMenuActionButtonsProps = {
     selectedIDs: number[];
+
     onSelectAll: () => void;
     onDeleteMany: () => void;
     onMove: () => void;
+    onWriteOffByDeath: () => void;
+    onWriteOffBySell: () => void;
+
+    isMoreOptionsVisible: boolean;
+    onCloseMoreOptions: () => void;
+    openMoreOptions: () => void;
 };
+
 export const SelectionMenuActionButtons = ({
     onDeleteMany,
     onSelectAll,
     selectedIDs,
     onMove,
+    onWriteOffByDeath,
+    onWriteOffBySell,
+
+    isMoreOptionsVisible,
+    onCloseMoreOptions,
+    openMoreOptions,
 }: SelectionMenuActionButtonsProps) => (
     <View style={{ flexDirection: "row", gap: 4 }}>
         <Tooltip title="Deletar">
             <IconButton
                 iconColor={Colors.white}
                 icon="delete"
-                onPress={() =>
-                    showConfirmationAndDeleteAll(selectedIDs, onDeleteMany)
-                }
+                onPress={() => confirmDeleteAll(selectedIDs, onDeleteMany)}
                 style={{ margin: 0 }}
                 size={20}
             />
@@ -37,14 +50,52 @@ export const SelectionMenuActionButtons = ({
                 size={20}
             />
         </Tooltip>
-        <Tooltip title="Mover de lote">
-            <IconButton
-                iconColor={Colors.white}
-                icon="folder-move"
-                onPress={onMove}
-                style={{ margin: 0 }}
-                size={20}
-            />
+        <Tooltip title="Mais opções">
+            <Menu
+                contentStyle={commonStyles.inputAspect}
+                visible={isMoreOptionsVisible}
+                onDismiss={onCloseMoreOptions}
+                anchor={
+                    <IconButton
+                        iconColor={Colors.white}
+                        icon="dots-vertical"
+                        onPress={openMoreOptions}
+                        style={{ margin: 0 }}
+                        size={20}
+                    />
+                }
+            >
+                <Menu.Item
+                    titleStyle={commonStyles.text}
+                    onPress={onMove}
+                    title="Mover de lote"
+                    leadingIcon="folder-move"
+                />
+                <Menu.Item
+                    titleStyle={commonStyles.text}
+                    onPress={() => {}}
+                    title="Agrupar em novo lote"
+                    leadingIcon={require("../../assets/images/FolderPlusIcon.png")}
+                />
+                <Menu.Item
+                    titleStyle={commonStyles.text}
+                    onPress={onWriteOffBySell}
+                    title="Dar baixa de venda"
+                    leadingIcon="truck-delivery"
+                />
+                <Menu.Item
+                    titleStyle={commonStyles.text}
+                    onPress={onWriteOffByDeath}
+                    title="Dar baixa de morte"
+                    leadingIcon="coffin"
+                />
+                <Menu.Item
+                    titleStyle={commonStyles.text}
+                    onPress={() => {}}
+                    title="Fazer anotação"
+                    leadingIcon="bookmark-plus-outline"
+                />
+            </Menu>
         </Tooltip>
     </View>
 );

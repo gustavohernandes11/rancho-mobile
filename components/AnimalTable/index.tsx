@@ -15,6 +15,8 @@ import { showToast } from "utils/showToast";
 import { Header } from "./Header";
 import { Row } from "./Row";
 import { SelectionMenu } from "./SelectionMenu";
+import { confirmWriteOffByDeath } from "./confirmWriteOffByDeath";
+import { confirmWriteOffBySell } from "./confirmWriteOffBySell";
 
 type AnimalTableProps = {
     animals: Animal[];
@@ -47,12 +49,28 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
         controller.setSelectedIDs(animals.map(al => al.id));
     };
 
+    const handleWriteOffByDeath = () => {
+        confirmWriteOffByDeath(controller.selectedIDs, () =>
+            onSucess("Animais atualizados.")
+        );
+    };
+
+    const handleWriteOffBySell = () => {
+        confirmWriteOffBySell(controller.selectedIDs, () =>
+            onSucess("Animais atualizados.")
+        );
+    };
+
     const handleDeleteMany = () => {
-        Storage.deleteAnimal(controller.selectedIDs).then(() => {
-            refreshAll();
-            controller.clearSelection();
-            showToast("Animais removidos com sucesso.");
-        });
+        Storage.deleteAnimal(controller.selectedIDs).then(() =>
+            onSucess("Animais removidos com sucesso.")
+        );
+    };
+
+    const onSucess = (message: string) => {
+        refreshAll();
+        controller.clearSelection();
+        showToast(message);
     };
 
     const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
@@ -78,6 +96,8 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
             {controller.isSelectionMode && !onlySelectionMode && (
                 <Span>
                     <SelectionMenu
+                        onWriteOffByDeath={handleWriteOffByDeath}
+                        onWriteOffBySell={handleWriteOffBySell}
                         showActions={true}
                         showCloseButton={true}
                         onClearSelection={controller.clearSelection}
