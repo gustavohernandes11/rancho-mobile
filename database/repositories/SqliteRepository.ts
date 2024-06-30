@@ -63,6 +63,7 @@ export class SqliteRepository implements StorageRepository {
             this.ensureBatchTableExists(),
             this.ensureProductionTableExists(),
             this.ensureAnnotationTableExists(),
+            this.alterAnimalTableToAddStatus(),
         ]);
     }
 
@@ -118,6 +119,15 @@ export class SqliteRepository implements StorageRepository {
 			quantity INTEGER
 		  );
 		`;
+
+        await this.execute(query, []);
+    };
+
+    private alterAnimalTableToAddStatus = async () => {
+        const query = `
+            ALTER TABLE Animals
+            ADD COLUMN status TEXT DEFAULT 'active';
+        `;
 
         await this.execute(query, []);
     };
@@ -184,7 +194,7 @@ export class SqliteRepository implements StorageRepository {
     async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
         const query = `
 		INSERT INTO Animals 
-			(name, gender, birthdate, batchID, code, paternityID, maternityID, observation)
+			(name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status)
 		VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 		`;
 
@@ -198,6 +208,7 @@ export class SqliteRepository implements StorageRepository {
             parsed.paternityID,
             parsed.maternityID,
             parsed.observation,
+            parsed.status,
         ];
 
         return this.execute(query, params).then(
@@ -223,7 +234,7 @@ export class SqliteRepository implements StorageRepository {
     async getAnimal(animalID: number): Promise<Animal> {
         const query = `
 			SELECT 
-				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation
+				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
 			FROM Animals 
 			WHERE id = ?
 		`;
@@ -269,7 +280,7 @@ export class SqliteRepository implements StorageRepository {
     private async listOffspring(animalID: number): Promise<Animal[]> {
         const query = `
 		SELECT 
-			id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation
+			id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
 		FROM Animals 
 		WHERE paternityID = ? OR maternityID = ?
 		`;
@@ -280,7 +291,7 @@ export class SqliteRepository implements StorageRepository {
     async listAnimals(queryOptions: QueryOptions = {}): Promise<Animal[]> {
         let query = `
 			SELECT 
-				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation
+				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
 			FROM Animals
 		`;
 
@@ -299,6 +310,15 @@ export class SqliteRepository implements StorageRepository {
                 queryOptions.searchText,
                 queryOptions.searchText
             );
+        }
+
+        if (queryOptions.status) {
+            query +=
+                queryOptions.batchID !== undefined || queryOptions.searchText
+                    ? ` AND`
+                    : ` WHERE`;
+            query += ` status = ?`;
+            params.push(queryOptions.status);
         }
 
         switch (queryOptions.orderBy) {
@@ -363,7 +383,7 @@ export class SqliteRepository implements StorageRepository {
 
         const query = `
 		UPDATE Animals SET 
-			name = ?, gender = ?, birthdate = ?, batchID = ?, code = ?, paternityID = ?, maternityID = ?, observation = ?
+			name = ?, gender = ?, birthdate = ?, batchID = ?, code = ?, paternityID = ?, maternityID = ?, observation = ?, status = ?
 		WHERE id = ?
 		`;
 
@@ -377,6 +397,7 @@ export class SqliteRepository implements StorageRepository {
             parsed.paternityID,
             parsed.maternityID,
             parsed.observation,
+            parsed.status,
             parsed.id,
         ];
 

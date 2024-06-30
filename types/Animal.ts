@@ -1,9 +1,11 @@
 import { Batch } from "./Batch";
 
+export type AnimalStatusOptions = "active" | "dead" | "sold";
 export type Animal = {
     id: number;
     name: string;
     gender: "F" | "M";
+    status: AnimalStatusOptions;
     birthdate?: string;
     batchID?: number;
     code?: string | number;

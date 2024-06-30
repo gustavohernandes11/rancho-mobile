@@ -2,7 +2,7 @@ import Colors from "styles/Colors";
 import { ButtonTypes } from "types";
 
 export const getButtonBackgroundColor = (type: ButtonTypes) =>
-    type === "primary" ? Colors.green : Colors.surface;
+    type === "primary" ? Colors.green : Colors.white;
 
 export const getButtonBorderColor = (type: ButtonTypes) =>
     type === "primary" ? "transparent" : Colors.border;

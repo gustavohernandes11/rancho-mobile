@@ -1,4 +1,10 @@
-import { AddAnimal, Animal, PopulatedAnimal, UpdateAnimal } from "./Animal";
+import {
+    AddAnimal,
+    Animal,
+    AnimalStatusOptions,
+    PopulatedAnimal,
+    UpdateAnimal,
+} from "./Animal";
 import { AddAnnotation, Annotation, UpdateAnnotation } from "./Annotation";
 import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
@@ -12,6 +18,7 @@ export type QueryOptions = {
     orderBy?: OrderByOptions;
     batchID?: number;
     searchText?: string;
+    status?: AnimalStatusOptions;
 };
 
 export interface StorageRepository {

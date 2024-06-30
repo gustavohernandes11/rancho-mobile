@@ -4,6 +4,7 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
 import { Paragraph } from "components/Paragraph";
+import RadioInput from "components/RadioInput";
 import { SearchBar } from "components/SearchBar";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
@@ -12,7 +13,7 @@ import useDebounce from "hooks/useDebounce";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useCallback, useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
-import { Animal, OrderByOptions } from "types";
+import { Animal, AnimalStatusOptions, OrderByOptions } from "types";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
@@ -20,7 +21,10 @@ export default function ViewAnimalsScreen() {
     const { animals, batches } = useGlobalState();
     const [searchText, setSearchText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
+    const [showFilters, setShowFilters] = useState(false);
     const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
+    const [statusFilter, setStatusFilter] =
+        useState<AnimalStatusOptions>("active");
     const [filterByBatchID, setFilterByBatchID] = useState<
         number | undefined
     >();
@@ -31,6 +35,7 @@ export default function ViewAnimalsScreen() {
             orderBy,
             batchID: filterByBatchID,
             searchText,
+            status: statusFilter,
         })
             .then(animals => setFilteredAnimals(() => animals))
             .finally(() => setIsLoading(false));
@@ -57,6 +62,19 @@ export default function ViewAnimalsScreen() {
             fetchFilteredAnimals();
         }, [animals, orderBy, filterByBatchID, searchText])
     );
+
+    const handleClearFilters = () => {
+        setStatusFilter("active");
+        setFilterByBatchID(undefined);
+        setOrderBy("alfabetic");
+    };
+
+    const hasFilters =
+        orderBy !== "alfabetic" ||
+        !!filterByBatchID ||
+        statusFilter !== "active";
+
+    const toggleShowFilters = () => setShowFilters(() => !showFilters);
 
     function getDisplayInfo() {
         const totalCount = animals ? animals.length : 0;
@@ -90,42 +108,81 @@ export default function ViewAnimalsScreen() {
                 value={searchText}
                 placeholder="Busque por nome, código ou observação"
             />
-            <Span direction="row" my={4}>
-                <Select
-                    label="Ordenar por"
-                    items={[
-                        { key: "Alfabética", value: "alfabetic" },
-                        { key: "Idade", value: "age" },
-                    ]}
-                    defaultValue="Alfabética"
-                    defaultButtonText="Alfabética"
-                    onSelect={option => {
-                        setOrderBy(option.value);
-                    }}
-                    size="small"
-                    backgroundColor="transparent"
-                />
-                <Select
-                    label="Lote"
-                    items={[
-                        {
-                            key: "Todos",
-                            value: undefined as unknown as string,
-                        },
-                        ...serializeBatches(batches),
-                    ]}
-                    defaultValue="Todos"
-                    defaultButtonText="Todos"
-                    onSelect={option => setFilterByBatchID(option.value)}
-                    size="small"
-                    backgroundColor="transparent"
-                />
+
+            <Span direction="row">
+                {showFilters && (
+                    <>
+                        <Span flexWrap="wrap" my={0}>
+                            <Select
+                                label="Ordenar por"
+                                items={[
+                                    { key: "Alfabética", value: "alfabetic" },
+                                    { key: "Idade", value: "age" },
+                                ]}
+                                defaultValue="Alfabética"
+                                defaultButtonText="Alfabética"
+                                onSelect={option => {
+                                    setOrderBy(option.value);
+                                }}
+                                size="small"
+                                backgroundColor="transparent"
+                            />
+                            <Select
+                                label="Lote"
+                                items={[
+                                    {
+                                        key: "Todos",
+                                        value: undefined as unknown as string,
+                                    },
+                                    ...serializeBatches(batches),
+                                ]}
+                                defaultValue="Todos"
+                                defaultButtonText="Todos"
+                                onSelect={option =>
+                                    setFilterByBatchID(option.value)
+                                }
+                                size="small"
+                                backgroundColor="transparent"
+                            />
+                            <Span my={0}>
+                                <RadioInput
+                                    onValueChange={option =>
+                                        setStatusFilter(option)
+                                    }
+                                    label="Situação do animal"
+                                    value={statusFilter}
+                                    options={[
+                                        { label: "Ativo", value: "active" },
+                                        { label: "Morto", value: "dead" },
+                                        { label: "Vendido", value: "sold" },
+                                    ]}
+                                />
+                            </Span>
+                        </Span>
+                    </>
+                )}
+                <Span my={0}>
+                    <Button
+                        type="light"
+                        title={`${showFilters ? "Esconder" : "Ver"} filtros${
+                            hasFilters ? "*" : ""
+                        }`}
+                        onPress={toggleShowFilters}
+                    />
+                    {hasFilters && (
+                        <Button
+                            type="light"
+                            title="Limpar filtros"
+                            onPress={handleClearFilters}
+                        />
+                    )}
+                </Span>
             </Span>
 
             {isLoading ? (
                 <Loading />
             ) : (
-                <Span py={8}>
+                <Span>
                     <AnimalTable animals={filteredAnimals} />
                 </Span>
             )}
