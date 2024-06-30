@@ -7,12 +7,14 @@ import { confirmDeleteAll } from "./confirmDeleteAll";
 
 type SelectionMenuActionButtonsProps = {
     selectedIDs: number[];
-
     onSelectAll: () => void;
+
     onDeleteMany: () => void;
     onMove: () => void;
     onWriteOffByDeath: () => void;
     onwriteOffBySale: () => void;
+    onCreateBatchWithSelectedAnimals: () => void;
+    onCreateAnnotationWithSelectedAnimals: () => void;
 
     isMoreOptionsVisible: boolean;
     onCloseMoreOptions: () => void;
@@ -20,12 +22,15 @@ type SelectionMenuActionButtonsProps = {
 };
 
 export const SelectionMenuActionButtons = ({
-    onDeleteMany,
     onSelectAll,
     selectedIDs,
+
+    onDeleteMany,
     onMove,
     onWriteOffByDeath,
     onwriteOffBySale,
+    onCreateBatchWithSelectedAnimals,
+    onCreateAnnotationWithSelectedAnimals,
 
     isMoreOptionsVisible,
     onCloseMoreOptions,
@@ -73,7 +78,10 @@ export const SelectionMenuActionButtons = ({
                 />
                 <Menu.Item
                     titleStyle={commonStyles.text}
-                    onPress={() => {}}
+                    onPress={() => {
+                        onCreateBatchWithSelectedAnimals();
+                        onCloseMoreOptions();
+                    }}
                     title="Agrupar em novo lote"
                     leadingIcon={require("../../assets/images/FolderPlusIcon.png")}
                 />
@@ -91,7 +99,10 @@ export const SelectionMenuActionButtons = ({
                 />
                 <Menu.Item
                     titleStyle={commonStyles.text}
-                    onPress={() => {}}
+                    onPress={() => {
+                        onCreateAnnotationWithSelectedAnimals();
+                        onCloseMoreOptions();
+                    }}
                     title="Fazer anotação"
                     leadingIcon="bookmark-plus-outline"
                 />

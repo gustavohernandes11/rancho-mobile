@@ -224,7 +224,7 @@ export class SqliteRepository implements StorageRepository {
         const query = `
 		INSERT INTO Animals 
 			(name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status)
-		VALUES (?, ?, ?, ?, ?, ?, ?, ?);
+		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);
 		`;
 
         const parsed = nullifyFalsyFields(animal);
@@ -341,13 +341,17 @@ export class SqliteRepository implements StorageRepository {
             );
         }
 
-        if (queryOptions.status) {
+        if (queryOptions.status && queryOptions.status.length > 0) {
             query +=
                 queryOptions.batchID !== undefined || queryOptions.searchText
                     ? ` AND`
                     : ` WHERE`;
-            query += ` status = ?`;
-            params.push(queryOptions.status);
+
+            query += ` status IN (${queryOptions.status
+                .map(() => "?")
+                .join(",")})`;
+
+            params.push(...queryOptions.status);
         }
 
         switch (queryOptions.orderBy) {

@@ -1,10 +1,10 @@
 import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
+import CheckboxInput from "components/CheckboxInput";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
 import { Paragraph } from "components/Paragraph";
-import RadioInput from "components/RadioInput";
 import { SearchBar } from "components/SearchBar";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
@@ -23,8 +23,9 @@ export default function ViewAnimalsScreen() {
     const [isLoading, setIsLoading] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
     const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
-    const [statusFilter, setStatusFilter] =
-        useState<AnimalStatusOptions>("active");
+    const [statusFilter, setStatusFilter] = useState<AnimalStatusOptions[]>([
+        "active",
+    ]);
     const [filterByBatchID, setFilterByBatchID] = useState<
         number | undefined
     >();
@@ -64,7 +65,7 @@ export default function ViewAnimalsScreen() {
     );
 
     const handleClearFilters = () => {
-        setStatusFilter("active");
+        setStatusFilter(["active"]);
         setFilterByBatchID(undefined);
         setOrderBy("alfabetic");
     };
@@ -72,7 +73,8 @@ export default function ViewAnimalsScreen() {
     const hasFilters =
         orderBy !== "alfabetic" ||
         !!filterByBatchID ||
-        statusFilter !== "active";
+        statusFilter.length !== 1 ||
+        !statusFilter.includes("active");
 
     const toggleShowFilters = () => setShowFilters(() => !showFilters);
 
@@ -145,12 +147,12 @@ export default function ViewAnimalsScreen() {
                                 backgroundColor="transparent"
                             />
                             <Span my={0}>
-                                <RadioInput
-                                    onValueChange={option =>
-                                        setStatusFilter(option)
+                                <CheckboxInput
+                                    onValueChange={options =>
+                                        setStatusFilter(options)
                                     }
                                     label="Situação do animal"
-                                    value={statusFilter}
+                                    selectedValues={statusFilter}
                                     options={[
                                         { label: "Ativo", value: "active" },
                                         { label: "Morto", value: "dead" },

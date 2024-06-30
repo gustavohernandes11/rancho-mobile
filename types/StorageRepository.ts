@@ -18,7 +18,7 @@ export type QueryOptions = {
     orderBy?: OrderByOptions;
     batchID?: number;
     searchText?: string;
-    status?: AnimalStatusOptions;
+    status?: AnimalStatusOptions[];
 };
 
 export interface StorageRepository {

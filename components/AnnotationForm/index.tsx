@@ -25,9 +25,11 @@ import { validationSchema } from "./validation.schema";
 
 interface AnnotationFormProps {
     initialValues?: Partial<Annotation>;
+    initialSelectedAnimals?: number[];
 }
 export const AnnotationForm: React.FC<AnnotationFormProps> = ({
     initialValues = defaultValues,
+    initialSelectedAnimals = [],
 }) => {
     let mergedInitialValues: Annotation = Object.assign(
         {},
@@ -40,9 +42,10 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
     const { animals, refreshAll } = useGlobalState();
 
     useEffect(() => {
-        if (mergedInitialValues.animalIDs) {
-            table.setSelectedIDs(mergedInitialValues.animalIDs);
-        }
+        table.setSelectedIDs([
+            ...(mergedInitialValues.animalIDs || []),
+            ...initialSelectedAnimals,
+        ]);
     }, []);
 
     const onSubmit = (values: Annotation) => {

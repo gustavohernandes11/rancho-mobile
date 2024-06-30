@@ -20,13 +20,22 @@ import { validationSchema } from "./validation.schema";
 
 interface BatchFormProps {
     initialValues?: Batch;
+    initialSelectedAnimals?: number[];
 }
 
 export const BatchForm: React.FC<BatchFormProps> = ({
     initialValues = defaultValues,
+    initialSelectedAnimals = [],
 }) => {
     const table = useAnimalTable();
     const { animals, refreshAll } = useGlobalState();
+
+    useEffect(() => {
+        if (initialSelectedAnimals) {
+            table.setSelectedIDs(initialSelectedAnimals);
+        }
+    }, [initialSelectedAnimals]);
+
     const navigation = useNavigation();
     const formik = useFormik({
         initialValues,

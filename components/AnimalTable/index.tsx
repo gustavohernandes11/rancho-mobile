@@ -1,5 +1,6 @@
 import { FlashList } from "@shopify/flash-list";
 import { Span } from "components/Span";
+import { useRouter } from "expo-router";
 import {
     ControlledAnimalTableProps,
     useAnimalTable,
@@ -30,6 +31,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     // an optional controller for the table, when it is needed to control it one level up
     liftedController = null,
 }) => {
+    const router = useRouter();
     const { refreshAll } = useGlobalState();
     const localController = useAnimalTable();
     const controller = liftedController || localController;
@@ -64,6 +66,20 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     const handleDeleteMany = () => {
         Storage.deleteAnimal(controller.selectedIDs).then(() =>
             onSucess("Animais removidos com sucesso.")
+        );
+    };
+
+    const handleCreateBatchWithSelectedAnimals = () => {
+        router.push(
+            "/(screens)/batches/add-with-selected-animals/" +
+                JSON.stringify(controller.selectedIDs)
+        );
+    };
+
+    const handleCreateAnnotationWithSelectedAnimals = () => {
+        router.push(
+            "/(screens)/annotations/add-with-selected-animals/" +
+                JSON.stringify(controller.selectedIDs)
         );
     };
 
@@ -102,6 +118,12 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                         showCloseButton={true}
                         onClearSelection={controller.clearSelection}
                         onSelectAll={handleSelectAll}
+                        onCreateBatchWithSelectedAnimals={
+                            handleCreateBatchWithSelectedAnimals
+                        }
+                        onCreateAnnotationWithSelectedAnimals={
+                            handleCreateAnnotationWithSelectedAnimals
+                        }
                         selectedIDs={controller.selectedIDs}
                         onDeleteMany={handleDeleteMany}
                     />
