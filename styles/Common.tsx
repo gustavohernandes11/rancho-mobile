@@ -16,9 +16,9 @@ export const commonStyles = StyleSheet.create({
     },
     inputAspect: {
         borderRadius: 8,
-        backgroundColor: Colors.lightGray,
+        backgroundColor: Colors.white,
         borderColor: Colors.border,
-        borderWidth: 1,
+        borderWidth: 2,
         fontFamily: Fonts.primaryFamily,
     },
     error: {

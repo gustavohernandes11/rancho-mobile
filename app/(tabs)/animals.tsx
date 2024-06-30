@@ -46,7 +46,7 @@ export default function ViewAnimalsScreen() {
         () => {
             fetchFilteredAnimals();
         },
-        [orderBy, filterByBatchID, searchText],
+        [orderBy, filterByBatchID, searchText, statusFilter],
         300
     );
 
@@ -60,7 +60,7 @@ export default function ViewAnimalsScreen() {
     useFocusEffect(
         useCallback(() => {
             fetchFilteredAnimals();
-        }, [animals, orderBy, filterByBatchID, searchText])
+        }, [animals, orderBy, filterByBatchID, searchText, statusFilter])
     );
 
     const handleClearFilters = () => {

@@ -37,15 +37,13 @@ export const Select: React.FC<
     ...props
 }) => {
     const getSelectHeight = () => (size === "medium" ? 50 : 40);
-    const getBackgroundColor = () =>
-        backgroundColor === "gray" ? Colors.lightGray : "transparent";
 
     const buttonStyles = [
         styles.button,
         {
             height: getSelectHeight(),
-            backgroundColor: getBackgroundColor(),
             borderColor: getInputBorderColor(!!errorText),
+            backgroundColor: Colors.white,
         },
     ];
     const rowStyle = [
@@ -86,13 +84,10 @@ const styles = StyleSheet.create({
     },
     button: {
         width: "auto",
-        borderWidth: 1,
-        borderColor: Colors.border,
-        borderRadius: 8,
+        ...commonStyles.inputAspect,
         padding: 8,
     },
     row: {
-        backgroundColor: Colors.lightGray,
         borderBottomWidth: 1,
         borderColor: Colors.border,
         padding: 8,

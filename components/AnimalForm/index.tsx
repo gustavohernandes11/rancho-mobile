@@ -1,6 +1,7 @@
 import { Button } from "components/Button";
 import { DatePicker } from "components/DatePicker";
 import { Input } from "components/Input";
+import RadioInput from "components/RadioInput";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { router, useNavigation } from "expo-router";
@@ -43,8 +44,10 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
     };
     const onError = (e: Error) => Alert.alert("Erro!", e.message);
 
+    const isUpdate = !!initialValues.id;
+
     const onSubmit = (values: Animal) => {
-        initialValues.id
+        isUpdate
             ? Storage.updateAnimal(values)
                   .then(() =>
                       onSucess(`${values.name} foi atualizado(a) com sucesso.`)
@@ -143,6 +146,23 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                 }
                 label="Lote"
             />
+            {isUpdate && (
+                <Span>
+                    <RadioInput
+                        onValueChange={option =>
+                            formik.setFieldValue("status", option)
+                        }
+                        label="Situação do animal"
+                        value={formik.values.status}
+                        options={[
+                            { label: "Ativo", value: "active" },
+                            { label: "Morto", value: "dead" },
+                            { label: "Vendido", value: "sold" },
+                        ]}
+                        errorText={getFieldError("status", formik)}
+                    />
+                </Span>
+            )}
             <Span>
                 <Input
                     label="Código"
@@ -203,6 +223,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                     multiline={true}
                 />
             </Span>
+
             <Span justify="flex-end" py={16}>
                 <Button
                     type="light"
