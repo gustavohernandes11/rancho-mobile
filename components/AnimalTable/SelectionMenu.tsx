@@ -16,6 +16,8 @@ interface SelectionMenuProps {
     selectedIDs: number[];
     onSelectAll: () => void;
     onDeleteMany: () => void;
+    onWriteOffByDeath: () => void;
+    onwriteOffBySale: () => void;
 }
 
 export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
@@ -25,9 +27,15 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
     selectedIDs,
     onSelectAll,
     onDeleteMany,
+    onWriteOffByDeath,
+    onwriteOffBySale,
     ...props
 }) => {
     const [isBatchModalVisible, setIsBatchModalVisible] = useState(false);
+    const [isMoreOptionsVisible, setIsMoreOptionsVisible] =
+        React.useState(false);
+    const openMoreOptions = () => setIsMoreOptionsVisible(true);
+    const closeMoreOptions = () => setIsMoreOptionsVisible(false);
 
     return (
         <>
@@ -61,8 +69,13 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
                         <SelectionMenuActionButtons
                             onDeleteMany={onDeleteMany}
                             onSelectAll={onSelectAll}
+                            onWriteOffByDeath={onWriteOffByDeath}
+                            onwriteOffBySale={onwriteOffBySale}
                             selectedIDs={selectedIDs}
                             onMove={() => setIsBatchModalVisible(true)}
+                            isMoreOptionsVisible={isMoreOptionsVisible}
+                            onCloseMoreOptions={closeMoreOptions}
+                            openMoreOptions={openMoreOptions}
                         />
                     )}
                 </Span>

@@ -56,6 +56,10 @@ export interface StorageRepository {
         animalID: number | number[],
         batchID: number | null
     ): Promise<boolean>;
+    setAnimalStatus(
+        animalID: number | number[],
+        status: AnimalStatusOptions
+    ): Promise<boolean>;
 
     nullifyParentalIds(animalID: number | number[]): Promise<boolean>;
 }

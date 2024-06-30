@@ -1,7 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
 import moment from "moment";
 import Colors from "styles/Colors";
-import { AnnotationTypeOption } from "types";
+import { AnimalStatusOptions, AnnotationTypeOption } from "types";
 
 export const formatAge = (isoString: string): string => {
     const duration = moment.duration(moment().diff(moment(isoString)));
@@ -93,6 +93,20 @@ export const formatAnnotationType = (type: AnnotationTypeOption) => {
             return "Compra";
         case "heath care":
             return "Manejo Sanitário";
+
+        default:
+            return "";
+    }
+};
+
+export const formatAnimalStatus = (type: AnimalStatusOptions) => {
+    switch (type) {
+        case "active":
+            return "Ativo no rebanho";
+        case "dead":
+            return "Morto";
+        case "sold":
+            return "Vendido";
 
         default:
             return "";

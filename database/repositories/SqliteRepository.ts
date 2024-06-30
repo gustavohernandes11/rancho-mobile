@@ -5,6 +5,7 @@ import {
     AddAnnotation,
     AddBatch,
     Animal,
+    AnimalStatusOptions,
     Annotation,
     AnnotationQueryOptions,
     Batch,
@@ -129,10 +130,38 @@ export class SqliteRepository implements StorageRepository {
             ADD COLUMN status TEXT DEFAULT 'active';
         `;
 
-        await this.execute(query, []);
+        try {
+            await this.execute(query, []);
+        } catch {
+            // already done
+        }
     };
 
     private formatDate = (date: Date) => date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
+
+    async setAnimalStatus(
+        animalID: number | number[],
+        status: AnimalStatusOptions
+    ): Promise<boolean> {
+        if (Array.isArray(animalID)) {
+            const operations = animalID.map(id =>
+                this.setAnimalStatus(id, status)
+            );
+            return Promise.all(operations)
+                .then(() => true)
+                .catch(() => false);
+        }
+
+        const query = `
+		UPDATE Animals SET 
+			status = ?
+		WHERE id = ?
+		`;
+
+        return this.execute(query, [status, animalID])
+            .then(() => true)
+            .catch(() => false);
+    }
 
     async count(): Promise<Count> {
         const countAnimalsQuery = `

@@ -25,6 +25,89 @@ export class StorageServices implements StorageServicesMethods {
     constructor(private readonly DbRepository: StorageRepository) {
         this.DbRepository.initDatabase();
     }
+    async generateDeathAnnotation(
+        animalID: number | number[]
+    ): Promise<boolean> {
+        let title = "";
+        let relatedAnimalIDs: number[] = [];
+
+        if (Array.isArray(animalID)) {
+            title = animalID.length + " animais morreram.";
+            relatedAnimalIDs = animalID;
+        } else {
+            const animal = await this.DbRepository.getAnimal(animalID);
+            title = animal.name + " morreu.";
+            relatedAnimalIDs = [animalID];
+        }
+
+        this.DbRepository.insertAnnotation({
+            title,
+            type: "death",
+            animalIDs: relatedAnimalIDs,
+            date: new Date(),
+            description: "*Gerada automaticamente",
+        });
+
+        return true;
+    }
+
+    async generateSaleAnnotation(
+        animalID: number | number[]
+    ): Promise<boolean> {
+        let title = "";
+        let relatedAnimalIDs: number[] = [];
+
+        if (Array.isArray(animalID)) {
+            title = animalID.length + " animais foram vendidos.";
+            relatedAnimalIDs = animalID;
+        } else {
+            const animal = await this.DbRepository.getAnimal(animalID);
+            title = animal.name + " foi vendido.";
+            relatedAnimalIDs = [animalID];
+        }
+
+        await this.DbRepository.insertAnnotation({
+            title,
+            type: "sell",
+            animalIDs: relatedAnimalIDs,
+            date: new Date(),
+            description: "*Gerada automaticamente",
+        });
+
+        return true;
+    }
+
+    async writeOffByDeath(
+        animalIDs: number | number[],
+        generateAnnotation: boolean
+    ): Promise<boolean> {
+        try {
+            if (generateAnnotation) {
+                await this.generateDeathAnnotation(animalIDs);
+            }
+            await this.DbRepository.setAnimalStatus(animalIDs, "dead");
+
+            return true;
+        } catch {
+            return false;
+        }
+    }
+
+    async writeOffBySale(
+        animalIDs: number | number[],
+        generateAnnotation: boolean
+    ): Promise<boolean> {
+        try {
+            if (generateAnnotation) {
+                await this.generateSaleAnnotation(animalIDs);
+            }
+            await this.DbRepository.setAnimalStatus(animalIDs, "sold");
+
+            return true;
+        } catch {
+            return false;
+        }
+    }
 
     insertAnnotation(annotation: AddAnnotation): Promise<number | undefined> {
         return this.DbRepository.insertAnnotation(annotation);
