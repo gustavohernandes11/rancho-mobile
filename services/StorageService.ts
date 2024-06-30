@@ -177,6 +177,34 @@ export class StorageServices implements StorageServicesMethods {
         );
     }
 
+    // set 0 to days without quantity
+    async listPopulatedMonthProduction(month: Date): Promise<DayProduction[]> {
+        const productionData = await this.listMonthProduction(month);
+
+        const startOfMonth = moment(month).startOf("month").toDate();
+        const endOfMonth = moment(month).endOf("month").toDate();
+
+        const daysInMonth = [];
+        for (
+            let date = startOfMonth;
+            date <= endOfMonth;
+            date.setDate(date.getDate() + 1)
+        ) {
+            daysInMonth.push(moment(date).format("YYYY-MM-DD"));
+        }
+
+        const productionMap = new Map(
+            productionData.map(p => [p.day, p.quantity])
+        );
+
+        const completeProduction: DayProduction[] = daysInMonth.map(day => ({
+            day,
+            quantity: productionMap.get(day) || 0,
+        }));
+
+        return completeProduction;
+    }
+
     getDayProduction(date: Date): Promise<DayProduction | null> {
         return this.DbRepository.getDayProduction(date);
     }

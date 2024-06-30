@@ -1,104 +1,106 @@
 import { Loading } from "components/Loading";
-import React, { useEffect, useState } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
-import { BarChart } from "react-native-chart-kit";
+import { Paragraph } from "components/Paragraph";
+import { useFocus } from "hooks/useFocus";
+import { useEffect, useState } from "react";
+import { Dimensions, StyleSheet, View } from "react-native";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import LineChart from "react-native-simple-line-chart";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { DayProduction } from "types";
-import { chartConfig } from "./chartConfig";
+import { DayProduction } from "types/Production";
+import { formatDateToShortPtBR } from "utils/formatters";
+import { Point } from "./Point";
 
-type ProductionChartProps = {
-    monthNumber: number;
-    yearNumber: number;
-};
-
-const serializeDays = (n: number) => {
-    const labels = [];
-    for (let i = 0; i < n; i++) {
-        labels.push((i + 1).toString());
-    }
-    return labels;
-};
-
-export const ProductionChart = ({
-    monthNumber,
-    yearNumber,
-}: ProductionChartProps) => {
-    const [monthProduction, setMonthProduction] = useState<DayProduction[]>([]);
+export function ProductionChart() {
+    const [production, setProduction] = useState<DayProduction[]>();
     const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        const date = new Date(yearNumber, monthNumber - 1);
-        setIsLoading(true);
-        Storage.listMonthProduction(date)
-            .then(prod => {
-                setMonthProduction(prod);
-            })
-            .finally(() => setIsLoading(false));
-    }, [monthNumber, yearNumber]);
-
-    const generateData = (): number[] => {
-        const daysInMonth = new Date(yearNumber, monthNumber, 0).getDate();
-        const data = Array(daysInMonth).fill(0);
-
-        monthProduction.forEach(prod => {
-            const day = parseInt(prod.day.split("-")[2], 10);
-            data[day - 1] = prod.quantity;
-        });
-
-        return data;
+    const getProduction = async () => {
+        await Storage.listPopulatedMonthProduction(new Date()).then(prod =>
+            setProduction(prod)
+        );
     };
 
-    // const getTotal = () => {
-    //     return monthProduction.reduce((acc, prod) => acc + prod.quantity, 0);
-    // };
+    // udpate on focus
+    useFocus(() => {
+        getProduction();
+    });
 
-    if (isLoading) {
-        return <Loading />;
-    }
+    // first load
+    useEffect(() => {
+        getProduction().then(() => {
+            setIsLoading(false);
+        });
+    }, []);
+
+    const data =
+        production?.map(p => ({
+            y: p.quantity,
+            x: new Date(p.day).getTime(),
+            extraData: {
+                formattedValue: `${p.quantity} litros`,
+                formattedTime: formatDateToShortPtBR(new Date(p.day)),
+            },
+        })) || [];
+
+    if (isLoading) return <Loading />;
+    const hasProduction = production?.some(day => day.quantity > 0);
 
     return (
-        <View
-            style={{
-                borderRadius: 8,
-            }}
-        >
-            <ScrollView horizontal={true}>
-                <BarChart
-                    data={{
-                        labels: serializeDays(
-                            new Date(yearNumber, monthNumber, 0).getDate()
-                        ),
-                        datasets: [
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <View style={styles.container}>
+                {hasProduction ? (
+                    <LineChart
+                        lines={[
                             {
-                                color: () => Colors.green,
-                                data: generateData(),
+                                data,
+                                activePointConfig: {
+                                    color: Colors.darkGreen,
+                                    showVerticalLine: true,
+                                },
+                                lineColor: Colors.green,
+                                curve: "linear",
+                                endPointConfig: {
+                                    color: Colors.green,
+                                    radius: 5,
+                                    animated: true,
+                                },
+                                activePointComponent: (point: any) => (
+                                    <Point
+                                        formattedValue={
+                                            point?.extraData?.formattedValue
+                                        }
+                                        formattedTime={
+                                            point?.extraData?.formattedTime
+                                        }
+                                    />
+                                ),
                             },
-                        ],
-                    }}
-                    width={850}
-                    height={240}
-                    yAxisSuffix="L"
-                    yAxisInterval={1}
-                    yAxisLabel=""
-                    chartConfig={chartConfig}
-                    style={styles.chartStyle}
-                    showBarTops={false}
-                    withInnerLines={true}
-                    showValuesOnTopOfBars={true}
-                />
-            </ScrollView>
-        </View>
+                        ]}
+                        backgroundColor={undefined}
+                        height={200}
+                        width={Dimensions.get("screen").width - 16}
+                    />
+                ) : (
+                    <Paragraph>
+                        Adicione litros de leite produzidos para gerar um
+                        gráfico.
+                    </Paragraph>
+                )}
+            </View>
+        </GestureHandlerRootView>
     );
-};
+}
 
 const styles = StyleSheet.create({
-    chartStyle: {
-        borderBottomRightRadius: 15,
-        paddingRight: 0,
-        backgroundColor: Colors.white,
+    container: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
         borderWidth: 1,
         borderRadius: 8,
         borderColor: Colors.border,
+        padding: 8,
+        overflow: "hidden",
     },
 });

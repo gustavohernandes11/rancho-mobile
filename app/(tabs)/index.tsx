@@ -4,7 +4,7 @@ import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { ProductionChart } from "components/ProductionChart";
 import { Span } from "components/Span";
-import { useFocusEffect } from "expo-router";
+import { useFocus } from "hooks/useFocus";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
@@ -14,7 +14,7 @@ export default function TabOneScreen() {
     const [count, setCount] = useState<Count>();
     const { refreshAll } = useGlobalState();
 
-    useFocusEffect(() => {
+    useFocus(() => {
         Storage.count().then(count => setCount(count));
     });
 
@@ -28,7 +28,7 @@ export default function TabOneScreen() {
             <Span>
                 <Heading size="small">Produção do mês atual</Heading>
             </Span>
-            <ProductionChart monthNumber={6} yearNumber={2024} />
+            <ProductionChart />
             <Span py={4}>
                 {count ? (
                     <InfoCard
