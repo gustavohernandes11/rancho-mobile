@@ -130,20 +130,35 @@ export class SqliteRepository implements StorageRepository {
 		AS animals 
 		FROM Animals
 		`;
+
         const countBatchesQuery = `
 		SELECT COUNT(id)
 		AS batches 
 		FROM Batches
 		`;
 
-        const [animals, batches] = await Promise.all([
+        const startOfMonth = moment().startOf("month").format("YYYY-MM-DD");
+        const endOfMonth = moment().endOf("month").format("YYYY-MM-DD");
+
+        const countLitersProducedQuery = `
+            SELECT SUM(quantity) AS litersProduced 
+            FROM DayProduction
+            WHERE day >= ? AND day <= ?
+        `;
+
+        const [animals, batches, litersProduced] = await Promise.all([
             this.getOne<{ animal: number }>(countAnimalsQuery, []),
             this.getOne<{ batches: number }>(countBatchesQuery, []),
+            this.getOne<{ litersProduced: number }>(countLitersProducedQuery, [
+                startOfMonth,
+                endOfMonth,
+            ]),
         ]);
 
         return {
             ...animals,
             ...batches,
+            ...litersProduced,
         } as Count;
     }
 

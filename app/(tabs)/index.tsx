@@ -43,7 +43,10 @@ export default function TabOneScreen() {
                     />
                 ) : null}
                 {count ? (
-                    <InfoCard title={"1450"} description="Litros produzidos" />
+                    <InfoCard
+                        title={count.litersProduced.toString() || "?"}
+                        description="Litros produzidos"
+                    />
                 ) : null}
             </Span>
             <Heading size="small">O que você quer fazer?</Heading>
