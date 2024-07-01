@@ -22,7 +22,6 @@ interface SelectProps {
     defaultValue?: string;
     defaultButtonText?: string;
     size?: "medium" | "small";
-    backgroundColor?: "gray" | "transparent";
 }
 export const Select: React.FC<
     SelectProps & Omit<SelectDropdownProps, "data">
@@ -32,26 +31,10 @@ export const Select: React.FC<
     defaultButtonText,
     label,
     errorText,
-    backgroundColor = "gray",
     size = "medium",
     ...props
 }) => {
-    const getSelectHeight = () => (size === "medium" ? 50 : 40);
-
-    const buttonStyles = [
-        styles.button,
-        {
-            height: getSelectHeight(),
-            borderColor: getInputBorderColor(!!errorText),
-            backgroundColor: Colors.white,
-        },
-    ];
-    const rowStyle = [
-        styles.row,
-        {
-            height: getSelectHeight(),
-        },
-    ];
+    const styles = getStyles(size, !!errorText);
 
     return (
         <View style={styles.inputContainer}>
@@ -59,8 +42,8 @@ export const Select: React.FC<
             <SelectDropdown
                 renderDropdownIcon={DropdownIcon}
                 buttonTextStyle={commonStyles.label}
-                buttonStyle={buttonStyles}
-                rowStyle={rowStyle}
+                buttonStyle={styles.button}
+                rowStyle={styles.row}
                 rowTextStyle={commonStyles.text}
                 dropdownStyle={commonStyles.inputAspect}
                 defaultButtonText={defaultButtonText || "Selecione uma opção"}
@@ -75,21 +58,23 @@ export const Select: React.FC<
     );
 };
 
-const styles = StyleSheet.create({
-    inputContainer: {
-        flex: 1,
-    },
-    dropdown: {
-        borderRadius: 8,
-    },
-    button: {
-        width: "auto",
-        ...commonStyles.inputAspect,
-        padding: 8,
-    },
-    row: {
-        borderBottomWidth: 1,
-        borderColor: Colors.border,
-        padding: 8,
-    },
-});
+const getSelectHeight = (size: string) => (size === "medium" ? 50 : 40);
+const getStyles = (size: "medium" | "small", hasError: boolean) =>
+    StyleSheet.create({
+        inputContainer: {
+            flex: 1,
+        },
+        button: {
+            width: "auto",
+            ...commonStyles.inputAspect,
+            padding: 8,
+            height: getSelectHeight(size),
+            borderColor: getInputBorderColor(hasError),
+        },
+        row: {
+            borderBottomWidth: 1,
+            borderColor: Colors.border,
+            padding: 8,
+            height: getSelectHeight(size),
+        },
+    });

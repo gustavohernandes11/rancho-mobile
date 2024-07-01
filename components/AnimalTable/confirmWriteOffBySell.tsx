@@ -12,7 +12,7 @@ export const confirmWriteOffBySell = (
             {
                 text: "Vender",
                 onPress: () =>
-                    Storage.writeOffBySell(selectedIDs, false).then(
+                    Storage.writeOffBySale(selectedIDs, false).then(
                         () => onSellCallback && onSellCallback()
                     ),
                 style: "default",
@@ -20,7 +20,7 @@ export const confirmWriteOffBySell = (
             {
                 text: "Vender e salvar",
                 onPress: () =>
-                    Storage.writeOffBySell(selectedIDs, true).then(
+                    Storage.writeOffBySale(selectedIDs, true).then(
                         () => onSellCallback && onSellCallback()
                     ),
                 style: "default",

@@ -1,7 +1,7 @@
 import { Button } from "components/Button";
 import { DatePicker } from "components/DatePicker";
 import { Input } from "components/Input";
-import RadioInput from "components/RadioInput";
+import { RadioInput } from "components/RadioInput";
 import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { router, useNavigation } from "expo-router";
@@ -12,7 +12,7 @@ import moment from "moment";
 import React from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
-import { Animal } from "types";
+import { Animal, AnimalStatusOptions } from "types";
 import {
     filterPossibleMaternity,
     filterPossiblePaternity,
@@ -45,6 +45,29 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
     const onError = (e: Error) => Alert.alert("Erro!", e.message);
 
     const isUpdate = !!initialValues.id;
+
+    const handleChangeBirthdate = (date?: Date) => {
+        if (moment.isDate(date))
+            formik.setFieldValue("birthdate", date!.toISOString());
+        else formik.setFieldValue("birthdate", "");
+    };
+
+    const handleChangeBirthdateText = (text?: string) => {
+        if (text === "") {
+            formik.setFieldValue("birthdate", "");
+        } else if (!moment.isDate(text)) {
+            formik.setFieldError(
+                "birthdate",
+                "Formato de data inválido. Use 'DD/MM/AAAA'"
+            );
+        }
+    };
+
+    const animalStatusOptions = [
+        { label: "Ativo", value: "active" },
+        { label: "Morto", value: "dead" },
+        { label: "Vendido", value: "sold" },
+    ];
 
     const onSubmit = (values: Animal) => {
         isUpdate
@@ -105,24 +128,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                     inputMode="start"
                     saveLabel="Salvar"
                     errorText={getFieldError("birthdate", formik)}
-                    onChange={date => {
-                        if (moment.isDate(date))
-                            formik.setFieldValue(
-                                "birthdate",
-                                date!.toISOString()
-                            );
-                        else formik.setFieldValue("birthdate", "");
-                    }}
-                    onChangeText={text => {
-                        if (text === "") {
-                            formik.setFieldValue("birthdate", "");
-                        } else if (!moment.isDate(text)) {
-                            formik.setFieldError(
-                                "birthdate",
-                                "Formato de data inválido. Use 'DD/MM/AAAA'"
-                            );
-                        }
-                    }}
+                    onChange={handleChangeBirthdate}
+                    onChangeText={handleChangeBirthdateText}
                     value={
                         formik.values.birthdate
                             ? new Date(formik.values.birthdate)
@@ -149,16 +156,12 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
             {isUpdate && (
                 <Span>
                     <RadioInput
-                        onValueChange={option =>
+                        onValueChange={(option: AnimalStatusOptions) =>
                             formik.setFieldValue("status", option)
                         }
                         label="Situação do animal"
                         value={formik.values.status}
-                        options={[
-                            { label: "Ativo", value: "active" },
-                            { label: "Morto", value: "dead" },
-                            { label: "Vendido", value: "sold" },
-                        ]}
+                        options={animalStatusOptions}
                         errorText={getFieldError("status", formik)}
                     />
                 </Span>

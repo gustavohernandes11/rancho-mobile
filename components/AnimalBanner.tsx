@@ -13,16 +13,18 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
     animal,
     ...props
 }) => {
+    const title = (
+        <>
+            {getGenderIcon(animal.gender)}
+            {" " + animal.name}
+        </>
+    );
+
     return (
         <Banner
             iconAlt="Rounded animal icon"
             iconSource={require("../assets/images/AnimalCircleIcon.png")}
-            title={
-                <>
-                    {getGenderIcon(animal.gender)}
-                    {" " + animal.name}
-                </>
-            }
+            title={title}
             rightDescription={animal.birthdate && formatAge(animal.birthdate)}
             {...props}
         />

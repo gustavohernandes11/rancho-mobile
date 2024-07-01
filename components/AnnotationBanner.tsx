@@ -13,6 +13,7 @@ import { commonStyles } from "styles/Common";
 import Fonts from "styles/Fonts";
 import { AnnotationTypeOption } from "types";
 import { formatAnnotationType, formatDateToShortPtBR } from "utils/formatters";
+import { Paragraph } from "./Paragraph";
 
 type AnnotationBannerProps = {
     title: string;
@@ -45,18 +46,14 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
                 </View>
                 <View style={styles.main}>
                     <View style={styles.top}>
-                        <Text style={commonStyles.text}>
-                            {formatAnnotationType(type)}
-                        </Text>
+                        <Paragraph>{formatAnnotationType(type)}</Paragraph>
                         <Text style={styles.date}>
                             {date ? formatDateToShortPtBR(date) : " "}
                         </Text>
                     </View>
                     <View style={styles.main}>
                         <Text style={styles.title}>{title}</Text>
-                        {description && (
-                            <Text style={commonStyles.text}>{description}</Text>
-                        )}
+                        {description && <Paragraph>{description}</Paragraph>}
                     </View>
                 </View>
             </Pressable>

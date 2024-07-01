@@ -1,8 +1,8 @@
 import React from "react";
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import Colors from "styles/Colors";
-import { commonStyles } from "styles/Common";
 import { Item } from "types";
+import { Paragraph } from "./Paragraph";
 
 interface SimpleTableProps {
     data: Item[];
@@ -35,8 +35,8 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 
 const Row: React.FC<RowProps<Item>> = ({ item }) => (
     <View style={styles.row}>
-        <Text style={commonStyles.text}>{item.key}</Text>
-        <Text style={commonStyles.text}>{item.value}</Text>
+        <Paragraph>{item.key}</Paragraph>
+        <Paragraph>{item.value}</Paragraph>
     </View>
 );
 

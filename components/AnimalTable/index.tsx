@@ -8,7 +8,7 @@ import {
 import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
 import { useGlobalState } from "hooks/useGlobalState";
 import React, { useCallback } from "react";
-import { Dimensions, Text, View } from "react-native";
+import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { commonStyles } from "styles/Common";
 import { Animal } from "types";
@@ -110,36 +110,24 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     return (
         <>
             {controller.isSelectionMode && !onlySelectionMode && (
-                <Span>
-                    <SelectionMenu
-                        onWriteOffByDeath={handleWriteOffByDeath}
-                        onWriteOffBySale={handlewriteOffBySale}
-                        showActions={true}
-                        showCloseButton={true}
-                        onClearSelection={controller.clearSelection}
-                        onSelectAll={handleSelectAll}
-                        onCreateBatchWithSelectedAnimals={
-                            handleCreateBatchWithSelectedAnimals
-                        }
-                        onCreateAnnotationWithSelectedAnimals={
-                            handleCreateAnnotationWithSelectedAnimals
-                        }
-                        selectedIDs={controller.selectedIDs}
-                        onDeleteMany={handleDeleteMany}
-                    />
-                </Span>
+                <SelectionMenu
+                    onWriteOffByDeath={handleWriteOffByDeath}
+                    onWriteOffBySale={handlewriteOffBySale}
+                    showActions={true}
+                    showCloseButton={true}
+                    onClearSelection={controller.clearSelection}
+                    onSelectAll={handleSelectAll}
+                    onCreateBatchWithSelectedAnimals={
+                        handleCreateBatchWithSelectedAnimals
+                    }
+                    onCreateAnnotationWithSelectedAnimals={
+                        handleCreateAnnotationWithSelectedAnimals
+                    }
+                    selectedIDs={controller.selectedIDs}
+                    onDeleteMany={handleDeleteMany}
+                />
             )}
-            <View
-                style={[
-                    {
-                        minHeight: 20,
-                        width: Dimensions.get("screen").width - 16,
-                        borderRadius: 8,
-                        overflow: "hidden",
-                    },
-                    commonStyles.border,
-                ]}
-            >
+            <View style={styles.tableContainer}>
                 <FlashList
                     removeClippedSubviews={true}
                     data={animals}
@@ -159,3 +147,13 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
         </>
     );
 };
+
+const styles = StyleSheet.create({
+    tableContainer: {
+        minHeight: 20,
+        width: Dimensions.get("screen").width - 16,
+        borderRadius: 8,
+        overflow: "hidden",
+        ...commonStyles.border,
+    },
+});

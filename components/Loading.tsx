@@ -12,22 +12,25 @@ type CustomLoadingProps = {
 };
 
 export const Loading: React.FC<ActivityIndicatorProps & CustomLoadingProps> = ({
-    children,
     height = 100,
     ...props
 }) => {
+    const styles = getStyles(height);
+
     return (
-        <View style={[styles.container, { height }]}>
+        <View style={styles.container}>
             <ActivityIndicator color={Colors.green} size={30} {...props} />
         </View>
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-        width: "100%",
-    },
-});
+const getStyles = (height: number) =>
+    StyleSheet.create({
+        container: {
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            height: height,
+        },
+    });

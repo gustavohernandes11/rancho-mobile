@@ -25,20 +25,18 @@ export const Cell: React.FC<CellProps<DayItem>> = ({
         Storage.getDayProduction(item.date).then(prod =>
             setQuantity(prod?.quantity || null)
         );
-    });
+    }, [item.date]);
 
-    const cellStyles = [styles.cell, isSelected && styles.selectedCell];
-    const textStyles = [commonStyles.text, isSelected && styles.selectedText];
-    const boldStyles = [styles.boldText, isSelected && styles.selectedText];
+    const styles = getStyles(isSelected);
 
     return (
         <TouchableOpacity
             onPress={() => onSelect(item.date)}
-            style={cellStyles}
+            style={styles.cell}
             {...props}
         >
-            <Text style={textStyles}>{item.value}</Text>
-            <Text style={boldStyles}>{quantity || " "}</Text>
+            <Text style={styles.text}>{item.value}</Text>
+            <Text style={styles.bold}>{quantity || " "}</Text>
         </TouchableOpacity>
     );
 };
@@ -52,24 +50,25 @@ const isEqual = (
 
 export const MemoizedCell = React.memo(Cell, isEqual);
 
-const styles = StyleSheet.create({
-    cell: {
-        flexBasis: (Dimensions.get("window").width - 32) / 7,
-        paddingHorizontal: 4,
-        paddingVertical: 8,
-        gap: 4,
-        justifyContent: "center",
-        alignItems: "center",
-    },
-    selectedCell: {
-        backgroundColor: Colors.green,
-        borderRadius: 8,
-    },
-    boldText: {
-        ...commonStyles.text,
-        fontWeight: "bold",
-    },
-    selectedText: {
-        color: Colors.white,
-    },
-});
+const getStyles = (isSelected: boolean) =>
+    StyleSheet.create({
+        cell: {
+            flexBasis: (Dimensions.get("window").width - 32) / 7,
+            paddingHorizontal: 4,
+            paddingVertical: 8,
+            gap: 4,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: isSelected ? Colors.green : "transparent",
+            borderRadius: isSelected ? 8 : 0,
+        },
+        text: {
+            ...commonStyles.text,
+            color: isSelected ? Colors.white : commonStyles.text.color,
+        },
+        bold: {
+            ...commonStyles.text,
+            color: isSelected ? Colors.white : commonStyles.text.color,
+            fontWeight: "bold",
+        },
+    });

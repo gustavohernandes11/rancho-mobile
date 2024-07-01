@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "react-native";
+import { StyleSheet, Text } from "react-native";
 import { TextProps } from "react-native-paper";
 import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
@@ -13,15 +13,19 @@ export const Paragraph: React.FC<TextProps<any> & ParagraphProps> = ({
     color = "black",
     ...props
 }) => {
+    const styles = getStyles(color);
+
     return (
-        <Text
-            style={[
-                commonStyles.text,
-                { color: color === "black" ? Colors.darkGray : Colors.white },
-            ]}
-            {...props}
-        >
+        <Text style={styles.text} {...props}>
             {children}
         </Text>
     );
 };
+
+const getStyles = (color: "white" | "black") =>
+    StyleSheet.create({
+        text: {
+            ...commonStyles.text,
+            color: color === "black" ? Colors.darkGray : Colors.white,
+        },
+    });

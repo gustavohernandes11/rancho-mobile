@@ -3,14 +3,11 @@ import React from "react";
 import { IconButton, IconButtonProps } from "react-native-paper";
 import Colors from "styles/Colors";
 
-interface GoBackButtonProps {
-    children?: React.ReactNode;
-}
-
-export const GoBackButton: React.FC<
-    GoBackButtonProps & Omit<IconButtonProps, "icon">
-> = ({ ...props }) => {
+export const GoBackButton: React.FC<Omit<IconButtonProps, "icon">> = ({
+    ...props
+}) => {
     const navigation = useNavigation();
+
     return (
         <IconButton
             size={24}

@@ -51,7 +51,7 @@ export const serializeAnimalInfo = (animal?: Animal): Item[] => {
     return items;
 };
 
-export const serializeAnnotation = (annotation?: Annotation): Item[] => {
+export const serializeAnnotation = (annotation?: Annotation | null): Item[] => {
     let items: Item[] = [];
     if (!annotation) return items;
 

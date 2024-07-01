@@ -8,19 +8,38 @@ Aplicativo offline para gerenciamento de gado!
 
 </div>
 
-## Versão 1.1.0
+## Versão 1.2.0
 
 Funcionalidades:
 
--   Registrar animais.
--   Registrar hereditariedade (maternidade e paternidade).
--   Agrupar por lotes.
--   Acompanhar idade.
--   Fazer observações importantes.
+-   Registro de animais:
 
-## Capturas de Tela
+    -   Nome;
+    -   Sexo;
+    -   Data de nascimento;
+    -   Código;
+    -   Lote;
+    -   Relação de paternidade e maternidade entre animais;
+    -   Situação (ativo no rebanho, morto ou vendido);
+    -   Observação;
 
-![Screenshots](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/a121d676-1a74-466c-ace0-e82b7a007aae)
+-   Agrupamento por lotes:
+
+    -   Nome do lote;
+    -   Descrição;
+    -   Criação de lotes com animais pré-selecionados
+    -   Movimentação entre lotes facilitada com o menu de seleção de animais.
+
+-   Controle da produção de leite.
+
+    -   Calendário com a produção de cada dia;
+    -   Gráfico da produção do mês;
+
+-   Anotações:
+
+    -   Tipo: simples, manejo sanitário, venda, compra e morte.
+    -   Relação de animais relacionados a anotação.
+    -   Criação de anotações com animais pré-selecionados.
 
 ## Tecnologias
 

@@ -13,7 +13,7 @@ interface RadioInputProps {
     errorText?: string;
 }
 
-const RadioInput: React.FC<RadioInputProps> = ({
+export const RadioInput: React.FC<RadioInputProps> = ({
     label,
     options,
     value,
@@ -57,5 +57,3 @@ const styles = StyleSheet.create({
         ...commonStyles.inputAspect,
     },
 });
-
-export default RadioInput;

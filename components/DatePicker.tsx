@@ -15,19 +15,15 @@ interface DatePickerProps {
 export const DatePicker: React.FC<
     DatePickerProps & Omit<DatePickerInputProps, "locale">
 > = ({ label, errorText, ...props }) => {
-    const outlineStyle = [
-        commonStyles.inputAspect,
-        {
-            borderColor: getInputBorderColor(!!errorText),
-        },
-    ];
+    const styles = getStyles(!!errorText);
+
     return (
         <View style={styles.inputContainer}>
             {label && <Label>{label}</Label>}
             <DatePickerInput
                 iconColor={Colors.darkGray}
                 mode="outlined"
-                outlineStyle={outlineStyle}
+                outlineStyle={styles.outline}
                 outlineColor={Colors.border}
                 activeOutlineColor={Colors.darkGray}
                 textColor={Colors.darkGray}
@@ -44,15 +40,20 @@ export const DatePicker: React.FC<
     );
 };
 
-const styles = StyleSheet.create({
-    inputContainer: {
-        flex: 1,
-    },
-    input: {
-        borderRadius: 8,
-        height: 50,
-        fontSize: 14,
-        fontFamily: Fonts.primaryFamily,
-        backgroundColor: Colors.lightGray,
-    },
-});
+const getStyles = (hasError: boolean) =>
+    StyleSheet.create({
+        inputContainer: {
+            flex: 1,
+        },
+        input: {
+            borderRadius: 8,
+            height: 50,
+            fontSize: 14,
+            fontFamily: Fonts.primaryFamily,
+            backgroundColor: Colors.lightGray,
+        },
+        outline: {
+            ...commonStyles.inputAspect,
+            borderColor: getInputBorderColor(hasError),
+        },
+    });

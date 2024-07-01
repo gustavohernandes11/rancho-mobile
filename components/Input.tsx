@@ -16,26 +16,14 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
     multiline,
     ...props
 }) => {
-    const inputStyle = [
-        commonStyles.inputAspect,
-        {
-            height: multiline ? 80 : 50,
-            borderWidth: 0,
-        },
-    ];
-    const outlineStyle = [
-        commonStyles.inputAspect,
-        {
-            borderColor: getInputBorderColor(!!errorText),
-        },
-    ];
+    const styles = getStyles({ multiline, hasError: !!errorText });
 
     return (
         <View style={styles.inputContainer}>
             {label && <Label>{label}</Label>}
             <TextInput
                 mode="outlined"
-                outlineStyle={outlineStyle}
+                outlineStyle={styles.outline}
                 outlineColor={Colors.border}
                 activeOutlineColor={Colors.black}
                 textColor={Colors.darkGray}
@@ -43,7 +31,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
                 cursorColor={Colors.darkGray}
                 error={!!errorText}
                 multiline={multiline}
-                style={inputStyle}
+                style={styles.input}
                 {...props}
             />
             {errorText && <Text style={commonStyles.error}>{errorText}</Text>}
@@ -51,9 +39,25 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
     );
 };
 
-const styles = StyleSheet.create({
-    inputContainer: {
-        flex: 1,
-        width: "100%",
-    },
-});
+const getStyles = ({
+    multiline,
+    hasError,
+}: {
+    multiline?: boolean;
+    hasError: boolean;
+}) =>
+    StyleSheet.create({
+        inputContainer: {
+            flex: 1,
+            width: "100%",
+        },
+        input: {
+            ...commonStyles.inputAspect,
+            height: multiline ? 80 : 50,
+            borderWidth: 0,
+        },
+        outline: {
+            ...commonStyles.inputAspect,
+            borderColor: getInputBorderColor(hasError),
+        },
+    });

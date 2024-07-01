@@ -24,13 +24,10 @@ export const Card: React.FC<LinkProps & CardProps> = ({
     href,
     ...props
 }) => {
-    const containerStyle = [
-        commonStyles.card,
-        { backgroundColor: Colors[color] },
-    ];
+    const styles = getStyles(color);
 
     return (
-        <Link href={href} style={containerStyle} asChild {...props}>
+        <Link href={href} style={styles.container} asChild {...props}>
             <TouchableRipple>
                 <Span direction="column" justify="center" flexWrap="nowrap">
                     <Image
@@ -45,12 +42,17 @@ export const Card: React.FC<LinkProps & CardProps> = ({
     );
 };
 
-const styles = StyleSheet.create({
-    title: {
-        ...commonStyles.text,
-        fontSize: 16,
-        flexShrink: 1,
-        color: Colors.white,
-        marginTop: 4,
-    },
-});
+const getStyles = (color: ColorOptions) =>
+    StyleSheet.create({
+        container: {
+            ...commonStyles.card,
+            backgroundColor: Colors[color],
+        },
+        title: {
+            ...commonStyles.text,
+            fontSize: 16,
+            flexShrink: 1,
+            color: Colors.white,
+            marginTop: 4,
+        },
+    });

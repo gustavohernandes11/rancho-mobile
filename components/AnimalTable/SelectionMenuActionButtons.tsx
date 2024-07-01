@@ -9,7 +9,6 @@ type SelectionMenuActionButtonsProps = {
     selectedIDs: number[];
 
     onSelectAll: () => void;
-
     onDeleteMany: () => void;
     onMove: () => void;
     onWriteOffByDeath: () => void;
@@ -23,9 +22,9 @@ type SelectionMenuActionButtonsProps = {
 };
 
 export const SelectionMenuActionButtons = ({
-    onSelectAll,
     selectedIDs,
 
+    onSelectAll,
     onDeleteMany,
     onMove,
     onWriteOffByDeath,
@@ -37,14 +36,14 @@ export const SelectionMenuActionButtons = ({
     onCloseMoreOptions,
     openMoreOptions,
 }: SelectionMenuActionButtonsProps) => (
-    <View style={{ flexDirection: "row", gap: 4 }}>
+    <View style={styles.actions}>
         <Tooltip title="Deletar">
             <IconButton
                 iconColor={Colors.white}
                 icon="delete"
                 onPress={() => confirmDeleteAll(selectedIDs, onDeleteMany)}
                 style={{ margin: 0 }}
-                size={20}
+                size={24}
             />
         </Tooltip>
         <Tooltip title="Selecionar todos">
@@ -53,7 +52,7 @@ export const SelectionMenuActionButtons = ({
                 icon="select-all"
                 onPress={onSelectAll}
                 style={{ margin: 0 }}
-                size={20}
+                size={24}
             />
         </Tooltip>
         <Tooltip title="Mais opções">
@@ -67,7 +66,7 @@ export const SelectionMenuActionButtons = ({
                         icon="dots-vertical"
                         onPress={openMoreOptions}
                         style={{ margin: 0 }}
-                        size={20}
+                        size={24}
                     />
                 }
             >
@@ -111,17 +110,9 @@ export const SelectionMenuActionButtons = ({
         </Tooltip>
     </View>
 );
-export const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        borderRadius: 8,
-        borderWidth: 1,
-        borderColor: Colors.border,
-        backgroundColor: Colors.green,
-        padding: 4,
-    },
-    text: {
-        color: Colors.white,
-        flexShrink: 1,
+const styles = StyleSheet.create({
+    actions: {
+        flexDirection: "row",
+        gap: 4,
     },
 });

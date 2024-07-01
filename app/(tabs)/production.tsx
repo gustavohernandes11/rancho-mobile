@@ -1,13 +1,12 @@
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { MonthProductionCalendar } from "components/MonthProductionCalendar";
+import { Paragraph } from "components/Paragraph";
 import { ProductionForm } from "components/ProductionForm";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
-import { Text } from "react-native";
-import { commonStyles } from "styles/Common";
 
 export default function ViewProductionScreen() {
     const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
@@ -36,10 +35,10 @@ export default function ViewProductionScreen() {
                     selectedDate={selectedDate}
                 />
             </Span>
-            <Text style={commonStyles.text}>
+            <Paragraph>
                 Selecione uma data no calendário e insira a quantidade
                 produzida.
-            </Text>
+            </Paragraph>
             <Span direction="column">
                 <ProductionForm
                     selectedDate={selectedDate}

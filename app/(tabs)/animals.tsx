@@ -127,7 +127,6 @@ export default function ViewAnimalsScreen() {
                                     setOrderBy(option.value);
                                 }}
                                 size="small"
-                                backgroundColor="transparent"
                             />
                             <Select
                                 label="Lote"
@@ -144,7 +143,6 @@ export default function ViewAnimalsScreen() {
                                     setFilterByBatchID(option.value)
                                 }
                                 size="small"
-                                backgroundColor="transparent"
                             />
                             <Span my={0}>
                                 <CheckboxInput
