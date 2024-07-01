@@ -43,6 +43,7 @@ export default function ViewAnnotationsPage() {
                     headerRight: () => (
                         <Button
                             title="Nova anotação"
+                            icon="bookmark-plus-outline"
                             onPress={() =>
                                 router.push("/(screens)/annotations/add")
                             }

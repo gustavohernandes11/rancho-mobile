@@ -746,4 +746,60 @@ export class SqliteRepository implements StorageRepository {
             .then(() => true)
             .catch(() => false);
     }
+    async unlinkAnimalFromAnnotations(
+        animalID: number | number[]
+    ): Promise<boolean> {
+        if (Array.isArray(animalID)) {
+            const operations = animalID.map(id =>
+                this.unlinkAnimalFromAnnotations(id)
+            );
+            return Promise.all(operations)
+                .then(() => true)
+                .catch(() => false);
+        }
+
+        const queryAnnotations = `
+            SELECT id, animalIDs 
+            FROM Annotations 
+            WHERE animalIDs LIKE '%' || ? || '%';
+        `;
+
+        try {
+            const annotations = await this.getAll<Annotation>(
+                queryAnnotations,
+                [animalID.toString()]
+            );
+
+            const updateOperations = annotations.map(async annotation => {
+                const animalIDs = this.convertStringToAnimalIDs(
+                    annotation.animalIDs as unknown as string
+                );
+                const updatedAnimalIDs = animalIDs.filter(id => id != animalID);
+                console.log(
+                    "updatedAnimalIDs: " + JSON.stringify(updatedAnimalIDs)
+                );
+
+                const updatedAnimalIDsString =
+                    this.convertAnimalIDsToString(updatedAnimalIDs);
+
+                console.log(
+                    "updatedAnimalIDsString: " + updatedAnimalIDsString
+                );
+                const updateQuery = `
+                    UPDATE Annotations SET animalIDs = ? WHERE id = ?;
+                `;
+
+                await this.execute(updateQuery, [
+                    updatedAnimalIDsString,
+                    annotation.id,
+                ]);
+            });
+
+            const results = await Promise.allSettled(updateOperations);
+
+            return results.every(result => result.status === "fulfilled");
+        } catch (error) {
+            return false;
+        }
+    }
 }

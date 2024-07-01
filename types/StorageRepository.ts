@@ -62,4 +62,5 @@ export interface StorageRepository {
     ): Promise<boolean>;
 
     nullifyParentalIds(animalID: number | number[]): Promise<boolean>;
+    unlinkAnimalFromAnnotations(animalID: number | number[]): Promise<boolean>;
 }

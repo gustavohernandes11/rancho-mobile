@@ -182,10 +182,11 @@ export class StorageServices implements StorageServicesMethods {
         return true;
     }
 
-    deleteAnimal(animalID: number | number[]): Promise<boolean> {
-        return this.DbRepository.nullifyParentalIds(animalID).then(() =>
-            this.DbRepository.deleteAnimal(animalID)
-        );
+    async deleteAnimal(animalID: number | number[]): Promise<boolean> {
+        await this.DbRepository.nullifyParentalIds(animalID);
+        await this.DbRepository.unlinkAnimalFromAnnotations(animalID);
+
+        return await this.DbRepository.deleteAnimal(animalID);
     }
 
     async deleteBatch(batchID: number): Promise<boolean> {
