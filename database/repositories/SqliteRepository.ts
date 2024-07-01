@@ -147,6 +147,7 @@ export class SqliteRepository implements StorageRepository {
             const operations = animalID.map(id =>
                 this.setAnimalStatus(id, status)
             );
+
             return Promise.all(operations)
                 .then(() => true)
                 .catch(() => false);
@@ -168,7 +169,7 @@ export class SqliteRepository implements StorageRepository {
         SELECT COUNT(id) AS animals
         FROM Animals
         WHERE status = 'active'
-    `;
+        `;
 
         const countBatchesQuery = `
 		SELECT COUNT(id) AS batches 
@@ -179,9 +180,9 @@ export class SqliteRepository implements StorageRepository {
         const endOfMonth = moment().endOf("month").format("YYYY-MM-DD");
 
         const countLitersProducedQuery = `
-            SELECT SUM(quantity) AS litersProduced 
-            FROM DayProduction
-            WHERE day >= ? AND day <= ?
+        SELECT SUM(quantity) AS litersProduced 
+        FROM DayProduction
+        WHERE day >= ? AND day <= ?
         `;
 
         const [animalsResult, batchesResult, litersProducedResult] =
@@ -262,10 +263,10 @@ export class SqliteRepository implements StorageRepository {
 
     async getAnimal(animalID: number): Promise<Animal> {
         const query = `
-			SELECT 
-				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
-			FROM Animals 
-			WHERE id = ?
+		SELECT 
+			id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
+		FROM Animals 
+		WHERE id = ?
 		`;
 
         return (await this.getOne<Animal>(query, [animalID])) as Animal;
@@ -319,9 +320,9 @@ export class SqliteRepository implements StorageRepository {
 
     async listAnimals(queryOptions: QueryOptions = {}): Promise<Animal[]> {
         let query = `
-			SELECT 
-				id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
-			FROM Animals
+		SELECT 
+			id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
+		FROM Animals
 		`;
 
         const params: (string | number)[] = [];
@@ -378,7 +379,7 @@ export class SqliteRepository implements StorageRepository {
         LEFT JOIN Animals ON Batches.id = Animals.batchID
         WHERE Batches.id = ?
         GROUP BY Batches.id, Batches.name, Batches.description
-    `;
+        `;
 
         const [batchInfo, animals] = await Promise.all([
             this.getOne<Batch>(loadBatchQuery, [batchID]),
@@ -560,9 +561,9 @@ export class SqliteRepository implements StorageRepository {
         const { day, quantity } = production;
         const formattedDay = day.split("T")[0];
         const query = `
-		  INSERT INTO DayProduction (day, quantity)
-		  VALUES (?, ?)
-		  ON CONFLICT(day) DO UPDATE SET quantity = excluded.quantity;
+		INSERT INTO DayProduction (day, quantity)
+		VALUES (?, ?)
+		ON CONFLICT(day) DO UPDATE SET quantity = excluded.quantity;
 		`;
 
         const params = [formattedDay, quantity];
@@ -580,10 +581,10 @@ export class SqliteRepository implements StorageRepository {
         end: Date
     ): Promise<DayProduction[]> {
         const query = `
-		  SELECT day, quantity
-		  FROM DayProduction
-		  WHERE day BETWEEN ? AND ?
-		  ORDER BY day;
+		SELECT day, quantity
+		FROM DayProduction
+		WHERE day BETWEEN ? AND ?
+		ORDER BY day;
 		`;
 
         const formattedStart = this.formatDate(start);
@@ -599,9 +600,9 @@ export class SqliteRepository implements StorageRepository {
 
     async getDayProduction(date: Date): Promise<DayProduction | null> {
         const query = `
-		  SELECT day, quantity
-		  FROM DayProduction
-		  WHERE day = ?;
+		SELECT day, quantity
+		FROM DayProduction
+		WHERE day = ?;
 		`;
 
         const formattedDate = this.formatDate(date);
@@ -617,8 +618,8 @@ export class SqliteRepository implements StorageRepository {
         annotation: AddAnnotation
     ): Promise<number | undefined> {
         const query = `
-			INSERT INTO Annotations (title, type, description, date, animalIDs, dosage, medicineName)
-			VALUES (?, ?, ?, ?, ?, ?, ?);
+		INSERT INTO Annotations (title, type, description, date, animalIDs, dosage, medicineName)
+		VALUES (?, ?, ?, ?, ?, ?, ?);
 		`;
 
         const parsed = nullifyFalsyFields(annotation);
@@ -643,9 +644,9 @@ export class SqliteRepository implements StorageRepository {
     }
     async getAnnotation(id: number): Promise<Annotation | null> {
         const query = `
-            SELECT id, title, type, description, date, animalIDs, dosage, medicineName
-            FROM Annotations
-            WHERE id = ?;
+        SELECT id, title, type, description, date, animalIDs, dosage, medicineName
+        FROM Annotations
+        WHERE id = ?;
         `;
 
         const annotation = await this.getOne<Annotation>(query, [id]);
@@ -668,8 +669,8 @@ export class SqliteRepository implements StorageRepository {
         queryOptions?: AnnotationQueryOptions
     ): Promise<Annotation[]> {
         let sqlQuery = `
-            SELECT id, title, type, description, date, animalIDs, dosage, medicineName
-            FROM Annotations
+        SELECT id, title, type, description, date, animalIDs, dosage, medicineName
+        FROM Annotations
         `;
 
         const params: (string | number)[] = [];
@@ -713,9 +714,9 @@ export class SqliteRepository implements StorageRepository {
         }
 
         const query = `
-            UPDATE Annotations SET 
-                title = ?, type = ?, description = ?, date = ?, animalIDs = ?, dosage = ?, medicineName = ?
-            WHERE id = ?;
+        UPDATE Annotations SET 
+            title = ?, type = ?, description = ?, date = ?, animalIDs = ?, dosage = ?, medicineName = ?
+        WHERE id = ?;
         `;
 
         const parsed = nullifyFalsyFields(updateData);
@@ -738,8 +739,8 @@ export class SqliteRepository implements StorageRepository {
     }
     async deleteAnnotation(id: number): Promise<boolean> {
         const query = `
-            DELETE FROM Annotations
-            WHERE id = ?;
+        DELETE FROM Annotations
+        WHERE id = ?;
         `;
 
         return this.execute(query, [id])
@@ -759,9 +760,9 @@ export class SqliteRepository implements StorageRepository {
         }
 
         const queryAnnotations = `
-            SELECT id, animalIDs 
-            FROM Annotations 
-            WHERE animalIDs LIKE '%' || ? || '%';
+        SELECT id, animalIDs 
+        FROM Annotations 
+        WHERE animalIDs LIKE '%' || ? || '%';
         `;
 
         try {
@@ -780,7 +781,7 @@ export class SqliteRepository implements StorageRepository {
                     this.convertAnimalIDsToString(updatedAnimalIDs);
 
                 const updateQuery = `
-                    UPDATE Annotations SET animalIDs = ? WHERE id = ?;
+                UPDATE Annotations SET animalIDs = ? WHERE id = ?;
                 `;
 
                 await this.execute(updateQuery, [
