@@ -184,20 +184,21 @@ export class SqliteRepository implements StorageRepository {
             WHERE day >= ? AND day <= ?
         `;
 
-        const [animals, batches, litersProduced] = await Promise.all([
-            this.getOne<{ animal: number }>(countAnimalsQuery, []),
-            this.getOne<{ batches: number }>(countBatchesQuery, []),
-            this.getOne<{ litersProduced: number }>(countLitersProducedQuery, [
-                startOfMonth,
-                endOfMonth,
-            ]),
-        ]);
+        const [animalsResult, batchesResult, litersProducedResult] =
+            await Promise.all([
+                this.getOne<{ animal: number }>(countAnimalsQuery, []),
+                this.getOne<{ batches: number }>(countBatchesQuery, []),
+                this.getOne<{ litersProduced: number }>(
+                    countLitersProducedQuery,
+                    [startOfMonth, endOfMonth]
+                ),
+            ]);
 
         return {
-            ...animals,
-            ...batches,
-            ...litersProduced,
-        } as Count;
+            animals: animalsResult?.animal || 0,
+            batches: batchesResult?.batches || 0,
+            litersProduced: litersProducedResult?.litersProduced || 0,
+        };
     }
 
     async clearDatabase(): Promise<boolean> {
