@@ -7,6 +7,7 @@ import { confirmDeleteAll } from "./confirmDeleteAll";
 
 type SelectionMenuActionButtonsProps = {
     selectedIDs: number[];
+
     onSelectAll: () => void;
 
     onDeleteMany: () => void;
