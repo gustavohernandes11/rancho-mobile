@@ -19,10 +19,12 @@ const isNotParent = (animal: Animal, childAnimal: Animal) => {
 
 const isMale = (animal: Animal) => animal.gender === "M";
 const isFemale = (animal: Animal) => animal.gender === "F";
+const isActive = (animal: Animal) => animal.status === "active";
 
 export const filterPossibleMaternity = (animals: Animal[], child: Animal) => {
     let filteredAnimals = animals
         .filter(isFemale)
+        .filter(isActive)
         .filter(atLeastOneYearOld)
         .filter(animal => oneYearOlderThenChild(animal, child?.birthdate))
         .filter(animal => isNotParent(animal, child));
@@ -33,6 +35,7 @@ export const filterPossibleMaternity = (animals: Animal[], child: Animal) => {
 export const filterPossiblePaternity = (animals: Animal[], child: Animal) => {
     let filteredAnimals = animals
         .filter(isMale)
+        .filter(isActive)
         .filter(atLeastOneYearOld)
         .filter(animal => oneYearOlderThenChild(animal, child?.birthdate))
         .filter(animal => isNotParent(animal, child));
