@@ -165,14 +165,13 @@ export class SqliteRepository implements StorageRepository {
 
     async count(): Promise<Count> {
         const countAnimalsQuery = `
-		SELECT COUNT(id)
-		AS animals 
-		FROM Animals
-		`;
+        SELECT COUNT(id) AS animals
+        FROM Animals
+        WHERE status = 'active';
+    `;
 
         const countBatchesQuery = `
-		SELECT COUNT(id)
-		AS batches 
+		SELECT COUNT(id) AS batches 
 		FROM Batches
 		`;
 
