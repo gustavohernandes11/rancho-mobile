@@ -1,43 +1,33 @@
-# Rancho - Aplicativo Mobile Offline para Gerenciamento de Gado
+<div align="center">
+  
+![LOGO_MEDIUM](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/5b35be91-3337-4d5d-8f27-b30a69971188)
 
-![Screenshot_20240124-075214_Rancho-portrait](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/8bbf0ba1-4318-4980-8dfa-26ce4f81ec25)
+Aplicativo offline para gerenciamento de gado!
+  
+![Screenshot_20240408-103221_Rancho-portrait](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/f31fac4b-5426-4efa-97d4-bfaf767686ee)
+  
+</div>
 
-Uma versão mobile e offline do aplicativo Rancho para ajudar no gerenciamento de gado. É possível fazer coisas como: registrar animais, separá-los em lotes, demarcar prole, acompanhar a idade, fazer observações importantes.
+## Versão 1.1.0
+Funcionalidades:
+- Registrar animais.
+- Registrar hereditariedade (maternidade e paternidade).
+- Agrupar por lotes.
+- Acompanhar idade.
+- Fazer observações importantes.
 
 ## Capturas de Tela
+![Screenshots](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/a121d676-1a74-466c-ace0-e82b7a007aae)
 
-### Listagem e Seleção de Animais
-<details>
-  <summary>Mostrar Capturas</summary>
-  
-  <img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/314d86cb-952f-4e60-b3eb-cca7ac89d403" width="500">
-  <img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/3a59ce7d-2cc4-4a32-b472-8cdae1b30e5d" width="500">
-
-</details>
-
-### Detalhes de um Animal
-<details>
-  <summary>Mostrar Captura</summary>
-  
-  <img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/49afba20-6a0d-46c7-a9b3-1a8bfb448ef3" width="500">
-
-</details>
-
-### Detalhes de um Lote
-<details>
-  <summary>Mostrar Captura</summary>
-  
-  <img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/73eb5c39-f3b7-4ddf-bfcf-e335e75c4691" width="500">
-
-</details>
-
-### Listagem de Lotes
-<details>
-  <summary>Mostrar Captura</summary>
-  
-  <img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/5ed538ef-ad1e-401f-82b6-0df7b49dc9ea" width="500">
-
-</details>
+## Tecnologias
+- React Native
+- Expo
+- Sqlite3
+- Jest
+- Zustand
+- Formik with Yup
 
 ## Instalação
-Em breve
+Google Play Store: em breve.
+
+APK 1.1.0 (Android): [Baixe aqui](https://www.mediafire.com/file/bnwlovmmrecwqb3/Rancho_1.1.0.apk/file)
