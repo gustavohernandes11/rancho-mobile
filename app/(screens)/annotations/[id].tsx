@@ -1,17 +1,18 @@
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Label } from "components/Label";
+import { PageSkeleton } from "components/PageSkeleton";
+import { Paragraph } from "components/Paragraph";
 import { SimpleTable } from "components/SimpleTable";
-import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useFocus } from "hooks/useFocus";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { Alert, Text } from "react-native";
+import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { commonStyles } from "styles/Common";
 import { Animal, Annotation } from "types";
 import { serializeAnimalPreview, serializeAnnotation } from "utils/serializers";
 
@@ -74,7 +75,7 @@ export default function ViewAnnotationDetailsScreen() {
     );
 
     const handleDelete = () => {
-        showConfirmationAndDelete(annotation!, router.back);
+        confirmDelete(annotation!, router.back);
     };
     const handleEdit = () => {
         router.push(`/(screens)/annotations/edit/${id}`);
@@ -87,12 +88,10 @@ export default function ViewAnnotationDetailsScreen() {
             ) : (
                 <>
                     <Span direction="column">
-                        <Text style={commonStyles.label}>Título</Text>
+                        <Label>Título</Label>
                         <Heading size="big">{annotation?.title}</Heading>
                         {annotation?.description && (
-                            <Text style={commonStyles.text}>
-                                {annotation?.description}
-                            </Text>
+                            <Paragraph>{annotation?.description}</Paragraph>
                         )}
                     </Span>
 
@@ -107,7 +106,7 @@ export default function ViewAnnotationDetailsScreen() {
 
                     {annotation?.type !== "simple" && annotation?.animalIDs && (
                         <Span direction="column">
-                            <Heading size="small">{`Animais envolvidos (${annotation.animalIDs.length})`}</Heading>
+                            <Heading size="small">{`Animais envolvidos (${annotation?.animalIDs?.length})`}</Heading>
                             <Span>
                                 {relatedAnimals?.map(animal => (
                                     <SimpleTable
@@ -124,30 +123,7 @@ export default function ViewAnnotationDetailsScreen() {
     );
 }
 
-const PageSkeleton = () => {
-    return (
-        <>
-            <Skeleton width={20} />
-            <Skeleton width={50} />
-            <Span direction="row">
-                <Skeleton width={150} />
-                <Skeleton width={20} />
-                <Skeleton width={50} />
-            </Span>
-            <Span direction="column">
-                <Skeleton width={150} />
-                <Skeleton width="100%" height={60} />
-                <Skeleton width={150} />
-            </Span>
-            <Span direction="column">
-                <Skeleton width={150} />
-                <Skeleton width={200} />
-                <Skeleton width="100%" height={80} />
-            </Span>
-        </>
-    );
-};
-const showConfirmationAndDelete = (
+const confirmDelete = (
     annotation: Annotation,
     onDeleteCallback: () => void
 ) => {

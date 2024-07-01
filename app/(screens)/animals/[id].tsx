@@ -2,17 +2,17 @@ import { AnimalBanner } from "components/AnimalBanner";
 import { BatchBanner } from "components/BatchBanner";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Label } from "components/Label";
+import { PageSkeleton } from "components/PageSkeleton";
 import { SimpleTable } from "components/SimpleTable";
-import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { Alert, Text } from "react-native";
+import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Colors from "styles/Colors";
-import { commonStyles } from "styles/Common";
 import { Animal, PopulatedAnimal } from "types";
 import { serializeAnimalInfo } from "utils/serializers";
 
@@ -70,75 +70,58 @@ export default function ViewAnimalDetailsScreen() {
     return (
         <ContainerView immediateContent={<StackScreen />}>
             {isLoading ? (
-                <Skeleton width={300} />
+                <PageSkeleton />
             ) : (
                 <>
-                    <Text style={commonStyles.label}>Nome</Text>
+                    <Label>Nome</Label>
                     <Heading size="big">{animal?.name}</Heading>
-                </>
-            )}
-
-            {isLoading ? (
-                <>
-                    <Skeleton width={250} />
-                    <Skeleton height={40} />
-                    <Skeleton height={40} />
-                    <Skeleton height={40} />
-                </>
-            ) : (
-                <Span direction="column">
-                    <Heading size="small">Informações gerais</Heading>
-                    <SimpleTable data={serializeAnimalInfo(animal)} />
-                </Span>
-            )}
-
-            {isLoading ? (
-                <>
-                    <Skeleton width={250} />
-                    <Skeleton height={40} />
-                </>
-            ) : (
-                animal?.batch && (
                     <Span direction="column">
-                        <Heading size="small">Lote</Heading>
-                        <BatchBanner
-                            href={`/(screens)/batches/${animal.batch.id}`}
-                            batch={animal.batch}
-                        />
+                        <Heading size="small">Informações gerais</Heading>
+                        <SimpleTable data={serializeAnimalInfo(animal)} />
                     </Span>
-                )
-            )}
 
-            {animal && animal?.paternity && (
-                <Span direction="column">
-                    <Heading size="small">Paternidade</Heading>
-                    <AnimalBanner
-                        href={`/(screens)/animals/${animal.paternityID}`}
-                        animal={animal.paternity}
-                    />
-                </Span>
-            )}
+                    {animal?.batch && (
+                        <Span direction="column">
+                            <Heading size="small">Lote</Heading>
+                            <BatchBanner
+                                href={`/(screens)/batches/${animal.batch.id}`}
+                                batch={animal.batch}
+                            />
+                        </Span>
+                    )}
 
-            {animal && animal?.maternity && (
-                <Span direction="column">
-                    <Heading size="small">Maternidade</Heading>
-                    <AnimalBanner
-                        href={`/(screens)/animals/${animal.maternityID}`}
-                        animal={animal.maternity}
-                    />
-                </Span>
-            )}
+                    {animal && animal?.paternity && (
+                        <Span direction="column">
+                            <Heading size="small">Paternidade</Heading>
+                            <AnimalBanner
+                                href={`/(screens)/animals/${animal.paternityID}`}
+                                animal={animal.paternity}
+                            />
+                        </Span>
+                    )}
 
-            {animal && animal.offspring.length > 0 && (
-                <Span direction="column">
-                    <Heading size="small">Prole</Heading>
-                    {animal.offspring.map(calf => (
-                        <AnimalBanner
-                            href={`/(screens)/animals/${calf.id}`}
-                            animal={calf}
-                        />
-                    ))}
-                </Span>
+                    {animal && animal?.maternity && (
+                        <Span direction="column">
+                            <Heading size="small">Maternidade</Heading>
+                            <AnimalBanner
+                                href={`/(screens)/animals/${animal.maternityID}`}
+                                animal={animal.maternity}
+                            />
+                        </Span>
+                    )}
+
+                    {animal && animal.offspring.length > 0 && (
+                        <Span direction="column">
+                            <Heading size="small">Prole</Heading>
+                            {animal.offspring.map(calf => (
+                                <AnimalBanner
+                                    href={`/(screens)/animals/${calf.id}`}
+                                    animal={calf}
+                                />
+                            ))}
+                        </Span>
+                    )}
+                </>
             )}
         </ContainerView>
     );

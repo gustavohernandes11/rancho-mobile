@@ -1,19 +1,19 @@
 import { AnimalTable } from "components/AnimalTable";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Label } from "components/Label";
 import { Loading } from "components/Loading";
+import { PageSkeleton } from "components/PageSkeleton";
 import { SimpleTable } from "components/SimpleTable";
-import { Skeleton } from "components/Skeleton";
 import { Span } from "components/Span";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useAnimalTable } from "hooks/useAnimalTable";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect, useState } from "react";
-import { Alert, Text } from "react-native";
+import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Storage } from "services/StorageService";
-import { commonStyles } from "styles/Common";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
@@ -88,39 +88,30 @@ export default function ViewBatchDetailsScreen() {
     return (
         <ContainerView immediateContent={<StackScreen />}>
             {isLoading ? (
-                <Skeleton width={300} />
+                <PageSkeleton />
             ) : (
                 <>
-                    <Text style={commonStyles.label}>Título</Text>
+                    <Label>Título</Label>
                     <Heading>{batch?.name}</Heading>
-                </>
-            )}
-
-            {isLoading ? (
-                <>
-                    <Skeleton width={200} />
-                    <Skeleton height={200} />
-                </>
-            ) : (
-                batch && (
+                    {batch && (
+                        <Span direction="column">
+                            <Heading size="small">Informações Gerais</Heading>
+                            <SimpleTable data={serializeBatchInfo(batch)} />
+                        </Span>
+                    )}
                     <Span direction="column">
-                        <Heading size="small">Informações Gerais</Heading>
-                        <SimpleTable data={serializeBatchInfo(batch)} />
+                        <Heading size="small">Animais do lote</Heading>
+                        {isLoading ? (
+                            <Loading />
+                        ) : (
+                            <AnimalTable
+                                liftedController={table}
+                                animals={batch?.animals || []}
+                            />
+                        )}
                     </Span>
-                )
+                </>
             )}
-
-            <Span direction="column">
-                <Heading size="small">Animais do lote</Heading>
-                {isLoading ? (
-                    <Loading />
-                ) : (
-                    <AnimalTable
-                        liftedController={table}
-                        animals={batch?.animals || []}
-                    />
-                )}
-            </Span>
         </ContainerView>
     );
 }
