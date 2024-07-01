@@ -13,7 +13,7 @@ type SelectionMenuActionButtonsProps = {
     onDeleteMany: () => void;
     onMove: () => void;
     onWriteOffByDeath: () => void;
-    onwriteOffBySale: () => void;
+    onWriteOffBySale: () => void;
     onCreateBatchWithSelectedAnimals: () => void;
     onCreateAnnotationWithSelectedAnimals: () => void;
 
@@ -29,7 +29,7 @@ export const SelectionMenuActionButtons = ({
     onDeleteMany,
     onMove,
     onWriteOffByDeath,
-    onwriteOffBySale,
+    onWriteOffBySale,
     onCreateBatchWithSelectedAnimals,
     onCreateAnnotationWithSelectedAnimals,
 
@@ -88,7 +88,7 @@ export const SelectionMenuActionButtons = ({
                 />
                 <Menu.Item
                     titleStyle={commonStyles.text}
-                    onPress={onwriteOffBySale}
+                    onPress={onWriteOffBySale}
                     title="Dar baixa de venda"
                     leadingIcon="truck-delivery"
                 />

@@ -113,7 +113,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                 <Span>
                     <SelectionMenu
                         onWriteOffByDeath={handleWriteOffByDeath}
-                        onwriteOffBySale={handlewriteOffBySale}
+                        onWriteOffBySale={handlewriteOffBySale}
                         showActions={true}
                         showCloseButton={true}
                         onClearSelection={controller.clearSelection}

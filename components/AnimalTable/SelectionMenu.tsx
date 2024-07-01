@@ -17,7 +17,7 @@ interface SelectionMenuProps {
     onSelectAll: () => void;
     onDeleteMany: () => void;
     onWriteOffByDeath: () => void;
-    onwriteOffBySale: () => void;
+    onWriteOffBySale: () => void;
     onCreateBatchWithSelectedAnimals: () => void;
     onCreateAnnotationWithSelectedAnimals: () => void;
 }
@@ -30,7 +30,7 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
     onSelectAll,
     onDeleteMany,
     onWriteOffByDeath,
-    onwriteOffBySale,
+    onWriteOffBySale,
     onCreateBatchWithSelectedAnimals,
     onCreateAnnotationWithSelectedAnimals,
     ...props
@@ -74,7 +74,7 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
                             onDeleteMany={onDeleteMany}
                             onSelectAll={onSelectAll}
                             onWriteOffByDeath={onWriteOffByDeath}
-                            onwriteOffBySale={onwriteOffBySale}
+                            onWriteOffBySale={onWriteOffBySale}
                             selectedIDs={selectedIDs}
                             onMove={() => setIsBatchModalVisible(true)}
                             onCreateBatchWithSelectedAnimals={
