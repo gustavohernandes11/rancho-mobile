@@ -4,27 +4,27 @@ import { BackHandler } from "react-native";
 import { ControlledAnimalTableProps } from "./useAnimalTable";
 
 export const useClearSelectionOnHardwareBack = ({
-	controller,
+    controller,
 }: {
-	controller: ControlledAnimalTableProps;
+    controller: ControlledAnimalTableProps;
 }) => {
-	useFocusEffect(
-		useCallback(() => {
-			const backAction = () => {
-				if (controller.isSelectionMode) {
-					controller.clearSelection();
-					return true;
-				} else {
-					return false;
-				}
-			};
+    useFocusEffect(
+        useCallback(() => {
+            const backAction = () => {
+                if (controller.isSelectionMode) {
+                    controller.clearSelection();
+                    return true;
+                } else {
+                    return false;
+                }
+            };
 
-			const backHandler = BackHandler.addEventListener(
-				"hardwareBackPress",
-				backAction
-			);
+            const backHandler = BackHandler.addEventListener(
+                "hardwareBackPress",
+                backAction
+            );
 
-			return () => backHandler.remove();
-		}, [controller.isSelectionMode, controller.selectedIDs])
-	);
+            return () => backHandler.remove();
+        }, [controller.isSelectionMode, controller.selectedIDs])
+    );
 };

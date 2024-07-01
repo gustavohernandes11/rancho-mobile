@@ -1,62 +1,63 @@
-import { AddButton } from "components/AddButton";
 import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
-import { SubTitle } from "components/SubTitle";
-import { Link, Stack, router } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useGlobalState } from "hooks/useGlobalState";
 import { useEffect } from "react";
-import { Text, View } from "react-native";
+import { Text } from "react-native";
 
 export default function ViewBatchesScreen() {
-	const { batches, refreshBatches } = useGlobalState();
+    const { batches, refreshBatches } = useGlobalState();
+    const router = useRouter();
 
-	useEffect(() => {
-		refreshBatches();
-	}, []);
+    useEffect(() => {
+        refreshBatches();
+    }, []);
 
-	return (
-		<ContainerView>
-			<Stack.Screen
-				options={{
-					headerTitle: "Lotes",
-					headerRight: () => (
-						<AddButton
-							icon="add-batch"
-							href="/(screens)/batches/add"
-						/>
-					),
-				}}
-			/>
-			<Span justify="space-between" align="center">
-				<Heading>Crie e edite seus lotes</Heading>
-				<SubTitle>{`Total: ${batches?.length || ""}`}</SubTitle>
-			</Span>
-			<View style={{ gap: 4 }}>
-				{batches.length > 0 ? (
-					batches?.map((batch) => (
-						<Link
-							href={`/(screens)/batches/${batch.id}`}
-							key={batch.id}
-							asChild
-						>
-							<BatchBanner batch={batch} key={batch.id} />
-						</Link>
-					))
-				) : (
-					<Span direction="column">
-						<Text>Nenhum lote adicionado ainda.</Text>
-					</Span>
-				)}
-				<Span justify="center" py={8}>
-					<Button
-						title="Adicionar novo lote"
-						onPress={() => router.push("/(screens)/batches/add")}
-					/>
-				</Span>
-			</View>
-		</ContainerView>
-	);
+    return (
+        <ContainerView>
+            <Stack.Screen
+                options={{
+                    headerTitle: "Lotes",
+                    headerRight: () => (
+                        <Button
+                            title="Novo lote"
+                            icon={require("../../assets/images/FolderPlusIcon.png")}
+                            onPress={() =>
+                                router.push("/(screens)/batches/add")
+                            }
+                        />
+                    ),
+                }}
+            />
+            <Span justify="space-between" align="center">
+                <Heading>Crie e edite seus lotes</Heading>
+                <Paragraph>{`Total: ${batches?.length || "0"}`}</Paragraph>
+            </Span>
+            <Span direction="column">
+                {batches.length > 0 ? (
+                    batches?.map(batch => (
+                        <BatchBanner
+                            href={`/(screens)/batches/${batch.id}`}
+                            batch={batch}
+                            key={batch.id}
+                        />
+                    ))
+                ) : (
+                    <Span direction="row" justify="center">
+                        <Text>Nenhum lote adicionado.</Text>
+                    </Span>
+                )}
+                <Span justify="center" py={8}>
+                    <Button
+                        title="Adicionar novo lote"
+                        onPress={() => router.push("/(screens)/batches/add")}
+                    />
+                </Span>
+            </Span>
+        </ContainerView>
+    );
 }

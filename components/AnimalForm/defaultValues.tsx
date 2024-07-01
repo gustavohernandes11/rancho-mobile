@@ -1,13 +1,14 @@
-import { Animal } from "types/Animal";
+import { Animal } from "types";
 
 export const defaultValues: Animal = {
-	id: "",
-	name: "",
-	gender: "",
-	batchId: "",
-	birthdate: "",
-	code: "",
-	maternityId: "",
-	paternityId: "",
-	observation: "",
+    id: "",
+    name: "",
+    gender: "",
+    batchID: "",
+    birthdate: "",
+    code: "",
+    maternityID: "",
+    paternityID: "",
+    observation: "",
+    status: "active",
 } as unknown as Animal;

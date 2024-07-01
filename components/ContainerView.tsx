@@ -1,47 +1,47 @@
-import Colors from "constants/Colors";
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View, ViewProps } from "react-native";
+import Colors from "styles/Colors";
 import { Loading } from "./Loading";
 
 interface ContainerViewType {
-	flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
-	immediateContent?: React.ReactNode;
-	children?: React.ReactNode;
+    flexDirection?: "row" | "column" | "row-reverse" | "column-reverse";
+    immediateContent?: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
-	children,
-	flexDirection,
-	immediateContent,
-	...props
+    children,
+    flexDirection,
+    immediateContent,
+    ...props
 }) => {
-	const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
 
-	useEffect(() => {
-		setIsLoading(false);
-	}, []);
+    useEffect(() => {
+        setIsLoading(false);
+    }, []);
 
-	return (
-		<ScrollView style={[styles.container, { flexDirection }]} {...props}>
-			<>
-				{immediateContent}
-				{isLoading ? (
-					<Loading height={500} />
-				) : (
-					<View style={styles.inner}>{children}</View>
-				)}
-			</>
-		</ScrollView>
-	);
+    return (
+        <ScrollView style={[styles.container, { flexDirection }]} {...props}>
+            <>
+                {immediateContent}
+                {isLoading ? (
+                    <Loading height={500} />
+                ) : (
+                    <View style={styles.inner}>{children}</View>
+                )}
+            </>
+        </ScrollView>
+    );
 };
 
 const styles = StyleSheet.create({
-	container: {
-		backgroundColor: Colors.background,
-		flex: 1,
-	},
-	inner: {
-		paddingHorizontal: 8,
-		paddingVertical: 16,
-	},
+    container: {
+        backgroundColor: Colors.background,
+        flex: 1,
+    },
+    inner: {
+        paddingHorizontal: 8,
+        paddingVertical: 16,
+    },
 });

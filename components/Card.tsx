@@ -1,53 +1,56 @@
-import Colors from "constants/Colors";
-import { Link, LinkProps } from "expo-router";
+import { Link } from "expo-router";
+import { LinkProps } from "expo-router/build/link/Link";
 import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import { TouchableRipple } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import Colors from "styles/Colors";
+import { commonStyles } from "styles/Common";
 import { Span } from "./Span";
 
-type ColorOptions = "green" | "blue" | "purple";
+type ColorOptions = "green" | "blue" | "purple" | "cian";
 interface CardProps {
-	title: string;
-	alt: string;
-	iconSource: ImageURISource;
-	color?: ColorOptions;
-	href?: any;
+    title: string;
+    alt: string;
+    iconSource: ImageURISource;
+    color?: ColorOptions;
+    href?: any;
 }
 
-export const Card: React.FC<LinkProps<any> & CardProps> = ({
-	title,
-	alt,
-	iconSource,
-	color = "green",
-	href,
-	...props
+export const Card: React.FC<LinkProps & CardProps> = ({
+    title,
+    alt,
+    iconSource,
+    color = "green",
+    href,
+    ...props
 }) => {
-	return (
-		<Link
-			href={href}
-			style={[sharedStyles.card, { backgroundColor: Colors[color] }]}
-			asChild
-			{...props}
-		>
-			<TouchableRipple>
-				<Span align="center" justify="center" flexWrap="nowrap">
-					<Image
-						style={sharedStyles.icon}
-						source={iconSource}
-						alt={alt}
-					/>
-					<Text style={styles.title}>{title}</Text>
-				</Span>
-			</TouchableRipple>
-		</Link>
-	);
+    const containerStyle = [
+        commonStyles.card,
+        { backgroundColor: Colors[color] },
+    ];
+
+    return (
+        <Link href={href} style={containerStyle} asChild {...props}>
+            <TouchableRipple>
+                <Span direction="column" justify="center" flexWrap="nowrap">
+                    <Image
+                        style={commonStyles.icon}
+                        source={iconSource}
+                        alt={alt}
+                    />
+                    <Text style={styles.title}>{title}</Text>
+                </Span>
+            </TouchableRipple>
+        </Link>
+    );
 };
 
 const styles = StyleSheet.create({
-	title: {
-		...sharedStyles.text,
-		flexShrink: 1,
-		color: Colors.white,
-	},
+    title: {
+        ...commonStyles.text,
+        fontSize: 16,
+        flexShrink: 1,
+        color: Colors.white,
+        marginTop: 4,
+    },
 });

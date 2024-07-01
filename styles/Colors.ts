@@ -1,0 +1,18 @@
+export default {
+    text: "#000",
+    background: "#fff",
+    red: "#E06F6F",
+    darkGreen: "#3A7544",
+    blue: "#568AA7",
+    cian: "#20B2AA",
+    purple: "#775A8E",
+    lightGray: "#F5F5F5",
+    gray: "#ADADAD",
+    darkGray: "#696969",
+    surface: "#EFEFEF",
+    darkSurface: "#CDCDCD",
+    green: "#56A763",
+    border: "#D9D9D9",
+    white: "#fff",
+    black: "#000",
+};

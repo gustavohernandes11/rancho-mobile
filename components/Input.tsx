@@ -1,59 +1,59 @@
-import Colors from "constants/Colors";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { HelperText, TextInput, TextInputProps } from "react-native-paper";
-import { sharedStyles } from "styles/shared";
+import { TextInput, TextInputProps } from "react-native-paper";
+import Colors from "styles/Colors";
+import { commonStyles } from "styles/Common";
 import { getInputBorderColor } from "utils/conditionalStyles";
+import { Label } from "./Label";
 
 interface InputProps {
-	errorText?: string;
+    errorText?: string;
 }
 
 export const Input: React.FC<InputProps & TextInputProps> = ({
-	label,
-	errorText,
-	multiline,
-	...props
+    label,
+    errorText,
+    multiline,
+    ...props
 }) => {
-	return (
-		<View style={styles.inputContainer}>
-			{label && (
-				<HelperText style={sharedStyles.label} type="info">
-					{label}
-				</HelperText>
-			)}
-			<TextInput
-				mode="outlined"
-				outlineStyle={[
-					{
-						borderColor: getInputBorderColor(!!errorText),
-					},
-					sharedStyles.inputAspect,
-				]}
-				outlineColor={Colors.border}
-				activeOutlineColor={Colors.black}
-				textColor={Colors.darkGray}
-				placeholderTextColor={Colors.darkGray}
-				cursorColor={Colors.darkGray}
-				error={!!errorText}
-				multiline={multiline}
-				style={[
-					sharedStyles.inputAspect,
-					{
-						height: multiline ? 80 : 50,
-						borderWidth: 0,
-					},
-				]}
-				{...props}
-			/>
-			{errorText && <Text style={sharedStyles.error}>{errorText}</Text>}
-		</View>
-	);
+    const inputStyle = [
+        commonStyles.inputAspect,
+        {
+            height: multiline ? 80 : 50,
+            borderWidth: 0,
+        },
+    ];
+    const outlineStyle = [
+        commonStyles.inputAspect,
+        {
+            borderColor: getInputBorderColor(!!errorText),
+        },
+    ];
+
+    return (
+        <View style={styles.inputContainer}>
+            {label && <Label>{label}</Label>}
+            <TextInput
+                mode="outlined"
+                outlineStyle={outlineStyle}
+                outlineColor={Colors.border}
+                activeOutlineColor={Colors.black}
+                textColor={Colors.darkGray}
+                placeholderTextColor={Colors.gray}
+                cursorColor={Colors.darkGray}
+                error={!!errorText}
+                multiline={multiline}
+                style={inputStyle}
+                {...props}
+            />
+            {errorText && <Text style={commonStyles.error}>{errorText}</Text>}
+        </View>
+    );
 };
 
 const styles = StyleSheet.create({
-	inputContainer: {
-		flex: 1,
-		width: "100%",
-	},
+    inputContainer: {
+        flex: 1,
+        width: "100%",
+    },
 });
