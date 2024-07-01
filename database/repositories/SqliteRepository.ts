@@ -167,7 +167,7 @@ export class SqliteRepository implements StorageRepository {
         const countAnimalsQuery = `
         SELECT COUNT(id) AS animals
         FROM Animals
-        WHERE status = 'active';
+        WHERE status = 'active'
     `;
 
         const countBatchesQuery = `
@@ -186,7 +186,7 @@ export class SqliteRepository implements StorageRepository {
 
         const [animalsResult, batchesResult, litersProducedResult] =
             await Promise.all([
-                this.getOne<{ animal: number }>(countAnimalsQuery, []),
+                this.getOne<{ animals: number }>(countAnimalsQuery, []),
                 this.getOne<{ batches: number }>(countBatchesQuery, []),
                 this.getOne<{ litersProduced: number }>(
                     countLitersProducedQuery,
@@ -195,7 +195,7 @@ export class SqliteRepository implements StorageRepository {
             ]);
 
         return {
-            animals: animalsResult?.animal || 0,
+            animals: animalsResult?.animals || 0,
             batches: batchesResult?.batches || 0,
             litersProduced: litersProducedResult?.litersProduced || 0,
         };
@@ -775,16 +775,10 @@ export class SqliteRepository implements StorageRepository {
                     annotation.animalIDs as unknown as string
                 );
                 const updatedAnimalIDs = animalIDs.filter(id => id != animalID);
-                console.log(
-                    "updatedAnimalIDs: " + JSON.stringify(updatedAnimalIDs)
-                );
 
                 const updatedAnimalIDsString =
                     this.convertAnimalIDsToString(updatedAnimalIDs);
 
-                console.log(
-                    "updatedAnimalIDsString: " + updatedAnimalIDsString
-                );
                 const updateQuery = `
                     UPDATE Annotations SET animalIDs = ? WHERE id = ?;
                 `;
