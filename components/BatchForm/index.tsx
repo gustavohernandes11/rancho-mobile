@@ -30,20 +30,16 @@ export const BatchForm: React.FC<BatchFormProps> = ({
     const table = useAnimalTable();
     const { animals, refreshAll } = useGlobalState();
 
-    useEffect(() => {
-        if (initialSelectedAnimals) {
-            table.setSelectedIDs(initialSelectedAnimals);
-        }
-    }, [initialSelectedAnimals]);
-
     const navigation = useNavigation();
     const formik = useFormik({
         initialValues,
         onSubmit: values => handleSubmit(values, !initialValues.id),
         validationSchema,
     });
-
     useEffect(() => {
+        if (initialSelectedAnimals) {
+            table.setSelectedIDs(initialSelectedAnimals);
+        }
         if (initialValues.id) {
             Storage.listAnimals({
                 batchID: initialValues.id,
