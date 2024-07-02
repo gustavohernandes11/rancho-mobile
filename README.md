@@ -4,7 +4,8 @@
 
 Aplicativo offline para gerenciamento de gado!
 
-![Screenshot_20240408-103221_Rancho-portrait](https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/f31fac4b-5426-4efa-97d4-bfaf767686ee)
+<img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/430a62d5-f713-43cd-864b-95383af236c1" alt="drawing" width="450"/>    
+<img src="https://github.com/gustavohernandes11/rancho-mobile/assets/66632840/46c8b657-f033-4573-bab2-8a43a525dd79" alt="drawing" width="450"/>    
 
 </div>
 
@@ -22,6 +23,8 @@ Funcionalidades:
     -   Relação de paternidade e maternidade entre animais;
     -   Situação (ativo no rebanho, morto ou vendido);
     -   Observação;
+ 
+      
 
 -   Agrupamento por lotes:
 
