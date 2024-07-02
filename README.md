@@ -57,4 +57,4 @@ Funcionalidades:
 
 Google Play Store: em breve.
 
-APK 1.1.0 (Android): [Baixe aqui](https://www.mediafire.com/file/bnwlovmmrecwqb3/Rancho_1.1.0.apk/file)
+APK 1.2.0 (Android): [Baixe aqui](https://www.mediafire.com/file/xdb7nwwlq0l226y/Rancho_v1.2.0.apk/file)
