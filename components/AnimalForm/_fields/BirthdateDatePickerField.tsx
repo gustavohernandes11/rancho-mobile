@@ -1,7 +1,7 @@
 import { DatePicker } from "components/DatePicker";
 import { FormikProps } from "formik";
 import moment from "moment";
-import React, { memo, useEffect } from "react";
+import React, { memo } from "react";
 import { Animal } from "types/Animal";
 import { getFieldError } from "utils/forms";
 
@@ -17,7 +17,6 @@ export const BirthdateDatePickerField: React.FC<
             formik.setFieldValue("birthdate", date!.toISOString());
         else formik.setFieldValue("birthdate", "");
     };
-    useEffect(() => console.log("date picker render"));
 
     const handleChangeBirthdateText = (text?: string) => {
         if (text === "") {

@@ -1,25 +1,21 @@
-import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
-import { DatePicker } from "components/DatePicker";
-import { Input } from "components/Input";
-import { ListAccordion } from "components/ListAccordion";
-import { Loading } from "components/Loading";
-import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { useNavigation, useRouter } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
-import moment from "moment";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { Annotation } from "types";
-import { formatAnnotationType } from "utils/formatters";
-import { getFieldError } from "utils/forms";
 import { showToast } from "utils/showToast";
-import { annotationTypeItems } from "./annotationTypeItems";
+import { AnimalSelectionField } from "./_fields/AnimalSelectionField";
+import { AnnotationTypeSelect } from "./_fields/AnnotationTypeSelect";
+import { DateField } from "./_fields/DateField";
+import { DescriptionField } from "./_fields/DescriptionField";
+import { MedicineFields } from "./_fields/MedicineFields";
+import { TitleField } from "./_fields/TitleField";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
@@ -46,7 +42,6 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
     );
 
     const router = useRouter();
-    const animals = useGlobalStore(state => state.animals);
     const refreshAll = useGlobalStore(state => state.refreshAll);
 
     useEffect(() => {
@@ -96,107 +91,28 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
     };
     const onError = (error: Error) => Alert.alert("Erro!", error.message);
 
-    const handleChangeDate = (date?: Date) => {
-        if (moment.isDate(date))
-            formik.setFieldValue("date", date!.toISOString());
-        else formik.setFieldValue("date", "");
-    };
-
-    const handleChangeDateText = (text?: string) => {
-        if (text === "") {
-            formik.setFieldValue("date", "");
-        } else if (!moment.isDate(text)) {
-            formik.setFieldError(
-                "date",
-                "Formato de data inválido. Use 'DD/MM/AAAA'"
-            );
-        }
-    };
-
     return (
         <View>
             <Span>
-                <Select
-                    label="Tipo de anotação"
-                    items={annotationTypeItems}
-                    defaultButtonText={
-                        initialValues.type
-                            ? formatAnnotationType(initialValues.type)
-                            : "Simples"
-                    }
-                    defaultValue={initialValues.type}
-                    errorText={getFieldError("type", formik)}
-                    onSelect={option =>
-                        formik.setFieldValue("type", option.value)
-                    }
-                />
+                <AnnotationTypeSelect formik={formik} />
             </Span>
             <Span>
-                <Input
-                    label="Título*"
-                    value={formik.values.title}
-                    onChangeText={text => formik.setFieldValue("title", text)}
-                    errorText={getFieldError("title", formik)}
-                />
+                <TitleField formik={formik} />
             </Span>
             <Span>
-                <Input
-                    label="Descrição"
-                    onChangeText={text =>
-                        formik.setFieldValue("description", text)
-                    }
-                    errorText={getFieldError("description", formik)}
-                    value={formik.values.description?.toString()}
-                    multiline={true}
-                />
+                <DescriptionField formik={formik} />
             </Span>
             {formik.values.type === "heath care" ? (
                 <Span direction="row">
-                    <Input
-                        label="Nome do remédio/vacina"
-                        onChangeText={cod =>
-                            formik.setFieldValue("medicineName", cod)
-                        }
-                        value={formik.values.medicineName}
-                        errorText={getFieldError("medicineName", formik)}
-                    />
-                    <Input
-                        label="Dosagem"
-                        onChangeText={cod =>
-                            formik.setFieldValue("dosage", cod)
-                        }
-                        value={formik.values.dosage}
-                        errorText={getFieldError("dosage", formik)}
-                    />
+                    <MedicineFields formik={formik} />
                 </Span>
             ) : null}
             <Span>
-                <DatePicker
-                    label="Data"
-                    inputMode="start"
-                    saveLabel="Salvar"
-                    errorText={getFieldError("date", formik)}
-                    onChange={handleChangeDate}
-                    onChangeText={handleChangeDateText}
-                    value={
-                        formik.values.date
-                            ? new Date(formik.values.date)
-                            : undefined
-                    }
-                />
+                <DateField formik={formik} />
             </Span>
             {formik.values.type !== "simple" ? (
                 <Span>
-                    <ListAccordion
-                        label="Quais animais estão associados?"
-                        title={`${selectedIDs.length} selecionado(s)`}
-                    >
-                        {animals ? (
-                            <AnimalTable animals={animals} />
-                        ) : (
-                            <Loading />
-                        )}
-                    </ListAccordion>
+                    <AnimalSelectionField selectedIDs={selectedIDs} />
                 </Span>
             ) : null}
             <Span justify="flex-end" py={16}>
