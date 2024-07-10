@@ -1,84 +1,59 @@
 import { Button } from "components/Button";
-import { DatePicker } from "components/DatePicker";
-import { Input } from "components/Input";
-import { RadioInput } from "components/RadioInput";
-import { Select } from "components/Select";
 import { Span } from "components/Span";
-import { router, useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { useFormik } from "formik";
-import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useGlobalStore } from "hooks/useGlobalStore";
-import moment from "moment";
-import React, { useEffect } from "react";
+import React from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
-import { Animal, AnimalStatusOptions } from "types";
-import {
-    filterPossibleMaternity,
-    filterPossiblePaternity,
-} from "utils/filters";
-import { getFieldError } from "utils/forms";
-import { serializeAnimals, serializeBatches } from "utils/serializers";
+import { Animal } from "types/Animal";
 import { showToast } from "utils/showToast";
+import { BatchSelectField } from "./_fields/BatchSelectField";
+import { MemoBirthdateDatePickerField } from "./_fields/BirthdateDatePickerField";
+import { CodeField } from "./_fields/CodeField";
+import { GenderField } from "./_fields/GenderField";
+import { MemoMaternityField } from "./_fields/MaternityField";
+import { NameField } from "./_fields/NameField";
+import { ObservationField } from "./_fields/ObservationField";
+import { MemoPaternityField } from "./_fields/PaternityField";
+import { StatusRadioField } from "./_fields/StatusRadioField";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
 interface AnimalFormProps {
     initialValues?: Partial<Animal>;
 }
+
 export const AnimalForm: React.FC<AnimalFormProps> = ({
     initialValues = defaultValues,
 }) => {
-    useEffect(() => console.log("re-render animal form"));
     let mergedInitialValues: Animal = Object.assign(
         {},
         defaultValues,
         initialValues
     );
 
-    const onSucess = (message: string) => {
+    const onSuccess = (message: string) => {
         refreshAll();
         formik.resetForm();
         router.back();
         showToast(message);
     };
+
     const onError = (e: Error) => Alert.alert("Erro!", e.message);
 
     const isUpdate = !!initialValues.id;
-
-    const handleChangeBirthdate = (date?: Date) => {
-        if (moment.isDate(date))
-            formik.setFieldValue("birthdate", date!.toISOString());
-        else formik.setFieldValue("birthdate", "");
-    };
-
-    const handleChangeBirthdateText = (text?: string) => {
-        if (text === "") {
-            formik.setFieldValue("birthdate", "");
-        } else if (!moment.isDate(text)) {
-            formik.setFieldError(
-                "birthdate",
-                "Formato de data inválido. Use 'DD/MM/AAAA'"
-            );
-        }
-    };
-
-    const animalStatusOptions = [
-        { label: "Ativo", value: "active" },
-        { label: "Morto", value: "dead" },
-        { label: "Vendido", value: "sold" },
-    ];
 
     const onSubmit = (values: Animal) => {
         isUpdate
             ? Storage.updateAnimal(values)
                   .then(() =>
-                      onSucess(`${values.name} foi atualizado(a) com sucesso.`)
+                      onSuccess(`${values.name} foi atualizado(a) com sucesso.`)
                   )
                   .catch(onError)
             : Storage.insertAnimal(values)
                   .then(() =>
-                      onSucess(`${values.name} foi adicionado(a) com sucesso.`)
+                      onSuccess(`${values.name} foi adicionado(a) com sucesso.`)
                   )
                   .catch(onError);
     };
@@ -88,143 +63,37 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
         onSubmit,
         validationSchema,
     });
-
-    const animals = useGlobalStore(state => state.animals);
-    const batches = useGlobalStore(state => state.batches);
-    const refreshAll = useGlobalStore(state => state.refreshAll);
-
     const navigation = useNavigation();
-
-    useAlertUnsavedChanges({
-        formik,
-    });
+    const router = useRouter();
+    const refreshAll = useGlobalStore(state => state.refreshAll);
 
     return (
         <View>
-            <Span align="flex-start">
-                <Input
-                    label="Nome*"
-                    value={formik.values.name}
-                    onChangeText={text => formik.setFieldValue("name", text)}
-                    errorText={getFieldError("name", formik)}
-                />
-                <RadioInput
-                    label="Gênero*"
-                    onValueChange={value =>
-                        formik.setFieldValue("gender", value)
-                    }
-                    options={[
-                        { label: "Fêmea", value: "F" },
-                        { label: "Macho", value: "M" },
-                    ]}
-                    errorText={getFieldError("gender", formik)}
-                    value={formik.values.gender}
-                />
+            <Span>
+                <NameField formik={formik} />
+                <GenderField formik={formik} />
             </Span>
             <Span>
-                <DatePicker
-                    inputMode="start"
-                    saveLabel="Salvar"
-                    errorText={getFieldError("birthdate", formik)}
-                    onChange={handleChangeBirthdate}
-                    onChangeText={handleChangeBirthdateText}
-                    value={
-                        formik.values.birthdate
-                            ? new Date(formik.values.birthdate)
-                            : undefined
-                    }
-                    label="Date de nascimento"
-                />
+                <MemoBirthdateDatePickerField formik={formik} />
             </Span>
-            <Select
-                items={[
-                    ...serializeBatches(batches || []),
-                    { key: "Selecione um lote", value: "" },
-                ]}
-                defaultButtonText={
-                    batches?.find(b => b.id === initialValues.batchID)?.name ||
-                    "Selecione um lote"
-                }
-                errorText={getFieldError("batchID", formik)}
-                onSelect={option =>
-                    formik.setFieldValue("batchID", option.value)
-                }
-                label="Lote"
-            />
+            <Span>
+                <BatchSelectField formik={formik} />
+            </Span>
             {isUpdate ? (
                 <Span>
-                    <RadioInput
-                        onValueChange={(option: AnimalStatusOptions) =>
-                            formik.setFieldValue("status", option)
-                        }
-                        label="Situação do animal"
-                        value={formik.values.status}
-                        options={animalStatusOptions}
-                        errorText={getFieldError("status", formik)}
-                    />
+                    <StatusRadioField formik={formik} />
                 </Span>
             ) : null}
             <Span>
-                <Input
-                    label="Código"
-                    onChangeText={cod => formik.setFieldValue("code", cod)}
-                    value={formik.values.code?.toString()}
-                    errorText={getFieldError("code", formik)}
-                    keyboardType="numeric"
-                />
+                <CodeField formik={formik} />
             </Span>
             <Span>
-                <Select
-                    defaultButtonText={
-                        animals?.find(a => a.id === initialValues.paternityID)
-                            ?.name || "Selecione um animal"
-                    }
-                    items={[
-                        ...serializeAnimals(
-                            filterPossiblePaternity(animals!, formik.values)
-                        ),
-                        { key: "Selecione um animal", value: "" },
-                    ]}
-                    errorText={getFieldError("paternityID", formik)}
-                    onSelect={option =>
-                        formik.setFieldValue("paternityID", option.value)
-                    }
-                    label="Paternidade"
-                />
-                <Select
-                    defaultButtonText={
-                        animals?.find(a => a.id === initialValues.maternityID)
-                            ?.name || "Selecione um animal"
-                    }
-                    items={[
-                        ...(serializeAnimals(
-                            filterPossibleMaternity(animals!, formik.values)
-                        ) || []),
-                        { key: "Selecione um animal", value: "" },
-                    ]}
-                    errorText={getFieldError("maternityID", formik)}
-                    defaultValue={formik.initialValues.maternityID?.toString()}
-                    onSelect={option =>
-                        formik.setFieldValue(
-                            "maternityID",
-                            Number(option.value)
-                        )
-                    }
-                    label="Maternidade"
-                />
+                <MemoPaternityField formik={formik} />
+                <MemoMaternityField formik={formik} />
             </Span>
             <Span>
-                <Input
-                    label="Observação"
-                    onChangeText={text =>
-                        formik.setFieldValue("observation", text)
-                    }
-                    errorText={getFieldError("observation", formik)}
-                    value={formik.values.observation?.toString()}
-                    multiline={true}
-                />
+                <ObservationField formik={formik} />
             </Span>
-
             <Span justify="flex-end" py={16}>
                 <Button
                     type="light"
