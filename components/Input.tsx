@@ -51,11 +51,10 @@ const getStyles = ({
     StyleSheet.create({
         inputContainer: {
             flex: 1,
-            width: "100%",
         },
         input: {
             ...commonStyles.inputAspect,
-            height: multiline ? 80 : 50,
+            height: multiline ? 100 : 50,
             borderWidth: 0,
         },
         outline: {

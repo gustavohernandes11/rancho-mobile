@@ -28,7 +28,9 @@ export const RadioInput: React.FC<RadioInputProps> = ({
                     <RadioButton.Item
                         position="leading"
                         labelStyle={commonStyles.text}
-                        uncheckedColor={Colors.darkGray}
+                        uncheckedColor={
+                            errorText ? Colors.red : Colors.darkGray
+                        }
                         key={index}
                         label={option.label}
                         value={option.value}

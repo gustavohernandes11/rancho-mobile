@@ -9,7 +9,7 @@ import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import moment from "moment";
-import React from "react";
+import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { Animal, AnimalStatusOptions } from "types";
@@ -17,7 +17,6 @@ import {
     filterPossibleMaternity,
     filterPossiblePaternity,
 } from "utils/filters";
-import { formatGender } from "utils/formatters";
 import { getFieldError } from "utils/forms";
 import { serializeAnimals, serializeBatches } from "utils/serializers";
 import { showToast } from "utils/showToast";
@@ -30,6 +29,7 @@ interface AnimalFormProps {
 export const AnimalForm: React.FC<AnimalFormProps> = ({
     initialValues = defaultValues,
 }) => {
+    useEffect(() => console.log("re-render animal form"));
     let mergedInitialValues: Animal = Object.assign(
         {},
         defaultValues,
@@ -108,23 +108,17 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                     onChangeText={text => formik.setFieldValue("name", text)}
                     errorText={getFieldError("name", formik)}
                 />
-
-                <Select
+                <RadioInput
                     label="Gênero*"
-                    items={[
-                        { key: "Fêmea", value: "F" },
-                        { key: "Macho", value: "M" },
+                    onValueChange={value =>
+                        formik.setFieldValue("gender", value)
+                    }
+                    options={[
+                        { label: "Fêmea", value: "F" },
+                        { label: "Macho", value: "M" },
                     ]}
-                    defaultButtonText={
-                        initialValues.gender
-                            ? formatGender(initialValues.gender)
-                            : "Escolha um gênero"
-                    }
-                    defaultValue={initialValues.gender}
                     errorText={getFieldError("gender", formik)}
-                    onSelect={option =>
-                        formik.setFieldValue("gender", option.value)
-                    }
+                    value={formik.values.gender}
                 />
             </Span>
             <Span>
