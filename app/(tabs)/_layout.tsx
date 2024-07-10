@@ -108,7 +108,7 @@ export default function TabLayout() {
                     tabBarIcon: () => (
                         <Image
                             style={iconSize}
-                            source={require("../../assets/images/BookMarkIcon.png")}
+                            source={require("../../assets/images/BookIcon.png")}
                             alt={"annotation page"}
                         />
                     ),
