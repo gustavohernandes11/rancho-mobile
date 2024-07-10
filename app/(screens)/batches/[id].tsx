@@ -8,7 +8,7 @@ import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useAnimalTable } from "hooks/useAnimalTable";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
@@ -20,7 +20,9 @@ import { serializeBatchInfo } from "utils/serializers";
 export default function ViewBatchDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [isLoading, setIsLoading] = useState(true);
-    const { refreshAll, batches } = useGlobalState();
+    const batches = useGlobalStore(state => state.batches);
+    const refreshAll = useGlobalStore(state => state.refreshAll);
+
     const [batch, setBatch] = useState<PopulatedBatch>();
     const table = useAnimalTable();
 

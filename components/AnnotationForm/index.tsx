@@ -10,7 +10,7 @@ import { useNavigation, useRouter } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useAnimalTable } from "hooks/useAnimalTable";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import moment from "moment";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
@@ -39,7 +39,8 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
 
     const router = useRouter();
     const table = useAnimalTable();
-    const { animals, refreshAll } = useGlobalState();
+    const animals = useGlobalStore(state => state.animals);
+    const refreshAll = useGlobalStore(state => state.refreshAll);
 
     useEffect(() => {
         table.setSelectedIDs([

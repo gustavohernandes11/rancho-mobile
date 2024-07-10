@@ -2,7 +2,7 @@ import { BannerRadio } from "components/BannerRadio";
 import { Button } from "components/Button";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { useState } from "react";
 import {
     Alert,
@@ -48,7 +48,8 @@ export const TransferAnimalsModal: React.FC<
     ...props
 }) => {
     const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
-    const { batches, refreshAll } = useGlobalState();
+    const batches = useGlobalStore(state => state.batches);
+    const refreshAll = useGlobalStore(state => state.refreshAll);
 
     const handleMoveAnimals = () => {
         const isDestinationNull = selectedBatch?.id === null;

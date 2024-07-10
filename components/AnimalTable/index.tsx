@@ -6,7 +6,7 @@ import {
     useAnimalTable,
 } from "hooks/useAnimalTable";
 import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { useCallback } from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
 import { Storage } from "services/StorageService";
@@ -32,7 +32,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     liftedController = null,
 }) => {
     const router = useRouter();
-    const { refreshAll } = useGlobalState();
+    const refreshAll = useGlobalStore(state => state.refreshAll);
     const localController = useAnimalTable();
     const controller = liftedController || localController;
 

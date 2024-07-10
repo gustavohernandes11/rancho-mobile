@@ -10,7 +10,7 @@ interface GlobalState {
     batches: Batch[];
 }
 
-export const useGlobalState = create<GlobalState>()((set, get) => ({
+export const useGlobalStore = create<GlobalState>()((set, get) => ({
     animals: [],
     batches: [],
     refreshBatches: async () => {

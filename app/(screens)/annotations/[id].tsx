@@ -7,7 +7,7 @@ import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useFocus } from "hooks/useFocus";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
@@ -18,7 +18,7 @@ import { serializeAnimalPreview, serializeAnnotation } from "utils/serializers";
 
 export default function ViewAnnotationDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
-    const { animals } = useGlobalState();
+    const animals = useGlobalStore(state => state.animals);
     const [annotation, setAnnotation] = useState<Annotation | null>();
     const [relatedAnimals, setRelatedAnimals] = useState<Animal[]>();
     const [isLoading, setIsLoading] = useState(true);

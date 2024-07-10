@@ -5,14 +5,14 @@ import { InfoCard } from "components/InfoCard";
 import { ProductionChart } from "components/ProductionChart";
 import { Span } from "components/Span";
 import { useFocus } from "hooks/useFocus";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
 import { Count } from "types";
 
 export default function TabOneScreen() {
     const [count, setCount] = useState<Count>();
-    const { refreshAll } = useGlobalState();
+    const refreshAll = useGlobalStore(state => state.refreshAll);
 
     useFocus(() => {
         Storage.count().then(count => setCount(count));

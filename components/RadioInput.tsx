@@ -23,7 +23,7 @@ export const RadioInput: React.FC<RadioInputProps> = ({
     return (
         <View style={styles.container}>
             {label ? <Label>{label}</Label> : null}
-            <View style={styles.radioGroup}>
+            <View style={styles.group}>
                 {options.map((option, index) => (
                     <RadioButton.Item
                         position="leading"
@@ -33,6 +33,7 @@ export const RadioInput: React.FC<RadioInputProps> = ({
                         label={option.label}
                         value={option.value}
                         color={Colors.green}
+                        style={styles.item}
                         status={
                             value === option.value ? "checked" : "unchecked"
                         }
@@ -52,10 +53,14 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
     },
-    radioGroup: {
+    group: {
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "flex-start",
-        ...commonStyles.inputAspect,
+    },
+    item: {
+        margin: 0,
+        paddingHorizontal: 0,
+        marginRight: 8,
     },
 });

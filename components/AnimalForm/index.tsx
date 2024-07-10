@@ -7,7 +7,7 @@ import { Span } from "components/Span";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import moment from "moment";
 import React from "react";
 import { Alert, View } from "react-native";
@@ -88,7 +88,11 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
         onSubmit,
         validationSchema,
     });
-    const { animals, batches, refreshAll } = useGlobalState();
+
+    const animals = useGlobalStore(state => state.animals);
+    const batches = useGlobalStore(state => state.batches);
+    const refreshAll = useGlobalStore(state => state.refreshAll);
+
     const navigation = useNavigation();
 
     useAlertUnsavedChanges({

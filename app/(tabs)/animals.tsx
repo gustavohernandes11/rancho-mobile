@@ -10,7 +10,7 @@ import { Select } from "components/Select";
 import { Span } from "components/Span";
 import { Stack, useFocusEffect, useRouter } from "expo-router";
 import useDebounce from "hooks/useDebounce";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import { useCallback, useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
 import { Animal, AnimalStatusOptions, OrderByOptions } from "types";
@@ -18,7 +18,9 @@ import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
     const router = useRouter();
-    const { animals, batches } = useGlobalState();
+    const animals = useGlobalStore(state => state.animals);
+    const batches = useGlobalStore(state => state.batches);
+
     const [searchText, setSearchText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
     const [showFilters, setShowFilters] = useState(false);

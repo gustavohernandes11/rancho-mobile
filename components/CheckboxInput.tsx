@@ -31,23 +31,23 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
     return (
         <View style={styles.container}>
             {label ? <Label>{label}</Label> : null}
-            <View style={styles.checkboxGroup}>
-                {options.map((option, index) => (
-                    <View key={index} style={styles.checkboxItem}>
-                        <Checkbox.Item
-                            label={option.label}
-                            status={
-                                selectedValues.includes(option.value)
-                                    ? "checked"
-                                    : "unchecked"
-                            }
-                            onPress={() => handleCheckboxChange(option.value)}
-                            color={Colors.green}
-                            labelStyle={commonStyles.text}
-                            uncheckedColor={Colors.darkGray}
-                            position="leading"
-                        />
-                    </View>
+            <View style={styles.group}>
+                {options.map(option => (
+                    <Checkbox.Item
+                        key={option.value}
+                        label={option.label}
+                        status={
+                            selectedValues.includes(option.value)
+                                ? "checked"
+                                : "unchecked"
+                        }
+                        onPress={() => handleCheckboxChange(option.value)}
+                        color={Colors.green}
+                        labelStyle={commonStyles.text}
+                        uncheckedColor={Colors.darkGray}
+                        position="leading"
+                        style={styles.item}
+                    />
                 ))}
             </View>
             {errorText ? (
@@ -62,15 +62,15 @@ const styles = StyleSheet.create({
         flex: 1,
         width: "100%",
     },
-    checkboxGroup: {
+    group: {
         flexDirection: "row",
         alignItems: "flex-start",
         justifyContent: "flex-start",
-        ...commonStyles.inputAspect,
     },
-    checkboxItem: {
-        flexDirection: "row",
-        alignItems: "center",
+    item: {
+        margin: 0,
+        paddingHorizontal: 0,
+        marginRight: 8,
     },
 });
 

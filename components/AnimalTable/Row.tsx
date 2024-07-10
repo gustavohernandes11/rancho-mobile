@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
@@ -25,7 +25,7 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 
 export const Row: React.FC<RowProps> = memo(
     ({ animal, isChecked = false, onCheck }) => {
-        const { batches } = useGlobalState();
+        const batches = useGlobalStore(state => state.batches);
         const batch = batches.find(batch => batch.id === animal.batchID);
 
         return (

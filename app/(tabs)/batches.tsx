@@ -5,12 +5,13 @@ import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
-import { useGlobalState } from "hooks/useGlobalState";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect } from "react";
 import { Text } from "react-native";
 
 export default function ViewBatchesScreen() {
-    const { batches, refreshBatches } = useGlobalState();
+    const batches = useGlobalStore(state => state.batches);
+    const refreshBatches = useGlobalStore(state => state.refreshBatches);
     const router = useRouter();
 
     useEffect(() => {
