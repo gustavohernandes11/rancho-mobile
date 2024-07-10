@@ -1,10 +1,6 @@
-import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
-import { Input } from "components/Input";
-import { ListAccordion } from "components/ListAccordion";
-import { Loading } from "components/Loading";
 import { Span } from "components/Span";
-import { router, useNavigation } from "expo-router";
+import { router } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
@@ -13,8 +9,11 @@ import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { AddBatch, Batch, UpdateBatch } from "types";
-import { getFieldError } from "utils/forms";
 import { showToast } from "utils/showToast";
+import { AnimalSelectionField } from "./_fields/AnimalSelectionField";
+import { DescriptionField } from "./_fields/DescriptionField";
+import { NameField } from "./_fields/NameField";
+import { CancelButton } from "./CancelButton";
 import { defaultValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
@@ -37,7 +36,6 @@ export const BatchForm: React.FC<BatchFormProps> = ({
     );
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
 
-    const navigation = useNavigation();
     const formik = useFormik({
         initialValues,
         onSubmit: values => handleSubmit(values, !initialValues.id),
@@ -97,41 +95,19 @@ export const BatchForm: React.FC<BatchFormProps> = ({
     return (
         <View>
             <Span>
-                <Input
-                    label="Nome*"
-                    value={formik.values.name}
-                    onChangeText={text => formik.setFieldValue("name", text)}
-                    errorText={getFieldError("name", formik)}
-                />
+                <NameField formik={formik} />
             </Span>
             <Span>
-                <Input
-                    label="Descrição"
-                    value={formik.values.description}
-                    onChangeText={text =>
-                        formik.setFieldValue("description", text)
-                    }
-                    errorText={getFieldError("description", formik)}
-                    multiline={true}
-                />
+                <DescriptionField formik={formik} />
             </Span>
             <Span>
-                <ListAccordion
-                    title={`${selectedIDs.length} selecionado(s)`}
-                    label="Selecione os animais - ou faça isso depois"
-                >
-                    {animals ? <AnimalTable animals={animals} /> : <Loading />}
-                </ListAccordion>
+                <AnimalSelectionField
+                    animals={animals}
+                    selectedIDs={selectedIDs}
+                />
             </Span>
             <Span justify="flex-end" py={16}>
-                <Button
-                    type="light"
-                    title="Cancelar"
-                    onPress={() => {
-                        navigation.goBack();
-                        clearSelection();
-                    }}
-                />
+                <CancelButton />
                 <Button
                     title="Salvar"
                     onPress={formik.isSubmitting ? () => {} : formik.submitForm}
