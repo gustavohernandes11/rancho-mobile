@@ -62,7 +62,7 @@ export default function ViewAnimalDetailsScreen() {
 
     const handleEdit = () => router.push(`/(screens)/animals/edit/${id}`);
     const handleDelete = () =>
-        showConfirmationAndDelete(animal!, () => {
+        confirmDeleteAnimal(animal!, () => {
             refreshAll();
             router.back();
         });
@@ -80,7 +80,7 @@ export default function ViewAnimalDetailsScreen() {
                         <SimpleTable data={serializeAnimalInfo(animal)} />
                     </Span>
 
-                    {animal?.batch && (
+                    {animal?.batch ? (
                         <Span direction="column">
                             <Heading size="small">Lote</Heading>
                             <BatchBanner
@@ -88,9 +88,9 @@ export default function ViewAnimalDetailsScreen() {
                                 batch={animal.batch}
                             />
                         </Span>
-                    )}
+                    ) : null}
 
-                    {animal && animal?.paternity && (
+                    {animal && animal?.paternity ? (
                         <Span direction="column">
                             <Heading size="small">Paternidade</Heading>
                             <AnimalBanner
@@ -98,9 +98,9 @@ export default function ViewAnimalDetailsScreen() {
                                 animal={animal.paternity}
                             />
                         </Span>
-                    )}
+                    ) : null}
 
-                    {animal && animal?.maternity && (
+                    {animal && animal?.maternity ? (
                         <Span direction="column">
                             <Heading size="small">Maternidade</Heading>
                             <AnimalBanner
@@ -108,9 +108,9 @@ export default function ViewAnimalDetailsScreen() {
                                 animal={animal.maternity}
                             />
                         </Span>
-                    )}
+                    ) : null}
 
-                    {animal && animal.offspring.length > 0 && (
+                    {animal && animal.offspring.length > 0 ? (
                         <Span direction="column">
                             <Heading size="small">Prole</Heading>
                             {animal.offspring.map(calf => (
@@ -120,16 +120,13 @@ export default function ViewAnimalDetailsScreen() {
                                 />
                             ))}
                         </Span>
-                    )}
+                    ) : null}
                 </>
             )}
         </ContainerView>
     );
 }
-const showConfirmationAndDelete = (
-    animal: Animal,
-    onDeleteCallback: () => void
-) => {
+const confirmDeleteAnimal = (animal: Animal, onDeleteCallback: () => void) => {
     Alert.alert(
         `Deletar animal?`,
         `Você têm certeza que deseja deletar o animal "${animal.name}"?`,

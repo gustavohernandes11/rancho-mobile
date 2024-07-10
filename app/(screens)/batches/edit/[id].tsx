@@ -30,7 +30,7 @@ export default function EditAnimalScreen() {
     );
     return (
         <ContainerView immediateContent={<StackScreen />}>
-            {batch && <BatchForm initialValues={batch} />}
+            {batch ? <BatchForm initialValues={batch} /> : null}
         </ContainerView>
     );
 }

@@ -27,7 +27,7 @@ export default function EditAnnotationScreen() {
 
     return (
         <ContainerView immediateContent={<StackScreen />}>
-            {annotation && <AnnotationForm initialValues={annotation} />}
+            {annotation ? <AnnotationForm initialValues={annotation} /> : null}
         </ContainerView>
     );
 }

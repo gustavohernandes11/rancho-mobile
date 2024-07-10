@@ -27,7 +27,7 @@ export default function EditAnimalScreen() {
 
     return (
         <ContainerView immediateContent={<StackScreen />}>
-            {animal && <AnimalForm initialValues={animal} />}
+            {animal ? <AnimalForm initialValues={animal} /> : null}
         </ContainerView>
     );
 }

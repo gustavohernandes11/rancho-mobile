@@ -38,7 +38,7 @@ export const Select: React.FC<
 
     return (
         <View style={styles.inputContainer}>
-            {label && <Label>{label}</Label>}
+            {label ? <Label>{label}</Label> : null}
             <SelectDropdown
                 renderDropdownIcon={DropdownIcon}
                 buttonTextStyle={commonStyles.label}
@@ -53,7 +53,9 @@ export const Select: React.FC<
                 rowTextForSelection={(item: Item) => item.key}
                 {...props}
             />
-            {errorText && <Text style={commonStyles.error}>{errorText}</Text>}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
         </View>
     );
 };

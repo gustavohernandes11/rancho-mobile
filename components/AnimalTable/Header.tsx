@@ -30,7 +30,7 @@ export const Header = () => {
                     style={{ flex: 1, justifyContent: "center" }}
                     textStyle={[{ flexShrink: 1 }, commonStyles.text]}
                 >
-                    {"✓"}
+                    ✓
                 </DataTable.Title>
             </DataTable.Header>
         </DataTable>

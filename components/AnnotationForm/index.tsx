@@ -140,7 +140,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                     multiline={true}
                 />
             </Span>
-            {formik.values.type === "heath care" && (
+            {formik.values.type === "heath care" ? (
                 <Span direction="row">
                     <Input
                         label="Nome do remédio/vacina"
@@ -159,7 +159,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                         errorText={getFieldError("dosage", formik)}
                     />
                 </Span>
-            )}
+            ) : null}
             <Span>
                 <DatePicker
                     label="Data"
@@ -175,7 +175,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                     }
                 />
             </Span>
-            {formik.values.type !== "simple" && (
+            {formik.values.type !== "simple" ? (
                 <Span>
                     <ListAccordion
                         label="Quais animais estão associados?"
@@ -192,7 +192,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                         )}
                     </ListAccordion>
                 </Span>
-            )}
+            ) : null}
             <Span justify="flex-end" py={16}>
                 <Button
                     type="light"

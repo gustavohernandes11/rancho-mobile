@@ -19,7 +19,7 @@ export const DatePicker: React.FC<
 
     return (
         <View style={styles.inputContainer}>
-            {label && <Label>{label}</Label>}
+            {label ? <Label>{label}</Label> : null}
             <DatePickerInput
                 iconColor={Colors.darkGray}
                 mode="outlined"
@@ -35,7 +35,9 @@ export const DatePicker: React.FC<
                 withModal={false}
                 {...props}
             />
-            {errorText && <Text style={commonStyles.error}>{errorText}</Text>}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
         </View>
     );
 };

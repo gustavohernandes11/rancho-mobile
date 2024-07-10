@@ -67,7 +67,7 @@ export default function ViewBatchDetailsScreen() {
                         <IconButton
                             icon={require("../../../assets/images/AddCowIcon.png")}
                             iconColor={Colors.white}
-                            onPress={handleAddAnimal}
+                            onPress={handleRegisterAnimal}
                         />
                     </>
                 ),
@@ -76,13 +76,13 @@ export default function ViewBatchDetailsScreen() {
     );
 
     const handleDelete = () =>
-        showConfirmationAndDelete(batch!, () => {
+        confirmDeleteBatch(batch!, () => {
             refreshAll();
             router.back();
         });
     const handleEdit = () =>
         router.push(`/(screens)/batches/edit/${batch!.id}`);
-    const handleAddAnimal = () =>
+    const handleRegisterAnimal = () =>
         router.push(`/(screens)/batches/register-animal-to-batch/${batch!.id}`);
 
     return (
@@ -116,7 +116,7 @@ export default function ViewBatchDetailsScreen() {
     );
 }
 
-export const showConfirmationAndDelete = (
+export const confirmDeleteBatch = (
     batch: Batch,
     onConfirmCallback: () => void
 ) => {

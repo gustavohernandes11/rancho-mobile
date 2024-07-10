@@ -16,7 +16,7 @@ export const ListAccordion = ({
 }: ListAccordionProps) => {
     return (
         <View style={styles.inputContainer}>
-            {label && <Label>{label}</Label>}
+            {label ? <Label>{label}</Label> : null}
             <List.Accordion
                 style={styles.accordion}
                 titleStyle={commonStyles.text}

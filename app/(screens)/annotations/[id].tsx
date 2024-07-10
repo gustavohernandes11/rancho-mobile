@@ -75,7 +75,7 @@ export default function ViewAnnotationDetailsScreen() {
     );
 
     const handleDelete = () => {
-        confirmDelete(annotation!, router.back);
+        confirmDeleteAnnotation(annotation!, router.back);
     };
     const handleEdit = () => {
         router.push(`/(screens)/annotations/edit/${id}`);
@@ -95,16 +95,16 @@ export default function ViewAnnotationDetailsScreen() {
                         )}
                     </Span>
 
-                    {annotation && (
+                    {annotation ? (
                         <Span direction="column">
                             <Heading size="small">Informações gerais</Heading>
                             <SimpleTable
                                 data={serializeAnnotation(annotation)}
                             />
                         </Span>
-                    )}
+                    ) : null}
 
-                    {annotation?.type !== "simple" && annotation?.animalIDs && (
+                    {annotation?.type !== "simple" && annotation?.animalIDs ? (
                         <Span direction="column">
                             <Heading size="small">{`Animais envolvidos (${annotation?.animalIDs?.length})`}</Heading>
                             <Span>
@@ -116,14 +116,14 @@ export default function ViewAnnotationDetailsScreen() {
                                 ))}
                             </Span>
                         </Span>
-                    )}
+                    ) : null}
                 </>
             )}
         </ContainerView>
     );
 }
 
-const confirmDelete = (
+const confirmDeleteAnnotation = (
     annotation: Annotation,
     onDeleteCallback: () => void
 ) => {

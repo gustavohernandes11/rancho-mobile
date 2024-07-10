@@ -60,23 +60,24 @@ export default function ViewAnnotationsPage() {
                 placeholder="Busque suas anotações"
             />
             <Span direction="column" py={16}>
-                {annotations.length === 0 && (
+                {annotations.length === 0 ? (
                     <Span justify="center">
                         <Text>Nenhuma nota encontrada.</Text>
                     </Span>
-                )}
-                {annotations &&
-                    annotations.map(annotation => (
-                        <AnnotationBanner
-                            key={annotation.id}
-                            href={`/(screens)/annotations/${annotation.id}`}
-                            title={annotation.title}
-                            type={annotation.type}
-                            description={annotation.description}
-                            date={annotation.date}
-                            animalIds={annotation.animalIDs}
-                        />
-                    ))}
+                ) : null}
+                {annotations
+                    ? annotations.map(annotation => (
+                          <AnnotationBanner
+                              key={annotation.id}
+                              href={`/(screens)/annotations/${annotation.id}`}
+                              title={annotation.title}
+                              type={annotation.type}
+                              description={annotation.description}
+                              date={annotation.date}
+                              animalIds={annotation.animalIDs}
+                          />
+                      ))
+                    : null}
                 <Span justify="center" py={8}>
                     <Button
                         title="Nova anotação"

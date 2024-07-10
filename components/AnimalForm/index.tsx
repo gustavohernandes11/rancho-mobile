@@ -153,7 +153,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                 }
                 label="Lote"
             />
-            {isUpdate && (
+            {isUpdate ? (
                 <Span>
                     <RadioInput
                         onValueChange={(option: AnimalStatusOptions) =>
@@ -165,7 +165,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                         errorText={getFieldError("status", formik)}
                     />
                 </Span>
-            )}
+            ) : null}
             <Span>
                 <Input
                     label="Código"

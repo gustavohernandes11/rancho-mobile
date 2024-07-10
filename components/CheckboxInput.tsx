@@ -30,7 +30,7 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
 
     return (
         <View style={styles.container}>
-            {label && <Label>{label}</Label>}
+            {label ? <Label>{label}</Label> : null}
             <View style={styles.checkboxGroup}>
                 {options.map((option, index) => (
                     <View key={index} style={styles.checkboxItem}>
@@ -50,7 +50,9 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
                     </View>
                 ))}
             </View>
-            {errorText && <Text style={commonStyles.error}>{errorText}</Text>}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
         </View>
     );
 };

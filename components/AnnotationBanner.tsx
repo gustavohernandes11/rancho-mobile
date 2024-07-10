@@ -53,7 +53,9 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
                     </View>
                     <View style={styles.main}>
                         <Text style={styles.title}>{title}</Text>
-                        {description && <Paragraph>{description}</Paragraph>}
+                        {description ? (
+                            <Paragraph>{description}</Paragraph>
+                        ) : null}
                     </View>
                 </View>
             </Pressable>

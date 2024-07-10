@@ -20,7 +20,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 
     return (
         <View style={styles.inputContainer}>
-            {label && <Label>{label}</Label>}
+            {label ? <Label>{label}</Label> : null}
             <TextInput
                 mode="outlined"
                 outlineStyle={styles.outline}
@@ -34,7 +34,9 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
                 style={styles.input}
                 {...props}
             />
-            {errorText && <Text style={commonStyles.error}>{errorText}</Text>}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
         </View>
     );
 };

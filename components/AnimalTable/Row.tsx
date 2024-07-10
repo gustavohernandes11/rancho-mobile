@@ -44,10 +44,12 @@ export const Row: React.FC<RowProps> = memo(
                             {" " + animal.name}
                         </Cell>
                         <Cell flex={4}>
-                            {animal.batchID && batch && batch.name}
+                            {animal.batchID && batch ? batch.name : ""}
                         </Cell>
                         <Cell flex={2}>
-                            {animal.birthdate && formatAge(animal.birthdate)}
+                            {animal.birthdate
+                                ? formatAge(animal.birthdate)
+                                : ""}
                         </Cell>
                         <Cell flex={1}>
                             <Checkbox

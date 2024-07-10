@@ -42,9 +42,9 @@ export const BannerRadio: React.FC<BannerRadioProps & ViewProps> = ({
             </View>
             <View style={styles.left}>
                 <Text style={styles.title}>{title}</Text>
-                {description && (
+                {description ? (
                     <Text style={styles.description}>{description}</Text>
-                )}
+                ) : null}
             </View>
             <RadioButton
                 color={Colors.green}

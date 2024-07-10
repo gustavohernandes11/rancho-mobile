@@ -7,7 +7,7 @@ export const confirmWriteOffByDeath = (
 ) => {
     Alert.alert(
         `Dar baixa por morte?`,
-        `Os animais serão marcados como "mortos", mas não serão deletados. Deseja salvar uma anotação automática sobre?`,
+        `Os animais serão marcados como "mortos", mas não serão deletados.`,
         [
             {
                 text: "Dar baixa",
@@ -18,7 +18,7 @@ export const confirmWriteOffByDeath = (
                 style: "default",
             },
             {
-                text: "Dar baixa e salvar",
+                text: "Dar baixa e anotar",
                 onPress: () =>
                     Storage.writeOffByDeath(selectedIDs, true).then(
                         () => onDeleteCallback && onDeleteCallback()

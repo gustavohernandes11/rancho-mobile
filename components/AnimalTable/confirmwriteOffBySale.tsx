@@ -7,7 +7,7 @@ export const confirmwriteOffBySale = (
 ) => {
     Alert.alert(
         `Confirmar venda?`,
-        `Os animais serão marcados como "vendidos", mas não serão deletados. Deseja salvar uma anotação automática sobre?`,
+        `Os animais serão marcados como "vendidos", mas não serão deletados.`,
         [
             {
                 text: "Vender",
@@ -18,7 +18,7 @@ export const confirmwriteOffBySale = (
                 style: "default",
             },
             {
-                text: "Vender e salvar",
+                text: "Vender e anotar",
                 onPress: () =>
                     Storage.writeOffBySale(selectedIDs, true).then(
                         () => onSellCallback && onSellCallback()

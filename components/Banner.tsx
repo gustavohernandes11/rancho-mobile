@@ -43,16 +43,16 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
                 </View>
                 <View style={styles.left}>
                     <Text style={styles.title}>{title}</Text>
-                    {description && (
+                    {description ? (
                         <Text style={styles.description}>{description}</Text>
-                    )}
+                    ) : null}
                 </View>
                 <View style={styles.right}>
-                    {rightDescription && (
+                    {rightDescription ? (
                         <Text style={styles.description}>
                             {rightDescription}
                         </Text>
-                    )}
+                    ) : null}
                 </View>
             </Pressable>
         </Link>

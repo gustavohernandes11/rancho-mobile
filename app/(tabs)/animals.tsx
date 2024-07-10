@@ -112,7 +112,7 @@ export default function ViewAnimalsScreen() {
             />
 
             <Span direction="row">
-                {showFilters && (
+                {showFilters ? (
                     <>
                         <Span flexWrap="wrap" my={0}>
                             <Select
@@ -160,7 +160,7 @@ export default function ViewAnimalsScreen() {
                             </Span>
                         </Span>
                     </>
-                )}
+                ) : null}
                 <Span my={0}>
                     <Button
                         type="light"
