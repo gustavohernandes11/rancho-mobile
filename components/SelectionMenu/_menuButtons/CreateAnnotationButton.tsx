@@ -4,7 +4,11 @@ import React from "react";
 import { Menu } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 
-export const CreateAnnotationButton = () => {
+export const CreateAnnotationButton = ({
+    closeMoreOptions,
+}: {
+    closeMoreOptions: () => void;
+}) => {
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
 
     const handleCreateAnnotationWithSelectedAnimals = () => {
@@ -12,6 +16,7 @@ export const CreateAnnotationButton = () => {
             "/(screens)/annotations/add-with-selected-animals/" +
                 JSON.stringify(selectedIDs)
         );
+        closeMoreOptions();
     };
 
     return (

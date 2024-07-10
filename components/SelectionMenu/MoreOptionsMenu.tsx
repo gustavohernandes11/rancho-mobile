@@ -33,10 +33,10 @@ export const MoreOptionsMenu = ({ onSuccess }: MoreOptionsMenu) => {
             }
         >
             <MoveToBatchButton />
-            <CreateBatchButton />
+            <CreateBatchButton closeMoreOptions={closeMoreOptions} />
             <WriteOffByDeathButton onSuccess={onSuccess} />
             <WriteOffBySaleButton onSuccess={onSuccess} />
-            <CreateAnnotationButton />
+            <CreateAnnotationButton closeMoreOptions={closeMoreOptions} />
         </Menu>
     );
 };

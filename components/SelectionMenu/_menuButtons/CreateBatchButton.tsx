@@ -4,7 +4,11 @@ import React from "react";
 import { Menu } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 
-export const CreateBatchButton = () => {
+export const CreateBatchButton = ({
+    closeMoreOptions,
+}: {
+    closeMoreOptions: () => void;
+}) => {
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
 
     const handleCreateBatchWithSelectedAnimals = () => {
@@ -12,6 +16,7 @@ export const CreateBatchButton = () => {
             "/(screens)/batches/add-with-selected-animals/" +
                 JSON.stringify(selectedIDs)
         );
+        closeMoreOptions();
     };
 
     return (
