@@ -7,7 +7,7 @@ import { Span } from "components/Span";
 import { router, useNavigation } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
-import { useAnimalTable } from "hooks/useAnimalTable";
+import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
@@ -27,9 +27,15 @@ export const BatchForm: React.FC<BatchFormProps> = ({
     initialValues = defaultValues,
     initialSelectedAnimals = [],
 }) => {
-    const table = useAnimalTable();
     const animals = useGlobalStore(state => state.animals);
     const refreshAll = useGlobalStore(state => state.refreshAll);
+    const setSelectedIDs = useAnimalSelectionStore(
+        state => state.setSelectedIDs
+    );
+    const clearSelection = useAnimalSelectionStore(
+        state => state.clearSelection
+    );
+    const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
 
     const navigation = useNavigation();
     const formik = useFormik({
@@ -39,20 +45,22 @@ export const BatchForm: React.FC<BatchFormProps> = ({
     });
     useEffect(() => {
         if (initialSelectedAnimals) {
-            table.setSelectedIDs(initialSelectedAnimals);
+            setSelectedIDs(initialSelectedAnimals);
         }
         if (initialValues.id) {
             Storage.listAnimals({
                 batchID: initialValues.id,
             }).then(batchAnimals => {
-                table.setSelectedIDs(batchAnimals.map(a => a.id));
+                setSelectedIDs(batchAnimals.map(a => a.id));
             });
         }
+
+        return () => clearSelection();
     }, [initialValues.id]);
 
     const onSucess = (message: string) => {
         refreshAll();
-        table.clearSelection();
+        clearSelection();
         formik.resetForm();
         showToast(message);
     };
@@ -69,10 +77,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
         isNewBatch
             ? Storage.insertBatch(values)
                   .then(insertedID =>
-                      Storage.moveAnimalToBatch(
-                          table.selectedIDs,
-                          insertedID || null
-                      )
+                      Storage.moveAnimalToBatch(selectedIDs, insertedID || null)
                   )
                   .then(() => onSucess(`Lote ${values.name} foi adicionado`))
                   .then(() => router.replace("/(tabs)/batches"))
@@ -80,7 +85,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
             : Storage.updateBatch(values)
                   .then(() =>
                       Storage.compareBatchAnimalsWithSelectedAndUpdate(
-                          table.selectedIDs,
+                          selectedIDs,
                           values.id
                       )
                   )
@@ -112,18 +117,10 @@ export const BatchForm: React.FC<BatchFormProps> = ({
             </Span>
             <Span>
                 <ListAccordion
-                    title={`${table.selectedIDs.length} selecionado(s)`}
+                    title={`${selectedIDs.length} selecionado(s)`}
                     label="Selecione os animais - ou faça isso depois"
                 >
-                    {animals ? (
-                        <AnimalTable
-                            onlySelectionMode={true}
-                            liftedController={table}
-                            animals={animals}
-                        />
-                    ) : (
-                        <Loading />
-                    )}
+                    {animals ? <AnimalTable animals={animals} /> : <Loading />}
                 </ListAccordion>
             </Span>
             <Span justify="flex-end" py={16}>
@@ -132,7 +129,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
                     title="Cancelar"
                     onPress={() => {
                         navigation.goBack();
-                        table.clearSelection();
+                        clearSelection();
                     }}
                 />
                 <Button

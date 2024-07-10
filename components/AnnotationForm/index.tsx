@@ -9,7 +9,7 @@ import { Span } from "components/Span";
 import { useNavigation, useRouter } from "expo-router";
 import { useFormik } from "formik";
 import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
-import { useAnimalTable } from "hooks/useAnimalTable";
+import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import moment from "moment";
 import React, { useEffect } from "react";
@@ -37,22 +37,31 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
         initialValues
     );
 
+    const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
+    const setSelectedIDs = useAnimalSelectionStore(
+        state => state.setSelectedIDs
+    );
+    const clearSelection = useAnimalSelectionStore(
+        state => state.clearSelection
+    );
+
     const router = useRouter();
-    const table = useAnimalTable();
     const animals = useGlobalStore(state => state.animals);
     const refreshAll = useGlobalStore(state => state.refreshAll);
 
     useEffect(() => {
-        table.setSelectedIDs([
+        setSelectedIDs([
             ...(mergedInitialValues.animalIDs || []),
             ...initialSelectedAnimals,
         ]);
+
+        return () => clearSelection();
     }, []);
 
     const onSubmit = (values: Annotation) => {
         let annotation = { ...values };
         if (values.type !== "simple") {
-            annotation.animalIDs = table.selectedIDs;
+            annotation.animalIDs = selectedIDs;
         }
         if (initialValues.id) {
             Storage.updateAnnotation(annotation)
@@ -180,14 +189,10 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                 <Span>
                     <ListAccordion
                         label="Quais animais estão associados?"
-                        title={`${table.selectedIDs.length} selecionado(s)`}
+                        title={`${selectedIDs.length} selecionado(s)`}
                     >
                         {animals ? (
-                            <AnimalTable
-                                onlySelectionMode={true}
-                                liftedController={table}
-                                animals={animals}
-                            />
+                            <AnimalTable animals={animals} />
                         ) : (
                             <Loading />
                         )}

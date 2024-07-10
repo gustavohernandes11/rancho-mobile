@@ -1,18 +1,22 @@
 import { useFocusEffect } from "expo-router";
 import { useCallback } from "react";
 import { BackHandler } from "react-native";
-import { ControlledAnimalTableProps } from "./useAnimalTable";
+import { useAnimalSelectionStore } from "./useAnimalSelectionStore";
 
-export const useClearSelectionOnHardwareBack = ({
-    controller,
-}: {
-    controller: ControlledAnimalTableProps;
-}) => {
+export const useClearSelectionOnHardwareBack = () => {
+    const clearSelection = useAnimalSelectionStore(
+        state => state.clearSelection
+    );
+    const isSelectionMode = useAnimalSelectionStore(
+        state => state.isSelectionMode
+    );
+    const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
+
     useFocusEffect(
         useCallback(() => {
             const backAction = () => {
-                if (controller.isSelectionMode) {
-                    controller.clearSelection();
+                if (isSelectionMode) {
+                    clearSelection();
                     return true;
                 } else {
                     return false;
@@ -25,6 +29,6 @@ export const useClearSelectionOnHardwareBack = ({
             );
 
             return () => backHandler.remove();
-        }, [controller.isSelectionMode, controller.selectedIDs])
+        }, [isSelectionMode, selectedIDs])
     );
 };

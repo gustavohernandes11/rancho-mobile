@@ -47,8 +47,8 @@ const getStyles = (type: ButtonTypes, disabled?: boolean) =>
             ...(disabled && commonStyles.disabled),
         },
         text: {
-            ...(disabled && commonStyles.textDisabled),
             ...commonStyles.text,
             color: getButtonTextColor(type),
+            ...(disabled && commonStyles.textDisabled),
         },
     });

@@ -12,7 +12,7 @@ export default {
     surface: "#EFEFEF",
     darkSurface: "#CDCDCD",
     green: "#56A763",
-    border: "#D9D9D9",
+    border: "#b9b9b9",
     white: "#fff",
     black: "#000",
 };

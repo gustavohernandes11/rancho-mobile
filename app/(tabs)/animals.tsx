@@ -7,8 +7,10 @@ import { Loading } from "components/Loading";
 import { Paragraph } from "components/Paragraph";
 import { SearchBar } from "components/SearchBar";
 import { Select } from "components/Select";
+import { SelectionMenu } from "components/SelectionMenu";
 import { Span } from "components/Span";
 import { Stack, useFocusEffect, useRouter } from "expo-router";
+import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import useDebounce from "hooks/useDebounce";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import { useCallback, useEffect, useState } from "react";
@@ -20,6 +22,9 @@ export default function ViewAnimalsScreen() {
     const router = useRouter();
     const animals = useGlobalStore(state => state.animals);
     const batches = useGlobalStore(state => state.batches);
+    const isSelectionMode = useAnimalSelectionStore(
+        state => state.isSelectionMode
+    );
 
     const [searchText, setSearchText] = useState("");
     const [isLoading, setIsLoading] = useState(true);
@@ -185,6 +190,7 @@ export default function ViewAnimalsScreen() {
                 <Loading />
             ) : (
                 <Span>
+                    {isSelectionMode ? <SelectionMenu /> : null}
                     <AnimalTable animals={filteredAnimals} />
                 </Span>
             )}

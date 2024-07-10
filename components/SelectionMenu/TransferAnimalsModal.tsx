@@ -2,6 +2,7 @@ import { BannerRadio } from "components/BannerRadio";
 import { Button } from "components/Button";
 import { Heading } from "components/Heading";
 import { Span } from "components/Span";
+import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { useState } from "react";
 import {
@@ -21,9 +22,7 @@ import { showToast } from "utils/showToast";
 interface TransferAnimalsModalProps {
     visible: boolean;
     onDismiss: () => void;
-    setIsBatchModalVisible: React.Dispatch<React.SetStateAction<boolean>>;
-    selectedIDs: number[];
-    onClearSelection: () => void;
+    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
@@ -39,17 +38,14 @@ const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
 
 export const TransferAnimalsModal: React.FC<
     TransferAnimalsModalProps & Omit<ModalProps, "children">
-> = ({
-    visible,
-    onDismiss,
-    setIsBatchModalVisible,
-    selectedIDs,
-    onClearSelection,
-    ...props
-}) => {
+> = ({ visible, onDismiss, setIsModalOpen, ...props }) => {
     const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
     const batches = useGlobalStore(state => state.batches);
     const refreshAll = useGlobalStore(state => state.refreshAll);
+    const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
+    const clearSelection = useAnimalSelectionStore(
+        state => state.clearSelection
+    );
 
     const handleMoveAnimals = () => {
         const isDestinationNull = selectedBatch?.id === null;
@@ -65,9 +61,9 @@ export const TransferAnimalsModal: React.FC<
     };
 
     const onSuccess = (message: string) => {
-        setIsBatchModalVisible(false);
+        setIsModalOpen(false);
         showToast(message);
-        onClearSelection();
+        clearSelection();
         refreshAll();
     };
 
@@ -141,9 +137,7 @@ export const TransferAnimalsModal: React.FC<
                                 <Button
                                     type="light"
                                     title="Cancelar"
-                                    onPress={() =>
-                                        setIsBatchModalVisible(false)
-                                    }
+                                    onPress={() => setIsModalOpen(false)}
                                 />
                                 <Button
                                     title="Mover"

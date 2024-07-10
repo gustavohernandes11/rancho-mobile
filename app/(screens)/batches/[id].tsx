@@ -4,10 +4,11 @@ import { Heading } from "components/Heading";
 import { Label } from "components/Label";
 import { Loading } from "components/Loading";
 import { PageSkeleton } from "components/PageSkeleton";
+import { SelectionMenu } from "components/SelectionMenu";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { Stack, router, useLocalSearchParams } from "expo-router";
-import { useAnimalTable } from "hooks/useAnimalTable";
+import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
@@ -22,9 +23,14 @@ export default function ViewBatchDetailsScreen() {
     const [isLoading, setIsLoading] = useState(true);
     const batches = useGlobalStore(state => state.batches);
     const refreshAll = useGlobalStore(state => state.refreshAll);
+    const isSelectionMode = useAnimalSelectionStore(
+        state => state.isSelectionMode
+    );
+    const clearSelection = useAnimalSelectionStore(
+        state => state.clearSelection
+    );
 
     const [batch, setBatch] = useState<PopulatedBatch>();
-    const table = useAnimalTable();
 
     const fetchBatch = async () => {
         await Storage.getPopulatedBatch(Number(id)).then(populatedBatch =>
@@ -42,11 +48,11 @@ export default function ViewBatchDetailsScreen() {
     }, [batches]);
 
     useEffect(() => {
-        table.clearSelection();
+        clearSelection();
         fetchBatch();
 
         return () => {
-            table.clearSelection();
+            clearSelection();
         };
     }, []);
 
@@ -106,10 +112,10 @@ export default function ViewBatchDetailsScreen() {
                         {isLoading ? (
                             <Loading />
                         ) : (
-                            <AnimalTable
-                                liftedController={table}
-                                animals={batch?.animals || []}
-                            />
+                            <>
+                                {isSelectionMode ? <SelectionMenu /> : null}
+                                <AnimalTable animals={batch?.animals || []} />
+                            </>
                         )}
                     </Span>
                 </>
