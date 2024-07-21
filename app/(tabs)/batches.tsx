@@ -30,7 +30,6 @@ export default function ViewBatchesScreen() {
                             onPress={() =>
                                 router.push("/(screens)/batches/add")
                             }
-                            type="light"
                         />
                     ),
                 }}
@@ -55,7 +54,8 @@ export default function ViewBatchesScreen() {
                 )}
                 <Span justify="center" py={8}>
                     <Button
-                        title="Adicionar novo lote"
+                        title="Novo lote"
+                        icon={require("../../assets/images/FolderPlusIcon_green.png")}
                         onPress={() => router.push("/(screens)/batches/add")}
                     />
                 </Span>

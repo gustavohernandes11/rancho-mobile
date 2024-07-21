@@ -1,6 +1,7 @@
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { Icon } from "react-native-paper";
 import SelectDropdown, {
     SelectDropdownProps,
 } from "react-native-select-dropdown";
@@ -34,8 +35,8 @@ export const Select: React.FC<
     label,
     errorText,
     size = "medium",
-    search = false,
-    searchPlaceHolder,
+    search = true,
+    searchPlaceHolder = "Busque por nome",
     ...props
 }) => {
     const styles = getStyles(size, !!errorText);
@@ -60,7 +61,15 @@ export const Select: React.FC<
                     borderBottomWidth: 1,
                     borderBottomColor: Theme.colors.mediumGray,
                 }}
+                renderSearchInputLeftIcon={() => (
+                    <Icon
+                        source="magnify"
+                        color={Theme.colors.mediumGray}
+                        size={20}
+                    />
+                )}
                 searchPlaceHolder={searchPlaceHolder}
+                searchPlaceHolderColor={Theme.colors.lightGray}
                 {...props}
             />
             {errorText ? (
@@ -85,7 +94,7 @@ const getStyles = (size: "medium" | "small", hasError: boolean) =>
         },
         row: {
             borderBottomWidth: 1,
-            borderColor: Theme.colors.mediumGray,
+            borderColor: Theme.colors.lightGray,
             padding: 8,
             height: getSelectHeight(size),
         },

@@ -47,7 +47,6 @@ export default function ViewAnnotationsPage() {
                             onPress={() =>
                                 router.push("/(screens)/annotations/add")
                             }
-                            type="light"
                         />
                     ),
                 }}

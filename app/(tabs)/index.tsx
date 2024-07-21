@@ -24,10 +24,9 @@ export default function TabOneScreen() {
     return (
         <ContainerView>
             <Heading>Início</Heading>
-            {/* <Span>
-                <Heading size="small">Produção do mês atual</Heading>
+            <Span>
+                <Heading size="small">Informações gerais</Heading>
             </Span>
-            <ProductionChart /> */}
             <Span py={4}>
                 {count ? (
                     <InfoCard

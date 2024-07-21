@@ -1,11 +1,10 @@
 import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
-import CheckboxInput from "components/CheckboxInput";
 import { ContainerView } from "components/ContainerView";
-import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
 import { Paragraph } from "components/Paragraph";
 import { SearchBar } from "components/SearchBar";
+import SegmentedButtonsInput from "components/SegmentedButtonsInput";
 import { Select } from "components/Select";
 import { SelectionMenu } from "components/SelectionMenu";
 import { Span } from "components/Span";
@@ -14,7 +13,9 @@ import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import useDebounce from "hooks/useDebounce";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import { useCallback, useEffect, useState } from "react";
+import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
+import Theme from "styles/Theme";
 import { Animal, AnimalStatusOptions, OrderByOptions } from "types";
 import { serializeBatches } from "utils/serializers";
 
@@ -99,106 +100,86 @@ export default function ViewAnimalsScreen() {
                     headerTitle: "Rebanho",
                     headerRight: () => (
                         <Button
-                            title="Novo animal"
+                            title="Registrar animal"
                             icon={require("../../assets/images/CowIcon.png")}
                             onPress={() =>
                                 router.push("/(screens)/animals/add")
                             }
-                            type="light"
                         />
                     ),
                 }}
             />
-            <Span justify="space-between" my={8} align="center">
-                <Heading>Todos seus animais</Heading>
-                <Paragraph>{getDisplayInfo()}</Paragraph>
-            </Span>
-            <SearchBar
-                onChangeText={text => setSearchText(text)}
-                value={searchText}
-                placeholder="Busque por nome, código ou observação"
-            />
-
-            <Span direction="row">
-                {showFilters ? (
-                    <>
-                        <Span flexWrap="wrap" my={0}>
-                            <Select
-                                label="Ordenar por"
-                                items={[
-                                    { key: "Alfabética", value: "alfabetic" },
-                                    { key: "Idade", value: "age" },
-                                ]}
-                                defaultValue="Alfabética"
-                                defaultButtonText="Alfabética"
-                                onSelect={option => {
-                                    setOrderBy(option.value);
-                                }}
-                                size="small"
-                            />
-                            <Select
-                                label="Lote"
-                                items={[
-                                    {
-                                        key: "Todos",
-                                        value: undefined as unknown as string,
-                                    },
-                                    ...serializeBatches(batches),
-                                ]}
-                                defaultValue="Todos"
-                                defaultButtonText="Todos"
-                                onSelect={option =>
-                                    setFilterByBatchID(option.value)
-                                }
-                                size="small"
-                            />
-                            <Span my={0}>
-                                <CheckboxInput
-                                    onValueChange={options =>
-                                        setStatusFilter(options)
-                                    }
-                                    label="Situação do animal"
-                                    selectedValues={statusFilter}
-                                    options={[
-                                        { label: "Ativo", value: "active" },
-                                        { label: "Morto", value: "dead" },
-                                        { label: "Vendido", value: "sold" },
-                                    ]}
-                                />
-                            </Span>
-                        </Span>
-                    </>
-                ) : null}
-                <Span my={0}>
-                    <Button
-                        type="light"
-                        title={`${showFilters ? "Esconder" : "Ver"} filtros${
-                            hasFilters ? "*" : ""
-                        }`}
-                        onPress={toggleShowFilters}
+            <Span justify="space-between" gap={0} my={0} align="center">
+                <SearchBar
+                    onChangeText={text => setSearchText(text)}
+                    value={searchText}
+                    placeholder="Busque por nome ou código"
+                />
+                {hasFilters && (
+                    <IconButton
+                        icon="filter-remove"
+                        onPress={handleClearFilters}
                     />
-                    {hasFilters && (
-                        <Button
-                            type="light"
-                            title="Limpar filtros"
-                            onPress={handleClearFilters}
-                        />
-                    )}
-                </Span>
+                )}
+                <IconButton
+                    icon="filter"
+                    iconColor={
+                        showFilters
+                            ? Theme.colors.primary
+                            : Theme.colors.mediumGray
+                    }
+                    onPress={toggleShowFilters}
+                />
             </Span>
+            {showFilters ? (
+                <Span flexWrap="wrap" my={8}>
+                    <Select
+                        label="Lote"
+                        items={[
+                            {
+                                key: "Todos",
+                                value: undefined as unknown as string,
+                            },
+                            ...serializeBatches(batches),
+                        ]}
+                        defaultValue="Todos"
+                        defaultButtonText="Todos"
+                        onSelect={option => setFilterByBatchID(option.value)}
+                        size="small"
+                    />
+                    <Span my={0}>
+                        <SegmentedButtonsInput
+                            label="Incluir animais em estão"
+                            options={[
+                                { label: "Ativos", value: "active" },
+                                { label: "Mortos", value: "dead" },
+                                { label: "Vendidos", value: "sold" },
+                            ]}
+                            selectedValues={statusFilter}
+                            onValueChange={(options: AnimalStatusOptions[]) =>
+                                setStatusFilter(options)
+                            }
+                        />
+                    </Span>
+                </Span>
+            ) : null}
 
             {isLoading ? (
                 <Loading />
             ) : (
                 <Span>
                     {isSelectionMode ? <SelectionMenu /> : null}
-                    <AnimalTable animals={filteredAnimals} />
+                    <Span>
+                        <Paragraph>{getDisplayInfo()}</Paragraph>
+                        <AnimalTable animals={filteredAnimals} />
+                    </Span>
                 </Span>
             )}
 
             <Span justify="flex-end" direction="row">
                 <Button
                     title="Registrar animal"
+                    icon={require("../../assets/images/CowIcon_green.png")}
                     onPress={() => router.push("/(screens)/animals/add")}
                 />
             </Span>

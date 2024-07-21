@@ -20,7 +20,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     return (
         <View
             style={{
-                backgroundColor: Theme.colors.lightGray,
+                backgroundColor: Theme.colors.lightest,
                 flex,
                 height,
                 width,

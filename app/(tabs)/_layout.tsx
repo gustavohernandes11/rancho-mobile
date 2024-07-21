@@ -16,19 +16,19 @@ export default function TabLayout() {
                 headerTitle: () => (
                     <Image
                         style={{
-                            height: 21.2,
+                            height: 25,
                             width: 100,
                         }}
-                        source={require("../../assets/images/Logo_small_green.png")}
+                        source={require("../../assets/images/Logo.png")}
                         alt={"Logo"}
                     />
                 ),
-                headerTintColor: Theme.colors.darkest,
+                headerTintColor: Theme.colors.white,
                 headerTitleStyle: {
                     fontFamily: Theme.fonts.primaryFamily,
                 },
                 headerStyle: {
-                    backgroundColor: Theme.colors.lightest,
+                    backgroundColor: Theme.colors.primary,
                 },
 
                 tabBarLabelStyle: {
