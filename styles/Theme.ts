@@ -12,7 +12,7 @@ export default {
         blue: "#568aa7",
         purple: "#704e81",
         red: "#c83c3c",
-        cian: "#20b2aa",
+        cian: "#309691",
     },
     fonts: {
         primaryFamily: "OpenSans",

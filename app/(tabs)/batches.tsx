@@ -1,7 +1,6 @@
 import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
-import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
@@ -17,6 +16,8 @@ export default function ViewBatchesScreen() {
     useEffect(() => {
         refreshBatches();
     }, []);
+
+    const countText = `Total: ${batches?.length || "0"}`;
 
     return (
         <ContainerView>
@@ -34,25 +35,24 @@ export default function ViewBatchesScreen() {
                     ),
                 }}
             />
-            <Span justify="space-between" align="center">
-                <Heading>Crie e edite seus lotes</Heading>
-                <Paragraph>{`Total: ${batches?.length || "0"}`}</Paragraph>
-            </Span>
             <Span direction="column">
                 {batches.length > 0 ? (
-                    batches?.map(batch => (
-                        <BatchBanner
-                            href={`/(screens)/batches/${batch.id}`}
-                            batch={batch}
-                            key={batch.id}
-                        />
-                    ))
+                    <>
+                        <Paragraph>{countText}</Paragraph>
+                        {batches?.map(batch => (
+                            <BatchBanner
+                                href={`/(screens)/batches/${batch.id}`}
+                                batch={batch}
+                                key={batch.id}
+                            />
+                        ))}
+                    </>
                 ) : (
                     <Span direction="row" justify="center">
                         <Text>Nenhum lote adicionado.</Text>
                     </Span>
                 )}
-                <Span justify="center" py={8}>
+                <Span justify="flex-end" py={8}>
                     <Button
                         title="Novo lote"
                         icon={require("../../assets/images/FolderPlusIcon_green.png")}
