@@ -14,5 +14,5 @@ export const CancelButton: React.FC = () => {
         navigation.goBack();
     };
 
-    return <Button type="light" title="Cancelar" onPress={handleCancel} />;
+    return <Button type="secondary" title="Cancelar" onPress={handleCancel} />;
 };

@@ -1,46 +1,45 @@
 import { StyleSheet } from "react-native";
-import Colors from "styles/Colors";
-import Fonts from "styles/Fonts";
+import Theme from "./Theme";
 
 export const commonStyles = StyleSheet.create({
     text: {
         fontSize: 14,
-        color: Colors.darkGray,
-        fontFamily: Fonts.primaryFamily,
+        color: Theme.colors.darkGray,
+        fontFamily: Theme.fonts.primaryFamily,
     },
     label: {
         fontSize: 14,
-        color: Colors.darkGray,
-        fontFamily: Fonts.primaryFamily,
+        color: Theme.colors.darkGray,
+        fontFamily: Theme.fonts.primaryFamily,
         paddingLeft: 0,
     },
     inputAspect: {
         borderRadius: 8,
-        backgroundColor: Colors.white,
-        borderColor: Colors.border,
+        backgroundColor: Theme.colors.white,
+        borderColor: Theme.colors.mediumGray,
         borderWidth: 1,
-        fontFamily: Fonts.primaryFamily,
+        fontFamily: Theme.fonts.primaryFamily,
     },
     error: {
         fontSize: 12,
-        color: Colors.red,
-        fontFamily: Fonts.primaryFamily,
+        color: Theme.colors.red,
+        fontFamily: Theme.fonts.primaryFamily,
     },
     heading: {
         fontSize: 20,
-        color: Colors.text,
+        color: Theme.colors.darkest,
         marginVertical: 4,
-        fontFamily: Fonts.primaryFamily,
+        fontFamily: Theme.fonts.primaryFamily,
     },
     disabled: {
-        backgroundColor: Colors.lightGray,
-        borderColor: Colors.border,
+        backgroundColor: Theme.colors.lightGray,
+        borderColor: Theme.colors.mediumGray,
         borderStyle: "dashed",
         borderRadius: 8,
         borderWidth: 1,
     },
     textDisabled: {
-        color: Colors.darkGray,
+        color: Theme.colors.mediumGray,
     },
     icon: {
         height: 38,
@@ -50,7 +49,7 @@ export const commonStyles = StyleSheet.create({
     card: {
         width: "48.8%",
         maxWidth: 250,
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.colors.primary,
         borderRadius: 8,
         padding: 16,
         flexDirection: "row",
@@ -61,6 +60,6 @@ export const commonStyles = StyleSheet.create({
     },
     border: {
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.lightGray,
     },
 });

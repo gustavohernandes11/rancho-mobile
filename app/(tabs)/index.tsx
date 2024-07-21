@@ -2,7 +2,6 @@ import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
-import { ProductionChart } from "components/ProductionChart";
 import { Span } from "components/Span";
 import { useFocus } from "hooks/useFocus";
 import { useGlobalStore } from "hooks/useGlobalStore";
@@ -25,10 +24,10 @@ export default function TabOneScreen() {
     return (
         <ContainerView>
             <Heading>Início</Heading>
-            <Span>
+            {/* <Span>
                 <Heading size="small">Produção do mês atual</Heading>
             </Span>
-            <ProductionChart />
+            <ProductionChart /> */}
             <Span py={4}>
                 {count ? (
                     <InfoCard

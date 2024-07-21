@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Dimensions, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Storage } from "services/StorageService";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { DayItem } from "./index";
 
 export type CellProps<T> = {
@@ -59,16 +59,16 @@ const getStyles = (isSelected: boolean) =>
             gap: 4,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: isSelected ? Colors.green : "transparent",
+            backgroundColor: isSelected ? Theme.colors.primary : "transparent",
             borderRadius: isSelected ? 8 : 0,
         },
         text: {
             ...commonStyles.text,
-            color: isSelected ? Colors.white : commonStyles.text.color,
+            color: isSelected ? Theme.colors.white : commonStyles.text.color,
         },
         bold: {
             ...commonStyles.text,
-            color: isSelected ? Colors.white : commonStyles.text.color,
+            color: isSelected ? Theme.colors.white : commonStyles.text.color,
             fontWeight: "bold",
         },
     });

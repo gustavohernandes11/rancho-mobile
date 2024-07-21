@@ -13,8 +13,8 @@ import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { Storage } from "services/StorageService";
+import Theme from "styles/Theme";
 import { Batch, PopulatedBatch } from "types";
 import { serializeBatchInfo } from "utils/serializers";
 
@@ -64,17 +64,17 @@ export default function ViewBatchDetailsScreen() {
                     <>
                         <IconButton
                             icon="pencil"
-                            iconColor={Colors.white}
+                            iconColor={Theme.colors.white}
                             onPress={handleEdit}
                         />
                         <IconButton
                             icon="delete"
-                            iconColor={Colors.white}
+                            iconColor={Theme.colors.white}
                             onPress={handleDelete}
                         />
                         <IconButton
                             icon={require("../../../assets/images/AddCowIcon.png")}
-                            iconColor={Colors.white}
+                            iconColor={Theme.colors.white}
                             onPress={handleRegisterAnimal}
                         />
                     </>

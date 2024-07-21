@@ -1,6 +1,6 @@
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { IconButton } from "react-native-paper";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 
 export const CloseSelectionButton = () => {
     const clearSelection = useAnimalSelectionStore(
@@ -9,7 +9,7 @@ export const CloseSelectionButton = () => {
 
     return (
         <IconButton
-            iconColor={Colors.white}
+            iconColor={Theme.colors.white}
             icon="close-thick"
             onPress={clearSelection}
             style={{

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { IconButton, Menu } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { CreateAnnotationButton } from "./_menuButtons/CreateAnnotationButton";
 import { CreateBatchButton } from "./_menuButtons/CreateBatchButton";
 import { MoveToBatchButton } from "./_menuButtons/MoveToBatchButton";
@@ -24,7 +24,7 @@ export const MoreOptionsMenu = ({ onSuccess }: MoreOptionsMenu) => {
             onDismiss={closeMoreOptions}
             anchor={
                 <IconButton
-                    iconColor={Colors.white}
+                    iconColor={Theme.colors.white}
                     icon="dots-vertical"
                     onPress={openMoreOptions}
                     style={{ margin: 0 }}

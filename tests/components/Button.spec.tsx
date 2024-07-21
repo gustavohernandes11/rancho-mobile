@@ -1,5 +1,5 @@
 import { Button } from "components/Button";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { render, screen } from "tests/setupTests";
 
 describe("Button", () => {
@@ -22,7 +22,7 @@ describe("Button", () => {
             );
 
             expect(getByText("white_text_title")).toHaveStyle({
-                color: Colors.white,
+                color: Theme.colors.white,
             });
         });
 
@@ -32,7 +32,7 @@ describe("Button", () => {
             );
 
             expect(getByText("red_text_title")).toHaveStyle({
-                color: Colors.red,
+                color: Theme.colors.red,
             });
         });
     });

@@ -9,9 +9,8 @@ import {
     ViewProps,
 } from "react-native";
 import { RadioButton } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 
 interface BannerRadioProps {
     iconSource: ImageSourcePropType;
@@ -47,7 +46,7 @@ export const BannerRadio: React.FC<BannerRadioProps & ViewProps> = ({
                 ) : null}
             </View>
             <RadioButton
-                color={Colors.green}
+                color={Theme.colors.primary}
                 value={value}
                 status={isChecked ? "checked" : "unchecked"}
             />
@@ -61,9 +60,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 8,
-        backgroundColor: Colors.lightGray,
+        backgroundColor: Theme.colors.lightGray,
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.mediumGray,
         padding: 16,
     },
     right: {
@@ -77,8 +76,8 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     title: {
-        fontFamily: Fonts.primaryFamily,
-        color: Colors.text,
+        fontFamily: Theme.fonts.primaryFamily,
+        color: Theme.colors.darkest,
         fontSize: 16,
     },
     description: {

@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { TextProps } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 
 type ParagraphProps = {
     color?: "white" | "black";
@@ -26,6 +26,7 @@ const getStyles = (color: "white" | "black") =>
     StyleSheet.create({
         text: {
             ...commonStyles.text,
-            color: color === "black" ? Colors.darkGray : Colors.white,
+            color:
+                color === "black" ? Theme.colors.darkest : Theme.colors.white,
         },
     });

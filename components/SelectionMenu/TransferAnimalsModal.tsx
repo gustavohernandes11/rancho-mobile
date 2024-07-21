@@ -15,7 +15,7 @@ import {
 } from "react-native";
 import { ModalProps, Portal, RadioButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { Batch } from "types";
 import { showToast } from "utils/showToast";
 
@@ -157,16 +157,16 @@ const styles = StyleSheet.create({
     modal: {
         marginHorizontal: 16,
         marginVertical: "10%",
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.colors.white,
         paddingHorizontal: 16,
         paddingTop: 16,
         borderRadius: 8,
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.mediumGray,
         zIndex: 5,
     },
     description: {
-        color: Colors.darkGray,
+        color: Theme.colors.darkGray,
         fontSize: 12,
     },
     blur: {

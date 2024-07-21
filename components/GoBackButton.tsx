@@ -1,7 +1,7 @@
 import { useNavigation } from "expo-router";
 import React from "react";
 import { IconButton, IconButtonProps } from "react-native-paper";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 
 export const GoBackButton: React.FC<Omit<IconButtonProps, "icon">> = ({
     ...props
@@ -11,7 +11,7 @@ export const GoBackButton: React.FC<Omit<IconButtonProps, "icon">> = ({
     return (
         <IconButton
             size={24}
-            iconColor={Colors.white}
+            iconColor={Theme.colors.white}
             accessibilityLabel="Go back"
             style={{ marginRight: 11, marginLeft: 0 }}
             onPress={navigation.goBack}

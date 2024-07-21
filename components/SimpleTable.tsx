@@ -1,6 +1,6 @@
 import React from "react";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { Item } from "types";
 import { Paragraph } from "./Paragraph";
 
@@ -43,7 +43,7 @@ const Row: React.FC<RowProps<Item>> = ({ item }) => (
 const styles = StyleSheet.create({
     table: {
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.lightGray,
         borderRadius: 8,
         overflow: "hidden",
     },
@@ -51,8 +51,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         flexDirection: "row",
         borderBottomWidth: 1,
-        borderColor: Colors.border,
-        borderRadius: 8,
+        borderColor: Theme.colors.lightGray,
         paddingVertical: 16,
         paddingHorizontal: 8,
         justifyContent: "space-between",

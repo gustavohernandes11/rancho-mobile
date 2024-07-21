@@ -1,6 +1,6 @@
 import React from "react";
 import { View } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 
 type SkeletonProps = {
     width?: number | "100%";
@@ -20,7 +20,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
     return (
         <View
             style={{
-                backgroundColor: Colors.lightGray,
+                backgroundColor: Theme.colors.lightGray,
                 flex,
                 height,
                 width,

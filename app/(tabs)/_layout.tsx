@@ -1,8 +1,7 @@
 import { Tabs } from "expo-router";
 
 import { Image, ImageStyle, StyleProp } from "react-native";
-import Colors from "styles/Colors";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 
 const iconSize: StyleProp<ImageStyle> = {
     height: 28,
@@ -17,46 +16,51 @@ export default function TabLayout() {
                 headerTitle: () => (
                     <Image
                         style={{
-                            height: 25,
+                            height: 21.2,
                             width: 100,
                         }}
-                        source={require("../../assets/images/Logo.png")}
+                        source={require("../../assets/images/Logo_small_green.png")}
                         alt={"Logo"}
                     />
                 ),
-
-                headerTintColor: Colors.white,
+                headerTintColor: Theme.colors.darkest,
                 headerTitleStyle: {
-                    fontFamily: Fonts.primaryFamily,
+                    fontFamily: Theme.fonts.primaryFamily,
                 },
-                tabBarActiveTintColor: Colors.white,
-                tabBarInactiveTintColor: Colors.surface,
+                headerStyle: {
+                    backgroundColor: Theme.colors.lightest,
+                },
+
+                tabBarLabelStyle: {
+                    fontSize: 14,
+                    fontFamily: Theme.fonts.primaryFamily,
+                },
+
+                tabBarActiveTintColor: Theme.colors.white,
+                tabBarInactiveTintColor: Theme.colors.primary,
+
                 tabBarStyle: {
-                    overflow: "hidden",
-                    backgroundColor: Colors.green,
+                    backgroundColor: Theme.colors.primary,
                     height: 60,
                 },
-                tabBarItemStyle: { paddingVertical: 4 },
-                headerStyle: {
-                    backgroundColor: Colors.green,
-                },
-                tabBarLabelStyle: {
-                    fontSize: 12,
-                    color: Colors.white,
-                    fontFamily: Fonts.primaryFamily,
-                },
-                tabBarActiveBackgroundColor: Colors.darkGreen,
-                tabBarInactiveBackgroundColor: Colors.green,
+                tabBarItemStyle: { paddingVertical: 2 },
+
+                tabBarActiveBackgroundColor: Theme.colors.primary,
+                tabBarInactiveBackgroundColor: Theme.colors.lightest,
             }}
         >
             <Tabs.Screen
                 name="index"
                 options={{
                     tabBarLabel: "Início",
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={require("../../assets/images/HouseIcon.png")}
+                            source={
+                                focused
+                                    ? require("../../assets/images/HouseIcon.png")
+                                    : require("../../assets/images/HouseIcon_green.png")
+                            }
                             alt={"home page"}
                         />
                     ),
@@ -66,10 +70,14 @@ export default function TabLayout() {
                 name="animals"
                 options={{
                     tabBarLabel: "Rebanho",
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={require("../../assets/images/CowIcon.png")}
+                            source={
+                                focused
+                                    ? require("../../assets/images/CowIcon.png")
+                                    : require("../../assets/images/CowIcon_green.png")
+                            }
                             alt={"animals page"}
                         />
                     ),
@@ -79,10 +87,14 @@ export default function TabLayout() {
                 name="batches"
                 options={{
                     tabBarLabel: "Lotes",
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={require("../../assets/images/CowFolderIcon.png")}
+                            source={
+                                focused
+                                    ? require("../../assets/images/CowFolderIcon.png")
+                                    : require("../../assets/images/CowFolderIcon_green.png")
+                            }
                             alt={"batches page"}
                         />
                     ),
@@ -92,10 +104,14 @@ export default function TabLayout() {
                 name="production"
                 options={{
                     tabBarLabel: "Produção",
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={require("../../assets/images/ChartIcon.png")}
+                            source={
+                                focused
+                                    ? require("../../assets/images/ChartIcon.png")
+                                    : require("../../assets/images/ChartIcon_green.png")
+                            }
                             alt={"production page"}
                         />
                     ),
@@ -105,10 +121,14 @@ export default function TabLayout() {
                 name="annotations"
                 options={{
                     tabBarLabel: "Anotações",
-                    tabBarIcon: () => (
+                    tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={require("../../assets/images/BookIcon.png")}
+                            source={
+                                focused
+                                    ? require("../../assets/images/BookIcon.png")
+                                    : require("../../assets/images/BookIcon_green.png")
+                            }
                             alt={"annotation page"}
                         />
                     ),

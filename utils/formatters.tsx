@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import moment from "moment";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { AnimalStatusOptions, AnnotationTypeOption } from "types";
 
 export const formatAge = (isoString: string): string => {
@@ -48,13 +48,13 @@ export const getGenderIcon = (gender: "F" | "M") =>
     gender === "M" ? (
         <FontAwesome
             accessibilityLabel="Mars icon"
-            color={Colors.blue}
+            color={Theme.colors.blue}
             name="mars"
         />
     ) : (
         <FontAwesome
             accessibilityLabel="Jupter icon"
-            color={Colors.red}
+            color={Theme.colors.red}
             name="venus"
         />
     );

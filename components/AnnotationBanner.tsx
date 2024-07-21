@@ -8,9 +8,8 @@ import {
     View,
     ViewProps,
 } from "react-native";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 import { AnnotationTypeOption } from "types";
 import { formatAnnotationType, formatDateToShortPtBR } from "utils/formatters";
 import { Paragraph } from "./Paragraph";
@@ -71,9 +70,9 @@ const styles = StyleSheet.create({
         gap: 8,
         padding: 16,
         borderRadius: 8,
-        backgroundColor: Colors.lightGray,
+        backgroundColor: Theme.colors.lightest,
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.lightGray,
     },
     top: {
         flex: 1,
@@ -89,8 +88,8 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     title: {
-        fontFamily: Fonts.primaryFamily,
-        color: Colors.text,
+        fontFamily: Theme.fonts.primaryFamily,
+        color: Theme.colors.darkest,
         fontSize: 16,
     },
     date: {

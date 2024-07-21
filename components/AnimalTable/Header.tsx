@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { DataTable } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 
 export const Header = () => {
     return (
@@ -40,7 +40,7 @@ export const Header = () => {
 const styles = StyleSheet.create({
     tableHeader: {
         borderBottomWidth: 1,
-        borderColor: Colors.border,
-        backgroundColor: Colors.lightGray,
+        borderColor: Theme.colors.lightGray,
+        backgroundColor: Theme.colors.lightest,
     },
 });

@@ -2,9 +2,8 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 import { getInputBorderColor } from "utils/conditionalStyles";
 import { Label } from "./Label";
 
@@ -21,16 +20,16 @@ export const DatePicker: React.FC<
         <View style={styles.inputContainer}>
             {!!label ? <Label>{label}</Label> : null}
             <DatePickerInput
-                iconColor={Colors.darkGray}
+                iconColor={Theme.colors.darkGray}
                 mode="outlined"
                 outlineStyle={styles.outline}
-                outlineColor={Colors.border}
-                activeOutlineColor={Colors.darkGray}
-                textColor={Colors.darkGray}
+                outlineColor={Theme.colors.mediumGray}
+                activeOutlineColor={Theme.colors.darkGray}
+                textColor={Theme.colors.darkGray}
                 startYear={1990}
                 endYear={2025}
                 locale="pt"
-                placeholderTextColor={Colors.gray}
+                placeholderTextColor={Theme.colors.mediumGray}
                 style={styles.input}
                 withModal={false}
                 {...props}
@@ -51,8 +50,8 @@ const getStyles = (hasError: boolean) =>
             borderRadius: 8,
             height: 50,
             fontSize: 14,
-            fontFamily: Fonts.primaryFamily,
-            backgroundColor: Colors.lightGray,
+            fontFamily: Theme.fonts.primaryFamily,
+            backgroundColor: Theme.colors.lightGray,
         },
         outline: {
             ...commonStyles.inputAspect,

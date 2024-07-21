@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useCallback, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { MemoizedCell } from "./Cell";
 import { MonthAndYearSelect } from "./MonthAndYearSelect";
 
@@ -73,7 +73,7 @@ export const MonthProductionCalendar: React.FC<
 
 const styles = StyleSheet.create({
     calendar: {
-        borderColor: Colors.border,
+        borderColor: Theme.colors.mediumGray,
         borderRadius: 8,
         elevation: 1,
         padding: 8,

@@ -104,6 +104,7 @@ export default function ViewAnimalsScreen() {
                             onPress={() =>
                                 router.push("/(screens)/animals/add")
                             }
+                            type="light"
                         />
                     ),
                 }}

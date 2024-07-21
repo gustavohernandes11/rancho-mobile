@@ -5,7 +5,7 @@ import {
     StyleSheet,
     View,
 } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 
 type CustomLoadingProps = {
     height?: number;
@@ -19,7 +19,11 @@ export const Loading: React.FC<ActivityIndicatorProps & CustomLoadingProps> = ({
 
     return (
         <View style={styles.container}>
-            <ActivityIndicator color={Colors.green} size={30} {...props} />
+            <ActivityIndicator
+                color={Theme.colors.primary}
+                size={30}
+                {...props}
+            />
         </View>
     );
 };

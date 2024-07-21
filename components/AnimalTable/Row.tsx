@@ -3,7 +3,7 @@ import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { Animal } from "types";
 import { formatAge, getGenderIcon } from "utils/formatters";
 import { Cell } from "./Cell";
@@ -53,8 +53,8 @@ export const Row: React.FC<RowProps> = memo(
                         </Cell>
                         <Cell flex={1}>
                             <Checkbox
-                                color={Colors.green}
-                                uncheckedColor={Colors.gray}
+                                color={Theme.colors.primary}
+                                uncheckedColor={Theme.colors.mediumGray}
                                 status={isChecked ? "checked" : "unchecked"}
                                 onPress={onCheck}
                             />
@@ -69,10 +69,10 @@ export const Row: React.FC<RowProps> = memo(
 
 const styles = StyleSheet.create({
     checked: {
-        backgroundColor: Colors.surface,
+        backgroundColor: Theme.colors.lightest,
     },
     row: {
         borderTopWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.lightGray,
     },
 });

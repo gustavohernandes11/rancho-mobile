@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { getInputBorderColor } from "utils/conditionalStyles";
 import { Label } from "./Label";
 
@@ -24,11 +24,11 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
             <TextInput
                 mode="outlined"
                 outlineStyle={styles.outline}
-                outlineColor={Colors.border}
-                activeOutlineColor={Colors.black}
-                textColor={Colors.darkGray}
-                placeholderTextColor={Colors.gray}
-                cursorColor={Colors.darkGray}
+                outlineColor={Theme.colors.mediumGray}
+                activeOutlineColor={Theme.colors.darkest}
+                textColor={Theme.colors.darkGray}
+                placeholderTextColor={Theme.colors.mediumGray}
+                cursorColor={Theme.colors.darkGray}
                 error={!!errorText}
                 multiline={multiline}
                 style={styles.input}

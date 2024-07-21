@@ -2,7 +2,7 @@ import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import React from "react";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { confirmDeleteAll } from "../confirmDeleteAll";
 
 type DeleteAnimalsButtonProps = {
@@ -22,7 +22,7 @@ export const DeleteAnimalsButton = ({
 
     return (
         <IconButton
-            iconColor={Colors.white}
+            iconColor={Theme.colors.white}
             icon="delete"
             onPress={() => confirmDeleteAll(selectedIDs, handleDeleteMany)}
             style={{ margin: 0 }}

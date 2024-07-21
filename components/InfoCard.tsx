@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 
@@ -33,9 +33,9 @@ const styles = StyleSheet.create({
         gap: 0,
         flexDirection: "column",
         alignItems: "flex-start",
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.colors.white,
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.lightGray,
         elevation: 0,
     },
 });

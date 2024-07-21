@@ -1,17 +1,16 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Searchbar, SearchbarProps } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 
 export const SearchBar: React.FC<SearchbarProps> = ({ ...props }) => {
     return (
         <Searchbar
             style={styles.searchbar}
             inputStyle={styles.input}
-            iconColor={Colors.darkGray}
-            placeholderTextColor={Colors.darkGray}
+            iconColor={Theme.colors.darkGray}
+            placeholderTextColor={Theme.colors.darkGray}
             {...props}
         />
     );
@@ -23,10 +22,11 @@ const styles = StyleSheet.create({
         height: 45,
         ...commonStyles.inputAspect,
         borderWidth: 1,
+        borderRadius: 32,
     },
     input: {
-        fontFamily: Fonts.primaryFamily,
-        color: Colors.darkGray,
+        fontFamily: Theme.fonts.primaryFamily,
+        color: Theme.colors.darkGray,
         fontSize: 14,
         minHeight: "auto",
     },

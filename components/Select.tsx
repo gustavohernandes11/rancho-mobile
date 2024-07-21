@@ -4,8 +4,8 @@ import { StyleSheet, Text, View } from "react-native";
 import SelectDropdown, {
     SelectDropdownProps,
 } from "react-native-select-dropdown";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { Item } from "types";
 import { getInputBorderColor } from "utils/conditionalStyles";
 import { Label } from "./Label";
@@ -58,7 +58,7 @@ export const Select: React.FC<
                 search={search}
                 searchInputStyle={{
                     borderBottomWidth: 1,
-                    borderBottomColor: Colors.border,
+                    borderBottomColor: Theme.colors.mediumGray,
                 }}
                 searchPlaceHolder={searchPlaceHolder}
                 {...props}
@@ -85,7 +85,7 @@ const getStyles = (size: "medium" | "small", hasError: boolean) =>
         },
         row: {
             borderBottomWidth: 1,
-            borderColor: Colors.border,
+            borderColor: Theme.colors.mediumGray,
             padding: 8,
             height: getSelectHeight(size),
         },

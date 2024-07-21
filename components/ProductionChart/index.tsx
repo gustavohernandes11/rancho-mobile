@@ -6,7 +6,7 @@ import { Dimensions, StyleSheet, View } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import LineChart from "react-native-simple-line-chart";
 import { Storage } from "services/StorageService";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { DayProduction } from "types/Production";
 import { formatDateToShortPtBR } from "utils/formatters";
 import { Point } from "./Point";
@@ -55,13 +55,13 @@ export function ProductionChart() {
                             {
                                 data,
                                 activePointConfig: {
-                                    color: Colors.darkGreen,
+                                    color: Theme.colors.primary,
                                     showVerticalLine: true,
                                 },
-                                lineColor: Colors.green,
+                                lineColor: Theme.colors.primary,
                                 curve: "linear",
                                 endPointConfig: {
-                                    color: Colors.green,
+                                    color: Theme.colors.primary,
                                     radius: 5,
                                     animated: true,
                                 },
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         borderWidth: 1,
         borderRadius: 8,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.mediumGray,
         padding: 8,
         overflow: "hidden",
     },

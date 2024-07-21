@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 
 const daysOfWeek = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
@@ -23,6 +23,6 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: "center",
         padding: 4,
-        color: Colors.darkGray,
+        color: Theme.colors.darkGray,
     },
 });

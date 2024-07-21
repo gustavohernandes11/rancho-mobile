@@ -9,9 +9,8 @@ import {
     View,
     ViewProps,
 } from "react-native";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 
 interface BannerProps {
     iconSource: ImageSourcePropType;
@@ -65,9 +64,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 8,
-        backgroundColor: Colors.lightGray,
+        backgroundColor: Theme.colors.lightest,
         borderWidth: 1,
-        borderColor: Colors.border,
+        borderColor: Theme.colors.lightGray,
         padding: 16,
     },
     right: {
@@ -81,8 +80,8 @@ const styles = StyleSheet.create({
         gap: 4,
     },
     title: {
-        fontFamily: Fonts.primaryFamily,
-        color: Colors.text,
+        fontFamily: Theme.fonts.primaryFamily,
+        color: Theme.colors.darkest,
         fontSize: 16,
     },
     description: {

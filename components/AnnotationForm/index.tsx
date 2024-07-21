@@ -117,7 +117,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
             ) : null}
             <Span justify="flex-end" py={16}>
                 <Button
-                    type="light"
+                    type="secondary"
                     title="Cancelar"
                     onPress={navigation.goBack}
                 />

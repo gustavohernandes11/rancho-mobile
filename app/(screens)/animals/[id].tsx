@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { Animal, PopulatedAnimal } from "types";
 import { serializeAnimalInfo } from "utils/serializers";
 
@@ -47,12 +47,12 @@ export default function ViewAnimalDetailsScreen() {
                     <>
                         <IconButton
                             icon="pencil"
-                            iconColor={Colors.white}
+                            iconColor={Theme.colors.white}
                             onPress={handleEdit}
                         />
                         <IconButton
                             icon="delete"
-                            iconColor={Colors.white}
+                            iconColor={Theme.colors.white}
                             onPress={handleDelete}
                         />
                     </>

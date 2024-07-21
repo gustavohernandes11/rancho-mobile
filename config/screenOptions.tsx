@@ -1,14 +1,13 @@
 import { GoBackButton } from "components/GoBackButton";
-import Colors from "styles/Colors";
-import Fonts from "styles/Fonts";
+import Theme from "styles/Theme";
 
 export const screenOptions: any = {
     headerStyle: {
-        backgroundColor: Colors.green,
+        backgroundColor: Theme.colors.primary,
     },
-    headerTintColor: Colors.white,
+    headerTintColor: Theme.colors.white,
     headerTitleStyle: {
-        fontFamily: Fonts.primaryFamily,
+        fontFamily: Theme.fonts.primaryFamily,
     },
     headerLeft: () => <GoBackButton />,
 };

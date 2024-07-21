@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { RadioButton } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { Label } from "./Label";
 
 interface RadioInputProps {
@@ -29,12 +29,12 @@ export const RadioInput: React.FC<RadioInputProps> = ({
                         position="leading"
                         labelStyle={commonStyles.text}
                         uncheckedColor={
-                            errorText ? Colors.red : Colors.darkGray
+                            errorText ? Theme.colors.red : Theme.colors.darkGray
                         }
                         key={index}
                         label={option.label}
                         value={option.value}
-                        color={Colors.green}
+                        color={Theme.colors.primary}
                         style={styles.item}
                         status={
                             value === option.value ? "checked" : "unchecked"

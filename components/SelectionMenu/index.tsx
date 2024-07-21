@@ -2,7 +2,7 @@ import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { StyleSheet, View, ViewProps } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { Actions } from "./Actions";
 import { CloseSelectionButton } from "./_iconButtons/CloseSelectionButton";
 
@@ -39,8 +39,8 @@ const getStyles = (showActions: boolean) =>
             flex: 1,
             borderRadius: 8,
             borderWidth: 1,
-            borderColor: Colors.border,
-            backgroundColor: Colors.green,
+            borderColor: Theme.colors.mediumGray,
+            backgroundColor: Theme.colors.primary,
             padding: 8,
             ...(!showActions && { padding: 16 }),
         },

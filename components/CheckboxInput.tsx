@@ -1,8 +1,8 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { Checkbox } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { Label } from "./Label";
 
 interface CheckboxInputProps {
@@ -42,9 +42,9 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
                                 : "unchecked"
                         }
                         onPress={() => handleCheckboxChange(option.value)}
-                        color={Colors.green}
+                        color={Theme.colors.primary}
                         labelStyle={commonStyles.text}
-                        uncheckedColor={Colors.darkGray}
+                        uncheckedColor={Theme.colors.mediumGray}
                         position="leading"
                         style={styles.item}
                     />

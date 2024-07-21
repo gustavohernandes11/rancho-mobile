@@ -1,0 +1,20 @@
+export default {
+    colors: {
+        // primary: "#407d4a",
+        primary: "#407d4a",
+        lightGreen: "#56A763",
+        darkest: "#1d1f1d",
+        darkGray: "#3a3d3a",
+        mediumGray: "#696969",
+        lightGray: "#cccccc",
+        lightest: "#f0f0f0",
+        white: "#f9f9f9",
+        blue: "#568aa7",
+        purple: "#704e81",
+        red: "#c83c3c",
+        cian: "#20b2aa",
+    },
+    fonts: {
+        primaryFamily: "OpenSans",
+    },
+};

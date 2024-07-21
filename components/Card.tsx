@@ -3,11 +3,11 @@ import { LinkProps } from "expo-router/build/link/Link";
 import React from "react";
 import { Image, ImageURISource, StyleSheet, Text } from "react-native";
 import { TouchableRipple } from "react-native-paper";
-import Colors from "styles/Colors";
 import { commonStyles } from "styles/Common";
+import Theme from "styles/Theme";
 import { Span } from "./Span";
 
-type ColorOptions = "green" | "blue" | "purple" | "cian";
+type ColorOptions = "primary" | "blue" | "purple" | "cian";
 interface CardProps {
     title: string;
     alt: string;
@@ -20,7 +20,7 @@ export const Card: React.FC<LinkProps & CardProps> = ({
     title,
     alt,
     iconSource,
-    color = "green",
+    color = "primary",
     href,
     ...props
 }) => {
@@ -46,13 +46,13 @@ const getStyles = (color: ColorOptions) =>
     StyleSheet.create({
         container: {
             ...commonStyles.card,
-            backgroundColor: Colors[color],
+            backgroundColor: Theme.colors[color],
         },
         title: {
             ...commonStyles.text,
             fontSize: 16,
             flexShrink: 1,
-            color: Colors.white,
+            color: Theme.colors.white,
             marginTop: 4,
         },
     });

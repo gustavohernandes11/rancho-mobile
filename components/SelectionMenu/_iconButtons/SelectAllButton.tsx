@@ -2,7 +2,7 @@ import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React from "react";
 import { IconButton } from "react-native-paper";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 
 export const SelectAllButton = () => {
     const animals = useGlobalStore(state => state.animals);
@@ -13,7 +13,7 @@ export const SelectAllButton = () => {
     const handleSelectAll = () => setSelectedIDs(animals.map(al => al.id));
     return (
         <IconButton
-            iconColor={Colors.white}
+            iconColor={Theme.colors.white}
             icon="select-all"
             onPress={handleSelectAll}
             style={{ margin: 0 }}

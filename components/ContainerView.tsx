@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, View, ViewProps } from "react-native";
-import Colors from "styles/Colors";
+import Theme from "styles/Theme";
 import { Loading } from "./Loading";
 
 interface ContainerViewType {
@@ -37,7 +37,7 @@ export const ContainerView: React.FC<ContainerViewType & ViewProps> = ({
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: Colors.background,
+        backgroundColor: Theme.colors.white,
         flex: 1,
     },
     inner: {

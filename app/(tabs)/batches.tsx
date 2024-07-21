@@ -30,6 +30,7 @@ export default function ViewBatchesScreen() {
                             onPress={() =>
                                 router.push("/(screens)/batches/add")
                             }
+                            type="light"
                         />
                     ),
                 }}
