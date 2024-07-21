@@ -31,6 +31,8 @@ export const MaternityField: React.FC<MaternityFieldProps> = ({ formik }) => {
                 formik.setFieldValue("maternityID", Number(option.value))
             }
             label="Maternidade"
+            searchPlaceHolder="Busque por nome"
+            search={true}
         />
     );
 };

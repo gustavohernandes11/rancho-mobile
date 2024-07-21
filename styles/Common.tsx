@@ -18,7 +18,7 @@ export const commonStyles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: Colors.white,
         borderColor: Colors.border,
-        borderWidth: 2,
+        borderWidth: 1,
         fontFamily: Fonts.primaryFamily,
     },
     error: {

@@ -22,6 +22,8 @@ interface SelectProps {
     defaultValue?: string;
     defaultButtonText?: string;
     size?: "medium" | "small";
+    search?: boolean;
+    searchPlaceHolder?: string;
 }
 export const Select: React.FC<
     SelectProps & Omit<SelectDropdownProps, "data">
@@ -32,6 +34,8 @@ export const Select: React.FC<
     label,
     errorText,
     size = "medium",
+    search = false,
+    searchPlaceHolder,
     ...props
 }) => {
     const styles = getStyles(size, !!errorText);
@@ -51,6 +55,12 @@ export const Select: React.FC<
                 onSelect={onSelect}
                 buttonTextAfterSelection={selectedItem => selectedItem.key}
                 rowTextForSelection={(item: Item) => item.key}
+                search={search}
+                searchInputStyle={{
+                    borderBottomWidth: 1,
+                    borderBottomColor: Colors.border,
+                }}
+                searchPlaceHolder={searchPlaceHolder}
                 {...props}
             />
             {errorText ? (
