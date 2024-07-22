@@ -2,6 +2,7 @@ import { AddAnimal, Animal, PopulatedAnimal, UpdateAnimal } from "./Animal";
 import { AddAnnotation, Annotation, UpdateAnnotation } from "./Annotation";
 import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
+import { MonthDetails } from "./MonthDetails";
 import { DayProduction } from "./Production";
 
 export type OrderByOptions = "alfabetic" | "age";
@@ -29,6 +30,7 @@ export interface StorageServicesMethods {
     getPopulatedBatch(batchID: number): Promise<PopulatedBatch>;
     getDayProduction(date: Date): Promise<DayProduction | null>;
     getAnnotation(id: number): Promise<Annotation | null>;
+    getMonthDetails(month: Date): Promise<MonthDetails | null>;
 
     listAnimals(query?: AnimalQueryOptions): Promise<Animal[]>;
     listBatches(): Promise<Batch[]>;
@@ -39,6 +41,7 @@ export interface StorageServicesMethods {
     updateAnimal(updateData: UpdateAnimal | UpdateAnimal[]): Promise<boolean>;
     updateBatch(updateData: UpdateBatch): Promise<boolean>;
     upsertDayProduction(production: DayProduction): Promise<boolean>;
+    upsertMonthDetails(monthDetails: MonthDetails): Promise<boolean>;
     updateAnnotation(
         updateData: UpdateAnnotation | UpdateAnnotation[]
     ): Promise<boolean>;

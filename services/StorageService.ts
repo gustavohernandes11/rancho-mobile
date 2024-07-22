@@ -19,11 +19,20 @@ import {
     UpdateBatch,
 } from "types";
 
+import { MonthDetails } from "types/MonthDetails";
+import { formatDateToISO } from "utils/formatters";
 import { SqliteRepository } from "../database/repositories/SqliteRepository";
 
 export class StorageServices implements StorageServicesMethods {
     constructor(private readonly DbRepository: StorageRepository) {
         this.DbRepository.initDatabase();
+    }
+    getMonthDetails(month: Date): Promise<MonthDetails | null> {
+        return this.DbRepository.getMonthDetails(month);
+    }
+
+    upsertMonthDetails(monthDetails: MonthDetails): Promise<boolean> {
+        return this.DbRepository.upsertMonthDetails(monthDetails);
     }
 
     count(): Promise<Count> {
@@ -167,7 +176,7 @@ export class StorageServices implements StorageServicesMethods {
             date <= endOfMonth;
             date.setDate(date.getDate() + 1)
         ) {
-            daysInMonth.push(moment(date).format("YYYY-MM-DD"));
+            daysInMonth.push(formatDateToISO(date));
         }
 
         const productionMap = new Map(

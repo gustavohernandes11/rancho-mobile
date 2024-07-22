@@ -19,7 +19,8 @@ import {
     UpdateAnnotation,
     UpdateBatch,
 } from "types";
-import { formatDateToISO } from "utils/formatters";
+import { MonthDetails } from "types/MonthDetails";
+import { formatDateToISO, formatMonthToISO } from "utils/formatters";
 import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
 
 export class SqliteRepository implements StorageRepository {
@@ -65,6 +66,7 @@ export class SqliteRepository implements StorageRepository {
             this.ensureBatchTableExists(),
             this.ensureProductionTableExists(),
             this.ensureAnnotationTableExists(),
+            this.ensureMonthlyDetailsTableExists(),
             this.alterAnimalTableToAddStatus(),
         ]);
     }
@@ -122,6 +124,22 @@ export class SqliteRepository implements StorageRepository {
 		  );
 		`;
 
+        await this.execute(query, []);
+    };
+
+    private ensureMonthlyDetailsTableExists = async () => {
+        const query = `
+            CREATE TABLE IF NOT EXISTS MonthlyDetails (
+                month TEXT PRIMARY KEY,
+                fatPorcentage REAL,
+                proteinPorcentage REAL,
+                totalBacterial INTEGER,
+                totalSomaticCell INTEGER,
+                pricePerLiter REAL,
+                lactosePorcentage REAL,
+                observation TEXT
+            );
+        `;
         await this.execute(query, []);
     };
 
@@ -218,6 +236,50 @@ export class SqliteRepository implements StorageRepository {
         return Promise.all(operations)
             .then(() => true)
             .catch(() => false);
+    }
+    async upsertMonthDetails(monthDetails: MonthDetails): Promise<boolean> {
+        const formattedMonth = formatMonthToISO(
+            moment(monthDetails.month).toDate()
+        );
+        const query = `
+            INSERT INTO MonthlyDetails (month, fatPorcentage, proteinPorcentage, totalBacterial, totalSomaticCell, pricePerLiter, lactosePorcentage, observation)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT(month) DO UPDATE SET
+                fatPorcentage = excluded.fatPorcentage,
+                proteinPorcentage = excluded.proteinPorcentage,
+                totalBacterial = excluded.totalBacterial,
+                totalSomaticCell = excluded.totalSomaticCell,
+                pricePerLiter = excluded.pricePerLiter,
+                lactosePorcentage = excluded.lactosePorcentage,
+                observation = excluded.observation;
+        `;
+        const parsed = nullifyFalsyFields(monthDetails);
+
+        const params = [
+            formattedMonth,
+            parsed.fatPorcentage,
+            parsed.proteinPorcentage,
+            parsed.totalBacterial,
+            parsed.totalSomaticCell,
+            parsed.pricePerLiter,
+            parsed.lactosePorcentage,
+            parsed.observation,
+        ];
+
+        return this.execute(query, params)
+            .then(() => true)
+            .catch(() => false);
+    }
+
+    async getMonthDetails(month: Date): Promise<MonthDetails | null> {
+        const query = `
+            SELECT month, fatPorcentage, proteinPorcentage, totalBacterial, totalSomaticCell, pricePerLiter, lactosePorcentage, observation
+            FROM MonthlyDetails
+            WHERE month = ?
+        `;
+        const params = [formatMonthToISO(month)];
+
+        return await this.getOne<MonthDetails>(query, params);
     }
 
     async insertAnimal(animal: AddAnimal): Promise<number | undefined> {
@@ -558,7 +620,7 @@ export class SqliteRepository implements StorageRepository {
 
     async upsertDayProduction(production: DayProduction): Promise<boolean> {
         const { day, quantity } = production;
-        const formattedDay = day.split("T")[0];
+        const formattedDay = formatDateToISO(moment(day).toDate());
         const query = `
 		INSERT INTO DayProduction (day, quantity)
 		VALUES (?, ?)

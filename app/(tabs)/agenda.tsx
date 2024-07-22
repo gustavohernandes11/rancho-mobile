@@ -1,14 +1,15 @@
 import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import { Input } from "components/Input";
+import { MonthDetailsForm } from "components/MonthDetailsForm";
 import { MonthProductionCalendar } from "components/MonthProductionCalendar";
+import { ProductionForm } from "components/ProductionForm";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { Stack } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
-import { formatDateToLongPtBR } from "utils/formatters";
+import { formatDateToLongPtBR, formatMonthToISO } from "utils/formatters";
 
 export default function ViewAgendaScreen() {
     const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
@@ -16,6 +17,13 @@ export default function ViewAgendaScreen() {
     const handleSelectDate = (date: Date) => {
         setSelectedDate(date);
     };
+
+    const dayDetailsLabel = `Informações do dia ${formatDateToLongPtBR(
+        selectedDate
+    )}`;
+    const monthDetailsLabel = `Informações do mês de ${moment(
+        selectedDate
+    ).format("MMMM/YYYY")}`;
 
     return (
         <ContainerView>
@@ -47,17 +55,14 @@ export default function ViewAgendaScreen() {
                 selectedDate={selectedDate}
             />
             <Span direction="column">
-                <Heading>{`Informações do dia ${formatDateToLongPtBR(
-                    selectedDate
-                )}`}</Heading>
-                <Input label="Litros de leite produzidos" />
+                <Heading>{dayDetailsLabel}</Heading>
+                <ProductionForm
+                    selectedDate={selectedDate}
+                    onSubmitCallback={() => {}}
+                />
             </Span>
             <Span direction="column">
-                <Heading>
-                    {`Informações do mês de ${moment(selectedDate).format(
-                        "MMMM/YYYY"
-                    )}`}
-                </Heading>
+                <Heading>{monthDetailsLabel}</Heading>
                 <SimpleTable
                     data={[
                         { key: "Total de litros produzidos", value: "5689" },
@@ -70,21 +75,7 @@ export default function ViewAgendaScreen() {
             </Span>
             <Span direction="column">
                 <Heading size="small">Qualidade do leite</Heading>
-                <Span my={0}>
-                    <Input label="Gordura (%)" />
-                    <Input label="Proteína (%)" />
-                </Span>
-                <Span my={0}>
-                    <Input label="Contagem bacteriana total (CBT)" />
-                    <Input label="Contagem células somáticas (CCS)" />
-                </Span>
-                <Span my={0} justify="flex-end">
-                    <Input label="Preço de venda por litro" />
-                    <Input label="Nível de lactose" />
-                </Span>
-                <Span my={0}>
-                    <Input multiline label="Observação" />
-                </Span>
+                <MonthDetailsForm month={formatMonthToISO(selectedDate)} />
             </Span>
         </ContainerView>
     );

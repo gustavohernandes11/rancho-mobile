@@ -8,6 +8,7 @@ import {
 import { AddAnnotation, Annotation, UpdateAnnotation } from "./Annotation";
 import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
+import { MonthDetails } from "./MonthDetails";
 import { DayProduction } from "./Production";
 import {
     AnnotationQueryOptions,
@@ -63,4 +64,7 @@ export interface StorageRepository {
 
     nullifyParentalIds(animalID: number | number[]): Promise<boolean>;
     unlinkAnimalFromAnnotations(animalID: number | number[]): Promise<boolean>;
+
+    upsertMonthDetails(monthDetails: MonthDetails): Promise<boolean>;
+    getMonthDetails(month: Date): Promise<MonthDetails | null>;
 }

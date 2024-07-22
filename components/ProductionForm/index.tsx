@@ -1,5 +1,5 @@
-import { Button } from "components/Button";
 import { Input } from "components/Input";
+import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { FormikHelpers, useFormik } from "formik";
 import React, { useEffect } from "react";
@@ -8,11 +8,11 @@ import {
     NativeSyntheticEvent,
     TextInputSubmitEditingEventData,
 } from "react-native";
+import { Icon } from "react-native-paper";
 import { Storage } from "services/StorageService";
+import Theme from "styles/Theme";
 import { DayProduction } from "types";
-import { formatDateToLongPtBR } from "utils/formatters";
 import { getFieldError } from "utils/forms";
-import { showToast } from "utils/showToast";
 import { initialValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
@@ -30,8 +30,8 @@ const handleSubmit = async (
 ) => {
     Storage.upsertDayProduction(production)
         .then(() => {
-            showToast("Produção inserida com sucesso.");
-            formikHelpers.resetForm();
+            // showToast("Produção inserida com sucesso.");
+            formikHelpers.setSubmitting(false);
             onSubmitCallback();
         })
         .catch(() => {
@@ -74,27 +74,34 @@ export const ProductionForm: React.FC<ProductionFormProps> = ({
         formik.submitForm();
     };
 
-    const quantityLabel = `Litros produzidos em ${formatDateToLongPtBR(
-        selectedDate
-    )}`;
-
     return (
         <Span direction="column">
             <Input
-                label={quantityLabel}
+                label="Litros de leite produzidos"
                 keyboardType="numeric"
                 value={formik.values.quantity.toString()}
                 onChangeText={handleChangeText}
                 errorText={getFieldError("quantity", formik)}
                 returnKeyType="done"
+                onBlur={formik.submitForm}
                 onSubmitEditing={handleSubmitEditing}
             />
-            <Span direction="row" justify="flex-end">
-                <Button
-                    onPress={formik.isSubmitting ? () => {} : formik.submitForm}
-                    title="Salvar"
-                />
-            </Span>
+            {formik.dirty ? (
+                <Span>
+                    {formik.isSubmitting ? (
+                        <Paragraph color="green">Salvando dados...</Paragraph>
+                    ) : (
+                        <>
+                            <Icon
+                                size={16}
+                                color={Theme.colors.primary}
+                                source="check"
+                            />
+                            <Paragraph color="green">Salvo</Paragraph>
+                        </>
+                    )}
+                </Span>
+            ) : null}
         </Span>
     );
 };
