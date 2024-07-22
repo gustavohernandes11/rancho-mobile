@@ -6,14 +6,16 @@ import Theme from "styles/Theme";
 
 type ParagraphProps = {
     color?: "white" | "black";
+    secondary?: boolean;
 };
 
 export const Paragraph: React.FC<TextProps<any> & ParagraphProps> = ({
     children,
     color = "black",
+    secondary = false,
     ...props
 }) => {
-    const styles = getStyles(color);
+    const styles = getStyles(color, secondary);
 
     return (
         <Text style={styles.text} {...props}>
@@ -22,10 +24,10 @@ export const Paragraph: React.FC<TextProps<any> & ParagraphProps> = ({
     );
 };
 
-const getStyles = (color: "white" | "black") =>
+const getStyles = (color: "white" | "black", secondary: boolean) =>
     StyleSheet.create({
         text: {
-            ...commonStyles.text,
+            ...(secondary ? commonStyles.secondaryText : commonStyles.text),
             color:
                 color === "black" ? Theme.colors.darkest : Theme.colors.white,
         },

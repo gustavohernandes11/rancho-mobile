@@ -1,6 +1,5 @@
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import { Label } from "components/Label";
 import { PageSkeleton } from "components/PageSkeleton";
 import { Paragraph } from "components/Paragraph";
 import { SimpleTable } from "components/SimpleTable";
@@ -88,7 +87,6 @@ export default function ViewAnnotationDetailsScreen() {
             ) : (
                 <>
                     <Span direction="column">
-                        <Label>Título</Label>
                         <Heading size="big">{annotation?.title}</Heading>
                         {annotation?.description && (
                             <Paragraph>{annotation?.description}</Paragraph>

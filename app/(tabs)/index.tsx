@@ -24,9 +24,7 @@ export default function TabOneScreen() {
     return (
         <ContainerView>
             <Heading>Início</Heading>
-            <Span>
-                <Heading size="small">Informações gerais</Heading>
-            </Span>
+            <Heading size="small">Informações gerais</Heading>
             <Span py={4}>
                 {count ? (
                     <InfoCard
@@ -76,17 +74,26 @@ export default function TabOneScreen() {
                     color="blue"
                 />
                 <Card
-                    href="/(tabs)/production"
+                    href="/production"
                     alt="Production"
                     iconSource={require("assets/images/ChartIcon.png")}
-                    title="Produção do mês"
+                    title="Produção"
                     color="purple"
+                    size="small"
                 />
                 <Card
-                    href="/(tabs)/annotations"
+                    href="/annotations"
                     alt="Annotations"
                     iconSource={require("assets/images/BookMarkIcon.png")}
                     title="Anotações"
+                    color="cian"
+                    size="small"
+                />
+                <Card
+                    href="/(tabs)/agenda"
+                    alt="Agenda"
+                    iconSource={require("assets/images/BookIcon.png")}
+                    title="Agenda"
                     color="cian"
                 />
             </Span>

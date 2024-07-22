@@ -7,6 +7,7 @@ import { Paragraph } from "./Paragraph";
 interface SimpleTableProps {
     data: Item[];
 }
+
 type RowProps<T> = {
     item: T;
     index: number;
@@ -16,11 +17,7 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
     <ScrollView horizontal={false}>
         <ScrollView
             horizontal={true}
-            contentContainerStyle={{
-                width: "100%",
-                height: "100%",
-                overflow: "hidden",
-            }}
+            contentContainerStyle={styles.contentContainer}
         >
             <FlatList
                 style={styles.table}
@@ -35,16 +32,25 @@ export const SimpleTable: React.FC<SimpleTableProps> = ({ data, ...props }) => (
 
 const Row: React.FC<RowProps<Item>> = ({ item }) => (
     <View style={styles.row}>
-        <Paragraph>{item.key}</Paragraph>
-        <Paragraph>{item.value}</Paragraph>
+        <View style={styles.cellLeft}>
+            <Paragraph>{item.key}</Paragraph>
+        </View>
+        <View style={styles.cellRight}>
+            <Paragraph>{item.value}</Paragraph>
+        </View>
     </View>
 );
 
 const styles = StyleSheet.create({
+    contentContainer: {
+        width: "100%",
+        height: "100%",
+        overflow: "hidden",
+    },
     table: {
         borderWidth: 1,
         borderColor: Theme.colors.lightGray,
-        borderRadius: 8,
+        borderRadius: 4,
         overflow: "hidden",
     },
     row: {
@@ -52,8 +58,21 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 1,
         borderColor: Theme.colors.lightGray,
+        borderRadius: 4,
+        justifyContent: "space-between",
+    },
+    cellLeft: {
+        flex: 1,
+        backgroundColor: Theme.colors.lightest,
+        borderRightWidth: 1,
+        borderColor: Theme.colors.lightGray,
         paddingVertical: 16,
         paddingHorizontal: 8,
-        justifyContent: "space-between",
+    },
+    cellRight: {
+        flex: 1,
+        alignItems: "flex-end",
+        paddingVertical: 16,
+        paddingHorizontal: 8,
     },
 });

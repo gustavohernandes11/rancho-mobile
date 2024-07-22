@@ -101,26 +101,9 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="production"
+                name="agenda"
                 options={{
-                    tabBarLabel: "Produção",
-                    tabBarIcon: ({ focused }) => (
-                        <Image
-                            style={iconSize}
-                            source={
-                                focused
-                                    ? require("../../assets/images/ChartIcon.png")
-                                    : require("../../assets/images/ChartIcon_green.png")
-                            }
-                            alt={"production page"}
-                        />
-                    ),
-                }}
-            />
-            <Tabs.Screen
-                name="annotations"
-                options={{
-                    tabBarLabel: "Anotações",
+                    tabBarLabel: "Agenda",
                     tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
@@ -129,7 +112,7 @@ export default function TabLayout() {
                                     ? require("../../assets/images/BookIcon.png")
                                     : require("../../assets/images/BookIcon_green.png")
                             }
-                            alt={"annotation page"}
+                            alt={"agenda page"}
                         />
                     ),
                 }}

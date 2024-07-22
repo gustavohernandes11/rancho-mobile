@@ -81,6 +81,8 @@ export const formatDateToShortPtBR = (date: Date) => {
     return formatter.format(date);
 };
 
+export const formatDateToISO = (date: Date) => date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
+
 export const formatAnnotationType = (type: AnnotationTypeOption) => {
     switch (type) {
         case "simple":

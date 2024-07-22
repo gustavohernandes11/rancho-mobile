@@ -71,6 +71,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
         <View>
             <Span>
                 <NameField formik={formik} />
+            </Span>
+            <Span>
                 <GenderField formik={formik} />
             </Span>
             <Span>
@@ -89,6 +91,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
             </Span>
             <Span>
                 <MemoPaternityField formik={formik} />
+            </Span>
+            <Span>
                 <MemoMaternityField formik={formik} />
             </Span>
             <Span>

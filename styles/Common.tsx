@@ -4,7 +4,12 @@ import Theme from "./Theme";
 export const commonStyles = StyleSheet.create({
     text: {
         fontSize: 14,
-        color: Theme.colors.darkGray,
+        color: Theme.colors.darkest,
+        fontFamily: Theme.fonts.primaryFamily,
+    },
+    secondaryText: {
+        fontSize: 14,
+        color: Theme.colors.mediumGray,
         fontFamily: Theme.fonts.primaryFamily,
     },
     label: {
@@ -21,7 +26,8 @@ export const commonStyles = StyleSheet.create({
         fontFamily: Theme.fonts.primaryFamily,
     },
     error: {
-        fontSize: 12,
+        fontSize: 14,
+        marginBottom: 4,
         color: Theme.colors.red,
         fontFamily: Theme.fonts.primaryFamily,
     },
@@ -42,8 +48,13 @@ export const commonStyles = StyleSheet.create({
         color: Theme.colors.mediumGray,
     },
     icon: {
-        height: 38,
-        width: 38,
+        height: 32,
+        width: 32,
+        resizeMode: "contain",
+    },
+    smallIcon: {
+        height: 20,
+        width: 20,
         resizeMode: "contain",
     },
     card: {
@@ -54,8 +65,6 @@ export const commonStyles = StyleSheet.create({
         padding: 16,
         flexDirection: "row",
         alignItems: "center",
-        minHeight: 100,
-        gap: 8,
         elevation: 3,
     },
     border: {

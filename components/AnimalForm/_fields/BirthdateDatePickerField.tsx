@@ -41,6 +41,7 @@ export const BirthdateDatePickerField: React.FC<
                     ? new Date(formik.values.birthdate)
                     : undefined
             }
+            showCheckBoxToSelectToday={true}
             label="Data de Nascimento"
         />
     );

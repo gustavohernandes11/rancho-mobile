@@ -35,6 +35,7 @@ export const DateField: React.FC<DateFieldProps> = ({ formik }) => {
             errorText={getFieldError("date", formik)}
             onChange={handleChangeDate}
             onChangeText={handleChangeDateText}
+            showCheckBoxToSelectToday={true}
             value={
                 formik.values.date ? new Date(formik.values.date) : undefined
             }

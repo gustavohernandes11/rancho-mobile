@@ -27,6 +27,9 @@ const SegmentedButtonsInput: React.FC<SegmentedButtonsInputProps> = ({
     return (
         <View style={styles.container}>
             {label ? <Label>{label}</Label> : null}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
             <SegmentedButtons
                 multiSelect
                 value={selectedValues}
@@ -41,9 +44,6 @@ const SegmentedButtonsInput: React.FC<SegmentedButtonsInputProps> = ({
                 }))}
                 style={styles.buttonSpan}
             />
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
         </View>
     );
 };

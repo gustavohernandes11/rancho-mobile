@@ -20,7 +20,7 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
             <Heading size="big" shrink={1}>
                 {title}
             </Heading>
-            <Paragraph>{description}</Paragraph>
+            <Paragraph secondary>{description}</Paragraph>
         </View>
     );
 };

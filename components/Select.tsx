@@ -44,6 +44,9 @@ export const Select: React.FC<
     return (
         <View style={styles.inputContainer}>
             {label ? <Label>{label}</Label> : null}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
             <SelectDropdown
                 renderDropdownIcon={DropdownIcon}
                 buttonTextStyle={commonStyles.label}
@@ -72,9 +75,6 @@ export const Select: React.FC<
                 searchPlaceHolderColor={Theme.colors.lightGray}
                 {...props}
             />
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
         </View>
     );
 };

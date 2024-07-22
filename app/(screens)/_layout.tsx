@@ -7,6 +7,7 @@ export default function CommonPagesLayout() {
             <Stack.Screen name="animals" options={{ headerShown: false }} />
             <Stack.Screen name="batches" options={{ headerShown: false }} />
             <Stack.Screen name="annotations" options={{ headerShown: false }} />
+            <Stack.Screen name="production" options={{ headerShown: false }} />
         </Stack>
     );
 }

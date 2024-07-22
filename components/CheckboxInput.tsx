@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { Checkbox } from "react-native-paper";
 import { commonStyles } from "styles/Common";
-import Theme from "styles/Theme";
+import { CheckboxItem } from "./CheckboxItem";
 import { Label } from "./Label";
 
 interface CheckboxInputProps {
@@ -31,28 +30,23 @@ const CheckboxInput: React.FC<CheckboxInputProps> = ({
     return (
         <View style={styles.container}>
             {label ? <Label>{label}</Label> : null}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
             <View style={styles.group}>
                 {options.map(option => (
-                    <Checkbox.Item
+                    <CheckboxItem
                         key={option.value}
                         label={option.label}
-                        status={
+                        isChecked={
                             selectedValues.includes(option.value)
                                 ? "checked"
                                 : "unchecked"
                         }
                         onPress={() => handleCheckboxChange(option.value)}
-                        color={Theme.colors.primary}
-                        labelStyle={commonStyles.text}
-                        uncheckedColor={Theme.colors.mediumGray}
-                        position="leading"
-                        style={styles.item}
                     />
                 ))}
             </View>
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
         </View>
     );
 };
@@ -66,11 +60,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "flex-start",
         justifyContent: "flex-start",
-    },
-    item: {
-        margin: 0,
-        paddingHorizontal: 0,
-        marginRight: 8,
     },
 });
 

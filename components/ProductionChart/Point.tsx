@@ -12,8 +12,8 @@ export const Point = ({
 }) => {
     return (
         <View style={styles.activePoint}>
-            <Paragraph color="white">{formattedValue || ""}</Paragraph>
-            <Paragraph color="white">{formattedTime || ""}</Paragraph>
+            <Paragraph>{formattedValue || ""}</Paragraph>
+            <Paragraph>{formattedTime || ""}</Paragraph>
         </View>
     );
 };
@@ -21,8 +21,10 @@ export const Point = ({
 const styles = StyleSheet.create({
     activePoint: {
         backgroundColor: Theme.colors.lightest,
-        borderColor: Theme.colors.primary,
-        padding: 10,
-        borderRadius: 10,
+        borderColor: Theme.colors.mediumGray,
+        borderWidth: 1,
+        padding: 8,
+        borderRadius: 4,
+        zIndex: 99,
     },
 });

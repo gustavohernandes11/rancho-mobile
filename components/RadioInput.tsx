@@ -23,6 +23,9 @@ export const RadioInput: React.FC<RadioInputProps> = ({
     return (
         <View style={styles.container}>
             {label ? <Label>{label}</Label> : null}
+            {errorText ? (
+                <Text style={commonStyles.error}>{errorText}</Text>
+            ) : null}
             <View style={styles.group}>
                 {options.map((option, index) => (
                     <RadioButton.Item
@@ -43,9 +46,6 @@ export const RadioInput: React.FC<RadioInputProps> = ({
                     />
                 ))}
             </View>
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
         </View>
     );
 };

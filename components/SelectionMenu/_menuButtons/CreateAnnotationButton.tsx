@@ -24,7 +24,7 @@ export const CreateAnnotationButton = ({
             titleStyle={commonStyles.text}
             onPress={handleCreateAnnotationWithSelectedAnimals}
             title="Fazer anotação"
-            leadingIcon="bookmark-plus-outline"
+            leadingIcon="bookmark-plus"
         />
     );
 };

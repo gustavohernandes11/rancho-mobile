@@ -19,6 +19,7 @@ import {
     UpdateAnnotation,
     UpdateBatch,
 } from "types";
+import { formatDateToISO } from "utils/formatters";
 import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
 
 export class SqliteRepository implements StorageRepository {
@@ -136,8 +137,6 @@ export class SqliteRepository implements StorageRepository {
             // already done
         }
     };
-
-    private formatDate = (date: Date) => date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
 
     async setAnimalStatus(
         animalID: number | number[],
@@ -587,8 +586,8 @@ export class SqliteRepository implements StorageRepository {
 		ORDER BY day;
 		`;
 
-        const formattedStart = this.formatDate(start);
-        const formattedEnd = this.formatDate(end);
+        const formattedStart = formatDateToISO(start);
+        const formattedEnd = formatDateToISO(end);
         const params = [formattedStart, formattedEnd];
 
         try {
@@ -605,7 +604,7 @@ export class SqliteRepository implements StorageRepository {
 		WHERE day = ?;
 		`;
 
-        const formattedDate = this.formatDate(date);
+        const formattedDate = formatDateToISO(date);
         const params = [formattedDate];
 
         const production = await this.getOne<DayProduction>(query, params);

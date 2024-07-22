@@ -1,7 +1,6 @@
 import { AnnotationBanner } from "components/AnnotationBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
-import { Heading } from "components/Heading";
 import { SearchBar } from "components/SearchBar";
 import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
@@ -43,7 +42,7 @@ export default function ViewAnnotationsPage() {
                     headerRight: () => (
                         <Button
                             title="Nova anotação"
-                            icon="bookmark-plus-outline"
+                            icon="bookmark-plus"
                             onPress={() =>
                                 router.push("/(screens)/annotations/add")
                             }
@@ -51,15 +50,12 @@ export default function ViewAnnotationsPage() {
                     ),
                 }}
             />
-            <Span justify="space-between" my={8} align="center">
-                <Heading>Faça suas anotações aqui</Heading>
-            </Span>
             <SearchBar
                 onChangeText={handleChangeSearchText}
                 value={searchText}
                 placeholder="Busque suas anotações"
             />
-            <Span direction="column" py={16}>
+            <Span direction="column" py={8}>
                 {annotations.length === 0 ? (
                     <Span justify="center">
                         <Text>Nenhuma nota encontrada.</Text>
@@ -78,9 +74,10 @@ export default function ViewAnnotationsPage() {
                           />
                       ))
                     : null}
-                <Span justify="center" py={8}>
+                <Span justify="flex-end" py={8}>
                     <Button
                         title="Nova anotação"
+                        icon="bookmark-plus"
                         onPress={() =>
                             router.push("/(screens)/annotations/add")
                         }

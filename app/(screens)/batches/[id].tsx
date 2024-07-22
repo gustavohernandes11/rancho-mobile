@@ -1,7 +1,6 @@
 import { AnimalTable } from "components/AnimalTable";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import { Label } from "components/Label";
 import { Loading } from "components/Loading";
 import { PageSkeleton } from "components/PageSkeleton";
 import { SelectionMenu } from "components/SelectionMenu";
@@ -88,6 +87,7 @@ export default function ViewBatchDetailsScreen() {
             refreshAll();
             router.back();
         });
+
     const handleEdit = () =>
         router.push(`/(screens)/batches/edit/${batch!.id}`);
     const handleRegisterAnimal = () =>
@@ -99,14 +99,13 @@ export default function ViewBatchDetailsScreen() {
                 <PageSkeleton />
             ) : (
                 <>
-                    <Label>Título</Label>
                     <Heading>{batch?.name}</Heading>
-                    {batch && (
+                    {batch ? (
                         <Span direction="column">
                             <Heading size="small">Informações Gerais</Heading>
                             <SimpleTable data={serializeBatchInfo(batch)} />
                         </Span>
-                    )}
+                    ): null}
                     <Span direction="column">
                         <Heading size="small">Animais do lote</Heading>
                         {isLoading ? (

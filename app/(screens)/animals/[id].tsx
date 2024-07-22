@@ -2,7 +2,6 @@ import { AnimalBanner } from "components/AnimalBanner";
 import { BatchBanner } from "components/BatchBanner";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import { Label } from "components/Label";
 import { PageSkeleton } from "components/PageSkeleton";
 import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
@@ -74,7 +73,6 @@ export default function ViewAnimalDetailsScreen() {
                 <PageSkeleton />
             ) : (
                 <>
-                    <Label>Nome</Label>
                     <Heading size="big">{animal?.name}</Heading>
                     <Span direction="column">
                         <Heading size="small">Informações gerais</Heading>

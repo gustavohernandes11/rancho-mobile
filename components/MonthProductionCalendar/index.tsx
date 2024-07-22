@@ -1,86 +1,96 @@
-import moment from "moment";
-import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React from "react";
+import { Calendar, DateData } from "react-native-calendars";
+import { Theme as CalendarTheme } from "react-native-calendars/src/types";
 import Theme from "styles/Theme";
-import { MemoizedCell } from "./Cell";
-import { MonthAndYearSelect } from "./MonthAndYearSelect";
+import { formatDateToISO } from "utils/formatters";
 
 interface MonthProductionCalendarProps {
     onSelectDate: (date: Date) => void;
     selectedDate: Date;
-    updateUINumber: number;
 }
-
-export type DayItem = {
-    value: string;
-    date: Date;
+const theme: CalendarTheme = {
+    selectedDayBackgroundColor: Theme.colors.primary,
+    selectedDayTextColor: Theme.colors.white,
+    todayTextColor: Theme.colors.primary,
+    dayTextColor: Theme.colors.darkest,
+    textDisabledColor: Theme.colors.mediumGray,
+    dotColor: Theme.colors.primary,
+    selectedDotColor: Theme.colors.white,
+    indicatorColor: Theme.colors.primary,
+    arrowColor: Theme.colors.primary,
+    monthTextColor: Theme.colors.darkGray,
 };
+
+import { LocaleConfig } from "react-native-calendars";
+
+LocaleConfig.locales["pt-br"] = {
+    monthNames: [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
+    ],
+    monthNamesShort: [
+        "Jan.",
+        "Fev.",
+        "Mar.",
+        "Abr.",
+        "Mai.",
+        "Jun.",
+        "Jul.",
+        "Ago.",
+        "Set.",
+        "Out.",
+        "Nov.",
+        "Dez.",
+    ],
+    dayNames: [
+        "Domingo",
+        "Segunda-feira",
+        "Terça-feira",
+        "Quarta-feira",
+        "Quinta-feira",
+        "Sexta-feira",
+        "Sábado",
+    ],
+    dayNamesShort: ["Dom.", "Seg.", "Ter.", "Qua.", "Qui.", "Sex.", "Sáb."],
+};
+
+LocaleConfig.defaultLocale = "pt-br";
 
 export const MonthProductionCalendar: React.FC<
     MonthProductionCalendarProps
-> = ({ onSelectDate, selectedDate, updateUINumber }) => {
-    const [days, setDays] = useState<DayItem[]>([]);
+> = ({ selectedDate, onSelectDate }) => {
+    const handleDayPress = (day: DateData) => {
+        onSelectDate(new Date(day.dateString));
+    };
+    const selectedDateInISO = formatDateToISO(selectedDate);
 
-    useEffect(() => {
-        generateCells();
-    }, [selectedDate]);
-
-    const month = selectedDate.getMonth();
-    const year = selectedDate.getFullYear();
-
-    const generateCells = useCallback(() => {
-        const startOfMonth = moment(new Date(year, month)).startOf("month");
-        const daysInMonth = startOfMonth.daysInMonth();
-        let calendarDays: DayItem[] = [];
-
-        for (let i = 1; i <= daysInMonth; i++) {
-            const day = moment(startOfMonth).add(i - 1, "days");
-
-            calendarDays.push({
-                value: day.format("D"),
-                date: day.toDate(),
-            });
-        }
-
-        setDays(calendarDays);
-    }, [month, year]);
+    const markedDates = {
+        [selectedDateInISO]: {
+            selected: true,
+        },
+    };
 
     return (
-        <View style={styles.calendar}>
-            <MonthAndYearSelect
-                selectedDate={selectedDate}
-                setSelectedDate={onSelectDate}
-            />
-            {/* <WeekDayHeader />  need adjust */}
-            <View style={styles.daysContainer}>
-                {days.map(item => (
-                    <MemoizedCell
-                        key={item.date.toISOString()}
-                        updateUINumber={updateUINumber}
-                        item={item}
-                        isSelected={
-                            selectedDate
-                                ? moment(item.date).isSame(selectedDate, "day")
-                                : false
-                        }
-                        onSelect={onSelectDate}
-                    />
-                ))}
-            </View>
-        </View>
+        <Calendar
+            onDayPress={handleDayPress}
+            markedDates={markedDates}
+            enableSwipeMonths
+            theme={theme}
+            style={{
+                borderColor: Theme.colors.lightGray,
+                borderWidth: 1,
+                borderRadius: 8,
+            }}
+        />
     );
 };
-
-const styles = StyleSheet.create({
-    calendar: {
-        borderColor: Theme.colors.mediumGray,
-        borderRadius: 8,
-        elevation: 1,
-        padding: 8,
-    },
-    daysContainer: {
-        display: "flex",
-        flexDirection: "row",
-        flexWrap: "wrap",
-    },
-});
