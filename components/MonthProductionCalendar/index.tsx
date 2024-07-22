@@ -1,91 +1,64 @@
-import React from "react";
-import { Calendar, DateData } from "react-native-calendars";
-import { Theme as CalendarTheme } from "react-native-calendars/src/types";
+import React, { useEffect, useState } from "react";
+import { Calendar, DateData, LocaleConfig } from "react-native-calendars";
+import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
+import { DayProduction } from "types/Production";
 import { formatDateToISO } from "utils/formatters";
+import { calendarTheme } from "./calendarTheme";
 
 interface MonthProductionCalendarProps {
     onSelectDate: (date: Date) => void;
     selectedDate: Date;
 }
-const theme: CalendarTheme = {
-    selectedDayBackgroundColor: Theme.colors.primary,
-    selectedDayTextColor: Theme.colors.white,
-    todayTextColor: Theme.colors.primary,
-    dayTextColor: Theme.colors.darkest,
-    textDisabledColor: Theme.colors.mediumGray,
-    dotColor: Theme.colors.primary,
-    selectedDotColor: Theme.colors.white,
-    indicatorColor: Theme.colors.primary,
-    arrowColor: Theme.colors.primary,
-    monthTextColor: Theme.colors.darkGray,
-};
-
-import { LocaleConfig } from "react-native-calendars";
-
-LocaleConfig.locales["pt-br"] = {
-    monthNames: [
-        "Janeiro",
-        "Fevereiro",
-        "Março",
-        "Abril",
-        "Maio",
-        "Junho",
-        "Julho",
-        "Agosto",
-        "Setembro",
-        "Outubro",
-        "Novembro",
-        "Dezembro",
-    ],
-    monthNamesShort: [
-        "Jan.",
-        "Fev.",
-        "Mar.",
-        "Abr.",
-        "Mai.",
-        "Jun.",
-        "Jul.",
-        "Ago.",
-        "Set.",
-        "Out.",
-        "Nov.",
-        "Dez.",
-    ],
-    dayNames: [
-        "Domingo",
-        "Segunda-feira",
-        "Terça-feira",
-        "Quarta-feira",
-        "Quinta-feira",
-        "Sexta-feira",
-        "Sábado",
-    ],
-    dayNamesShort: ["Dom.", "Seg.", "Ter.", "Qua.", "Qui.", "Sex.", "Sáb."],
-};
 
 LocaleConfig.defaultLocale = "pt-br";
+
+const fetchProductionData = async (
+    setProduction: React.Dispatch<React.SetStateAction<DayProduction[]>>
+) => {
+    const prod = await Storage.listPopulatedMonthProduction(new Date());
+    setProduction(prod);
+};
+
+const getMarkedDates = (
+    production: DayProduction[],
+    selectedDateInISO: string
+) => {
+    return production.reduce((acc, prod) => {
+        const dateISO = formatDateToISO(new Date(prod.day));
+        acc[dateISO] = {
+            marked: !!prod.quantity,
+            selected: dateISO === selectedDateInISO,
+        };
+        return acc;
+    }, {} as { [key: string]: { marked: boolean; selected: boolean } });
+};
 
 export const MonthProductionCalendar: React.FC<
     MonthProductionCalendarProps
 > = ({ selectedDate, onSelectDate }) => {
-    const handleDayPress = (day: DateData) => {
-        onSelectDate(new Date(day.dateString));
-    };
-    const selectedDateInISO = formatDateToISO(selectedDate);
+    const [production, setProduction] = useState<DayProduction[]>([]);
 
-    const markedDates = {
-        [selectedDateInISO]: {
-            selected: true,
-        },
+    useEffect(() => {
+        fetchProductionData(setProduction);
+    }, []);
+
+    const handleDayPress = (day: DateData) => {
+        onSelectDate(new Date(day.year, day.month - 1, day.day));
     };
+
+    const selectedDateInISO = formatDateToISO(selectedDate);
+    const markedDates = getMarkedDates(production, selectedDateInISO);
 
     return (
         <Calendar
             onDayPress={handleDayPress}
-            markedDates={markedDates}
+            markedDates={{
+                [selectedDateInISO]: { selected: true },
+                ...markedDates,
+            }}
             enableSwipeMonths
-            theme={theme}
+            theme={calendarTheme}
             style={{
                 borderColor: Theme.colors.lightGray,
                 borderWidth: 1,

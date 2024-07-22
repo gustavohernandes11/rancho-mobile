@@ -7,20 +7,22 @@ import { Paragraph } from "./Paragraph";
 
 interface InfoCardProps {
     title: string;
-    description: string;
+    label: string;
+    size?: "big" | "medium" | "small";
 }
 
 export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
     title,
-    description,
+    label,
+    size = "big",
     ...props
 }) => {
     return (
         <View {...props} style={styles.card}>
-            <Heading size="big" shrink={1}>
+            <Heading size={size} shrink={1}>
                 {title}
             </Heading>
-            <Paragraph secondary>{description}</Paragraph>
+            <Paragraph secondary>{label}</Paragraph>
         </View>
     );
 };

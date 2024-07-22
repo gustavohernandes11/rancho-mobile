@@ -75,7 +75,7 @@ export const ProductionForm: React.FC<ProductionFormProps> = ({
     };
 
     return (
-        <Span direction="column">
+        <Span direction="column" my={0}>
             <Input
                 label="Litros de leite produzidos"
                 keyboardType="numeric"

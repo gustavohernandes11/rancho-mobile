@@ -29,19 +29,19 @@ export default function TabOneScreen() {
                 {count ? (
                     <InfoCard
                         title={count.animals.toString() || "?"}
-                        description="Animais registrados"
+                        label="Animais registrados"
                     />
                 ) : null}
                 {count ? (
                     <InfoCard
                         title={count.batches.toString() || "?"}
-                        description="Lotes registrados"
+                        label="Lotes registrados"
                     />
                 ) : null}
                 {count ? (
                     <InfoCard
                         title={count.litersProduced.toString() || "?"}
-                        description="Litros produzidos"
+                        label="Litros produzidos"
                     />
                 ) : null}
             </Span>

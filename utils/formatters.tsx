@@ -60,14 +60,7 @@ export const getGenderIcon = (gender: "F" | "M") =>
     );
 
 export const formatDateToLongPtBR = (date: Date) => {
-    const options = {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-    };
-
-    const formatter = new Intl.DateTimeFormat("pt-BR", options as any);
-    return formatter.format(date);
+    return moment(date).locale("pt-br").format("D [de] MMMM [de] YYYY");
 };
 
 export const formatDateToShortPtBR = (date: Date) => {
@@ -82,6 +75,7 @@ export const formatDateToShortPtBR = (date: Date) => {
 };
 
 export const formatDateToISO = (date: Date) => date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
+export const formatMonthToISO = (date: Date) => moment(date).format("YYYY-MM"); // Format the date to YYYY-MM
 
 export const formatAnnotationType = (type: AnnotationTypeOption) => {
     switch (type) {
