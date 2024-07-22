@@ -51,7 +51,6 @@ export const MonthDetailsForm: React.FC<MonthDetailsFormProps> = ({
 
     return (
         <View>
-            <Paragraph>{JSON.stringify(formik.isSubmitting)}</Paragraph>
             <Span>
                 <Input
                     label="Gordura (%)"
@@ -70,7 +69,7 @@ export const MonthDetailsForm: React.FC<MonthDetailsFormProps> = ({
                     errorText={getFieldError("proteinPorcentage", formik)}
                 />
             </Span>
-            <Span>
+            <Span my={0}>
                 <Input
                     label="Contagem bacteriana total (CBT)"
                     placeholder="UFC/mL"
@@ -90,7 +89,7 @@ export const MonthDetailsForm: React.FC<MonthDetailsFormProps> = ({
                     errorText={getFieldError("totalSomaticCell", formik)}
                 />
             </Span>
-            <Span justify="flex-end">
+            <Span justify="flex-end" my={0}>
                 <Input
                     label="Preço de venda por litro"
                     keyboardType="numeric"
@@ -109,7 +108,7 @@ export const MonthDetailsForm: React.FC<MonthDetailsFormProps> = ({
                     errorText={getFieldError("lactosePorcentage", formik)}
                 />
             </Span>
-            <Span>
+            <Span my={0}>
                 <Input
                     multiline
                     label="Observação"

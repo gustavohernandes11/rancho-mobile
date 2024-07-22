@@ -1,18 +1,19 @@
+import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { MonthDetailsForm } from "components/MonthDetailsForm";
 import { MonthProductionCalendar } from "components/MonthProductionCalendar";
 import { ProductionForm } from "components/ProductionForm";
-import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import moment from "moment";
 import React, { useState } from "react";
 import { formatDateToLongPtBR, formatMonthToISO } from "utils/formatters";
 
 export default function ViewAgendaScreen() {
     const [selectedDate, setSelectedDate] = useState<Date>(moment().toDate());
+    const router = useRouter();
 
     const handleSelectDate = (date: Date) => {
         setSelectedDate(date);
@@ -21,6 +22,7 @@ export default function ViewAgendaScreen() {
     const dayDetailsLabel = `Informações do dia ${formatDateToLongPtBR(
         selectedDate
     )}`;
+
     const monthDetailsLabel = `Informações do mês de ${moment(
         selectedDate
     ).format("MMMM/YYYY")}`;
@@ -30,6 +32,17 @@ export default function ViewAgendaScreen() {
             <Stack.Screen
                 options={{
                     headerTitle: "Agenda",
+                    headerRight: () => (
+                        <Button
+                            title="Nova anotação"
+                            icon="bookmark-plus"
+                            onPress={() =>
+                                router.push(
+                                    `/(screens)/annotations/add-with-selected-date/${selectedDate.toISOString()}`
+                                )
+                            }
+                        />
+                    ),
                 }}
             />
             <Span>
@@ -63,18 +76,6 @@ export default function ViewAgendaScreen() {
             </Span>
             <Span direction="column">
                 <Heading>{monthDetailsLabel}</Heading>
-                <SimpleTable
-                    data={[
-                        { key: "Total de litros produzidos", value: "5689" },
-                        {
-                            key: "Valor esperado (preço 2,50)",
-                            value: "R$ 14.222,50",
-                        },
-                    ]}
-                />
-            </Span>
-            <Span direction="column">
-                <Heading size="small">Qualidade do leite</Heading>
                 <MonthDetailsForm month={formatMonthToISO(selectedDate)} />
             </Span>
         </ContainerView>

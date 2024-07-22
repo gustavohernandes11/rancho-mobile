@@ -60,9 +60,9 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         borderRadius: 8,
-        backgroundColor: Theme.colors.lightGray,
+        backgroundColor: Theme.colors.lightest,
         borderWidth: 1,
-        borderColor: Theme.colors.mediumGray,
+        borderColor: Theme.colors.lightGray,
         padding: 16,
     },
     right: {

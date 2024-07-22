@@ -38,8 +38,6 @@ const getStyles = (showActions: boolean) =>
         container: {
             flex: 1,
             borderRadius: 8,
-            borderWidth: 1,
-            borderColor: Theme.colors.mediumGray,
             backgroundColor: Theme.colors.primary,
             padding: 8,
             ...(!showActions && { padding: 16 }),

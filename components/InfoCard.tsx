@@ -14,7 +14,7 @@ interface InfoCardProps {
 export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
     title,
     label,
-    size = "big",
+    size = "medium",
     ...props
 }) => {
     return (

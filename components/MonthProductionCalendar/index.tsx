@@ -54,7 +54,6 @@ export const MonthProductionCalendar: React.FC<
         <Calendar
             onDayPress={handleDayPress}
             markedDates={{
-                [selectedDateInISO]: { selected: true },
                 ...markedDates,
             }}
             enableSwipeMonths
@@ -67,3 +66,46 @@ export const MonthProductionCalendar: React.FC<
         />
     );
 };
+
+export const calendarLocalePtBr = {
+    monthNames: [
+        "Janeiro",
+        "Fevereiro",
+        "Março",
+        "Abril",
+        "Maio",
+        "Junho",
+        "Julho",
+        "Agosto",
+        "Setembro",
+        "Outubro",
+        "Novembro",
+        "Dezembro",
+    ],
+    monthNamesShort: [
+        "Jan.",
+        "Fev.",
+        "Mar.",
+        "Abr.",
+        "Mai.",
+        "Jun.",
+        "Jul.",
+        "Ago.",
+        "Set.",
+        "Out.",
+        "Nov.",
+        "Dez.",
+    ],
+    dayNames: [
+        "Domingo",
+        "Segunda-feira",
+        "Terça-feira",
+        "Quarta-feira",
+        "Quinta-feira",
+        "Sexta-feira",
+        "Sábado",
+    ],
+    dayNamesShort: ["Dom.", "Seg.", "Ter.", "Qua.", "Qui.", "Sex.", "Sáb."],
+};
+
+LocaleConfig.locales["pt-br"] = calendarLocalePtBr;

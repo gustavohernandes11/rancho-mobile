@@ -7,7 +7,7 @@ export const calendarTheme: CalendarTheme = {
     todayTextColor: Theme.colors.primary,
     dayTextColor: Theme.colors.darkest,
     textDisabledColor: Theme.colors.mediumGray,
-    dotColor: Theme.colors.primary,
+    dotColor: Theme.colors.lightGray,
     selectedDotColor: Theme.colors.white,
     indicatorColor: Theme.colors.primary,
     arrowColor: Theme.colors.primary,
