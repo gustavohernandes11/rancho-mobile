@@ -34,13 +34,11 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
     return (
         <Link style={styles.container} href={href} asChild>
             <Pressable {...props}>
-                <View style={styles.iconSpan}>
-                    <Image
-                        style={commonStyles.icon}
-                        source={iconSource}
-                        alt={iconAlt}
-                    />
-                </View>
+                <Image
+                    style={commonStyles.icon}
+                    source={iconSource}
+                    alt={iconAlt}
+                />
                 <View style={styles.left}>
                     <Heading size="small">{title}</Heading>
                     {description ? (
@@ -66,6 +64,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         borderColor: Theme.colors.lightGray,
         borderWidth: 1,
+        gap: 16,
         padding: 16,
     },
     right: {
@@ -76,10 +75,5 @@ const styles = StyleSheet.create({
     left: {
         flex: 1,
         alignItems: "flex-start",
-    },
-    iconSpan: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingRight: 16,
     },
 });

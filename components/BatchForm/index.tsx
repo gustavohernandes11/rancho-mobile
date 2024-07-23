@@ -9,6 +9,7 @@ import React, { useEffect } from "react";
 import { Alert, View } from "react-native";
 import { Storage } from "services/StorageService";
 import { AddBatch, Batch, UpdateBatch } from "types";
+import { isActive } from "utils/filters";
 import { showToast } from "utils/showToast";
 import { AnimalSelectionField } from "./_fields/AnimalSelectionField";
 import { DescriptionField } from "./_fields/DescriptionField";
@@ -26,7 +27,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
     initialValues = defaultValues,
     initialSelectedAnimals = [],
 }) => {
-    const animals = useGlobalStore(state => state.animals);
+    const animals = useGlobalStore(state => state.animals).filter(isActive);
     const refreshAll = useGlobalStore(state => state.refreshAll);
     const setSelectedIDs = useAnimalSelectionStore(
         state => state.setSelectedIDs
@@ -35,7 +36,6 @@ export const BatchForm: React.FC<BatchFormProps> = ({
         state => state.clearSelection
     );
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
-
     const formik = useFormik({
         initialValues,
         onSubmit: values => handleSubmit(values, !initialValues.id),

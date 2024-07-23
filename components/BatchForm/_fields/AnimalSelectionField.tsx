@@ -16,7 +16,7 @@ export const AnimalSelectionField: React.FC<AnimalSelectionFieldProps> = ({
     return (
         <ListAccordion
             title={`${selectedIDs.length} selecionado(s)`}
-            label="Selecione os animais - ou faça isso depois"
+            label="Selecione os animais (você pode editar isso depois)"
         >
             {animals ? <AnimalTable animals={animals} /> : <Loading />}
         </ListAccordion>

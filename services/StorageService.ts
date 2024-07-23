@@ -196,7 +196,8 @@ export class StorageServices implements StorageServicesMethods {
     }
 
     async generateDeathAnnotation(
-        animalID: number | number[]
+        animalID: number | number[],
+        reason: string
     ): Promise<boolean> {
         let title = "";
         let relatedAnimalIDs: number[] = [];
@@ -215,14 +216,15 @@ export class StorageServices implements StorageServicesMethods {
             type: "death",
             animalIDs: relatedAnimalIDs,
             date: new Date(),
-            description: "*Gerada automaticamente",
+            description: reason,
         });
 
         return true;
     }
 
     async generateSaleAnnotation(
-        animalID: number | number[]
+        animalID: number | number[],
+        reason: string
     ): Promise<boolean> {
         let title = "";
         let relatedAnimalIDs: number[] = [];
@@ -241,7 +243,7 @@ export class StorageServices implements StorageServicesMethods {
             type: "sell",
             animalIDs: relatedAnimalIDs,
             date: new Date(),
-            description: "*Gerada automaticamente",
+            description: reason,
         });
 
         return true;
@@ -249,11 +251,12 @@ export class StorageServices implements StorageServicesMethods {
 
     async writeOffByDeath(
         animalIDs: number | number[],
-        generateAnnotation: boolean
+        generateAnnotation: boolean,
+        reason: string
     ): Promise<boolean> {
         try {
             if (generateAnnotation) {
-                await this.generateDeathAnnotation(animalIDs);
+                await this.generateDeathAnnotation(animalIDs, reason);
             }
             await this.DbRepository.setAnimalStatus(animalIDs, "dead");
 
@@ -265,11 +268,12 @@ export class StorageServices implements StorageServicesMethods {
 
     async writeOffBySale(
         animalIDs: number | number[],
-        generateAnnotation: boolean
+        generateAnnotation: boolean,
+        reason: string
     ): Promise<boolean> {
         try {
             if (generateAnnotation) {
-                await this.generateSaleAnnotation(animalIDs);
+                await this.generateSaleAnnotation(animalIDs, reason);
             }
             await this.DbRepository.setAnimalStatus(animalIDs, "sold");
 

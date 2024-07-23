@@ -61,15 +61,23 @@ export interface StorageServicesMethods {
         batchID: number
     ): Promise<boolean>;
 
-    generateDeathAnnotation(animalID: number | number[]): Promise<boolean>;
-    generateSaleAnnotation(animalID: number | number[]): Promise<boolean>;
+    generateDeathAnnotation(
+        animalID: number | number[],
+        reason: string
+    ): Promise<boolean>;
+    generateSaleAnnotation(
+        animalID: number | number[],
+        reason: string
+    ): Promise<boolean>;
 
     writeOffByDeath(
         animalIDs: number | number[],
-        generateAnnotation: boolean
+        generateAnnotation: boolean,
+        reason: string
     ): Promise<boolean>;
     writeOffBySale(
         animalIDs: number | number[],
-        generateAnnotation: boolean
+        generateAnnotation: boolean,
+        reason: string
     ): Promise<boolean>;
 }

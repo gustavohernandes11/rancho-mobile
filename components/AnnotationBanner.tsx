@@ -1,17 +1,11 @@
 import { Link } from "expo-router";
 import React from "react";
-import {
-    Image,
-    Pressable,
-    StyleSheet,
-    Text,
-    View,
-    ViewProps,
-} from "react-native";
+import { Image, Pressable, StyleSheet, View, ViewProps } from "react-native";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { AnnotationTypeOption } from "types";
 import { formatAnnotationType, formatDateToShortPtBR } from "utils/formatters";
+import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
 
 type AnnotationBannerProps = {
@@ -36,24 +30,24 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
     return (
         <Link href={href} style={styles.container} asChild>
             <Pressable {...props} style={styles.container}>
-                <View style={styles.iconSpan}>
-                    <Image
-                        style={commonStyles.icon}
-                        source={require("../assets/images/AnnotationCircleIcon.png")}
-                        alt="Annotation icon"
-                    />
-                </View>
+                <Image
+                    style={commonStyles.icon}
+                    source={require("../assets/images/AnnotationCircleIcon.png")}
+                    alt="Annotation icon"
+                />
                 <View style={styles.main}>
                     <View style={styles.top}>
-                        <Paragraph>{formatAnnotationType(type)}</Paragraph>
-                        <Text style={styles.date}>
+                        <Paragraph secondary>
+                            {formatAnnotationType(type)}
+                        </Paragraph>
+                        <Paragraph secondary>
                             {date ? formatDateToShortPtBR(date) : " "}
-                        </Text>
+                        </Paragraph>
                     </View>
                     <View style={styles.main}>
-                        <Text style={styles.title}>{title}</Text>
+                        <Heading size="small">{title}</Heading>
                         {description ? (
-                            <Paragraph>{description}</Paragraph>
+                            <Paragraph secondary>{description}</Paragraph>
                         ) : null}
                     </View>
                 </View>
@@ -67,7 +61,7 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        gap: 8,
+        gap: 16,
         padding: 16,
         borderRadius: 8,
         backgroundColor: Theme.colors.lightest,
@@ -85,20 +79,10 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "column",
         alignItems: "flex-start",
-        gap: 4,
-    },
-    title: {
-        fontFamily: Theme.fonts.primaryFamily,
-        color: Theme.colors.darkest,
-        fontSize: 16,
+        gap: 0,
     },
     date: {
         ...commonStyles.text,
         textAlign: "right",
-    },
-    iconSpan: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingRight: 8,
     },
 });

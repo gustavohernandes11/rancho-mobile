@@ -7,7 +7,7 @@ export default {
         mediumGray: "#696969",
         lightGray: "#cccccc",
         lightest: "#f0f0f0",
-        white: "#f9f9f9",
+        white: "#f1f1f1",
         blue: "#568aa7",
         orange: "#CC5500",
         purple: "#704e81",
