@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useModal } from "hooks/useModal";
+import React from "react";
 import { IconButton, Menu } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
@@ -13,30 +14,28 @@ type MoreOptionsMenu = {
 };
 
 export const MoreOptionsMenu = ({ onSuccess }: MoreOptionsMenu) => {
-    const [isMoreOptionsVisible, setIsMoreOptionsVisible] = useState(false);
-    const openMoreOptions = () => setIsMoreOptionsVisible(true);
-    const closeMoreOptions = () => setIsMoreOptionsVisible(false);
+    const { closeModal, isVisible, openModal } = useModal();
 
     return (
         <Menu
             contentStyle={commonStyles.inputAspect}
-            visible={isMoreOptionsVisible}
-            onDismiss={closeMoreOptions}
+            visible={isVisible}
+            onDismiss={closeModal}
             anchor={
                 <IconButton
                     iconColor={Theme.colors.white}
                     icon="dots-vertical"
-                    onPress={openMoreOptions}
+                    onPress={openModal}
                     style={{ margin: 0 }}
                     size={24}
                 />
             }
         >
             <MoveToBatchButton />
-            <CreateBatchButton closeMoreOptions={closeMoreOptions} />
+            <CreateBatchButton closeMoreOptions={closeModal} />
             <WriteOffByDeathButton onSuccess={onSuccess} />
             <WriteOffBySaleButton onSuccess={onSuccess} />
-            <CreateAnnotationButton closeMoreOptions={closeMoreOptions} />
+            <CreateAnnotationButton closeMoreOptions={closeModal} />
         </Menu>
     );
 };
