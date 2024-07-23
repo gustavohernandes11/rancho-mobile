@@ -3,8 +3,8 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { Loading } from "components/Loading";
 import { PageSkeleton } from "components/PageSkeleton";
+import { Paragraph } from "components/Paragraph";
 import { SelectionMenu } from "components/SelectionMenu";
-import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { Stack, router, useLocalSearchParams } from "expo-router";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
@@ -15,7 +15,6 @@ import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { Batch, PopulatedBatch } from "types";
-import { serializeBatchInfo } from "utils/serializers";
 
 export default function ViewBatchDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -93,21 +92,28 @@ export default function ViewBatchDetailsScreen() {
     const handleRegisterAnimal = () =>
         router.push(`/(screens)/batches/register-animal-to-batch/${batch!.id}`);
 
+    const getAnimalsHeading = () => {
+        if (!batch) return "Vazio";
+
+        const animalCount = batch.animals.length;
+        return `Animais do lote ${
+            animalCount > 0 ? `(${animalCount})` : "(Vazio)"
+        }`;
+    };
+
     return (
         <ContainerView immediateContent={<StackScreen />}>
             {isLoading ? (
                 <PageSkeleton />
             ) : (
                 <>
-                    <Heading>{batch?.name}</Heading>
-                    {batch ? (
-                        <Span direction="column">
-                            <Heading size="small">Informações Gerais</Heading>
-                            <SimpleTable data={serializeBatchInfo(batch)} />
-                        </Span>
-                    ): null}
+                    <Heading size="big">{batch?.name}</Heading>
+                    {batch?.description ? (
+                        <Paragraph>{batch.description}</Paragraph>
+                    ) : null}
+
                     <Span direction="column">
-                        <Heading size="small">Animais do lote</Heading>
+                        <Heading size="medium">{getAnimalsHeading()}</Heading>
                         {isLoading ? (
                             <Loading />
                         ) : (

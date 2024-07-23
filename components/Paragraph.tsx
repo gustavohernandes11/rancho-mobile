@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 import { TextProps } from "react-native-paper";
-import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 
 type TextColorOptions = "white" | "black" | "green";
@@ -28,13 +27,19 @@ export const Paragraph: React.FC<TextProps<any> & ParagraphProps> = ({
 const getStyles = (color: TextColorOptions, secondary: boolean) =>
     StyleSheet.create({
         text: {
-            ...(secondary ? commonStyles.secondaryText : commonStyles.text),
-            color: getColor(color),
+            color: getColor(color, secondary),
+            fontSize: secondary ? 14 : 16,
         },
     });
 
-const getColor = (color: TextColorOptions) => {
-    if (color === "white") return Theme.colors.white;
-    else if (color === "green") return Theme.colors.primary;
-    else return Theme.colors.darkest;
+const getColor = (color: TextColorOptions, secondary: boolean) => {
+    switch (color) {
+        case "white":
+            return Theme.colors.white;
+        case "green":
+            return Theme.colors.primary;
+        case "black":
+        default:
+            return secondary ? Theme.colors.darkGray : Theme.colors.darkest;
+    }
 };

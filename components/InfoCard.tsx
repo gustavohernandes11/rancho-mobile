@@ -21,10 +21,8 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 }) => {
     return (
         <View {...props} style={styles.card}>
-            {/* <Span my={0} gap={4} align="center"> */}
             {icon}
             <Heading size={size}>{title}</Heading>
-            {/* </Span> */}
             <Paragraph secondary>{label}</Paragraph>
         </View>
     );
@@ -33,14 +31,13 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 const styles = StyleSheet.create({
     card: {
         ...commonStyles.card,
+        ...commonStyles.border,
         flex: 1,
         width: "auto",
         gap: 0,
         flexDirection: "column",
         alignItems: "flex-start",
         backgroundColor: Theme.colors.white,
-        borderWidth: 1,
-        borderColor: Theme.colors.lightGray,
         elevation: 0,
         padding: 16,
     },

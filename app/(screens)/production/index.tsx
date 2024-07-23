@@ -101,7 +101,12 @@ export default function ViewProductionReportsPage() {
             </Span>
             <Span direction="column">
                 <Heading size="small">Vendas</Heading>
-                <Span align="stretch" justify="space-between" my={0}>
+                <Span
+                    align="stretch"
+                    justify="space-between"
+                    flexWrap="wrap"
+                    my={0}
+                >
                     <InfoCard
                         label="Litros produzidos"
                         title={formatInfo(producedAmount)}
@@ -113,6 +118,7 @@ export default function ViewProductionReportsPage() {
                         )}`}
                     />
                     <InfoCard
+                        size="small"
                         label="Valor total"
                         title={`R$ ${formatInfo(calculateTotal())}`}
                     />

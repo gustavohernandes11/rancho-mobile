@@ -5,17 +5,18 @@ import {
     ImageSourcePropType,
     Pressable,
     StyleSheet,
-    Text,
     View,
     ViewProps,
 } from "react-native";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
+import { Heading } from "./Heading";
+import { Paragraph } from "./Paragraph";
 
 interface BannerProps {
     iconSource: ImageSourcePropType;
     iconAlt: string;
-    title: string | React.ReactNode;
+    title: string;
     description?: string;
     rightDescription?: string;
     href: string;
@@ -41,16 +42,14 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
                     />
                 </View>
                 <View style={styles.left}>
-                    <Text style={styles.title}>{title}</Text>
+                    <Heading size="small">{title}</Heading>
                     {description ? (
-                        <Text style={styles.description}>{description}</Text>
+                        <Paragraph secondary>{description}</Paragraph>
                     ) : null}
                 </View>
                 <View style={styles.right}>
                     {rightDescription ? (
-                        <Text style={styles.description}>
-                            {rightDescription}
-                        </Text>
+                        <Paragraph secondary>{rightDescription}</Paragraph>
                     ) : null}
                 </View>
             </Pressable>
@@ -62,11 +61,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "row",
-        alignItems: "center",
+        alignItems: "flex-start",
         borderRadius: 8,
         backgroundColor: Theme.colors.lightest,
-        borderWidth: 1,
         borderColor: Theme.colors.lightGray,
+        borderWidth: 1,
         padding: 16,
     },
     right: {
@@ -77,17 +76,6 @@ const styles = StyleSheet.create({
     left: {
         flex: 1,
         alignItems: "flex-start",
-        gap: 4,
-    },
-    title: {
-        fontFamily: Theme.fonts.primaryFamily,
-        color: Theme.colors.darkest,
-        fontSize: 16,
-    },
-    description: {
-        ...commonStyles.text,
-        fontSize: 12,
-        textAlign: "right",
     },
     iconSpan: {
         alignItems: "center",

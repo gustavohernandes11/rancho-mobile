@@ -170,7 +170,7 @@ export default function ViewAnimalsScreen() {
                 <Span>
                     {isSelectionMode ? <SelectionMenu /> : null}
                     <Span>
-                        <Paragraph>{getDisplayInfo()}</Paragraph>
+                        <Paragraph secondary>{getDisplayInfo()}</Paragraph>
                         <AnimalTable animals={filteredAnimals} />
                     </Span>
                 </Span>

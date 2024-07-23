@@ -7,11 +7,6 @@ export const commonStyles = StyleSheet.create({
         color: Theme.colors.darkest,
         fontFamily: Theme.fonts.primaryFamily,
     },
-    secondaryText: {
-        fontSize: 14,
-        color: Theme.colors.mediumGray,
-        fontFamily: Theme.fonts.primaryFamily,
-    },
     label: {
         fontSize: 14,
         color: Theme.colors.darkGray,
