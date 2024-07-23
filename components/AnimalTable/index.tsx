@@ -11,9 +11,13 @@ import { Row } from "./Row";
 
 type AnimalTableProps = {
     animals: Animal[];
+    showCheckbox?: boolean;
 };
 
-export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
+export const AnimalTable: React.FC<AnimalTableProps> = ({
+    animals,
+    showCheckbox = true,
+}) => {
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
     const isSelectionMode = useAnimalSelectionStore(
         state => state.isSelectionMode
@@ -36,11 +40,14 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
     const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
     const renderItem = ({ item }: { item: Animal }) => (
         <Row
+            showCheckbox={showCheckbox}
             isChecked={selectedIDs.includes(item.id)}
             onCheck={() => handleCheck(item.id)}
             animal={item}
         />
     );
+
+    const renderHeader = () => <Header showCheckbox={showCheckbox} />;
 
     const renderEmptyList = () => (
         <Span justify="center">
@@ -58,7 +65,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({ animals }) => {
                 extraData={[selectedIDs, isSelectionMode]}
                 renderItem={renderItem}
                 estimatedItemSize={50}
-                ListHeaderComponent={Header}
+                ListHeaderComponent={renderHeader}
                 ListEmptyComponent={renderEmptyList}
                 testID="animal-table"
             />

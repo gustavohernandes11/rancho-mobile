@@ -18,13 +18,10 @@ import { Animal, PopulatedAnimal } from "types";
 import {
     formatAge,
     formatAnimalStatus,
+    formatInfo,
     getAnimalStatusIcon,
     getGenderIcon,
 } from "utils/formatters";
-
-const formatInfo = (value: any) => {
-    return !!value ? `${value}` : "-";
-};
 
 export default function ViewAnimalDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -108,16 +105,18 @@ export default function ViewAnimalDetailsScreen() {
                                     }
                                 />
                             ) : null}
-                            <InfoCard
-                                label="Situação"
-                                title={formatInfo(
-                                    formatAnimalStatus(animal?.status!)
-                                )}
-                                icon={
-                                    animal?.status &&
-                                    getAnimalStatusIcon(animal?.status)
-                                }
-                            />
+                            {animal?.status ? (
+                                <InfoCard
+                                    label="Situação"
+                                    title={formatInfo(
+                                        formatAnimalStatus(animal.status)
+                                    )}
+                                    icon={
+                                        animal?.status &&
+                                        getAnimalStatusIcon(animal.status)
+                                    }
+                                />
+                            ) : null}
                         </Span>
                         {animal?.birthdate && (
                             <Span

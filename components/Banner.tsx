@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: "row",
-        alignItems: "flex-start",
+        alignItems: "center",
         borderRadius: 8,
         backgroundColor: Theme.colors.lightest,
         borderColor: Theme.colors.lightGray,

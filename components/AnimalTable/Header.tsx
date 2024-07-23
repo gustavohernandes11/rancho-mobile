@@ -4,7 +4,11 @@ import { DataTable } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 
-export const Header = () => {
+type HeaderProps = {
+    showCheckbox: boolean;
+};
+
+export const Header = ({ showCheckbox }: HeaderProps) => {
     return (
         <DataTable>
             <DataTable.Header style={styles.tableHeader}>
@@ -26,12 +30,14 @@ export const Header = () => {
                 >
                     Idade
                 </DataTable.Title>
-                <DataTable.Title
-                    style={{ flex: 1, justifyContent: "center" }}
-                    textStyle={[{ flexShrink: 1 }, commonStyles.text]}
-                >
-                    ✓
-                </DataTable.Title>
+                {showCheckbox ? (
+                    <DataTable.Title
+                        style={{ flex: 1, justifyContent: "center" }}
+                        textStyle={[{ flexShrink: 1 }, commonStyles.text]}
+                    >
+                        ✓
+                    </DataTable.Title>
+                ) : null}
             </DataTable.Header>
         </DataTable>
     );

@@ -48,7 +48,7 @@ export const getGenderIcon = (gender: "F" | "M") =>
     gender === "M" ? (
         <Icon source="gender-male" color={Theme.colors.blue} size={16} />
     ) : (
-        <Icon source="gender-female" color={Theme.colors.red} size={16} />
+        <Icon source="gender-female" color={Theme.colors.pink} size={16} />
     );
 
 export const formatDateToLongPtBR = (date: Date) => {
@@ -68,7 +68,9 @@ export const formatDateToShortPtBR = (date: Date) => {
 
 export const formatDateToISO = (date: Date) => date.toISOString().split("T")[0]; // Format the date to YYYY-MM-DD
 export const formatMonthToISO = (date: Date) => moment(date).format("YYYY-MM"); // Format the date to YYYY-MM
-
+export const formatInfo = (value: number | string | null | undefined) => {
+    return !!value ? value.toString() : "-";
+};
 export const formatAnnotationType = (type: AnnotationTypeOption) => {
     switch (type) {
         case "simple":
@@ -87,9 +89,7 @@ export const formatAnnotationType = (type: AnnotationTypeOption) => {
     }
 };
 
-export const formatAnimalStatus = (
-    type: AnimalStatusOptions
-): React.ReactNode => {
+export const formatAnimalStatus = (type: AnimalStatusOptions): string => {
     switch (type) {
         case "active":
             return "Ativo";

@@ -1,8 +1,9 @@
+import { AnimalTable } from "components/AnimalTable";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { InfoCard } from "components/InfoCard";
 import { PageSkeleton } from "components/PageSkeleton";
 import { Paragraph } from "components/Paragraph";
-import { SimpleTable } from "components/SimpleTable";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useFocus } from "hooks/useFocus";
@@ -13,7 +14,11 @@ import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { Animal, Annotation } from "types";
-import { serializeAnimalPreview, serializeAnnotation } from "utils/serializers";
+import {
+    formatAnnotationType,
+    formatDateToShortPtBR,
+    formatInfo,
+} from "utils/formatters";
 
 export default function ViewAnnotationDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -96,9 +101,46 @@ export default function ViewAnnotationDetailsScreen() {
                     {annotation ? (
                         <Span direction="column">
                             <Heading size="small">Informações gerais</Heading>
-                            <SimpleTable
-                                data={serializeAnnotation(annotation)}
-                            />
+                            <Span
+                                align="stretch"
+                                justify="space-between"
+                                my={0}
+                            >
+                                <InfoCard
+                                    label="Tipo"
+                                    size="small"
+                                    title={formatAnnotationType(
+                                        annotation.type
+                                    )}
+                                />
+                                {annotation.date && (
+                                    <InfoCard
+                                        label="Data"
+                                        size="small"
+                                        title={formatDateToShortPtBR(
+                                            annotation.date
+                                        )}
+                                    />
+                                )}
+                                <Span my={0}>
+                                    {annotation.medicineName && (
+                                        <InfoCard
+                                            label="Vacina/Medicação"
+                                            title={formatInfo(
+                                                annotation.medicineName
+                                            )}
+                                        />
+                                    )}
+                                    {annotation.dosage && (
+                                        <InfoCard
+                                            label="Dosagem"
+                                            title={formatInfo(
+                                                annotation.dosage
+                                            )}
+                                        />
+                                    )}
+                                </Span>
+                            </Span>
                         </Span>
                     ) : null}
 
@@ -106,12 +148,10 @@ export default function ViewAnnotationDetailsScreen() {
                         <Span direction="column">
                             <Heading size="small">{`Animais envolvidos (${annotation?.animalIDs?.length})`}</Heading>
                             <Span>
-                                {relatedAnimals?.map(animal => (
-                                    <SimpleTable
-                                        key={animal.id}
-                                        data={serializeAnimalPreview(animal)}
-                                    />
-                                ))}
+                                <AnimalTable
+                                    animals={relatedAnimals || []}
+                                    showCheckbox={false}
+                                />
                             </Span>
                         </Span>
                     ) : null}

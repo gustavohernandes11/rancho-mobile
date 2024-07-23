@@ -16,7 +16,7 @@ import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { MonthDetails } from "types/MonthDetails";
 import { DayProduction } from "types/Production";
-import { formatMonthToISO } from "utils/formatters";
+import { formatInfo, formatMonthToISO } from "utils/formatters";
 
 export default function ViewProductionReportsPage() {
     const [date, setDate] = useState(new Date());
@@ -48,10 +48,6 @@ export default function ViewProductionReportsPage() {
         const newDate = moment(dateString, "YYYY MM").toDate();
         setDate(newDate);
         setShow(false);
-    };
-
-    const formatInfo = (value: number | string | null | undefined) => {
-        return !!value ? value.toString() : "-";
     };
 
     const title = `Informações de ${moment(date).format("MMMM [de] YYYY")}`;

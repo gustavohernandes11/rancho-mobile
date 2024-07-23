@@ -12,6 +12,7 @@ interface RowProps {
     animal: Animal;
     onCheck: () => void;
     isChecked: boolean;
+    showCheckbox: boolean;
 }
 
 const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
@@ -24,7 +25,7 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 };
 
 export const Row: React.FC<RowProps> = memo(
-    ({ animal, isChecked = false, onCheck }) => {
+    ({ animal, isChecked = false, onCheck, showCheckbox }) => {
         const batches = useGlobalStore(state => state.batches);
         const batch = batches.find(batch => batch.id === animal.batchID);
 
@@ -51,14 +52,16 @@ export const Row: React.FC<RowProps> = memo(
                                 ? formatAge(animal.birthdate)
                                 : ""}
                         </Cell>
-                        <Cell flex={1}>
-                            <Checkbox
-                                color={Theme.colors.primary}
-                                uncheckedColor={Theme.colors.mediumGray}
-                                status={isChecked ? "checked" : "unchecked"}
-                                onPress={onCheck}
-                            />
-                        </Cell>
+                        {showCheckbox ? (
+                            <Cell flex={1}>
+                                <Checkbox
+                                    color={Theme.colors.primary}
+                                    uncheckedColor={Theme.colors.mediumGray}
+                                    status={isChecked ? "checked" : "unchecked"}
+                                    onPress={onCheck}
+                                />
+                            </Cell>
+                        ) : null}
                     </DataTable.Row>
                 </TouchableRipple>
             </Link>
