@@ -3,30 +3,27 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { PageSkeleton } from "components/PageSkeleton";
-import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
-import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import { useFocus } from "hooks/useFocus";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
-import { IconButton } from "react-native-paper";
+import { Paragraph } from "react-native-paper";
 import { Storage } from "services/StorageService";
-import Theme from "styles/Theme";
 import { Animal, Annotation } from "types";
 import {
     formatAnnotationType,
     formatDateToShortPtBR,
     formatInfo,
 } from "utils/formatters";
+import { AnnotationPageHeaderButtons } from "../../../components/AnnotationPageHeaderButtons";
 
 export default function ViewAnnotationDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const animals = useGlobalStore(state => state.animals);
-    const [annotation, setAnnotation] = useState<Annotation | null>();
-    const [relatedAnimals, setRelatedAnimals] = useState<Animal[]>();
+    const [annotation, setAnnotation] = useState<Annotation | null>(null);
+    const [relatedAnimals, setRelatedAnimals] = useState<Animal[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter();
 
     const loadAnnotation = () =>
         Storage.getAnnotation(Number(id)).then(annotation =>
@@ -44,9 +41,9 @@ export default function ViewAnnotationDetailsScreen() {
     };
 
     useEffect(() => {
-        setIsLoading(() => true);
+        setIsLoading(true);
         loadAnnotation().then(() => {
-            setIsLoading(() => false);
+            setIsLoading(false);
         });
     }, [id]);
 
@@ -60,30 +57,13 @@ export default function ViewAnnotationDetailsScreen() {
         <Stack.Screen
             options={{
                 headerTitle: "Anotação",
-                headerRight: () => (
-                    <>
-                        <IconButton
-                            icon="pencil"
-                            iconColor={Theme.colors.white}
-                            onPress={handleEdit}
-                        />
-                        <IconButton
-                            icon="delete"
-                            iconColor={Theme.colors.white}
-                            onPress={handleDelete}
-                        />
-                    </>
-                ),
+                headerRight: () =>
+                    annotation ? (
+                        <AnnotationPageHeaderButtons annotation={annotation} />
+                    ) : null,
             }}
         />
     );
-
-    const handleDelete = () => {
-        confirmDeleteAnnotation(annotation!, router.back);
-    };
-    const handleEdit = () => {
-        router.push(`/(screens)/annotations/edit/${id}`);
-    };
 
     return (
         <ContainerView immediateContent={<StackScreen />}>
@@ -160,27 +140,3 @@ export default function ViewAnnotationDetailsScreen() {
         </ContainerView>
     );
 }
-
-const confirmDeleteAnnotation = (
-    annotation: Annotation,
-    onDeleteCallback: () => void
-) => {
-    Alert.alert(
-        "Confirmação",
-        "Você têm certeza que deseja deletar essa nota?",
-        [
-            {
-                text: "Cancelar",
-                style: "cancel",
-            },
-            {
-                text: "Deletar",
-                onPress: () =>
-                    Storage.deleteAnnotation(annotation.id).then(() =>
-                        onDeleteCallback()
-                    ),
-                style: "destructive",
-            },
-        ]
-    );
-};

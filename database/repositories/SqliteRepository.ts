@@ -381,10 +381,10 @@ export class SqliteRepository implements StorageRepository {
 
     async listAnimals(queryOptions: QueryOptions = {}): Promise<Animal[]> {
         let query = `
-		SELECT 
-			id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
-		FROM Animals
-		`;
+            SELECT 
+                id, name, gender, birthdate, batchID, code, paternityID, maternityID, observation, status
+            FROM Animals
+        `;
 
         const params: (string | number)[] = [];
 
@@ -428,7 +428,9 @@ export class SqliteRepository implements StorageRepository {
                 break;
         }
 
-        return this.getAll<Animal>(query, params);
+        return this.getAll<Animal>(query, params).catch(e => {
+            return [];
+        });
     }
 
     async getPopulatedBatch(batchID: number): Promise<PopulatedBatch> {
