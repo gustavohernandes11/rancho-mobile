@@ -3,7 +3,6 @@ import { ScrollView, StyleSheet, View } from "react-native";
 import { Dialog as PaperDialog, Portal } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
-import { Paragraph } from "./Paragraph";
 
 interface DialogProps {
     title: string;
@@ -37,9 +36,7 @@ export const Dialog: React.FC<DialogProps> = ({
                         <ScrollView>{scrollableContent}</ScrollView>
                     </PaperDialog.ScrollArea>
                 ) : null}
-                <PaperDialog.Content>
-                    <Paragraph>{content}</Paragraph>
-                </PaperDialog.Content>
+                <PaperDialog.Content>{content}</PaperDialog.Content>
                 <PaperDialog.Actions>
                     <View style={styles.actionContainer}>{buttons}</View>
                 </PaperDialog.Actions>

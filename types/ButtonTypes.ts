@@ -1,1 +1,6 @@
-export type ButtonTypes = "primary" | "secondary" | "light" | "danger";
+export type ButtonTypes =
+    | "primary"
+    | "secondary"
+    | "light"
+    | "light-danger"
+    | "danger";

@@ -29,6 +29,7 @@ const getStyles = (color: TextColorOptions, secondary: boolean) =>
         text: {
             color: getColor(color, secondary),
             fontSize: secondary ? 14 : 16,
+            flexWrap: "wrap",
         },
     });
 

@@ -1,6 +1,8 @@
 import { AnimalBanner } from "components/AnimalBanner";
 import { BatchBanner } from "components/BatchBanner";
+import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
+import { Dialog } from "components/Dialog";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
 import { PageSkeleton } from "components/PageSkeleton";
@@ -8,9 +10,9 @@ import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalStore } from "hooks/useGlobalStore";
+import { useModal } from "hooks/useModal";
 import moment from "moment";
 import { useEffect, useState } from "react";
-import { Alert } from "react-native";
 import { Icon, IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
@@ -23,13 +25,90 @@ import {
     getGenderIcon,
 } from "utils/formatters";
 
+type ConfirmDeleteAnimalDialogProps = {
+    animal: Animal;
+    isVisible: boolean;
+    closeModal: () => void;
+};
+
+const ConfirmDeleteAnimalDialog = ({
+    animal,
+    isVisible,
+    closeModal,
+}: ConfirmDeleteAnimalDialogProps) => {
+    const { refreshAll } = useGlobalStore();
+    const router = useRouter();
+
+    return (
+        <Dialog
+            title="Deletar animal?"
+            visible={isVisible}
+            content={
+                <Paragraph>
+                    Você têm certeza que deseja deletar o animal "{animal?.name}
+                    "
+                </Paragraph>
+            }
+            buttons={
+                <>
+                    <Button
+                        title="Cancelar"
+                        type="light-danger"
+                        onPress={closeModal}
+                    />
+                    <Button
+                        title="Confirmar"
+                        type="danger"
+                        onPress={() => {
+                            if (animal) {
+                                Storage.deleteAnimal(animal.id).then(() => {
+                                    refreshAll();
+                                    router.back();
+                                });
+                            }
+                        }}
+                    />
+                </>
+            }
+            onDismiss={closeModal}
+        />
+    );
+};
+
+const AnimalHeaderButtons = ({ animal }: { animal: Animal }) => {
+    const router = useRouter();
+    const { openModal, closeModal, isVisible } = useModal();
+
+    const handleEdit = () =>
+        router.push(`/(screens)/animals/edit/${animal.id}`);
+    const handleDelete = () => openModal();
+
+    return (
+        <>
+            <IconButton
+                icon="pencil"
+                iconColor={Theme.colors.white}
+                onPress={handleEdit}
+            />
+            <IconButton
+                icon="delete"
+                iconColor={Theme.colors.white}
+                onPress={handleDelete}
+            />
+            <ConfirmDeleteAnimalDialog
+                animal={animal!}
+                closeModal={closeModal}
+                isVisible={isVisible}
+            />
+        </>
+    );
+};
+
 export default function ViewAnimalDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [animal, setAnimal] = useState<PopulatedAnimal>();
     const [isLoading, setIsLoading] = useState(true);
-    const router = useRouter();
     const animals = useGlobalStore(state => state.animals);
-    const refreshAll = useGlobalStore(state => state.refreshAll);
 
     const fetchPopulatedAnimal = async () => {
         await Storage.getPopulatedAnimal(Number(id)).then(animal =>
@@ -50,30 +129,10 @@ export default function ViewAnimalDetailsScreen() {
         <Stack.Screen
             options={{
                 headerTitle: "Ver animal",
-                headerRight: () => (
-                    <>
-                        <IconButton
-                            icon="pencil"
-                            iconColor={Theme.colors.white}
-                            onPress={handleEdit}
-                        />
-                        <IconButton
-                            icon="delete"
-                            iconColor={Theme.colors.white}
-                            onPress={handleDelete}
-                        />
-                    </>
-                ),
+                headerRight: () => <AnimalHeaderButtons animal={animal!} />,
             }}
         />
     );
-
-    const handleEdit = () => router.push(`/(screens)/animals/edit/${id}`);
-    const handleDelete = () =>
-        confirmDeleteAnimal(animal!, () => {
-            refreshAll();
-            router.back();
-        });
 
     return (
         <ContainerView immediateContent={<StackScreen />}>
@@ -193,24 +252,3 @@ export default function ViewAnimalDetailsScreen() {
         </ContainerView>
     );
 }
-
-const confirmDeleteAnimal = (animal: Animal, onDeleteCallback: () => void) => {
-    Alert.alert(
-        `Deletar animal?`,
-        `Você têm certeza que deseja deletar o animal "${animal.name}"?`,
-        [
-            {
-                text: "Cancelar",
-                style: "cancel",
-            },
-            {
-                text: "Deletar",
-                onPress: () =>
-                    Storage.deleteAnimal(animal.id).then(() =>
-                        onDeleteCallback()
-                    ),
-                style: "destructive",
-            },
-        ]
-    );
-};

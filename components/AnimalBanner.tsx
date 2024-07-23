@@ -24,7 +24,7 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
         <Banner
             iconAlt="Rounded animal icon"
             iconSource={require("../assets/images/AnimalCircleIcon.png")}
-            title={title}
+            title={title as unknown as string}
             rightDescription={animal.birthdate && formatAge(animal.birthdate)}
             {...props}
         />
