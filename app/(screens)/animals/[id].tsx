@@ -2,18 +2,29 @@ import { AnimalBanner } from "components/AnimalBanner";
 import { BatchBanner } from "components/BatchBanner";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
+import { InfoCard } from "components/InfoCard";
 import { PageSkeleton } from "components/PageSkeleton";
-import { SimpleTable } from "components/SimpleTable";
+import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useGlobalStore } from "hooks/useGlobalStore";
+import moment from "moment";
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
-import { IconButton } from "react-native-paper";
+import { Icon, IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { Animal, PopulatedAnimal } from "types";
-import { serializeAnimalInfo } from "utils/serializers";
+import {
+    formatAge,
+    formatAnimalStatus,
+    getAnimalStatusIcon,
+    getGenderIcon,
+} from "utils/formatters";
+
+const formatInfo = (value: any) => {
+    return !!value ? `${value}` : "-";
+};
 
 export default function ViewAnimalDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
@@ -76,7 +87,64 @@ export default function ViewAnimalDetailsScreen() {
                     <Heading size="big">{animal?.name}</Heading>
                     <Span direction="column">
                         <Heading size="small">Informações gerais</Heading>
-                        <SimpleTable data={serializeAnimalInfo(animal)} />
+                        <Span align="stretch" justify="space-between" my={0}>
+                            <InfoCard
+                                label="Gênero"
+                                title={formatInfo(
+                                    animal?.gender === "F" ? "Fêmea" : "Macho"
+                                )}
+                                icon={getGenderIcon(animal?.gender!)}
+                            />
+                            {animal?.code ? (
+                                <InfoCard
+                                    label="Código"
+                                    title={formatInfo(animal.code)}
+                                    icon={
+                                        <Icon
+                                            size={16}
+                                            source="alpha-c-box"
+                                            color={Theme.colors.mediumGray}
+                                        />
+                                    }
+                                />
+                            ) : null}
+                            <InfoCard
+                                label="Situação"
+                                title={formatInfo(
+                                    formatAnimalStatus(animal?.status!)
+                                )}
+                                icon={
+                                    animal?.status &&
+                                    getAnimalStatusIcon(animal?.status)
+                                }
+                            />
+                        </Span>
+                        {animal?.birthdate && (
+                            <Span
+                                align="stretch"
+                                justify="space-between"
+                                my={0}
+                            >
+                                <InfoCard
+                                    label="Idade"
+                                    title={formatInfo(
+                                        formatAge(animal?.birthdate)
+                                    )}
+                                />
+                                <InfoCard
+                                    label="Data de Nascimento"
+                                    title={moment(animal?.birthdate).format(
+                                        "DD/MM/YYYY"
+                                    )}
+                                />
+                            </Span>
+                        )}
+                        {animal?.observation && (
+                            <Span direction="column" gap={4}>
+                                <Heading size="small">Observação</Heading>
+                                <Paragraph>{animal.observation}</Paragraph>
+                            </Span>
+                        )}
                     </Span>
 
                     {animal?.batch ? (
@@ -114,6 +182,7 @@ export default function ViewAnimalDetailsScreen() {
                             <Heading size="small">Prole</Heading>
                             {animal.offspring.map(calf => (
                                 <AnimalBanner
+                                    key={calf.id}
                                     href={`/(screens)/animals/${calf.id}`}
                                     animal={calf}
                                 />
@@ -125,6 +194,7 @@ export default function ViewAnimalDetailsScreen() {
         </ContainerView>
     );
 }
+
 const confirmDeleteAnimal = (animal: Animal, onDeleteCallback: () => void) => {
     Alert.alert(
         `Deletar animal?`,

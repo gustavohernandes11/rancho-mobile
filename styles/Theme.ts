@@ -10,6 +10,7 @@ export default {
         lightest: "#f0f0f0",
         white: "#f9f9f9",
         blue: "#568aa7",
+        orange: "#CC5500",
         purple: "#704e81",
         red: "#c83c3c",
         cian: "#309691",

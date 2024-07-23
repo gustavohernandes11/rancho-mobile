@@ -1,5 +1,5 @@
-import { FontAwesome } from "@expo/vector-icons";
 import moment from "moment";
+import { Icon } from "react-native-paper";
 import Theme from "styles/Theme";
 import { AnimalStatusOptions, AnnotationTypeOption } from "types";
 
@@ -46,17 +46,9 @@ export const formatGender = (gender: "F" | "M") =>
 
 export const getGenderIcon = (gender: "F" | "M") =>
     gender === "M" ? (
-        <FontAwesome
-            accessibilityLabel="Mars icon"
-            color={Theme.colors.blue}
-            name="mars"
-        />
+        <Icon source="gender-male" color={Theme.colors.blue} size={16} />
     ) : (
-        <FontAwesome
-            accessibilityLabel="Jupter icon"
-            color={Theme.colors.red}
-            name="venus"
-        />
+        <Icon source="gender-female" color={Theme.colors.red} size={16} />
     );
 
 export const formatDateToLongPtBR = (date: Date) => {
@@ -95,10 +87,12 @@ export const formatAnnotationType = (type: AnnotationTypeOption) => {
     }
 };
 
-export const formatAnimalStatus = (type: AnimalStatusOptions) => {
+export const formatAnimalStatus = (
+    type: AnimalStatusOptions
+): React.ReactNode => {
     switch (type) {
         case "active":
-            return "Ativo no rebanho";
+            return "Ativo";
         case "dead":
             return "Morto";
         case "sold":
@@ -106,5 +100,36 @@ export const formatAnimalStatus = (type: AnimalStatusOptions) => {
 
         default:
             return "";
+    }
+};
+
+export const getAnimalStatusIcon = (status: AnimalStatusOptions) => {
+    switch (status) {
+        case "active":
+            return (
+                <Icon
+                    color={Theme.colors.primary}
+                    source="thumb-up"
+                    size={16}
+                />
+            );
+        case "dead":
+            return (
+                <Icon
+                    color={Theme.colors.mediumGray}
+                    source="coffin"
+                    size={16}
+                />
+            );
+        case "sold":
+            return (
+                <Icon
+                    color={Theme.colors.orange}
+                    source="truck-delivery"
+                    size={16}
+                />
+            );
+        default:
+            return null;
     }
 };

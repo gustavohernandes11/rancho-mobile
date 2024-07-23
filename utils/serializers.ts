@@ -1,7 +1,5 @@
 import { Animal, Annotation, Batch, Item } from "types";
 import {
-    formatAge,
-    formatAnimalStatus,
     formatAnnotationType,
     formatDateToLongPtBR,
     formatGender,
@@ -18,38 +16,6 @@ export const serializeBatches = (batches: Batch[]): Item[] =>
         key: b.name,
         value: b.id,
     })) || [];
-
-export const serializeAnimalInfo = (animal?: Animal): Item[] => {
-    let items: Item[] = [];
-    if (!animal) return items;
-
-    items.push({ key: "Nome", value: animal.name });
-    items.push({
-        key: "Gênero",
-        value: formatGender(animal.gender),
-    });
-    items.push({
-        key: "Situação",
-        value: formatAnimalStatus(animal.status),
-    });
-
-    if (animal.code)
-        items.push({ key: "Código", value: animal.code.toString() });
-    if (animal.birthdate) {
-        items.push({
-            key: "Idade",
-            value: formatAge(animal.birthdate),
-        });
-        items.push({
-            key: "Data de nascimento",
-            value: new Date(animal.birthdate).toLocaleDateString("pt-BR"),
-        });
-    }
-    if (animal.observation)
-        items.push({ key: "Observação", value: animal.observation });
-
-    return items;
-};
 
 export const serializeAnnotation = (annotation?: Annotation | null): Item[] => {
     let items: Item[] = [];

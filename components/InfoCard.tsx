@@ -9,19 +9,22 @@ interface InfoCardProps {
     title: string;
     label: string;
     size?: "big" | "medium" | "small";
+    icon?: React.ReactNode;
 }
 
 export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
     title,
     label,
     size = "medium",
+    icon,
     ...props
 }) => {
     return (
         <View {...props} style={styles.card}>
-            <Heading size={size} shrink={1}>
-                {title}
-            </Heading>
+            {/* <Span my={0} gap={4} align="center"> */}
+            {icon}
+            <Heading size={size}>{title}</Heading>
+            {/* </Span> */}
             <Paragraph secondary>{label}</Paragraph>
         </View>
     );
@@ -39,5 +42,6 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: Theme.colors.lightGray,
         elevation: 0,
+        padding: 16,
     },
 });
