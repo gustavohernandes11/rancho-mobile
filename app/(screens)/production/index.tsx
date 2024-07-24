@@ -10,7 +10,7 @@ import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
 import { calendarLocalePtBr } from "components/MonthProductionCalendar";
 import { Paragraph } from "components/Paragraph";
-import { ProductionChart } from "components/ProductionChart";
+import { MemoProductionChart } from "components/ProductionChart";
 import React, { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
@@ -93,7 +93,7 @@ export default function ViewProductionReportsPage() {
             ) : null}
             <Span direction="column">
                 <Heading>{title}</Heading>
-                <ProductionChart production={production || []} />
+                <MemoProductionChart production={production || []} />
             </Span>
             <Span direction="column">
                 <Heading size="small">Vendas</Heading>

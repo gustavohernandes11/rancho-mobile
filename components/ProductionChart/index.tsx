@@ -1,16 +1,26 @@
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import moment from "moment";
-import React from "react";
+import React, { memo } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import { BarChart } from "react-native-gifted-charts";
 import Theme from "styles/Theme";
 import { DayProduction } from "types/Production";
-import { formatDateToShortPtBR } from "utils/formatters";
+import { formatDateToShortPtBR, formatMonthToISO } from "utils/formatters";
 import { Point } from "./Point";
 
 type ProductionChartType = {
     production: DayProduction[];
+};
+
+const isEqual = (prev: ProductionChartType, next: ProductionChartType) => {
+    const getMonthString = (dayString: string) =>
+        formatMonthToISO(moment(dayString).toDate());
+
+    const prevMonth = prev.production.length > 0 ? prev.production[0]?.day : "";
+    const nextMonth = next.production.length > 0 ? next.production[0]?.day : "";
+
+    return getMonthString(prevMonth) === getMonthString(nextMonth);
 };
 
 export const ProductionChart = ({ production }: ProductionChartType) => {
@@ -68,6 +78,8 @@ export const ProductionChart = ({ production }: ProductionChartType) => {
         </View>
     );
 };
+
+export const MemoProductionChart = memo(ProductionChart, isEqual);
 
 const styles = StyleSheet.create({
     container: {
