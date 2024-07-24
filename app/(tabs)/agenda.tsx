@@ -1,10 +1,10 @@
 import { Button } from "components/Button";
 import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
+import { DayProductionForm } from "components/DayProductionForm";
 import { Heading } from "components/Heading";
 import { MonthDetailsForm } from "components/MonthDetailsForm";
 import { MonthProductionCalendar } from "components/MonthProductionCalendar";
-import { ProductionForm } from "components/ProductionForm";
 import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
 import moment from "moment";
@@ -69,10 +69,7 @@ export default function ViewAgendaScreen() {
             />
             <Span direction="column">
                 <Heading>{dayDetailsLabel}</Heading>
-                <ProductionForm
-                    selectedDate={selectedDate}
-                    onSubmitCallback={() => {}}
-                />
+                <DayProductionForm selectedDate={selectedDate} />
             </Span>
             <Span direction="column">
                 <Heading>{monthDetailsLabel}</Heading>
