@@ -8,7 +8,7 @@ import SelectDropdown, {
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { Item } from "types";
-import { getInputBorderColor } from "utils/conditionalStyles";
+import { getInputBorderColor } from "utils/getInputBorderColor";
 import { Label } from "./Label";
 
 const DropdownIcon = () => (

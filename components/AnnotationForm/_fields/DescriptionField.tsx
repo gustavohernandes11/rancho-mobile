@@ -2,7 +2,7 @@ import { Input } from "components/Input";
 import { FormikProps } from "formik";
 import React from "react";
 import { Annotation } from "types/Annotation";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 
 type DescriptionInputFieldProps = {
     formik: FormikProps<Annotation>;

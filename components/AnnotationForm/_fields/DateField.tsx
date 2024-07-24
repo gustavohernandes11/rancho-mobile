@@ -3,7 +3,7 @@ import { FormikProps } from "formik";
 import moment from "moment";
 import React from "react";
 import { Annotation } from "types/Annotation";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 
 type DateFieldProps = {
     formik: FormikProps<Annotation>;

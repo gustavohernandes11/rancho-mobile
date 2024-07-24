@@ -12,7 +12,7 @@ import { Icon } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { DayProduction } from "types";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 import { initialValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 

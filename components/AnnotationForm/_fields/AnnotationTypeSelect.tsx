@@ -3,7 +3,7 @@ import { FormikProps } from "formik";
 import React from "react";
 import { Annotation } from "types/Annotation";
 import { formatAnnotationType } from "utils/formatters";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 import { annotationTypeItems } from "../annotationTypeItems";
 
 type AnnotationTypeSelectProps = {

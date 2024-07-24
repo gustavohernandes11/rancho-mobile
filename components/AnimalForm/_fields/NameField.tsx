@@ -2,7 +2,7 @@ import { Input } from "components/Input";
 import { FormikProps } from "formik";
 import React from "react";
 import { Animal } from "types/Animal";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 
 type NameFieldProps = {
     formik: FormikProps<Animal>;

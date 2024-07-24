@@ -3,7 +3,7 @@ import { FormikProps } from "formik";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
 import { Animal } from "types/Animal";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 import { serializeBatches } from "utils/serializers";
 
 type BatchSelectFieldProps = {

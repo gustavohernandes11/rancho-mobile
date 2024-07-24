@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
-import { getInputBorderColor } from "utils/conditionalStyles";
+import { getInputBorderColor } from "utils/getInputBorderColor";
 import { Label } from "./Label";
 
 interface InputProps {

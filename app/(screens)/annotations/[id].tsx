@@ -11,11 +11,8 @@ import { useEffect, useState } from "react";
 import { Paragraph } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import { Animal, Annotation } from "types";
-import {
-    formatAnnotationType,
-    formatDateToShortPtBR,
-    formatInfo,
-} from "utils/formatters";
+import { formatAnnotationType, formatDateToShortPtBR } from "utils/formatters";
+import { valueOrHyphen } from "utils/valueOrHyphen";
 import { AnnotationPageHeaderButtons } from "../../../components/AnnotationPageHeaderButtons";
 
 export default function ViewAnnotationDetailsScreen() {
@@ -106,7 +103,7 @@ export default function ViewAnnotationDetailsScreen() {
                                     {annotation.medicineName && (
                                         <InfoCard
                                             label="Vacina/Medicação"
-                                            title={formatInfo(
+                                            title={valueOrHyphen(
                                                 annotation.medicineName
                                             )}
                                         />
@@ -114,7 +111,7 @@ export default function ViewAnnotationDetailsScreen() {
                                     {annotation.dosage && (
                                         <InfoCard
                                             label="Dosagem"
-                                            title={formatInfo(
+                                            title={valueOrHyphen(
                                                 annotation.dosage
                                             )}
                                         />

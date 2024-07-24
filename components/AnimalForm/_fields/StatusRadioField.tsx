@@ -2,7 +2,7 @@ import { RadioInput } from "components/RadioInput";
 import { FormikProps } from "formik";
 import React from "react";
 import { Animal, AnimalStatusOptions } from "types/Animal";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 
 type StatusRadioFieldProps = {
     formik: FormikProps<Animal>;

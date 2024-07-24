@@ -5,7 +5,7 @@ import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
-import { getInputBorderColor } from "utils/conditionalStyles";
+import { getInputBorderColor } from "utils/getInputBorderColor";
 import { CheckboxItem } from "./CheckboxItem";
 import { Label } from "./Label";
 import { Span } from "./Span";

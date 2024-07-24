@@ -2,7 +2,7 @@ import { Input } from "components/Input";
 import { FormikProps } from "formik";
 import React from "react";
 import { Batch } from "types/Batch";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 
 type DescriptionFieldProps = {
     formik: FormikProps<Batch>;

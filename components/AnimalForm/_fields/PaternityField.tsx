@@ -4,7 +4,7 @@ import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
 import { Animal } from "types/Animal";
 import { filterPossiblePaternity } from "utils/filters";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 import { serializeAnimals } from "utils/serializers";
 
 type PaternityFieldProps = {

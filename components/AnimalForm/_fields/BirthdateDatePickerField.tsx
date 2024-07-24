@@ -3,7 +3,7 @@ import { FormikProps } from "formik";
 import moment from "moment";
 import React, { memo } from "react";
 import { Animal } from "types/Animal";
-import { getFieldError } from "utils/forms";
+import { getFieldError } from "utils/getFieldError";
 
 type BirthdateDatePickerFieldProps = {
     formik: FormikProps<Animal>;

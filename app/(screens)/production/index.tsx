@@ -1,22 +1,21 @@
+import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
-import DatePicker from "react-native-modern-datepicker";
-
-import { Span } from "components/Span";
-import { Stack } from "expo-router";
-import moment from "moment";
-
-import { Button } from "components/Button";
 import { InfoCard } from "components/InfoCard";
-import { calendarLocalePtBr } from "components/MonthProductionCalendar";
 import { Paragraph } from "components/Paragraph";
 import { MemoProductionChart } from "components/ProductionChart";
+import { Span } from "components/Span";
+import { calendarLocalePtBr } from "config/calendarLocalePtBr";
+import { Stack } from "expo-router";
+import moment from "moment";
 import React, { useEffect, useState } from "react";
+import DatePicker from "react-native-modern-datepicker";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { MonthDetails } from "types/MonthDetails";
 import { DayProduction } from "types/Production";
-import { formatInfo, formatMonthToISO } from "utils/formatters";
+import { formatMonthToISO } from "utils/formatters";
+import { valueOrHyphen } from "utils/valueOrHyphen";
 
 export default function ViewProductionReportsPage() {
     const [date, setDate] = useState(new Date());
@@ -105,37 +104,37 @@ export default function ViewProductionReportsPage() {
                 >
                     <InfoCard
                         label="Litros produzidos"
-                        title={formatInfo(producedAmount)}
+                        title={valueOrHyphen(producedAmount)}
                     />
                     <InfoCard
                         label="Preço unitário"
-                        title={`R$ ${formatInfo(
+                        title={`R$ ${valueOrHyphen(
                             monthDetails?.pricePerLiter?.toFixed(2)
                         )}`}
                     />
                     <InfoCard
                         size="small"
                         label="Valor total"
-                        title={`R$ ${formatInfo(calculateTotal())}`}
+                        title={`R$ ${valueOrHyphen(calculateTotal())}`}
                     />
                 </Span>
                 <Heading size="small">Qualidade</Heading>
                 <Span align="stretch" justify="space-between" marginY={0}>
                     <InfoCard
                         label="Gordura"
-                        title={`${formatInfo(
+                        title={`${valueOrHyphen(
                             monthDetails?.fatPorcentage?.toFixed(1)
                         )} %`}
                     />
                     <InfoCard
                         label="Proteína"
-                        title={`${formatInfo(
+                        title={`${valueOrHyphen(
                             monthDetails?.proteinPorcentage?.toFixed(1)
                         )} %`}
                     />
                     <InfoCard
                         label="Lactose"
-                        title={`${formatInfo(
+                        title={`${valueOrHyphen(
                             monthDetails?.lactosePorcentage?.toFixed(1)
                         )} %`}
                     />
@@ -143,18 +142,18 @@ export default function ViewProductionReportsPage() {
                 <Span align="stretch" justify="space-between" marginY={0}>
                     <InfoCard
                         label="CBT (mil/mL)"
-                        title={formatInfo(monthDetails?.totalBacteria)}
+                        title={valueOrHyphen(monthDetails?.totalBacteria)}
                     />
                     <InfoCard
                         label="CCS (mil/mL)"
-                        title={formatInfo(monthDetails?.totalSomaticCell)}
+                        title={valueOrHyphen(monthDetails?.totalSomaticCell)}
                     />
                 </Span>
                 {monthDetails?.observation ? (
                     <>
                         <Heading size="small">Observação</Heading>
                         <Paragraph>
-                            {formatInfo(monthDetails.observation)}
+                            {valueOrHyphen(monthDetails.observation)}
                         </Paragraph>
                     </>
                 ) : null}

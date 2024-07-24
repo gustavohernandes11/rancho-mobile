@@ -13,14 +13,10 @@ import { useEffect, useState } from "react";
 import { Icon } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
-import { PopulatedAnimal } from "types";
-import {
-    formatAge,
-    formatAnimalStatus,
-    formatInfo,
-    getAnimalStatusIcon,
-    getGenderIcon,
-} from "utils/formatters";
+import { AnimalStatusOptions, PopulatedAnimal } from "types";
+import { getAgeString } from "utils/getAgeString";
+import { getGenderIcon } from "utils/getGenderIcon";
+import { valueOrHyphen } from "utils/valueOrHyphen";
 import { AnimalPageHeaderButtons } from "../../../components/AnimalPageHeaderButtons";
 
 export default function ViewAnimalDetailsScreen() {
@@ -69,7 +65,7 @@ export default function ViewAnimalDetailsScreen() {
                         >
                             <InfoCard
                                 label="Gênero"
-                                title={formatInfo(
+                                title={valueOrHyphen(
                                     animal?.gender === "F" ? "Fêmea" : "Macho"
                                 )}
                                 icon={getGenderIcon(animal?.gender!)}
@@ -77,7 +73,7 @@ export default function ViewAnimalDetailsScreen() {
                             {animal?.code ? (
                                 <InfoCard
                                     label="Código"
-                                    title={formatInfo(animal.code)}
+                                    title={valueOrHyphen(animal.code)}
                                     icon={
                                         <Icon
                                             size={16}
@@ -90,7 +86,7 @@ export default function ViewAnimalDetailsScreen() {
                             {animal?.status ? (
                                 <InfoCard
                                     label="Situação"
-                                    title={formatInfo(
+                                    title={valueOrHyphen(
                                         formatAnimalStatus(animal.status)
                                     )}
                                     icon={
@@ -108,8 +104,8 @@ export default function ViewAnimalDetailsScreen() {
                             >
                                 <InfoCard
                                     label="Idade"
-                                    title={formatInfo(
-                                        formatAge(animal?.birthdate)
+                                    title={valueOrHyphen(
+                                        getAgeString(animal?.birthdate)
                                     )}
                                 />
                                 <InfoCard
@@ -175,3 +171,48 @@ export default function ViewAnimalDetailsScreen() {
         </ContainerView>
     );
 }
+
+export const formatAnimalStatus = (type: AnimalStatusOptions): string => {
+    switch (type) {
+        case "active":
+            return "Ativo";
+        case "dead":
+            return "Morto";
+        case "sold":
+            return "Vendido";
+
+        default:
+            return "";
+    }
+};
+
+export const getAnimalStatusIcon = (status: AnimalStatusOptions) => {
+    switch (status) {
+        case "active":
+            return (
+                <Icon
+                    color={Theme.colors.primary}
+                    source="thumb-up"
+                    size={16}
+                />
+            );
+        case "dead":
+            return (
+                <Icon
+                    color={Theme.colors.mediumGray}
+                    source="coffin"
+                    size={16}
+                />
+            );
+        case "sold":
+            return (
+                <Icon
+                    color={Theme.colors.orange}
+                    source="truck-delivery"
+                    size={16}
+                />
+            );
+        default:
+            return null;
+    }
+};

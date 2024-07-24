@@ -5,7 +5,8 @@ import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import Theme from "styles/Theme";
 import { Animal } from "types";
-import { formatAge, getGenderIcon } from "utils/formatters";
+import { getAgeString } from "utils/getAgeString";
+import { getGenderIcon } from "utils/getGenderIcon";
 import { Cell } from "./Cell";
 
 interface RowProps {
@@ -49,7 +50,7 @@ export const Row: React.FC<RowProps> = memo(
                         </Cell>
                         <Cell flex={2}>
                             {animal.birthdate
-                                ? formatAge(animal.birthdate)
+                                ? getAgeString(animal.birthdate)
                                 : ""}
                         </Cell>
                         {showCheckbox ? (

@@ -1,7 +1,8 @@
 import React from "react";
 import { ViewProps } from "react-native";
 import { Animal } from "types";
-import { formatAge, getGenderIcon } from "utils/formatters";
+import { getAgeString } from "utils/getAgeString";
+import { getGenderIcon } from "utils/getGenderIcon";
 import { Banner } from "./Banner";
 
 interface AnimalBannerProps {
@@ -25,7 +26,9 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
             iconAlt="Rounded animal icon"
             iconSource={require("../assets/images/AnimalCircleIcon.png")}
             title={title as unknown as string}
-            rightDescription={animal.birthdate && formatAge(animal.birthdate)}
+            rightDescription={
+                animal.birthdate && getAgeString(animal.birthdate)
+            }
             {...props}
         />
     );
