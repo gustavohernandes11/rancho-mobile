@@ -6,6 +6,7 @@ import { Paragraph } from "components/Paragraph";
 import { SelectionMenu } from "components/SelectionMenu";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams } from "expo-router";
+import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
@@ -16,6 +17,9 @@ export default function ViewBatchDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [batch, setBatch] = useState<PopulatedBatch>();
     const [isLoading, setIsLoading] = useState(true);
+    const isSelectionMode = useAnimalSelectionStore(
+        store => store.isSelectionMode
+    );
     const batches = useGlobalStore(state => state.batches);
 
     const fetchPopulatedBatch = async () => {
@@ -60,7 +64,7 @@ export default function ViewBatchDetailsScreen() {
 
                     <Span direction="column">
                         <Heading size="medium">{getAnimalsHeading()}</Heading>
-                        <SelectionMenu />
+                        {isSelectionMode ? <SelectionMenu /> : null}
                         <AnimalTable animals={batch?.animals || []} />
                     </Span>
                 </>
