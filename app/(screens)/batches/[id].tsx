@@ -3,6 +3,7 @@ import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { PageSkeleton } from "components/PageSkeleton";
 import { Paragraph } from "components/Paragraph";
+import { SelectionMenu } from "components/SelectionMenu";
 import { Span } from "components/Span";
 import { Stack, useLocalSearchParams } from "expo-router";
 import { useGlobalStore } from "hooks/useGlobalStore";
@@ -59,6 +60,7 @@ export default function ViewBatchDetailsScreen() {
 
                     <Span direction="column">
                         <Heading size="medium">{getAnimalsHeading()}</Heading>
+                        <SelectionMenu />
                         <AnimalTable animals={batch?.animals || []} />
                     </Span>
                 </>
