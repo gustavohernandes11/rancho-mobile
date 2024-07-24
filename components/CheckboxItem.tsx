@@ -17,7 +17,7 @@ export const CheckboxItem: React.FC<CheckboxProps> = ({
     onPress,
 }) => {
     return (
-        <Span my={0}>
+        <Span marginY={0}>
             <Checkbox.Item
                 label={label}
                 status={isChecked}

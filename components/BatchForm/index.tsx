@@ -106,7 +106,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
                     selectedIDs={selectedIDs}
                 />
             </Span>
-            <Span justify="flex-end" py={16}>
+            <Span justify="flex-end" paddingY={16}>
                 <CancelButton />
                 <Button
                     title="Salvar"

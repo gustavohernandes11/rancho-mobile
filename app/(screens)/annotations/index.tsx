@@ -55,7 +55,7 @@ export default function ViewAnnotationsPage() {
                 value={searchText}
                 placeholder="Busque suas anotações"
             />
-            <Span direction="column" py={8}>
+            <Span direction="column" paddingY={8}>
                 {annotations.length === 0 ? (
                     <Span justify="center">
                         <Text>Nenhuma nota encontrada.</Text>
@@ -74,7 +74,7 @@ export default function ViewAnnotationsPage() {
                           />
                       ))
                     : null}
-                <Span justify="flex-end" py={8}>
+                <Span justify="flex-end" paddingY={8}>
                     <Button
                         title="Nova anotação"
                         icon="bookmark-plus"

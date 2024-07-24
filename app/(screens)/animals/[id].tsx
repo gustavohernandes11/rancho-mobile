@@ -62,7 +62,11 @@ export default function ViewAnimalDetailsScreen() {
                     <Heading size="big">{animal?.name}</Heading>
                     <Span direction="column">
                         <Heading size="small">Informações gerais</Heading>
-                        <Span align="stretch" justify="space-between" my={0}>
+                        <Span
+                            align="stretch"
+                            justify="space-between"
+                            marginY={0}
+                        >
                             <InfoCard
                                 label="Gênero"
                                 title={formatInfo(
@@ -100,7 +104,7 @@ export default function ViewAnimalDetailsScreen() {
                             <Span
                                 align="stretch"
                                 justify="space-between"
-                                my={0}
+                                marginY={0}
                             >
                                 <InfoCard
                                     label="Idade"

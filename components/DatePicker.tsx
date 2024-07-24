@@ -81,7 +81,7 @@ export const DatePicker: React.FC<
                 {...props}
             />
             {showCheckBoxToSelectToday ? (
-                <Span my={0}>
+                <Span marginY={0}>
                     <CheckboxItem
                         isChecked={isChecked ? "checked" : "unchecked"}
                         label="Hoje"

@@ -101,7 +101,7 @@ export default function ViewProductionReportsPage() {
                     align="stretch"
                     justify="space-between"
                     flexWrap="wrap"
-                    my={0}
+                    marginY={0}
                 >
                     <InfoCard
                         label="Litros produzidos"
@@ -120,7 +120,7 @@ export default function ViewProductionReportsPage() {
                     />
                 </Span>
                 <Heading size="small">Qualidade</Heading>
-                <Span align="stretch" justify="space-between" my={0}>
+                <Span align="stretch" justify="space-between" marginY={0}>
                     <InfoCard
                         label="Gordura"
                         title={`${formatInfo(
@@ -140,7 +140,7 @@ export default function ViewProductionReportsPage() {
                         )} %`}
                     />
                 </Span>
-                <Span align="stretch" justify="space-between" my={0}>
+                <Span align="stretch" justify="space-between" marginY={0}>
                     <InfoCard
                         label="CBT (mil/mL)"
                         title={formatInfo(monthDetails?.totalBacteria)}

@@ -98,7 +98,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
             <Span>
                 <ObservationField formik={formik} />
             </Span>
-            <Span justify="flex-end" py={16}>
+            <Span justify="flex-end" paddingY={16}>
                 <Button
                     type="secondary"
                     title="Cancelar"

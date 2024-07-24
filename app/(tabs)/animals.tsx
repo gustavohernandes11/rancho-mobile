@@ -109,7 +109,7 @@ export default function ViewAnimalsScreen() {
                     ),
                 }}
             />
-            <Span justify="space-between" gap={0} my={0} align="center">
+            <Span justify="space-between" gap={0} marginY={0} align="center">
                 <SearchBar
                     onChangeText={text => setSearchText(text)}
                     value={searchText}
@@ -132,7 +132,7 @@ export default function ViewAnimalsScreen() {
                 />
             </Span>
             {showFilters ? (
-                <Span flexWrap="wrap" my={8}>
+                <Span flexWrap="wrap" marginY={8}>
                     <Select
                         label="Lote"
                         items={[
@@ -147,7 +147,7 @@ export default function ViewAnimalsScreen() {
                         onSelect={option => setFilterByBatchID(option.value)}
                         size="small"
                     />
-                    <Span my={0}>
+                    <Span marginY={0}>
                         <SegmentedButtonsInput
                             label="Incluir animais em estão"
                             options={[

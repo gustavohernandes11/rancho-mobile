@@ -84,7 +84,7 @@ export default function ViewAnnotationDetailsScreen() {
                             <Span
                                 align="stretch"
                                 justify="space-between"
-                                my={0}
+                                marginY={0}
                             >
                                 <InfoCard
                                     label="Tipo"
@@ -102,7 +102,7 @@ export default function ViewAnnotationDetailsScreen() {
                                         )}
                                     />
                                 )}
-                                <Span my={0}>
+                                <Span marginY={0}>
                                     {annotation.medicineName && (
                                         <InfoCard
                                             label="Vacina/Medicação"

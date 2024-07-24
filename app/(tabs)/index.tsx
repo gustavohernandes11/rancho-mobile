@@ -25,7 +25,7 @@ export default function TabOneScreen() {
         <ContainerView>
             <Heading>Início</Heading>
             <Heading size="small">Informações gerais</Heading>
-            <Span py={4}>
+            <Span paddingY={4}>
                 {count ? (
                     <InfoCard
                         title={count.animals.toString() || "?"}
@@ -46,7 +46,7 @@ export default function TabOneScreen() {
                 ) : null}
             </Span>
             <Heading size="small">O que você quer fazer?</Heading>
-            <Span flexWrap="wrap" py={4}>
+            <Span flexWrap="wrap" paddingY={4}>
                 <Card
                     href="/animals/add"
                     alt="Registrar animal"

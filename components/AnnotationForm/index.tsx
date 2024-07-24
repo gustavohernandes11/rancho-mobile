@@ -115,7 +115,7 @@ export const AnnotationForm: React.FC<AnnotationFormProps> = ({
                     <AnimalSelectionField selectedIDs={selectedIDs} />
                 </Span>
             ) : null}
-            <Span justify="flex-end" py={16}>
+            <Span justify="flex-end" paddingY={16}>
                 <Button
                     type="secondary"
                     title="Cancelar"

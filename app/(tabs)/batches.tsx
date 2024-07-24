@@ -52,7 +52,7 @@ export default function ViewBatchesScreen() {
                         <Text>Nenhum lote adicionado.</Text>
                     </Span>
                 )}
-                <Span justify="flex-end" py={8}>
+                <Span justify="flex-end" paddingY={8}>
                     <Button
                         title="Novo lote"
                         icon={require("../../assets/images/FolderPlusIcon_green.png")}

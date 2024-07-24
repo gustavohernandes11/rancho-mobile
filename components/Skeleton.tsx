@@ -5,15 +5,15 @@ import Theme from "styles/Theme";
 type SkeletonProps = {
     width?: number | "100%";
     height?: number | "100%";
-    my?: number;
-    mx?: number;
+    marginY?: number;
+    marginX?: number;
     flex?: number;
 };
 export const Skeleton: React.FC<SkeletonProps> = ({
     width,
     height = 20,
-    mx = 0,
-    my = 5,
+    marginX = 0,
+    marginY = 5,
     flex = 1,
     ...props
 }) => {
@@ -24,8 +24,8 @@ export const Skeleton: React.FC<SkeletonProps> = ({
                 flex,
                 height,
                 width,
-                marginVertical: my,
-                marginHorizontal: mx,
+                marginVertical: marginY,
+                marginHorizontal: marginX,
                 borderRadius: 8,
             }}
             {...props}

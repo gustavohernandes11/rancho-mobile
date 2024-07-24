@@ -6,12 +6,12 @@ interface SpanProps {
     children?: React.ReactNode;
     align?: FlexAlignType;
     justify?: FlexJustifyTypes;
-    py?: number;
-    px?: number;
-    p?: number;
+    paddingY?: number;
+    paddingX?: number;
+    padding?: number;
     flexWrap?: "wrap" | "nowrap";
-    my?: number;
-    mx?: number;
+    marginY?: number;
+    marginX?: number;
     direction?: "row" | "column";
     gap?: number;
 }
@@ -20,11 +20,11 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
     children,
     align = "flex-start",
     justify,
-    py,
-    px,
-    p,
-    my = 8,
-    mx = 0,
+    paddingY,
+    paddingX,
+    padding,
+    marginY = 8,
+    marginX = 0,
     flexWrap = "wrap",
     direction = "row",
     gap = 8,
@@ -37,11 +37,11 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
                 {
                     alignItems: align,
                     justifyContent: justify,
-                    padding: p,
-                    paddingVertical: py,
-                    paddingHorizontal: px,
-                    marginVertical: my,
-                    marginHorizontal: mx,
+                    padding: padding,
+                    paddingVertical: paddingY,
+                    paddingHorizontal: paddingX,
+                    marginVertical: marginY,
+                    marginHorizontal: marginX,
                     flexDirection: direction,
                     flexWrap,
                     gap,

@@ -22,7 +22,7 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
 
     return (
         <View style={styles.container} {...props}>
-            <Span align="center" justify="space-between" my={0}>
+            <Span align="center" justify="space-between" marginY={0}>
                 {showCloseButton ? <CloseSelectionButton /> : null}
                 <Paragraph color="white">
                     {selectedIDs.length} selecionado(s).

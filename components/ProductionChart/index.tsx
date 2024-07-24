@@ -42,7 +42,7 @@ export const ProductionChart = ({ production }: ProductionChartType) => {
     return (
         <View style={styles.container}>
             {hasProduction ? (
-                <Span my={0} mx={8}>
+                <Span marginY={0} marginX={8}>
                     <Paragraph secondary>
                         Gráfico de litros produzidos por dia
                     </Paragraph>
