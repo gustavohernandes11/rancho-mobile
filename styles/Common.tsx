@@ -17,30 +17,14 @@ export const commonStyles = StyleSheet.create({
         borderRadius: 8,
         backgroundColor: Theme.colors.white,
         borderColor: Theme.colors.mediumGray,
-        borderWidth: 1,
         fontFamily: Theme.fonts.primaryFamily,
+        borderWidth: 1,
     },
     error: {
         fontSize: 14,
         marginBottom: 4,
         color: Theme.colors.red,
         fontFamily: Theme.fonts.primaryFamily,
-    },
-    heading: {
-        fontSize: 20,
-        color: Theme.colors.darkest,
-        marginVertical: 4,
-        fontFamily: Theme.fonts.primaryFamily,
-    },
-    disabled: {
-        backgroundColor: Theme.colors.lightGray,
-        borderColor: Theme.colors.mediumGray,
-        borderStyle: "dashed",
-        borderRadius: 8,
-        borderWidth: 1,
-    },
-    textDisabled: {
-        color: Theme.colors.mediumGray,
     },
     icon: {
         height: 32,

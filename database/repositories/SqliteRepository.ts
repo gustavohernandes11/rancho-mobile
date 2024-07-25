@@ -67,7 +67,6 @@ export class SqliteRepository implements StorageRepository {
             this.ensureProductionTableExists(),
             this.ensureAnnotationTableExists(),
             this.ensureMonthlyDetailsTableExists(),
-            this.alterAnimalTableToAddStatus(),
         ]);
     }
 
@@ -141,19 +140,6 @@ export class SqliteRepository implements StorageRepository {
             );
         `;
         await this.execute(query, []);
-    };
-
-    private alterAnimalTableToAddStatus = async () => {
-        const query = `
-            ALTER TABLE Animals
-            ADD COLUMN status TEXT DEFAULT 'active';
-        `;
-
-        try {
-            await this.execute(query, []);
-        } catch {
-            // already done
-        }
     };
 
     async setAnimalStatus(

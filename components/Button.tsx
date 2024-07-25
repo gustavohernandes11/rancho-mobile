@@ -15,16 +15,15 @@ type CustomButtonProps = {
 } & Omit<PaperButtonProps, "children">;
 
 export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
-    const { title, onPress, disabled, type = "primary", ...rest } = props;
+    const { title, onPress, type = "primary", ...rest } = props;
 
-    const styles = getStyles(type, disabled);
+    const styles = getStyles(type);
 
     return (
         <PaperButton
             textColor={getButtonTextColor(type)}
             ref={ref}
             style={styles.button}
-            disabled={disabled}
             onPress={onPress}
             {...rest}
         >
@@ -33,19 +32,17 @@ export const Button = forwardRef<any, CustomButtonProps>((props, ref) => {
     );
 });
 
-const getStyles = (type: ButtonTypes, disabled?: boolean) =>
+const getStyles = (type: ButtonTypes) =>
     StyleSheet.create({
         button: {
             borderWidth: 1,
             borderRadius: 8,
             backgroundColor: getButtonBackgroundColor(type),
             borderColor: getButtonBorderColor(type),
-            ...(disabled && commonStyles.disabled),
         },
         text: {
             ...commonStyles.text,
             color: getButtonTextColor(type),
-            ...(disabled && commonStyles.textDisabled),
         },
     });
 
