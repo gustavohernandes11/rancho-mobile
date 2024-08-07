@@ -133,20 +133,41 @@ export default function ViewAnimalsScreen() {
             </Span>
             {showFilters ? (
                 <Span flexWrap="wrap" marginY={8}>
-                    <Select
-                        label="Lote"
-                        items={[
-                            {
-                                key: "Todos",
-                                value: undefined as unknown as string,
-                            },
-                            ...serializeBatches(batches),
-                        ]}
-                        defaultValue="Todos"
-                        defaultButtonText="Todos"
-                        onSelect={option => setFilterByBatchID(option.value)}
-                        size="small"
-                    />
+                    <Span>
+                        <Select
+                            label="Lote"
+                            items={[
+                                {
+                                    key: "Todos",
+                                    value: undefined as unknown as string,
+                                },
+                                ...serializeBatches(batches),
+                            ]}
+                            defaultValue="Todos"
+                            defaultButtonText="Todos"
+                            onSelect={option =>
+                                setFilterByBatchID(option.value)
+                            }
+                            size="small"
+                        />
+                        <Select
+                            label="Ordenar"
+                            items={[
+                                {
+                                    key: "Alfabética",
+                                    value: "alfabetic",
+                                },
+                                {
+                                    key: "Idade",
+                                    value: "age",
+                                },
+                            ]}
+                            defaultValue="alfabetic"
+                            defaultButtonText="Alfabética"
+                            onSelect={option => setOrderBy(option.value)}
+                            size="small"
+                        />
+                    </Span>
                     <Span marginY={0}>
                         <SegmentedButtonsInput
                             label="Incluir animais em estão"
