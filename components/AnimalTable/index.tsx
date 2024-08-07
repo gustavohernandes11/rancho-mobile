@@ -67,9 +67,13 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                 data={animals}
                 indicatorStyle="white"
                 keyExtractor={keyExtractor}
-                extraData={[selectedIDs, isSelectionMode]}
+                extraData={[selectedIDs.length]}
                 renderItem={renderItem}
                 estimatedItemSize={50}
+                estimatedListSize={{
+                    width: Dimensions.get("screen").width - 16,
+                    height: 500,
+                }}
                 ListHeaderComponent={renderHeader}
                 ListEmptyComponent={renderEmptyList}
                 testID="animal-table"
@@ -80,7 +84,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 
 const styles = StyleSheet.create({
     tableContainer: {
-        minHeight: 20,
         width: Dimensions.get("screen").width - 16,
         borderRadius: 8,
         overflow: "hidden",

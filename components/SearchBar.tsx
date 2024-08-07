@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
         flex: 1,
         height: 45,
         ...commonStyles.inputAspect,
-        borderWidth: 1,
         borderRadius: 32,
     },
     input: {

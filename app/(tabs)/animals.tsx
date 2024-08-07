@@ -188,9 +188,9 @@ export default function ViewAnimalsScreen() {
             {isLoading ? (
                 <Loading />
             ) : (
-                <Span>
+                <Span direction="column">
                     {isSelectionMode ? <SelectionMenu /> : null}
-                    <Span>
+                    <Span direction="column">
                         <Paragraph secondary>{getDisplayInfo()}</Paragraph>
                         <AnimalTable animals={filteredAnimals} />
                     </Span>
