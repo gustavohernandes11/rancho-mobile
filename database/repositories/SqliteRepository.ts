@@ -323,7 +323,7 @@ export class SqliteRepository implements StorageRepository {
         const query = `
 		SELECT 
 			id, name
-		FROM Animals 
+		FROM Batches 
 		WHERE id = ?
 		`;
 
