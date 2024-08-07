@@ -4,6 +4,7 @@ import {
     AddAnnotation,
     AddBatch,
     Animal,
+    AnimalPreview,
     Annotation,
     AnnotationQueryOptions,
     Batch,
@@ -61,6 +62,29 @@ export class StorageServices implements StorageServicesMethods {
 
     listAnimals(query?: QueryOptions): Promise<Animal[]> {
         return this.DbRepository.listAnimals(query);
+    }
+
+    private populateAnimalsPreview = async (
+        animals: Animal[]
+    ): Promise<AnimalPreview[]> => {
+        return Promise.all(
+            animals.map(async animal => {
+                if (animal.batchID) {
+                    const batch = await this.DbRepository.getBatch(
+                        animal.batchID
+                    );
+                    if (batch) {
+                        return { ...animal, batch };
+                    }
+                }
+                return animal;
+            })
+        );
+    };
+
+    async listAnimalPreview(query?: QueryOptions): Promise<AnimalPreview[]> {
+        const animals = await this.DbRepository.listAnimals(query);
+        return this.populateAnimalsPreview(animals);
     }
 
     listBatches(): Promise<Batch[]> {

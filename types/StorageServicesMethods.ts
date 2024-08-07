@@ -1,4 +1,10 @@
-import { AddAnimal, Animal, PopulatedAnimal, UpdateAnimal } from "./Animal";
+import {
+    AddAnimal,
+    Animal,
+    AnimalPreview,
+    PopulatedAnimal,
+    UpdateAnimal,
+} from "./Animal";
 import { AddAnnotation, Annotation, UpdateAnnotation } from "./Annotation";
 import { AddBatch, Batch, PopulatedBatch, UpdateBatch } from "./Batch";
 import { Count } from "./Count";
@@ -32,7 +38,7 @@ export interface StorageServicesMethods {
     getAnnotation(id: number): Promise<Annotation | null>;
     getMonthDetails(month: Date): Promise<MonthDetails | null>;
 
-    listAnimals(query?: AnimalQueryOptions): Promise<Animal[]>;
+    listAnimals(query?: AnimalQueryOptions): Promise<AnimalPreview[]>;
     listBatches(): Promise<Batch[]>;
     listMonthProduction(month: Date): Promise<DayProduction[]>;
     listPopulatedMonthProduction(month: Date): Promise<DayProduction[]>;

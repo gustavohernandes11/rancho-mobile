@@ -13,6 +13,14 @@ export type Animal = {
     maternityID?: number;
     observation?: string;
 };
+
+export type AnimalPreview = Animal & {
+    batch?: {
+        id: number;
+        name: string;
+    };
+};
+
 export type PopulatedAnimal = Animal & {
     batch: Batch | null;
     paternity: Animal | null;

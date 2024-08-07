@@ -16,7 +16,7 @@ import { useCallback, useEffect, useState } from "react";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
-import { Animal, AnimalStatusOptions, OrderByOptions } from "types";
+import { AnimalPreview, AnimalStatusOptions, OrderByOptions } from "types";
 import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
@@ -37,10 +37,10 @@ export default function ViewAnimalsScreen() {
     const [filterByBatchID, setFilterByBatchID] = useState<
         number | undefined
     >();
-    const [filteredAnimals, setFilteredAnimals] = useState<Animal[]>([]);
+    const [filteredAnimals, setFilteredAnimals] = useState<AnimalPreview[]>([]);
 
     const fetchFilteredAnimals = () => {
-        Storage.listAnimals({
+        Storage.listAnimalPreview({
             orderBy,
             batchID: filterByBatchID,
             searchText,
@@ -188,9 +188,9 @@ export default function ViewAnimalsScreen() {
             {isLoading ? (
                 <Loading />
             ) : (
-                <Span direction="column">
+                <Span>
                     {isSelectionMode ? <SelectionMenu /> : null}
-                    <Span direction="column">
+                    <Span>
                         <Paragraph secondary>{getDisplayInfo()}</Paragraph>
                         <AnimalTable animals={filteredAnimals} />
                     </Span>

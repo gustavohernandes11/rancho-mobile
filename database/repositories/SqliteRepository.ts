@@ -319,6 +319,17 @@ export class SqliteRepository implements StorageRepository {
         return (await this.getOne<Animal>(query, [animalID])) as Animal;
     }
 
+    async getBatch(batchID: number): Promise<Batch | null> {
+        const query = `
+		SELECT 
+			id, name
+		FROM Animals 
+		WHERE id = ?
+		`;
+
+        return await this.getOne<Batch>(query, [batchID]);
+    }
+
     async getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
         const animal = await this.getAnimal(animalID);
 

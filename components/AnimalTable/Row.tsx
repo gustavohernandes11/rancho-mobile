@@ -1,16 +1,15 @@
 import { Link } from "expo-router";
-import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
 import { Checkbox, DataTable, TouchableRipple } from "react-native-paper";
 import Theme from "styles/Theme";
-import { Animal } from "types";
+import { AnimalPreview } from "types";
 import { getAgeString } from "utils/getAgeString";
 import { getGenderIcon } from "utils/getGenderIcon";
 import { Cell } from "./Cell";
 
 interface RowProps {
-    animal: Animal;
+    animal: AnimalPreview;
     onCheck: () => void;
     isChecked: boolean;
     showCheckbox: boolean;
@@ -28,9 +27,6 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 
 export const Row: React.FC<RowProps> = memo(
     ({ animal, isChecked = false, onCheck, showCheckbox, showAnimalBatch }) => {
-        const batches = useGlobalStore(state => state.batches);
-        const batch = batches.find(batch => batch.id === animal.batchID);
-
         return (
             <Link
                 href={{
@@ -48,7 +44,7 @@ export const Row: React.FC<RowProps> = memo(
                         </Cell>
                         {showAnimalBatch ? (
                             <Cell flex={4}>
-                                {animal.batchID && batch ? batch.name : ""}
+                                {animal.batch ? animal.batch.name : ""}
                             </Cell>
                         ) : null}
                         <Cell flex={2}>

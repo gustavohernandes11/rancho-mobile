@@ -17,7 +17,7 @@ export const useGlobalStore = create<GlobalState>()((set, get) => ({
         Storage.listBatches().then(batches => set(() => ({ batches })));
     },
     refreshAnimals: async () => {
-        Storage.listAnimals({}).then(animals => set(() => ({ animals })));
+        Storage.listAnimalPreview({}).then(animals => set(() => ({ animals })));
     },
     refreshAll: async () => {
         get().refreshBatches();

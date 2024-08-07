@@ -46,7 +46,7 @@ export const BatchForm: React.FC<BatchFormProps> = ({
             setSelectedIDs(initialSelectedAnimals);
         }
         if (initialValues.id) {
-            Storage.listAnimals({
+            Storage.listAnimalPreview({
                 batchID: initialValues.id,
             }).then(batchAnimals => {
                 setSelectedIDs(batchAnimals.map(a => a.id));

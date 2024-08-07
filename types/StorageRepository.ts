@@ -1,6 +1,7 @@
 import {
     AddAnimal,
     Animal,
+    AnimalPreview,
     AnimalStatusOptions,
     PopulatedAnimal,
     UpdateAnimal,
@@ -32,12 +33,13 @@ export interface StorageRepository {
     insertAnnotation(annotation: AddAnnotation): Promise<number | undefined>;
 
     getAnimal(animalID: number): Promise<Animal>;
+    getBatch(batchID: number): Promise<Batch | null>;
     getPopulatedBatch(batchID: number): Promise<PopulatedBatch>;
     getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal>;
     getDayProduction(date: Date): Promise<DayProduction | null>;
     getAnnotation(id: number): Promise<Annotation | null>;
 
-    listAnimals(query?: QueryOptions): Promise<Animal[]>;
+    listAnimals(query?: QueryOptions): Promise<AnimalPreview[]>;
     listBatches(): Promise<Batch[]>;
     listTimespanProduction(start: Date, end: Date): Promise<DayProduction[]>;
     listAnnotations(query?: AnnotationQueryOptions): Promise<Annotation[]>;
