@@ -14,6 +14,7 @@ interface RowProps {
     onCheck: () => void;
     isChecked: boolean;
     showCheckbox: boolean;
+    showAnimalBatch: boolean;
 }
 
 const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
@@ -26,7 +27,7 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 };
 
 export const Row: React.FC<RowProps> = memo(
-    ({ animal, isChecked = false, onCheck, showCheckbox }) => {
+    ({ animal, isChecked = false, onCheck, showCheckbox, showAnimalBatch }) => {
         const batches = useGlobalStore(state => state.batches);
         const batch = batches.find(batch => batch.id === animal.batchID);
 
@@ -45,9 +46,11 @@ export const Row: React.FC<RowProps> = memo(
                             {getGenderIcon(animal.gender)}
                             {" " + animal.name}
                         </Cell>
-                        <Cell flex={4}>
-                            {animal.batchID && batch ? batch.name : ""}
-                        </Cell>
+                        {showAnimalBatch ? (
+                            <Cell flex={4}>
+                                {animal.batchID && batch ? batch.name : ""}
+                            </Cell>
+                        ) : null}
                         <Cell flex={2}>
                             {animal.birthdate
                                 ? getAgeString(animal.birthdate)

@@ -65,7 +65,10 @@ export default function ViewBatchDetailsScreen() {
                     <Span direction="column">
                         <Heading size="medium">{getAnimalsHeading()}</Heading>
                         {isSelectionMode ? <SelectionMenu /> : null}
-                        <AnimalTable animals={batch?.animals || []} />
+                        <AnimalTable
+                            showAnimalBatch={false}
+                            animals={batch?.animals || []}
+                        />
                     </Span>
                 </>
             )}

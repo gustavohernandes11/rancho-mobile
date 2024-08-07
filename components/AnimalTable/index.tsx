@@ -12,11 +12,13 @@ import { Row } from "./Row";
 type AnimalTableProps = {
     animals: Animal[];
     showCheckbox?: boolean;
+    showAnimalBatch?: boolean;
 };
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
     animals,
     showCheckbox = true,
+    showAnimalBatch = true,
 }) => {
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
     const isSelectionMode = useAnimalSelectionStore(
@@ -40,6 +42,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     const keyExtractor = useCallback((item: Animal) => item.id.toString(), []);
     const renderItem = ({ item }: { item: Animal }) => (
         <Row
+            showAnimalBatch={showAnimalBatch}
             showCheckbox={showCheckbox}
             isChecked={selectedIDs.includes(item.id)}
             onCheck={() => handleCheck(item.id)}
@@ -47,7 +50,9 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
         />
     );
 
-    const renderHeader = () => <Header showCheckbox={showCheckbox} />;
+    const renderHeader = () => (
+        <Header showAnimalBatch={showAnimalBatch} showCheckbox={showCheckbox} />
+    );
 
     const renderEmptyList = () => (
         <Span justify="center">

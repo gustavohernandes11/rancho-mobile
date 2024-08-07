@@ -6,9 +6,10 @@ import Theme from "styles/Theme";
 
 type HeaderProps = {
     showCheckbox: boolean;
+    showAnimalBatch: boolean;
 };
 
-export const Header = ({ showCheckbox }: HeaderProps) => {
+export const Header = ({ showCheckbox, showAnimalBatch }: HeaderProps) => {
     return (
         <DataTable>
             <DataTable.Header style={styles.tableHeader}>
@@ -18,12 +19,14 @@ export const Header = ({ showCheckbox }: HeaderProps) => {
                 >
                     Nome
                 </DataTable.Title>
-                <DataTable.Title
-                    style={{ flex: 4 }}
-                    textStyle={commonStyles.text}
-                >
-                    Lote
-                </DataTable.Title>
+                {showAnimalBatch ? (
+                    <DataTable.Title
+                        style={{ flex: 4 }}
+                        textStyle={commonStyles.text}
+                    >
+                        Lote
+                    </DataTable.Title>
+                ) : null}
                 <DataTable.Title
                     style={{ flex: 2 }}
                     textStyle={commonStyles.text}
