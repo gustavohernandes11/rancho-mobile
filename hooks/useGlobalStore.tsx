@@ -1,9 +1,9 @@
 import { Storage } from "services/StorageService";
-import { Animal, Batch } from "types";
+import { AnimalPreview, Batch } from "types";
 import { create } from "zustand";
 
 interface GlobalState {
-    animals: Animal[];
+    animals: AnimalPreview[];
     refreshAnimals: () => void;
     refreshBatches: () => void;
     refreshAll: () => void;

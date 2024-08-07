@@ -2,7 +2,7 @@ import { Span } from "components/Span";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import { useClearSelectionOnHardwareBack } from "hooks/useClearSelectionOnHardwareBack";
 import React, { useCallback } from "react";
-import { Dimensions, FlatList, StyleSheet, Text, View } from "react-native";
+import { Dimensions, FlatList, StyleSheet, Text } from "react-native";
 import { commonStyles } from "styles/Common";
 import { Animal, AnimalPreview } from "types";
 import { Header } from "./Header";
@@ -60,7 +60,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     );
 
     return (
-        <View>
+        <Span>
             <FlatList
                 style={styles.tableContainer}
                 removeClippedSubviews={true}
@@ -76,7 +76,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                 scrollEnabled={false}
                 testID="animal-table"
             />
-        </View>
+        </Span>
     );
 };
 
