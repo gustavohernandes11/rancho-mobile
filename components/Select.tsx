@@ -41,6 +41,11 @@ export const Select: React.FC<
 }) => {
     const styles = getStyles(size, !!errorText);
 
+    // work around: passing false directly crashes the application
+    const searchProps = {
+        search: true,
+    };
+
     return (
         <View style={styles.inputContainer}>
             {label ? <Label>{label}</Label> : null}
@@ -57,13 +62,12 @@ export const Select: React.FC<
                 defaultButtonText={defaultButtonText || "Selecione uma opção"}
                 data={items}
                 onSelect={onSelect}
-                buttonTextAfterSelection={selectedItem => selectedItem.key}
-                rowTextForSelection={(item: Item) => item.key}
-                search={search}
                 searchInputStyle={{
                     borderBottomWidth: 1,
                     borderBottomColor: Theme.colors.mediumGray,
                 }}
+                buttonTextAfterSelection={selectedItem => selectedItem.key}
+                rowTextForSelection={(item: Item) => item.key}
                 renderSearchInputLeftIcon={() => (
                     <Icon
                         source="magnify"
@@ -73,6 +77,7 @@ export const Select: React.FC<
                 )}
                 searchPlaceHolder={searchPlaceHolder}
                 searchPlaceHolderColor={Theme.colors.lightGray}
+                {...(search ? searchProps : {})}
                 {...props}
             />
         </View>

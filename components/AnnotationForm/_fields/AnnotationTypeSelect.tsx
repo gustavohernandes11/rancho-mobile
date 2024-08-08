@@ -25,6 +25,7 @@ export const AnnotationTypeSelect: React.FC<AnnotationTypeSelectProps> = ({
             defaultValue={formik.values.type}
             errorText={getFieldError("type", formik)}
             onSelect={option => formik.setFieldValue("type", option.value)}
+            search={false}
         />
     );
 };

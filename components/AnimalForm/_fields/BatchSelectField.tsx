@@ -28,6 +28,7 @@ export const BatchSelectField: React.FC<BatchSelectFieldProps> = ({
             errorText={getFieldError("batchID", formik)}
             onSelect={option => formik.setFieldValue("batchID", option.value)}
             label="Lote"
+            search={false}
         />
     );
 };

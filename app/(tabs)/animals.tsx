@@ -161,6 +161,7 @@ export default function ViewAnimalsScreen() {
                                 setFilterByBatchID(option.value)
                             }
                             size="small"
+                            search={false}
                         />
                         <Select
                             label="Ordenar"
@@ -178,6 +179,7 @@ export default function ViewAnimalsScreen() {
                             defaultButtonText={getDefaultOrderText()}
                             onSelect={option => setOrderBy(option.value)}
                             size="small"
+                            search={false}
                         />
                     </Span>
                     <Span marginY={0}>
