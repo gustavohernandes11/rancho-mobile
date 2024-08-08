@@ -14,21 +14,21 @@ export const Header = ({ showCheckbox, showAnimalBatch }: HeaderProps) => {
         <DataTable>
             <DataTable.Header style={styles.tableHeader}>
                 <DataTable.Title
-                    style={{ flex: 4 }}
+                    style={{ flex: 5 }}
                     textStyle={commonStyles.text}
                 >
                     Nome
                 </DataTable.Title>
                 {showAnimalBatch ? (
                     <DataTable.Title
-                        style={{ flex: 4 }}
+                        style={{ flex: 5 }}
                         textStyle={commonStyles.text}
                     >
                         Lote
                     </DataTable.Title>
                 ) : null}
                 <DataTable.Title
-                    style={{ flex: 2 }}
+                    style={{ flex: 4 }}
                     textStyle={commonStyles.text}
                 >
                     Idade

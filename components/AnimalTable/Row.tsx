@@ -38,16 +38,16 @@ export const Row: React.FC<RowProps> = memo(
             >
                 <TouchableRipple style={isChecked ? styles.checked : null}>
                     <DataTable.Row style={styles.row}>
-                        <Cell flex={4}>
+                        <Cell flex={5}>
                             {getGenderIcon(animal.gender)}
                             {" " + animal.name}
                         </Cell>
                         {showAnimalBatch ? (
-                            <Cell flex={4}>
+                            <Cell flex={5}>
                                 {animal.batch ? animal.batch.name : ""}
                             </Cell>
                         ) : null}
-                        <Cell flex={2}>
+                        <Cell flex={4}>
                             {animal.birthdate
                                 ? getAgeString(animal.birthdate)
                                 : ""}
