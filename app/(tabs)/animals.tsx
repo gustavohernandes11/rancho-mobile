@@ -1,11 +1,10 @@
+import { AnimalFilters } from "components/AnimalFilters";
 import { AnimalTable } from "components/AnimalTable";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Loading } from "components/Loading";
 import { Paragraph } from "components/Paragraph";
 import { SearchBar } from "components/SearchBar";
-import SegmentedButtonsInput from "components/SegmentedButtonsInput";
-import { Select } from "components/Select";
 import { SelectionMenu } from "components/SelectionMenu";
 import { Span } from "components/Span";
 import { Stack, useFocusEffect, useRouter } from "expo-router";
@@ -17,7 +16,6 @@ import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { AnimalPreview, AnimalStatusOptions, OrderByOptions } from "types";
-import { serializeBatches } from "utils/serializers";
 
 export default function ViewAnimalsScreen() {
     const router = useRouter();
@@ -97,14 +95,6 @@ export default function ViewAnimalsScreen() {
         }`;
     }
 
-    const getDefaultOrderText = () =>
-        orderBy === "alfabetic" ? "Alfabética" : "Idade";
-
-    const getDefaultBatchText = () =>
-        filterByBatchID
-            ? batches.find(b => b.id === filterByBatchID)?.name || ""
-            : "Todos";
-
     return (
         <ContainerView>
             <Stack.Screen
@@ -144,59 +134,16 @@ export default function ViewAnimalsScreen() {
                 />
             </Span>
             {showFilters ? (
-                <Span flexWrap="wrap" marginY={8}>
-                    <Span>
-                        <Select
-                            label="Lote"
-                            items={[
-                                {
-                                    key: "Todos",
-                                    value: undefined as unknown as string,
-                                },
-                                ...serializeBatches(batches),
-                            ]}
-                            defaultValue="Todos"
-                            defaultButtonText={getDefaultBatchText()}
-                            onSelect={option =>
-                                setFilterByBatchID(option.value)
-                            }
-                            size="small"
-                            search={false}
-                        />
-                        <Select
-                            label="Ordenar"
-                            items={[
-                                {
-                                    key: "Alfabética",
-                                    value: "alfabetic",
-                                },
-                                {
-                                    key: "Idade",
-                                    value: "age",
-                                },
-                            ]}
-                            defaultValue="alfabetic"
-                            defaultButtonText={getDefaultOrderText()}
-                            onSelect={option => setOrderBy(option.value)}
-                            size="small"
-                            search={false}
-                        />
-                    </Span>
-                    <Span marginY={0}>
-                        <SegmentedButtonsInput
-                            label="Incluir animais em estão"
-                            options={[
-                                { label: "Ativos", value: "active" },
-                                { label: "Mortos", value: "dead" },
-                                { label: "Vendidos", value: "sold" },
-                            ]}
-                            selectedValues={statusFilter}
-                            onValueChange={(options: AnimalStatusOptions[]) =>
-                                setStatusFilter(options)
-                            }
-                        />
-                    </Span>
-                </Span>
+                <AnimalFilters
+                    availableBatches={batches}
+                    onSelectBatch={option => setFilterByBatchID(option.value)}
+                    statusFilterCheckedOptions={statusFilter}
+                    onCheckStatus={(options: AnimalStatusOptions[]) =>
+                        setStatusFilter(options)
+                    }
+                    orderBy={orderBy}
+                    onSelectOrdering={option => setOrderBy(option.value)}
+                />
             ) : null}
 
             {isLoading ? (
