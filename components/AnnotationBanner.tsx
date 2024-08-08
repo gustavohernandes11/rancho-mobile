@@ -38,10 +38,10 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
                 <View style={styles.main}>
                     <View style={styles.top}>
                         <Paragraph secondary>
-                            {formatAnnotationType(type)}
+                            {date ? formatDateToShortPtBR(date) : " "}
                         </Paragraph>
                         <Paragraph secondary>
-                            {date ? formatDateToShortPtBR(date) : " "}
+                            {formatAnnotationType(type)}
                         </Paragraph>
                     </View>
                     <View style={styles.main}>

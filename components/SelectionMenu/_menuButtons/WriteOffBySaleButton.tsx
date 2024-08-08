@@ -57,7 +57,7 @@ const ConfirmWriteOffBySaleDialog = ({
                     <CheckboxItem
                         isChecked={shouldAnnotate ? "checked" : "unchecked"}
                         onPress={handleCheck}
-                        label="Adicionar descrição."
+                        label="Adicionar anotação"
                     />
                     {shouldAnnotate && (
                         <Span>

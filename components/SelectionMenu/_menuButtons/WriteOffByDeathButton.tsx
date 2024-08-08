@@ -58,7 +58,7 @@ const ConfirmWriteOffByDeathDialog = ({
                     <CheckboxItem
                         isChecked={shouldAnnotate ? "checked" : "unchecked"}
                         onPress={handleCheck}
-                        label="Adicionar anotação."
+                        label="Adicionar anotação"
                     />
                     {shouldAnnotate && (
                         <Span>
