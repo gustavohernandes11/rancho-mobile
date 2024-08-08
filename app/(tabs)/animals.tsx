@@ -72,10 +72,12 @@ export default function ViewAnimalsScreen() {
         }, [animals, orderBy, filterByBatchID, searchText, statusFilter])
     );
 
-    const handleClearFilters = () => {
+    const handleClearAndHideFilters = () => {
         setStatusFilter(["active"]);
         setFilterByBatchID(undefined);
         setOrderBy("alfabetic");
+
+        setShowFilters(() => false);
     };
 
     const hasFilters =
@@ -90,8 +92,18 @@ export default function ViewAnimalsScreen() {
         const totalCount = animals ? animals.length : 0;
         const filteredCount = filteredAnimals ? filteredAnimals.length : 0;
 
-        return `Exibindo ${filteredCount} de ${totalCount}`;
+        return `Exibindo ${filteredCount} de ${totalCount} ${
+            hasFilters ? "(filtros ativos)" : ""
+        }`;
     }
+
+    const getDefaultOrderText = () =>
+        orderBy === "alfabetic" ? "Alfabética" : "Idade";
+
+    const getDefaultBatchText = () =>
+        filterByBatchID
+            ? batches.find(b => b.id === filterByBatchID)?.name || ""
+            : "Todos";
 
     return (
         <ContainerView>
@@ -118,7 +130,7 @@ export default function ViewAnimalsScreen() {
                 {hasFilters && (
                     <IconButton
                         icon="filter-remove"
-                        onPress={handleClearFilters}
+                        onPress={handleClearAndHideFilters}
                     />
                 )}
                 <IconButton
@@ -144,7 +156,7 @@ export default function ViewAnimalsScreen() {
                                 ...serializeBatches(batches),
                             ]}
                             defaultValue="Todos"
-                            defaultButtonText="Todos"
+                            defaultButtonText={getDefaultBatchText()}
                             onSelect={option =>
                                 setFilterByBatchID(option.value)
                             }
@@ -163,7 +175,7 @@ export default function ViewAnimalsScreen() {
                                 },
                             ]}
                             defaultValue="alfabetic"
-                            defaultButtonText="Alfabética"
+                            defaultButtonText={getDefaultOrderText()}
                             onSelect={option => setOrderBy(option.value)}
                             size="small"
                         />
