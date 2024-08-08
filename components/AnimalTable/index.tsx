@@ -62,7 +62,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     return (
         <Span>
             <FlatList
-                style={styles.tableContainer}
+                style={styles.table}
                 removeClippedSubviews={true}
                 data={animals}
                 indicatorStyle="white"
@@ -81,7 +81,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 };
 
 const styles = StyleSheet.create({
-    tableContainer: {
+    table: {
         width: Dimensions.get("screen").width - 16,
         borderRadius: 8,
         overflow: "hidden",
