@@ -27,23 +27,15 @@ export const Card: React.FC<LinkProps & CardProps> = ({
     size = "medium",
     ...props
 }) => {
-    const styles = getStyles(color, size);
+    const styles = getStyles(color);
 
     return (
         <Link href={href} style={styles.container} asChild {...props}>
             <TouchableRipple>
-                <Span
-                    direction={size === "medium" ? "column" : "row"}
-                    justify={size === "medium" ? "center" : "flex-start"}
-                    flexWrap="nowrap"
-                    gap={size === "medium" ? 4 : 8}
-                >
+                <Span direction={"column"} flexWrap="nowrap" gap={8}>
                     <Image
-                        style={
-                            size === "medium"
-                                ? commonStyles.icon
-                                : commonStyles.smallIcon
-                        }
+                        style={commonStyles.smallIcon}
+                        tintColor={Theme.colors[color]}
                         source={iconSource}
                         alt={alt}
                     />
@@ -54,20 +46,20 @@ export const Card: React.FC<LinkProps & CardProps> = ({
     );
 };
 
-const getStyles = (color: ColorOptions, size: SizeOptions) =>
+const getStyles = (color: ColorOptions) =>
     StyleSheet.create({
         container: {
-            ...commonStyles.card,
-            backgroundColor: Theme.colors[color],
-            paddingVertical: size === "medium" ? 16 : 8,
-            paddingHorizontal: 16,
-            minHeight: size === "medium" ? 100 : 25,
+            borderRadius: 4,
+            elevation: 1,
+            gap: 8,
+            padding: 12,
+            flex: 1,
+            flexShrink: 1,
         },
         title: {
             ...commonStyles.text,
             fontSize: 16,
-            flexShrink: 1,
-            color: Theme.colors.white,
-            marginTop: 4,
+            color: Theme.colors[color],
+            marginBottom: 0,
         },
     });

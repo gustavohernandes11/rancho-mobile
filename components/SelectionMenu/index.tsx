@@ -37,7 +37,7 @@ const getStyles = (showActions: boolean) =>
     StyleSheet.create({
         container: {
             flex: 1,
-            borderRadius: 8,
+            borderRadius: 4,
             backgroundColor: Theme.colors.primary,
             padding: 8,
             ...(!showActions && { padding: 16 }),

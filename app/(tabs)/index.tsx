@@ -25,11 +25,11 @@ export default function TabOneScreen() {
         <ContainerView>
             <Heading>Início</Heading>
             <Heading size="small">Informações gerais</Heading>
-            <Span paddingY={4}>
+            <Span paddingY={4} gap={4}>
                 {count ? (
                     <InfoCard
                         title={count.animals.toString() || "?"}
-                        label="Animais registrados"
+                        label="Animais ativos"
                     />
                 ) : null}
                 {count ? (
@@ -46,56 +46,73 @@ export default function TabOneScreen() {
                 ) : null}
             </Span>
             <Heading size="small">O que você quer fazer?</Heading>
-            <Span flexWrap="wrap" paddingY={4}>
-                <Card
-                    href="/animals/add"
-                    alt="Registrar animal"
-                    iconSource={require("assets/images/AddCowIcon.png")}
-                    title="Registrar animal"
-                />
-                <Card
-                    href="/(tabs)/animals"
-                    alt="Rebanho"
-                    iconSource={require("assets/images/CowIcon.png")}
-                    title="Rebanho"
-                />
-                <Card
-                    href="/batches/add"
-                    alt="Registrar lote"
-                    iconSource={require("assets/images/FolderPlusIcon.png")}
-                    title="Registrar lote"
-                    color="blue"
-                />
-                <Card
-                    href="/(tabs)/batches"
-                    alt="Lotes"
-                    iconSource={require("assets/images/CowFolderIcon.png")}
-                    title="Lotes"
-                    color="blue"
-                />
-                <Card
-                    href="/production"
-                    alt="Production"
-                    iconSource={require("assets/images/ChartIcon.png")}
-                    title="Produção"
-                    color="purple"
-                    size="small"
-                />
-                <Card
-                    href="/annotations"
-                    alt="Annotations"
-                    iconSource={require("assets/images/BookMarkIcon.png")}
-                    title="Anotações"
-                    color="cian"
-                    size="small"
-                />
-                <Card
-                    href="/(tabs)/agenda"
-                    alt="Agenda"
-                    iconSource={require("assets/images/BookIcon.png")}
-                    title="Agenda"
-                    color="cian"
-                />
+            <Span flexWrap="wrap" paddingY={4} gap={4}>
+                <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
+                    <Card
+                        href="/(tabs)/animals"
+                        alt="Rebanho"
+                        iconSource={require("assets/images/CowIcon_green.png")}
+                        title="Rebanho"
+                    />
+                    <Card
+                        href="/(tabs)/batches"
+                        alt="Lotes"
+                        iconSource={require("assets/images/CowFolderIcon_green.png")}
+                        title="Lotes"
+                        color="blue"
+                    />
+                    <Card
+                        href="/(tabs)/agenda"
+                        alt="Agenda"
+                        iconSource={require("assets/images/BookIcon_green.png")}
+                        title="Agenda"
+                        color="cian"
+                    />
+                </Span>
+                <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
+                    <Card
+                        href="/animals/add"
+                        alt="Registrar animal"
+                        iconSource={require("assets/images/AddCowIcon_green.png")}
+                        title="Registrar animal"
+                    />
+                    <Card
+                        href="/animals/add"
+                        alt="Registrar vários animais"
+                        iconSource={require("assets/images/AddCowIcon_green.png")}
+                        title="Registrar vários"
+                    />
+                    <Card
+                        href="/batches/add"
+                        alt="Registrar lote"
+                        iconSource={require("assets/images/FolderPlusIcon_green.png")}
+                        title="Registrar lote"
+                        color="blue"
+                    />
+                </Span>
+                <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
+                    <Card
+                        href="/production"
+                        alt="Production"
+                        iconSource={require("assets/images/ChartIcon_green.png")}
+                        title="Produção de leite"
+                        color="purple"
+                    />
+                    <Card
+                        href="/annotations"
+                        alt="Annotations"
+                        iconSource={require("assets/images/BookMarkIcon_green.png")}
+                        title="Ver anotações"
+                        color="cian"
+                    />
+                    <Card
+                        href="/annotations"
+                        alt="Export data"
+                        iconSource={require("assets/images/BookMarkIcon_green.png")}
+                        title="Exportar dados"
+                        color="cian"
+                    />
+                </Span>
             </Span>
         </ContainerView>
     );

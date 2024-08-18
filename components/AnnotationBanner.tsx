@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         width: "100%",
         gap: 16,
         padding: 16,
-        borderRadius: 8,
+        borderRadius: 4,
         backgroundColor: Theme.colors.lightest,
         borderWidth: 1,
         borderColor: Theme.colors.lightGray,

@@ -36,7 +36,7 @@ const getStyles = (type: ButtonTypes) =>
     StyleSheet.create({
         button: {
             borderWidth: 1,
-            borderRadius: 8,
+            borderRadius: 4,
             backgroundColor: getButtonBackgroundColor(type),
             borderColor: getButtonBorderColor(type),
         },

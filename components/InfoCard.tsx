@@ -30,7 +30,6 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 
 const styles = StyleSheet.create({
     card: {
-        ...commonStyles.card,
         ...commonStyles.border,
         flex: 1,
         width: "auto",
@@ -38,7 +37,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "flex-start",
         backgroundColor: Theme.colors.white,
-        elevation: 0,
+        borderRadius: 4,
         padding: 16,
     },
 });

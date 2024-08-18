@@ -38,17 +38,18 @@ export const ProductionChart = ({ production }: ProductionChartType) => {
         })) || [];
 
     const hasProduction = production?.some(day => day.quantity > 0);
+    const labelStyle = {
+        color: Theme.colors.darkGray,
+    };
 
     return (
         <View style={styles.container}>
             {hasProduction ? (
                 <Span marginY={0} marginX={8}>
-                    <Paragraph secondary>
-                        Gráfico de litros produzidos por dia
-                    </Paragraph>
+                    <Paragraph secondary>Litros produzidos por dia</Paragraph>
                     <BarChart
                         data={data}
-                        barWidth={16}
+                        barWidth={24}
                         barBorderTopLeftRadius={2}
                         barBorderTopRightRadius={2}
                         renderTooltip={(p: Point) => (
@@ -59,11 +60,15 @@ export const ProductionChart = ({ production }: ProductionChartType) => {
                                 )}
                             />
                         )}
-                        height={200}
+                        height={250}
                         spacing={8}
                         color={Theme.colors.primary}
                         frontColor={Theme.colors.primary}
+                        xAxisLabelTextStyle={labelStyle}
+                        yAxisTextStyle={labelStyle}
+                        topLabelTextStyle={labelStyle}
                         isAnimated
+                        showValuesAsTopLabel
                         showScrollIndicator
                         barStyle={{
                             borderRadius: 6,
@@ -85,7 +90,7 @@ const styles = StyleSheet.create({
     container: {
         width: Dimensions.get("screen").width - 16,
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 4,
         borderColor: Theme.colors.lightGray,
         paddingVertical: 8,
         overflow: "hidden",

@@ -62,7 +62,7 @@ export const MonthProductionCalendar: React.FC<
             style={{
                 borderColor: Theme.colors.lightGray,
                 borderWidth: 1,
-                borderRadius: 8,
+                borderRadius: 4,
             }}
         />
     );

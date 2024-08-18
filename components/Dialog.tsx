@@ -48,7 +48,7 @@ export const Dialog: React.FC<DialogProps> = ({
 const styles = StyleSheet.create({
     dialog: {
         ...commonStyles.border,
-        borderRadius: 8,
+        borderRadius: 4,
         backgroundColor: Theme.colors.lightest,
     },
     title: {

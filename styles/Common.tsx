@@ -14,7 +14,7 @@ export const commonStyles = StyleSheet.create({
         paddingLeft: 0,
     },
     inputAspect: {
-        borderRadius: 8,
+        borderRadius: 4,
         backgroundColor: Theme.colors.white,
         borderColor: Theme.colors.mediumGray,
         fontFamily: Theme.fonts.primaryFamily,
@@ -32,19 +32,9 @@ export const commonStyles = StyleSheet.create({
         resizeMode: "contain",
     },
     smallIcon: {
-        height: 20,
-        width: 20,
+        height: 24,
+        width: 24,
         resizeMode: "contain",
-    },
-    card: {
-        width: "48.8%",
-        maxWidth: 250,
-        backgroundColor: Theme.colors.primary,
-        borderRadius: 8,
-        padding: 16,
-        flexDirection: "row",
-        alignItems: "center",
-        elevation: 3,
     },
     border: {
         borderWidth: 1,

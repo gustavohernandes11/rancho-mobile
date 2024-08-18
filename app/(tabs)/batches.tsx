@@ -1,7 +1,6 @@
 import { BatchBanner } from "components/BatchBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
-import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
 import { useGlobalStore } from "hooks/useGlobalStore";
@@ -16,8 +15,6 @@ export default function ViewBatchesScreen() {
     useEffect(() => {
         refreshBatches();
     }, []);
-
-    const countText = `Total: ${batches?.length || "0"}`;
 
     return (
         <ContainerView>
@@ -38,7 +35,6 @@ export default function ViewBatchesScreen() {
             <Span direction="column">
                 {batches.length > 0 ? (
                     <>
-                        <Paragraph>{countText}</Paragraph>
                         {batches?.map(batch => (
                             <BatchBanner
                                 href={`/(screens)/batches/${batch.id}`}

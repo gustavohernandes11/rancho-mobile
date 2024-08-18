@@ -12,4 +12,5 @@ export const calendarTheme: CalendarTheme = {
     indicatorColor: Theme.colors.primary,
     arrowColor: Theme.colors.primary,
     monthTextColor: Theme.colors.darkGray,
+    backgroundColor: Theme.colors.lightGreen,
 };

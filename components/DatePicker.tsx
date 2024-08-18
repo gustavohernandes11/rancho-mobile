@@ -99,7 +99,7 @@ const getStyles = (hasError: boolean) =>
             flex: 1,
         },
         input: {
-            borderRadius: 8,
+            borderRadius: 4,
             height: 50,
             fontSize: 14,
             fontFamily: Theme.fonts.primaryFamily,

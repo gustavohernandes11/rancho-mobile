@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: Theme.colors.lightest,
-        borderRadius: 8,
+        borderRadius: 4,
         borderColor: Theme.colors.lightGray,
         borderWidth: 1,
         gap: 16,
