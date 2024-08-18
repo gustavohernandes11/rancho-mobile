@@ -45,16 +45,13 @@ export default function ViewAgendaScreen() {
                     ),
                 }}
             />
-            <MonthProductionCalendar
-                onSelectDate={handleSelectDate}
-                selectedDate={selectedDate}
-            />
+
             <Span>
                 <Card
                     iconSource={require("assets/images/BookMarkIcon_green.png")}
                     alt="Ir para anotações"
                     href="/annotations"
-                    title="Anotações"
+                    title="Ver todas as anotações"
                     color="cian"
                     size="small"
                 />
@@ -62,11 +59,15 @@ export default function ViewAgendaScreen() {
                     href="/production"
                     alt="Production"
                     iconSource={require("assets/images/ChartIcon_green.png")}
-                    title="Produção"
+                    title="Relatório de produção"
                     color="purple"
                     size="small"
                 />
             </Span>
+            <MonthProductionCalendar
+                onSelectDate={handleSelectDate}
+                selectedDate={selectedDate}
+            />
             <Span direction="column">
                 <Heading>{dayDetailsLabel}</Heading>
                 <DayProductionForm selectedDate={selectedDate} />

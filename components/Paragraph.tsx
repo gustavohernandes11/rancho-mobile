@@ -41,6 +41,6 @@ const getColor = (color: TextColorOptions, secondary: boolean) => {
             return Theme.colors.primary;
         case "black":
         default:
-            return secondary ? Theme.colors.darkGray : Theme.colors.darkest;
+            return secondary ? Theme.colors.mediumGray : Theme.colors.darkest;
     }
 };
