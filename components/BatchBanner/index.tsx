@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { useModal } from "hooks/useModal";
 import React from "react";
-import { ViewProps } from "react-native";
+import { View, ViewProps } from "react-native";
 import { Icon, IconButton, Menu } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
@@ -14,10 +14,12 @@ import { DeleteBatchMenuButton } from "./DeleteBatchMenuButton";
 interface BatchBannerProps {
     batch: Batch;
     href: string;
+    showDotMenu?: boolean;
 }
 
 export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
     batch,
+    showDotMenu = true,
     ...props
 }) => {
     return (
@@ -26,13 +28,19 @@ export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
             iconSource={require("../../assets/images/BatchCircleIcon.png")}
             title={batch.name}
             description={batch.description}
-            right={<RightContent batch={batch} />}
+            right={<RightContent batch={batch} showDotMenu={showDotMenu} />}
             {...props}
         />
     );
 };
 
-const RightContent = ({ batch }: { batch: Batch }) => {
+const RightContent = ({
+    batch,
+    showDotMenu,
+}: {
+    batch: Batch;
+    showDotMenu?: boolean;
+}) => {
     return (
         <Span
             direction="row"
@@ -41,9 +49,17 @@ const RightContent = ({ batch }: { batch: Batch }) => {
             justify="flex-end"
             marginY={0}
         >
-            <Paragraph secondary>{batch.count}</Paragraph>
-            <Icon size={16} source="cow" color={Theme.colors.mediumGray} />
-            <BatchDotMenu batch={batch} />
+            <View
+                style={{
+                    flexDirection: "row",
+                    gap: 4,
+                    marginRight: showDotMenu ? 0 : 8,
+                }}
+            >
+                <Paragraph secondary>{batch.count}</Paragraph>
+                <Icon size={16} source="cow" color={Theme.colors.mediumGray} />
+            </View>
+            {showDotMenu ? <BatchDotMenu batch={batch} /> : null}
         </Span>
     );
 };
