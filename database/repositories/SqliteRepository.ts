@@ -439,7 +439,7 @@ export class SqliteRepository implements StorageRepository {
             Batches.id, Batches.name, Batches.description,
             COUNT(Animals.id) AS count
         FROM Batches
-        LEFT JOIN Animals ON Batches.id = Animals.batchID
+        LEFT JOIN Animals ON Batches.id = Animals.batchID AND Animals.status = 'active'
         WHERE Batches.id = ?
         GROUP BY Batches.id, Batches.name, Batches.description
         `;
@@ -457,13 +457,13 @@ export class SqliteRepository implements StorageRepository {
 
     async listBatches(): Promise<Batch[]> {
         const query = `
-		SELECT 
-        	Batches.id, Batches.name, Batches.description,
-        	COUNT(Animals.id) AS count
-    	FROM Batches
-    	LEFT JOIN Animals ON Batches.id = Animals.batchID
-    	GROUP BY Batches.id, Batches.name, Batches.description
-		`;
+        SELECT 
+            Batches.id, Batches.name, Batches.description,
+            COUNT(Animals.id) AS count
+        FROM Batches
+        LEFT JOIN Animals ON Batches.id = Animals.batchID AND Animals.status = 'active'
+        GROUP BY Batches.id, Batches.name, Batches.description
+        `;
 
         return this.getAll<Batch>(query, []);
     }

@@ -16,6 +16,7 @@ import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { AnimalPreview, AnimalStatusOptions, OrderByOptions } from "types";
+import { isActive } from "utils/filters";
 
 export default function ViewAnimalsScreen() {
     const router = useRouter();
@@ -87,12 +88,25 @@ export default function ViewAnimalsScreen() {
     const toggleShowFilters = () => setShowFilters(() => !showFilters);
 
     function getDisplayInfo() {
-        const totalCount = animals ? animals.length : 0;
-        const filteredCount = filteredAnimals ? filteredAnimals.length : 0;
+        const totalCount = animals?.filter(isActive).length ?? 0;
+        const filteredCount = filteredAnimals?.length ?? 0;
+        const visibleInactiveCount = filteredCount - totalCount;
 
-        return `Exibindo ${filteredCount} de ${totalCount} ${
-            hasFilters ? "(filtros ativos)" : ""
+        let displayMessage = `Exibindo ${filteredCount} animal${
+            filteredCount !== 1 ? "s" : ""
         }`;
+
+        if (visibleInactiveCount > 0) {
+            displayMessage += ` (incluindo ${visibleInactiveCount} inativo${
+                visibleInactiveCount !== 1 ? "s" : ""
+            })`;
+        }
+
+        if (hasFilters) {
+            displayMessage += " (filtros ativos)";
+        }
+
+        return displayMessage;
     }
 
     return (

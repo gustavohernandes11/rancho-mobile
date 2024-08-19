@@ -11,6 +11,7 @@ import { useGlobalStore } from "hooks/useGlobalStore";
 import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
 import { PopulatedBatch } from "types";
+import { isActive } from "utils/filters";
 import { BatchPageHeaderButtons } from "../../../components/BatchPageHeaderButtons";
 
 export default function ViewBatchDetailsScreen() {
@@ -45,7 +46,7 @@ export default function ViewBatchDetailsScreen() {
     const getAnimalsHeading = () => {
         if (!batch) return "Vazio";
 
-        const animalCount = batch.animals.length;
+        const animalCount = batch.animals.filter(isActive).length;
         return `Animais do lote ${
             animalCount > 0 ? `(${animalCount})` : "(Vazio)"
         }`;
@@ -67,7 +68,7 @@ export default function ViewBatchDetailsScreen() {
                         {isSelectionMode ? <SelectionMenu /> : null}
                         <AnimalTable
                             showAnimalBatch={false}
-                            animals={batch?.animals || []}
+                            animals={batch?.animals.filter(isActive) || []}
                         />
                     </Span>
                 </>

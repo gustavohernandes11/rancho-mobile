@@ -77,7 +77,7 @@ export default function TabOneScreen() {
                         title="Registrar animal"
                     />
                     <Card
-                        href="/animals/add"
+                        href="/error"
                         alt="Registrar vários animais"
                         iconSource={require("assets/images/AddCowIcon_green.png")}
                         title="Registrar vários"
@@ -95,7 +95,7 @@ export default function TabOneScreen() {
                         href="/production"
                         alt="Production"
                         iconSource={require("assets/images/ChartIcon_green.png")}
-                        title="Produção de leite"
+                        title="Relatório de produção"
                         color="purple"
                     />
                     <Card
@@ -106,7 +106,7 @@ export default function TabOneScreen() {
                         color="cian"
                     />
                     <Card
-                        href="/annotations"
+                        href="/error"
                         alt="Export data"
                         iconSource={require("assets/images/BookMarkIcon_green.png")}
                         title="Exportar dados"
