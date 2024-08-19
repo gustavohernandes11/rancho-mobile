@@ -53,7 +53,7 @@ const RightContent = ({
                 style={{
                     flexDirection: "row",
                     gap: 4,
-                    marginRight: showDotMenu ? 0 : 8,
+                    marginRight: showDotMenu ? 0 : 16,
                 }}
             >
                 <Paragraph secondary>{batch.count}</Paragraph>

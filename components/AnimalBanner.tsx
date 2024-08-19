@@ -29,7 +29,7 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
             iconSource={require("../assets/images/AnimalCircleIcon.png")}
             title={title as unknown as string}
             right={
-                <Span justify="flex-end" marginX={8}>
+                <Span justify="flex-end" marginX={16}>
                     <Paragraph secondary>
                         {animal.birthdate && getAgeString(animal.birthdate)}
                     </Paragraph>

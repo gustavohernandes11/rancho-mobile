@@ -64,10 +64,21 @@ export const AnimalPageHeaderButtons = ({ animal }: { animal: Animal }) => {
 
     const handleEdit = () =>
         router.push(`/(screens)/animals/edit/${animal.id}`);
+    const handleCreateNewAnnotation = () =>
+        router.push(
+            `/(screens)/annotations/add-with-selected-animals/${JSON.stringify([
+                animal.id,
+            ])}`
+        );
     const handleDelete = () => openModal();
 
     return (
         <>
+            <IconButton
+                icon="bookmark-plus"
+                iconColor={Theme.colors.white}
+                onPress={handleCreateNewAnnotation}
+            />
             <IconButton
                 icon="pencil"
                 iconColor={Theme.colors.white}

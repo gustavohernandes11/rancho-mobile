@@ -353,10 +353,10 @@ export class SqliteRepository implements StorageRepository {
                 ? this.getAnimal(animal.paternityID)
                 : resolveNull()
         );
+        operations.push(this.listAnnotations({ includesAnimalId: animal.id }));
 
-        const [offspring, batch, maternity, paternity] = await Promise.all(
-            operations
-        );
+        const [offspring, batch, maternity, paternity, annotations] =
+            await Promise.all(operations);
 
         return {
             ...animal,
@@ -364,6 +364,7 @@ export class SqliteRepository implements StorageRepository {
             batch,
             maternity,
             paternity,
+            annotations,
         };
     }
 

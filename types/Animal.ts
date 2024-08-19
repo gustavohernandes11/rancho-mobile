@@ -1,3 +1,4 @@
+import { Annotation } from "./Annotation";
 import { Batch } from "./Batch";
 
 export type AnimalStatusOptions = "active" | "dead" | "sold";
@@ -26,6 +27,7 @@ export type PopulatedAnimal = Animal & {
     paternity: Animal | null;
     maternity: Animal | null;
     offspring: Animal[];
+    annotations: Annotation[] | null;
 };
 export type AddAnimal = Omit<Animal, "id">;
 export type UpdateAnimal = Partial<Animal> & { id: number };

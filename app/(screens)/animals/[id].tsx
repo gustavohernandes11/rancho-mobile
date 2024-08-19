@@ -1,4 +1,5 @@
 import { AnimalBanner } from "components/AnimalBanner";
+import { AnnotationBanner } from "components/AnnotationBanner";
 import { BatchBanner } from "components/BatchBanner";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
@@ -165,6 +166,24 @@ export default function ViewAnimalDetailsScreen() {
                                     key={calf.id}
                                     href={`/(screens)/animals/${calf.id}`}
                                     animal={calf}
+                                />
+                            ))}
+                        </Span>
+                    ) : null}
+                    {animal &&
+                    animal.annotations &&
+                    animal.annotations.length > 0 ? (
+                        <Span direction="column">
+                            <Heading size="small">
+                                Anotações relacionadas
+                            </Heading>
+                            {animal.annotations.map(annotation => (
+                                <AnnotationBanner
+                                    key={annotation.id}
+                                    href={`/(screens)/annotations/${annotation.id}`}
+                                    title={annotation.title}
+                                    type={annotation.type}
+                                    date={annotation.date}
                                 />
                             ))}
                         </Span>
