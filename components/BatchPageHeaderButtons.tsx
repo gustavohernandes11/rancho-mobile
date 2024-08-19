@@ -16,7 +16,7 @@ type ConfirmDeleteBatchDialogProps = {
     closeModal: () => void;
 };
 
-const ConfirmDeleteBatchDialog = ({
+export const ConfirmDeleteBatchDialog = ({
     batch,
     isVisible,
     closeModal,
