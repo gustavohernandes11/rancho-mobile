@@ -15,6 +15,7 @@ export const DeleteBatchMenuButton = ({ batch }: { batch: Batch }) => {
                 closeModal={closeModal}
                 isVisible={isVisible}
                 batch={batch}
+                goBack={false}
             />
             <Menu.Item
                 titleStyle={commonStyles.text}

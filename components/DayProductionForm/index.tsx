@@ -1,5 +1,4 @@
 import { Input } from "components/Input";
-import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { FormikHelpers, useFormik } from "formik";
 import moment from "moment";
@@ -9,9 +8,7 @@ import {
     NativeSyntheticEvent,
     TextInputSubmitEditingEventData,
 } from "react-native";
-import { Icon } from "react-native-paper";
 import { Storage } from "services/StorageService";
-import Theme from "styles/Theme";
 import { DayProduction } from "types";
 import { getFieldError } from "utils/getFieldError";
 import { initialValues } from "./defaultValues";
@@ -83,22 +80,6 @@ export const DayProductionForm: React.FC<DayProductionFormProps> = ({
                 onBlur={formik.submitForm}
                 onSubmitEditing={handleSubmitEditing}
             />
-            {formik.dirty ? (
-                <Span>
-                    {formik.isSubmitting ? (
-                        <Paragraph color="green">Salvando dados...</Paragraph>
-                    ) : (
-                        <>
-                            <Icon
-                                size={16}
-                                color={Theme.colors.primary}
-                                source="check"
-                            />
-                            <Paragraph color="green">Salvo</Paragraph>
-                        </>
-                    )}
-                </Span>
-            ) : null}
         </Span>
     );
 };

@@ -1,3 +1,4 @@
+import { toDateId } from "@marceloterreiro/flash-calendar";
 import { SQLiteExecuteAsyncResult, openDatabaseSync } from "expo-sqlite";
 import moment from "moment";
 import {
@@ -20,6 +21,7 @@ import {
     UpdateBatch,
 } from "types";
 import { MonthDetails } from "types/MonthDetails";
+import { dateIdToDate } from "utils/dateIdToDate";
 import { formatDateToISO, formatMonthToISO } from "utils/formatters";
 import { nullifyFalsyFields } from "utils/nullifyFalsyFields";
 
@@ -225,7 +227,7 @@ export class SqliteRepository implements StorageRepository {
     }
     async upsertMonthDetails(monthDetails: MonthDetails): Promise<boolean> {
         const formattedMonth = formatMonthToISO(
-            moment(monthDetails.month).toDate()
+            dateIdToDate(monthDetails.month)
         );
         const query = `
             INSERT INTO MonthlyDetails (month, fatPorcentage, proteinPorcentage, totalBacterial, totalSomaticCell, pricePerLiter, lactosePorcentage, observation)
@@ -688,7 +690,7 @@ export class SqliteRepository implements StorageRepository {
             parsed.title,
             parsed.type,
             parsed.description,
-            parsed.date ? moment(parsed.date).toISOString() : null,
+            parsed.date ? toDateId(parsed.date) : null,
             parsed.animalIDs
                 ? this.convertAnimalIDsToString(parsed.animalIDs)
                 : null,
@@ -717,7 +719,7 @@ export class SqliteRepository implements StorageRepository {
 
         return {
             ...annotation,
-            date: annotation.date ? new Date(annotation.date) : null,
+            date: annotation.date ? dateIdToDate(annotation.date) : null,
             animalIDs: annotation.animalIDs
                 ? this.convertStringToAnimalIDs(
                       annotation.animalIDs as unknown as string
@@ -734,26 +736,40 @@ export class SqliteRepository implements StorageRepository {
         `;
 
         const params: (string | number)[] = [];
+        let whereClauses: string[] = [];
+
         if (queryOptions?.types && queryOptions.types.length > 0) {
             const placeholders = queryOptions.types.map(() => "?").join(", ");
-            sqlQuery += ` WHERE type IN (${placeholders})`;
+            whereClauses.push(`type IN (${placeholders})`);
             params.push(...queryOptions.types);
         }
 
         if (queryOptions?.searchText) {
-            sqlQuery +=
-                queryOptions.types && queryOptions.types.length > 0
-                    ? ` AND`
-                    : ` WHERE`;
-            sqlQuery += ` (title LIKE '%' || ? || '%' OR description LIKE '%' || ? || '%')`;
+            whereClauses.push(
+                `(title LIKE '%' || ? || '%' OR description LIKE '%' || ? || '%')`
+            );
             params.push(queryOptions.searchText, queryOptions.searchText);
+        }
+
+        if (queryOptions?.day) {
+            whereClauses.push(`date = ?`);
+            params.push(queryOptions.day);
+        }
+
+        if (queryOptions?.includesAnimalId) {
+            whereClauses.push(`animalIDs LIKE '%' || ? || '%'`);
+            params.push(queryOptions.includesAnimalId.toString());
+        }
+
+        if (whereClauses.length > 0) {
+            sqlQuery += ` WHERE ${whereClauses.join(" AND ")}`;
         }
 
         const annotations = await this.getAll<Annotation>(sqlQuery, params);
 
         return annotations.map(annotation => ({
             ...annotation,
-            date: annotation.date ? new Date(annotation.date) : undefined,
+            date: annotation.date ? dateIdToDate(annotation.date) : undefined,
             animalIDs: annotation.animalIDs
                 ? this.convertStringToAnimalIDs(
                       annotation.animalIDs as unknown as string
@@ -761,6 +777,7 @@ export class SqliteRepository implements StorageRepository {
                 : [],
         }));
     }
+
     async updateAnnotation(
         updateData: UpdateAnnotation | UpdateAnnotation[]
     ): Promise<boolean> {

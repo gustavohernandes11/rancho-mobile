@@ -1,15 +1,35 @@
+import { AnnotationBanner } from "components/AnnotationBanner";
 import { Button } from "components/Button";
 import { Calendar } from "components/Calendar";
 import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
 import { DayProductionForm } from "components/DayProductionForm";
 import { Heading } from "components/Heading";
+import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { Stack, useRouter } from "expo-router";
 import { useControlledCalendar } from "hooks/useControlledCalendar";
 import moment from "moment";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton } from "react-native-paper";
+import { Storage } from "services/StorageService";
+import { Annotation } from "types/Annotation";
+
+const NewDayAnnotationButton = ({ dateId }: { dateId: string }) => {
+    const router = useRouter();
+
+    return (
+        <Button
+            title="Nova anotação"
+            icon="bookmark-plus"
+            onPress={() =>
+                router.push(
+                    `/(screens)/annotations/add-with-selected-date/${dateId}`
+                )
+            }
+        />
+    );
+};
 
 export default function ViewAgendaScreen() {
     const {
@@ -18,13 +38,24 @@ export default function ViewAgendaScreen() {
         onPressNextMonth,
         onPressPrevMonth,
     } = useControlledCalendar();
-    const router = useRouter();
 
-    const monthQualityDetailsLabel = `Inserir qualidade do leite em ${moment(
-        selectedDateId
-    ).format("MMMM/YYYY")}`;
+    const [dayAnnotations, setDayAnnotations] = useState<Annotation[]>([]);
 
-    const monthLabel = moment(selectedDateId).format("MMMM/YYYY");
+    const fetchSelectedDateAnnotations = () => {
+        Storage.listAnnotations({ day: selectedDateId }).then(annotations =>
+            setDayAnnotations(annotations)
+        );
+    };
+
+    useEffect(() => {
+        fetchSelectedDateAnnotations();
+    }, [selectedDateId]);
+
+    const monthString = moment(selectedDateId).format("MMMM/YYYY");
+    const monthQualityDetailsLabel = `Inserir qualidade do leite em ${monthString}`;
+    const dayInfoLabel = `Informações do dia ${moment(selectedDateId).format(
+        "DD/MM/YYYY"
+    )}`;
 
     return (
         <ContainerView>
@@ -32,21 +63,13 @@ export default function ViewAgendaScreen() {
                 options={{
                     headerTitle: "Agenda",
                     headerRight: () => (
-                        <Button
-                            title="Nova anotação"
-                            icon="bookmark-plus"
-                            onPress={() =>
-                                router.push(
-                                    `/(screens)/annotations/add-with-selected-date/${selectedDateId}`
-                                )
-                            }
-                        />
+                        <NewDayAnnotationButton dateId={selectedDateId} />
                     ),
                 }}
             />
             <Span justify="space-between" align="center" marginY={0}>
                 <IconButton icon={"arrow-left"} onPress={onPressPrevMonth} />
-                <Heading>{monthLabel}</Heading>
+                <Heading>{monthString}</Heading>
                 <IconButton icon={"arrow-right"} onPress={onPressNextMonth} />
             </Span>
             <Span>
@@ -56,13 +79,36 @@ export default function ViewAgendaScreen() {
                 />
             </Span>
             <Span>
-                <Heading size="small">Informações do dia selecionado</Heading>
-                <Span marginY={0}>
-                    <DayProductionForm selectedDate={selectedDateId} />
+                <Heading size="medium">{dayInfoLabel}</Heading>
+                <DayProductionForm selectedDate={selectedDateId} />
+            </Span>
+            <Span>
+                <Heading size="medium">Anotações do dia</Heading>
+                {dayAnnotations && dayAnnotations.length > 0 ? (
+                    dayAnnotations.map(annotation => (
+                        <AnnotationBanner
+                            key={annotation.id}
+                            href={`/(screens)/annotations/${annotation.id}`}
+                            title={annotation.title}
+                            type={annotation.type}
+                            description={annotation.description}
+                            date={annotation.date}
+                            animalIds={annotation.animalIDs}
+                        />
+                    ))
+                ) : (
+                    <Span>
+                        <Paragraph secondary>
+                            Não há anotações nesse dia.
+                        </Paragraph>
+                    </Span>
+                )}
+                <Span justify="flex-end" marginY={0}>
+                    <NewDayAnnotationButton dateId={selectedDateId} />
                 </Span>
             </Span>
             <Span>
-                <Heading size="small">Mais ações</Heading>
+                <Heading size="medium">Mais ações</Heading>
                 <Span marginY={0}>
                     <Card
                         href={"/production/add-month-details/" + selectedDateId}

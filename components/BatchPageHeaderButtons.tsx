@@ -14,12 +14,14 @@ type ConfirmDeleteBatchDialogProps = {
     batch: Batch;
     isVisible: boolean;
     closeModal: () => void;
+    goBack?: boolean;
 };
 
 export const ConfirmDeleteBatchDialog = ({
     batch,
     isVisible,
     closeModal,
+    goBack = true,
 }: ConfirmDeleteBatchDialogProps) => {
     const { refreshAll } = useGlobalStore();
     const [shouldDeleteAnimals, setShouldDeleteAnimals] = useState(false);
@@ -30,7 +32,7 @@ export const ConfirmDeleteBatchDialog = ({
     const handleConfirmDelete = () => {
         const onSucess = () => {
             refreshAll();
-            router.back();
+            goBack && router.back();
         };
         if (batch) {
             if (shouldDeleteAnimals) {

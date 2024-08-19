@@ -22,6 +22,8 @@ export type AnimalQueryOptions = {
 export type AnnotationQueryOptions = {
     searchText?: string;
     types?: ("simple" | "death" | "purchase" | "heath care" | "sell")[];
+    day?: string;
+    includesAnimalId?: number;
 };
 
 export interface StorageServicesMethods {

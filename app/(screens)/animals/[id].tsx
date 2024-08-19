@@ -119,7 +119,9 @@ export default function ViewAnimalDetailsScreen() {
                         {animal?.observation && (
                             <Span direction="column" gap={4}>
                                 <Heading size="small">Observação</Heading>
-                                <Paragraph>{animal.observation}</Paragraph>
+                                <Paragraph secondary>
+                                    {animal.observation}
+                                </Paragraph>
                             </Span>
                         )}
                     </Span>

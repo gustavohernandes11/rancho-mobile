@@ -6,7 +6,7 @@ import { Paragraph } from "components/Paragraph";
 import { MemoProductionChart } from "components/ProductionChart";
 import { Span } from "components/Span";
 import { calendarLocalePtBr } from "config/calendarLocalePtBr";
-import { Stack } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
@@ -22,6 +22,7 @@ export default function ViewProductionReportsPage() {
     const [show, setShow] = useState(false);
     const [production, setProduction] = useState<DayProduction[]>();
     const [monthDetails, setMonthDetails] = useState<MonthDetails>();
+    const router = useRouter();
 
     const getProduction = async () => {
         await Storage.listPopulatedMonthProduction(date).then(prod => {
@@ -54,6 +55,15 @@ export default function ViewProductionReportsPage() {
         (total, day) => total + day.quantity,
         0
     );
+    const countDaysWithAnyProduction = production?.filter(
+        prod => prod.quantity > 0
+    ).length;
+    const monthAverage = () => {
+        if (producedAmount && countDaysWithAnyProduction) {
+            return producedAmount / countDaysWithAnyProduction;
+        }
+        return null;
+    };
     const calculateTotal = () => {
         if (producedAmount && monthDetails?.pricePerLiter) {
             return (producedAmount * monthDetails.pricePerLiter).toFixed(2);
@@ -103,9 +113,20 @@ export default function ViewProductionReportsPage() {
                     marginY={0}
                 >
                     <InfoCard
-                        label="Litros produzidos"
+                        label="Total"
                         title={valueOrHyphen(producedAmount)}
                     />
+                    <InfoCard
+                        label="Média por dia"
+                        title={valueOrHyphen(monthAverage())}
+                    />
+                </Span>
+                <Span
+                    align="stretch"
+                    justify="space-between"
+                    flexWrap="wrap"
+                    marginY={0}
+                >
                     <InfoCard
                         label="Preço unitário"
                         title={`R$ ${valueOrHyphen(
@@ -113,8 +134,7 @@ export default function ViewProductionReportsPage() {
                         )}`}
                     />
                     <InfoCard
-                        size="small"
-                        label="Valor total"
+                        label="Valor total esperado"
                         title={`R$ ${valueOrHyphen(calculateTotal())}`}
                     />
                 </Span>
@@ -139,6 +159,7 @@ export default function ViewProductionReportsPage() {
                         )} %`}
                     />
                 </Span>
+
                 <Span align="stretch" justify="space-between" marginY={0}>
                     <InfoCard
                         label="CBT (mil/mL)"
@@ -147,6 +168,18 @@ export default function ViewProductionReportsPage() {
                     <InfoCard
                         label="CCS (mil/mL)"
                         title={valueOrHyphen(monthDetails?.totalSomaticCell)}
+                    />
+                </Span>
+                <Span justify="flex-end" paddingY={8}>
+                    <Button
+                        title="Editar informações do mês"
+                        icon="pencil"
+                        onPress={() =>
+                            router.push(
+                                "/(screens)/production/add-month-details/" +
+                                    formatMonthToISO(date)
+                            )
+                        }
                     />
                 </Span>
                 {monthDetails?.observation ? (
