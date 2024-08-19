@@ -14,7 +14,8 @@ import { showToast } from "utils/showToast";
 interface TransferAnimalsModalProps {
     visible: boolean;
     onDismiss: () => void;
-    setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    closeModal: any;
+    targetAnimalIds?: number[]; // skip to use the useAnimalSelectionStore
 }
 
 const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
@@ -31,7 +32,8 @@ const EmptyBatchOption = ({ checked }: { checked: boolean }) => (
 export const TransferAnimalsModal: React.FC<TransferAnimalsModalProps> = ({
     visible,
     onDismiss,
-    setIsModalOpen,
+    closeModal,
+    targetAnimalIds,
 }) => {
     const [selectedBatch, setSelectedBatch] = useState<Batch | null>();
     const batches = useGlobalStore(state => state.batches);
@@ -45,7 +47,10 @@ export const TransferAnimalsModal: React.FC<TransferAnimalsModalProps> = ({
         if (selectedBatch?.id === undefined)
             return showToast("Escolha um lote");
         const isDestinationNull = selectedBatch?.id === null;
-        Storage.moveAnimalToBatch(selectedIDs, selectedBatch?.id || null)
+        Storage.moveAnimalToBatch(
+            targetAnimalIds || selectedIDs,
+            selectedBatch?.id || null
+        )
             .then(() =>
                 onSuccess(
                     isDestinationNull
@@ -57,7 +62,7 @@ export const TransferAnimalsModal: React.FC<TransferAnimalsModalProps> = ({
     };
 
     const onSuccess = (message: string) => {
-        setIsModalOpen(false);
+        closeModal();
         showToast(message);
         clearSelection();
         refreshAll();
@@ -119,7 +124,7 @@ export const TransferAnimalsModal: React.FC<TransferAnimalsModalProps> = ({
                     <Button
                         type="light"
                         title="Cancelar"
-                        onPress={() => setIsModalOpen(false)}
+                        onPress={() => closeModal()}
                     />
                     <Button title="Mover" onPress={handleMoveAnimals} />
                 </>

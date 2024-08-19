@@ -134,6 +134,8 @@ export default function ViewAnimalDetailsScreen() {
                                 href={`/(screens)/batches/${animal.batch.id}`}
                                 batch={animal.batch}
                                 showDotMenu={false}
+                                showChangeBatchButton={true}
+                                relatedAnimalId={[animal.id]}
                             />
                         </Span>
                     ) : null}

@@ -59,7 +59,7 @@ export default function ViewBatchDetailsScreen() {
                 <>
                     <Heading size="big">{batch?.name}</Heading>
                     {batch?.description && (
-                        <Paragraph>{batch.description}</Paragraph>
+                        <Paragraph secondary>{batch.description}</Paragraph>
                     )}
 
                     <Span direction="column">

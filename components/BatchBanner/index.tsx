@@ -1,3 +1,4 @@
+import { TransferAnimalsModal } from "components/SelectionMenu/TransferAnimalsModal";
 import { useRouter } from "expo-router";
 import { useModal } from "hooks/useModal";
 import React from "react";
@@ -15,11 +16,15 @@ interface BatchBannerProps {
     batch: Batch;
     href: string;
     showDotMenu?: boolean;
+    showChangeBatchButton?: boolean;
+    relatedAnimalId?: number[];
 }
 
 export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
     batch,
     showDotMenu = true,
+    showChangeBatchButton = false,
+    relatedAnimalId,
     ...props
 }) => {
     return (
@@ -28,18 +33,55 @@ export const BatchBanner: React.FC<BatchBannerProps & ViewProps> = ({
             iconSource={require("../../assets/images/BatchCircleIcon.png")}
             title={batch.name}
             description={batch.description}
-            right={<RightContent batch={batch} showDotMenu={showDotMenu} />}
+            right={
+                <RightContent
+                    batch={batch}
+                    showDotMenu={showDotMenu}
+                    showChangeBatchButton={showChangeBatchButton}
+                    relatedAnimalId={relatedAnimalId}
+                />
+            }
             {...props}
         />
+    );
+};
+export const MoveToBatchButton = ({
+    relatedAnimalId,
+}: {
+    relatedAnimalId: number[];
+}) => {
+    const { closeModal, isVisible, openModal } = useModal();
+
+    return (
+        <>
+            <TransferAnimalsModal
+                visible={isVisible}
+                onDismiss={closeModal}
+                closeModal={closeModal}
+                targetAnimalIds={relatedAnimalId}
+            />
+
+            <IconButton
+                iconColor={Theme.colors.mediumGray}
+                icon="pencil"
+                onPress={openModal}
+                style={{ margin: 0 }}
+                size={20}
+            />
+        </>
     );
 };
 
 const RightContent = ({
     batch,
     showDotMenu,
+    showChangeBatchButton,
+    relatedAnimalId,
 }: {
     batch: Batch;
     showDotMenu?: boolean;
+    showChangeBatchButton: boolean;
+    relatedAnimalId?: number[];
 }) => {
     return (
         <Span
@@ -60,6 +102,9 @@ const RightContent = ({
                 <Icon size={16} source="cow" color={Theme.colors.mediumGray} />
             </View>
             {showDotMenu ? <BatchDotMenu batch={batch} /> : null}
+            {showChangeBatchButton ? (
+                <MoveToBatchButton relatedAnimalId={relatedAnimalId || []} />
+            ) : null}
         </Span>
     );
 };
