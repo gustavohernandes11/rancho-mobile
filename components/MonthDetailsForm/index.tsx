@@ -1,3 +1,4 @@
+import { Heading } from "components/Heading";
 import { Input } from "components/Input";
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
@@ -48,9 +49,13 @@ export const MonthDetailsForm: React.FC<MonthDetailsFormProps> = ({
         formik.handleBlur(field);
         formik.submitForm();
     };
+    const formLabel = `Qualidade do leite em ${moment(month).format(
+        "MMMM/YYYY"
+    )}`;
 
     return (
         <View>
+            <Heading>{formLabel}</Heading>
             <Span>
                 <Input
                     label="Gordura (%)"

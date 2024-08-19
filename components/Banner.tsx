@@ -18,7 +18,7 @@ interface BannerProps {
     iconAlt: string;
     title: string;
     description?: string;
-    rightDescription?: string;
+    right?: React.ReactNode;
     href: string;
 }
 
@@ -27,7 +27,7 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
     iconSource,
     title,
     description,
-    rightDescription,
+    right = null,
     href = "",
     ...props
 }) => {
@@ -45,11 +45,7 @@ export const Banner: React.FC<BannerProps & ViewProps> = ({
                         <Paragraph secondary>{description}</Paragraph>
                     ) : null}
                 </View>
-                <View style={styles.right}>
-                    {rightDescription ? (
-                        <Paragraph secondary>{rightDescription}</Paragraph>
-                    ) : null}
-                </View>
+                <View style={styles.right}>{right}</View>
             </Pressable>
         </Link>
     );
@@ -64,16 +60,19 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         borderColor: Theme.colors.lightGray,
         borderWidth: 1,
-        gap: 16,
-        padding: 16,
+        gap: 12,
+        padding: 12,
+        paddingRight: 0,
     },
     right: {
         flex: 1,
-        alignItems: "flex-end",
-        justifyContent: "center",
+        alignItems: "center",
+        gap: 4,
+        justifyContent: "flex-end",
+        flexDirection: "row",
     },
     left: {
-        flex: 1,
+        flex: 2,
         alignItems: "flex-start",
     },
 });

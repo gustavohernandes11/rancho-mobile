@@ -38,17 +38,14 @@ export const AnnotationBanner: React.FC<AnnotationBannerProps & ViewProps> = ({
                 <View style={styles.main}>
                     <View style={styles.top}>
                         <Paragraph secondary>
-                            {date ? formatDateToShortPtBR(date) : " "}
+                            {formatAnnotationType(type)}
                         </Paragraph>
                         <Paragraph secondary>
-                            {formatAnnotationType(type)}
+                            {date ? formatDateToShortPtBR(date) : " "}
                         </Paragraph>
                     </View>
                     <View style={styles.main}>
                         <Heading size="small">{title}</Heading>
-                        {description ? (
-                            <Paragraph secondary>{description}</Paragraph>
-                        ) : null}
                     </View>
                 </View>
             </Pressable>
@@ -61,8 +58,8 @@ const styles = StyleSheet.create({
         display: "flex",
         flexDirection: "row",
         width: "100%",
-        gap: 16,
-        padding: 16,
+        gap: 12,
+        padding: 12,
         borderRadius: 4,
         backgroundColor: Theme.colors.lightest,
         borderWidth: 1,

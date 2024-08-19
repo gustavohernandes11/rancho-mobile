@@ -76,9 +76,12 @@ export const ProductionChart = ({ production }: ProductionChartType) => {
                     />
                 </Span>
             ) : (
-                <Paragraph>
-                    Adicione litros de leite produzidos para gerar um gráfico.
-                </Paragraph>
+                <Span marginX={8}>
+                    <Paragraph secondary>
+                        Adicione litros produzidos durante o mês para gerar um
+                        gráfico.
+                    </Paragraph>
+                </Span>
             )}
         </View>
     );

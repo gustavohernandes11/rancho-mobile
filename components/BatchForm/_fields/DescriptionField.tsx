@@ -14,7 +14,7 @@ export const DescriptionField: React.FC<DescriptionFieldProps> = ({
     <Input
         label="Descrição"
         value={formik.values.description}
-        onChangeText={text => formik.setFieldValue("description", text)}
+        onChangeText={text => formik.setFieldValue("description", text.trim())}
         errorText={getFieldError("description", formik)}
         multiline={true}
     />

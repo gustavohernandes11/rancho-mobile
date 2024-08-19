@@ -2,6 +2,7 @@ import { Input } from "components/Input";
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
 import { FormikHelpers, useFormik } from "formik";
+import moment from "moment";
 import React, { useEffect } from "react";
 import {
     Alert,
@@ -17,7 +18,7 @@ import { initialValues } from "./defaultValues";
 import { validationSchema } from "./validation.schema";
 
 interface DayProductionFormProps {
-    selectedDate: Date;
+    selectedDate: string;
 }
 
 const handleSubmit = async (
@@ -43,7 +44,7 @@ export const DayProductionForm: React.FC<DayProductionFormProps> = ({
         onSubmit: (values, formikHelpers) =>
             handleSubmit(
                 {
-                    day: selectedDate.toISOString(),
+                    day: selectedDate,
                     quantity: values.quantity,
                 },
                 formikHelpers
@@ -52,9 +53,11 @@ export const DayProductionForm: React.FC<DayProductionFormProps> = ({
     });
 
     useEffect(() => {
-        Storage.getDayProduction(selectedDate).then(production => {
-            formik.setFieldValue("quantity", production?.quantity || 0);
-        });
+        Storage.getDayProduction(moment(selectedDate).toDate()).then(
+            production => {
+                formik.setFieldValue("quantity", production?.quantity || 0);
+            }
+        );
     }, [selectedDate]);
 
     const handleChangeText = (text: string) => {

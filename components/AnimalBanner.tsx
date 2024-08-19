@@ -4,6 +4,7 @@ import { Animal } from "types";
 import { getAgeString } from "utils/getAgeString";
 import { getGenderIcon } from "utils/getGenderIcon";
 import { Banner } from "./Banner";
+import { Paragraph } from "./Paragraph";
 
 interface AnimalBannerProps {
     animal: Animal;
@@ -23,11 +24,13 @@ export const AnimalBanner: React.FC<AnimalBannerProps & ViewProps> = ({
 
     return (
         <Banner
-            iconAlt="Rounded animal icon"
+            iconAlt="Animal icon"
             iconSource={require("../assets/images/AnimalCircleIcon.png")}
             title={title as unknown as string}
-            rightDescription={
-                animal.birthdate && getAgeString(animal.birthdate)
+            right={
+                <Paragraph secondary>
+                    {animal.birthdate && getAgeString(animal.birthdate)}
+                </Paragraph>
             }
             {...props}
         />
