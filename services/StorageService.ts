@@ -1,3 +1,9 @@
+import { AnimalRepository } from "database/repositories/AnimalRepository";
+import { AnnotationRepository } from "database/repositories/AnnotationRepository";
+import { BatchRepository } from "database/repositories/BatchRepository";
+import { MonthDetailsRepository } from "database/repositories/MonthDetailsRepository";
+import { ProductionRepository } from "database/repositories/ProductionRepository";
+import { UserInformationRepository } from "database/repositories/UserInformationRepository";
 import moment from "moment";
 import {
     AddAnimal,
@@ -10,58 +16,106 @@ import {
     Batch,
     Count,
     DayProduction,
+    MonthDetails,
     PopulatedAnimal,
     PopulatedBatch,
     QueryOptions,
-    StorageRepository,
     StorageServicesMethods,
     UpdateAnimal,
     UpdateAnnotation,
     UpdateBatch,
 } from "types";
-
-import { MonthDetails } from "types/MonthDetails";
 import { formatDateToISO } from "utils/formatters";
-import { SqliteRepository } from "../database/repositories/SqliteRepository";
 
 export class StorageServices implements StorageServicesMethods {
-    constructor(private readonly DbRepository: StorageRepository) {
-        this.DbRepository.initDatabase();
-    }
+    constructor(
+        private readonly animalRepository: AnimalRepository,
+        private readonly batchRepository: BatchRepository,
+        private readonly annotationRepository: AnnotationRepository,
+        private readonly monthDetailsRepository: MonthDetailsRepository,
+        private readonly productionRepository: ProductionRepository,
+        private readonly userInformationRepository: UserInformationRepository
+    ) {}
     getMonthDetails(month: Date): Promise<MonthDetails | null> {
-        return this.DbRepository.getMonthDetails(month);
+        return this.monthDetailsRepository.getMonthDetails(month);
     }
 
     upsertMonthDetails(monthDetails: MonthDetails): Promise<boolean> {
-        return this.DbRepository.upsertMonthDetails(monthDetails);
+        return this.monthDetailsRepository.upsertMonthDetails(monthDetails);
     }
 
     count(): Promise<Count> {
-        return this.DbRepository.count();
+        return this.userInformationRepository.count();
     }
 
     insertAnimal(animal: AddAnimal): Promise<number | undefined> {
-        return this.DbRepository.insertAnimal(animal);
+        return this.animalRepository.insertAnimal(animal);
     }
 
     insertBatch(batch: AddBatch): Promise<number | undefined> {
-        return this.DbRepository.insertBatch(batch);
+        return this.batchRepository.insertBatch(batch);
     }
 
     getAnimal(animalID: number): Promise<Animal> {
-        return this.DbRepository.getAnimal(animalID);
+        return this.animalRepository.getAnimal(animalID);
     }
 
-    getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
-        return this.DbRepository.getPopulatedAnimal(animalID);
+    async getPopulatedAnimal(animalID: number): Promise<PopulatedAnimal> {
+        const animal = await this.getAnimal(animalID);
+
+        const operations: Promise<any>[] = [
+            this.animalRepository.listOffspring(animalID),
+        ];
+        const resolveNull = () => Promise.resolve(null);
+
+        operations.push(
+            animal.batchID
+                ? this.batchRepository.getBatch(animal.batchID)
+                : resolveNull()
+        );
+        operations.push(
+            animal.maternityID
+                ? this.animalRepository.getAnimal(animal.maternityID)
+                : resolveNull()
+        );
+        operations.push(
+            animal.paternityID
+                ? this.animalRepository.getAnimal(animal.paternityID)
+                : resolveNull()
+        );
+        operations.push(
+            this.annotationRepository.listAnnotations({
+                includesAnimalId: animal.id,
+            })
+        );
+
+        const [offspring, batch, maternity, paternity, annotations] =
+            await Promise.all(operations);
+
+        return {
+            ...animal,
+            offspring,
+            batch,
+            maternity,
+            paternity,
+            annotations,
+        };
     }
 
-    getPopulatedBatch(batchID: number): Promise<PopulatedBatch> {
-        return this.DbRepository.getPopulatedBatch(batchID);
+    async getPopulatedBatch(batchID: number): Promise<PopulatedBatch> {
+        const [batch, animals] = await Promise.all([
+            this.batchRepository.getBatch(batchID),
+            this.animalRepository.listAnimals({ batchID }),
+        ]);
+
+        return {
+            ...batch,
+            animals,
+        } as PopulatedBatch;
     }
 
     listAnimals(query?: QueryOptions): Promise<Animal[]> {
-        return this.DbRepository.listAnimals(query);
+        return this.animalRepository.listAnimals(query);
     }
 
     private populateAnimalsPreview = async (
@@ -70,7 +124,7 @@ export class StorageServices implements StorageServicesMethods {
         return Promise.all(
             animals.map(async animal => {
                 if (animal.batchID) {
-                    const batch = await this.DbRepository.getBatch(
+                    const batch = await this.batchRepository.getBatch(
                         animal.batchID
                     );
                     if (batch) {
@@ -83,16 +137,16 @@ export class StorageServices implements StorageServicesMethods {
     };
 
     async listAnimalPreview(query?: QueryOptions): Promise<AnimalPreview[]> {
-        const animals = await this.DbRepository.listAnimals(query);
+        const animals = await this.animalRepository.listAnimals(query);
         return this.populateAnimalsPreview(animals);
     }
 
     listBatches(): Promise<Batch[]> {
-        return this.DbRepository.listBatches();
+        return this.batchRepository.listBatches();
     }
 
     updateAnimal(updateData: UpdateAnimal | UpdateAnimal[]): Promise<boolean> {
-        return this.DbRepository.updateAnimal(updateData);
+        return this.animalRepository.updateAnimal(updateData);
     }
 
     async updateBatch(
@@ -100,29 +154,31 @@ export class StorageServices implements StorageServicesMethods {
     ): Promise<boolean> {
         if (Array.isArray(updateData)) {
             for (const batch of updateData) {
-                await this.DbRepository.updateBatch(batch);
+                await this.batchRepository.updateBatch(batch);
             }
         } else {
-            await this.DbRepository.updateBatch(updateData);
+            await this.batchRepository.updateBatch(updateData);
         }
         return true;
     }
 
     async deleteAnimal(animalID: number | number[]): Promise<boolean> {
-        await this.DbRepository.nullifyParentalIds(animalID);
-        await this.DbRepository.unlinkAnimalFromAnnotations(animalID);
+        await Promise.all([
+            this.animalRepository.nullifyParentalIds(animalID),
+            this.annotationRepository.unlinkAnimalFromAnnotations(animalID),
+        ]);
 
-        return await this.DbRepository.deleteAnimal(animalID);
+        return await this.animalRepository.deleteAnimal(animalID);
     }
 
     async deleteBatch(batchID: number): Promise<boolean> {
-        const animalsToUnlink = await this.DbRepository.listAnimals({
+        const animalsToUnlink = await this.animalRepository.listAnimals({
             batchID,
         });
         const operations = animalsToUnlink.map(animal =>
-            this.DbRepository.setAnimalBatch(animal.id, null)
+            this.animalRepository.setAnimalBatch(animal.id, null)
         );
-        operations.push(this.DbRepository.deleteBatch(batchID));
+        operations.push(this.batchRepository.deleteBatch(batchID));
 
         return Promise.all(operations)
             .then(() => true)
@@ -130,13 +186,13 @@ export class StorageServices implements StorageServicesMethods {
     }
 
     async deleteBatchWithAnimals(batchID: number): Promise<boolean> {
-        const animalsToDelete = await this.DbRepository.listAnimals({
+        const animalsToDelete = await this.animalRepository.listAnimals({
             batchID,
         });
         const operations = animalsToDelete.map(animal =>
             this.deleteAnimal(animal.id)
         );
-        operations.push(this.DbRepository.deleteBatch(batchID));
+        operations.push(this.batchRepository.deleteBatch(batchID));
 
         return Promise.all(operations)
             .then(() => true)
@@ -147,24 +203,29 @@ export class StorageServices implements StorageServicesMethods {
         animalID: number | number[],
         batchID: number | null
     ): Promise<boolean> {
-        return this.DbRepository.setAnimalBatch(animalID, batchID);
+        return this.animalRepository.setAnimalBatch(animalID, batchID);
     }
 
     async compareBatchAnimalsWithSelectedAndUpdate(
         selectedIDs: number[],
         batchID: number
     ): Promise<boolean> {
-        const batch = await this.DbRepository.getPopulatedBatch(batchID);
-        const animals = await this.DbRepository.listAnimals();
+        const [batch, animals] = await Promise.all([
+            this.getPopulatedBatch(batchID),
+            this.animalRepository.listAnimals(),
+        ]);
 
         let operations = animals.map(animal => {
             const isSelected = selectedIDs.includes(animal.id);
             const belongsToBatch = animal.batchID === batch.id;
 
             if (belongsToBatch && !isSelected) {
-                return this.DbRepository.setAnimalBatch(animal.id, null);
+                return this.animalRepository.setAnimalBatch(animal.id, null);
             } else if (!belongsToBatch && isSelected) {
-                return this.DbRepository.setAnimalBatch(animal.id, batch.id);
+                return this.animalRepository.setAnimalBatch(
+                    animal.id,
+                    batch.id
+                );
             }
         });
 
@@ -174,14 +235,14 @@ export class StorageServices implements StorageServicesMethods {
     }
 
     upsertDayProduction(production: DayProduction): Promise<boolean> {
-        return this.DbRepository.upsertDayProduction(production);
+        return this.productionRepository.upsertDayProduction(production);
     }
 
     listMonthProduction(month: Date): Promise<DayProduction[]> {
         const startOfMonth = moment(month).startOf("month").toDate();
         const endOfMonth = moment(month).endOf("month").toDate();
 
-        return this.DbRepository.listTimespanProduction(
+        return this.productionRepository.listTimespanProduction(
             startOfMonth,
             endOfMonth
         );
@@ -216,7 +277,7 @@ export class StorageServices implements StorageServicesMethods {
     }
 
     getDayProduction(date: Date): Promise<DayProduction | null> {
-        return this.DbRepository.getDayProduction(date);
+        return this.productionRepository.getDayProduction(date);
     }
 
     async generateDeathAnnotation(
@@ -230,12 +291,12 @@ export class StorageServices implements StorageServicesMethods {
             title = animalID.length + " animais morreram.";
             relatedAnimalIDs = animalID;
         } else {
-            const animal = await this.DbRepository.getAnimal(animalID);
+            const animal = await this.animalRepository.getAnimal(animalID);
             title = animal.name + " morreu.";
             relatedAnimalIDs = [animalID];
         }
 
-        this.DbRepository.insertAnnotation({
+        this.annotationRepository.insertAnnotation({
             title,
             type: "death",
             animalIDs: relatedAnimalIDs,
@@ -257,12 +318,12 @@ export class StorageServices implements StorageServicesMethods {
             title = animalID.length + " animais foram vendidos.";
             relatedAnimalIDs = animalID;
         } else {
-            const animal = await this.DbRepository.getAnimal(animalID);
+            const animal = await this.animalRepository.getAnimal(animalID);
             title = animal.name + " foi vendido.";
             relatedAnimalIDs = [animalID];
         }
 
-        await this.DbRepository.insertAnnotation({
+        await this.annotationRepository.insertAnnotation({
             title,
             type: "sell",
             animalIDs: relatedAnimalIDs,
@@ -282,7 +343,7 @@ export class StorageServices implements StorageServicesMethods {
             if (generateAnnotation) {
                 await this.generateDeathAnnotation(animalIDs, reason);
             }
-            await this.DbRepository.setAnimalStatus(animalIDs, "dead");
+            await this.animalRepository.setAnimalStatus(animalIDs, "dead");
 
             return true;
         } catch {
@@ -299,7 +360,7 @@ export class StorageServices implements StorageServicesMethods {
             if (generateAnnotation) {
                 await this.generateSaleAnnotation(animalIDs, reason);
             }
-            await this.DbRepository.setAnimalStatus(animalIDs, "sold");
+            await this.animalRepository.setAnimalStatus(animalIDs, "sold");
 
             return true;
         } catch {
@@ -308,29 +369,42 @@ export class StorageServices implements StorageServicesMethods {
     }
 
     insertAnnotation(annotation: AddAnnotation): Promise<number | undefined> {
-        return this.DbRepository.insertAnnotation(annotation);
+        return this.annotationRepository.insertAnnotation(annotation);
     }
 
     getAnnotation(id: number): Promise<Annotation | null> {
-        return this.DbRepository.getAnnotation(id);
+        return this.annotationRepository.getAnnotation(id);
     }
 
     listAnnotations(
         query?: AnnotationQueryOptions | undefined
     ): Promise<Annotation[]> {
-        return this.DbRepository.listAnnotations(query);
+        return this.annotationRepository.listAnnotations(query);
     }
 
     updateAnnotation(
         updateData: UpdateAnnotation | UpdateAnnotation[]
     ): Promise<boolean> {
-        return this.DbRepository.updateAnnotation(updateData);
+        return this.annotationRepository.updateAnnotation(updateData);
     }
 
     deleteAnnotation(id: number): Promise<boolean> {
-        return this.DbRepository.deleteAnnotation(id);
+        return this.annotationRepository.deleteAnnotation(id);
     }
 }
 
-const sqliteRepository = new SqliteRepository();
-export const Storage = new StorageServices(sqliteRepository);
+const animalRepository = new AnimalRepository();
+const batchRepository = new BatchRepository();
+const annotationRepository = new AnnotationRepository();
+const monthDetailsRepository = new MonthDetailsRepository();
+const productionRepository = new ProductionRepository();
+const userInformationRepository = new UserInformationRepository();
+
+export const Storage = new StorageServices(
+    animalRepository,
+    batchRepository,
+    annotationRepository,
+    monthDetailsRepository,
+    productionRepository,
+    userInformationRepository
+);
