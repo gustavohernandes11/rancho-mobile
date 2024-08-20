@@ -12,7 +12,7 @@ interface SegmentedButtonsInputProps {
     errorText?: string;
 }
 
-const SegmentedButtonsInput: React.FC<SegmentedButtonsInputProps> = ({
+export const SegmentedButtonsInput: React.FC<SegmentedButtonsInputProps> = ({
     label,
     options,
     selectedValues,
@@ -62,5 +62,3 @@ const styles = StyleSheet.create({
         fontFamily: Theme.fonts.primaryFamily,
     },
 });
-
-export default SegmentedButtonsInput;
