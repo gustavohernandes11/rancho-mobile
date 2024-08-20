@@ -1,4 +1,4 @@
-import { ConfirmDeleteBatchDialog } from "components/BatchPageHeaderButtons";
+import { ConfirmDeleteBatchDialog } from "components/BatchPageHeaderButtons/ConfirmDeleteBatchDialog";
 import { useModal } from "hooks/useModal";
 import { Menu } from "react-native-paper";
 import { commonStyles } from "styles/Common";
