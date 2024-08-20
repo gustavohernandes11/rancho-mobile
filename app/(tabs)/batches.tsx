@@ -51,7 +51,7 @@ export default function ViewBatchesScreen() {
                 <Span justify="flex-end" paddingY={8}>
                     <Button
                         title="Novo lote"
-                        icon={require("../../assets/images/FolderPlusIcon_green.png")}
+                        icon={require("../../assets/images/FolderPlusIcon.png")}
                         onPress={() => router.push("/(screens)/batches/add")}
                     />
                 </Span>

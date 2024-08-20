@@ -115,13 +115,13 @@ export default function ViewAgendaScreen() {
                     <Card
                         href={"/production/add-month-details/" + selectedDateId}
                         alt="Production"
-                        iconSource={require("assets/images/ChartIcon_green.png")}
+                        iconSource={require("assets/images/ChartIcon.png")}
                         title={monthQualityDetailsLabel}
                     />
                 </Span>
                 <Span>
                     <Card
-                        iconSource={require("assets/images/BookMarkIcon_green.png")}
+                        iconSource={require("assets/images/BookMarkIcon.png")}
                         alt="Ir para anotações"
                         href="/annotations"
                         title="Ver todas as anotações"
@@ -130,7 +130,7 @@ export default function ViewAgendaScreen() {
                     <Card
                         href="/production"
                         alt="Production"
-                        iconSource={require("assets/images/ChartIcon_green.png")}
+                        iconSource={require("assets/images/ChartIcon.png")}
                         title="Relatório de produção"
                         color="purple"
                     />

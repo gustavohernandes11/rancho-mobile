@@ -56,10 +56,9 @@ export default function TabLayout() {
                     tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={
-                                focused
-                                    ? require("../../assets/images/HouseIcon.png")
-                                    : require("../../assets/images/HouseIcon_green.png")
+                            source={require("../../assets/images/HouseIcon.png")}
+                            tintColor={
+                                Theme.colors[focused ? "lightest" : "primary"]
                             }
                             alt={"home page"}
                         />
@@ -73,10 +72,9 @@ export default function TabLayout() {
                     tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={
-                                focused
-                                    ? require("../../assets/images/CowIcon.png")
-                                    : require("../../assets/images/CowIcon_green.png")
+                            source={require("../../assets/images/CowIcon.png")}
+                            tintColor={
+                                Theme.colors[focused ? "lightest" : "primary"]
                             }
                             alt={"animals page"}
                         />
@@ -90,10 +88,9 @@ export default function TabLayout() {
                     tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={
-                                focused
-                                    ? require("../../assets/images/CowFolderIcon.png")
-                                    : require("../../assets/images/CowFolderIcon_green.png")
+                            source={require("../../assets/images/CowFolderIcon.png")}
+                            tintColor={
+                                Theme.colors[focused ? "lightest" : "primary"]
                             }
                             alt={"batches page"}
                         />
@@ -107,10 +104,9 @@ export default function TabLayout() {
                     tabBarIcon: ({ focused }) => (
                         <Image
                             style={iconSize}
-                            source={
-                                focused
-                                    ? require("../../assets/images/BookIcon.png")
-                                    : require("../../assets/images/BookIcon_green.png")
+                            source={require("../../assets/images/BookIcon.png")}
+                            tintColor={
+                                Theme.colors[focused ? "lightest" : "primary"]
                             }
                             alt={"agenda page"}
                         />

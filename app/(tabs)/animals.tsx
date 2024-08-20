@@ -175,7 +175,7 @@ export default function ViewAnimalsScreen() {
             <Span justify="flex-end" direction="row">
                 <Button
                     title="Registrar animal"
-                    icon={require("../../assets/images/CowIcon_green.png")}
+                    icon={require("../../assets/images/CowIcon.png")}
                     onPress={() => router.push("/(screens)/animals/add")}
                 />
             </Span>

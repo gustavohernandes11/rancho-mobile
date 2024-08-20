@@ -21,7 +21,6 @@ export const AnimalAvatar = ({
     return (
         <View style={styles.container}>
             <Image source={source} style={styles.image} resizeMode="cover" />
-
             <ImageActions
                 animalImage={animalImage}
                 animal={animal}

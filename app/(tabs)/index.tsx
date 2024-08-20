@@ -51,20 +51,20 @@ export default function TabOneScreen() {
                     <Card
                         href="/(tabs)/animals"
                         alt="Rebanho"
-                        iconSource={require("assets/images/CowIcon_green.png")}
+                        iconSource={require("assets/images/CowIcon.png")}
                         title="Rebanho"
                     />
                     <Card
                         href="/(tabs)/batches"
                         alt="Lotes"
-                        iconSource={require("assets/images/CowFolderIcon_green.png")}
+                        iconSource={require("assets/images/CowFolderIcon.png")}
                         title="Lotes"
                         color="blue"
                     />
                     <Card
                         href="/(tabs)/agenda"
                         alt="Agenda"
-                        iconSource={require("assets/images/BookIcon_green.png")}
+                        iconSource={require("assets/images/BookIcon.png")}
                         title="Agenda"
                         color="cian"
                     />
@@ -73,19 +73,19 @@ export default function TabOneScreen() {
                     <Card
                         href="/animals/add"
                         alt="Registrar animal"
-                        iconSource={require("assets/images/AddCowIcon_green.png")}
+                        iconSource={require("assets/images/AddCowIcon.png")}
                         title="Registrar animal"
                     />
                     <Card
                         href="/error"
                         alt="Registrar vários animais"
-                        iconSource={require("assets/images/AddCowIcon_green.png")}
+                        iconSource={require("assets/images/AddCowIcon.png")}
                         title="Registrar vários"
                     />
                     <Card
                         href="/batches/add"
                         alt="Registrar lote"
-                        iconSource={require("assets/images/FolderPlusIcon_green.png")}
+                        iconSource={require("assets/images/FolderPlusIcon.png")}
                         title="Registrar lote"
                         color="blue"
                     />
@@ -94,21 +94,21 @@ export default function TabOneScreen() {
                     <Card
                         href="/production"
                         alt="Production"
-                        iconSource={require("assets/images/ChartIcon_green.png")}
+                        iconSource={require("assets/images/ChartIcon.png")}
                         title="Relatório de produção"
                         color="purple"
                     />
                     <Card
                         href="/annotations"
                         alt="Annotations"
-                        iconSource={require("assets/images/BookMarkIcon_green.png")}
+                        iconSource={require("assets/images/BookMarkIcon.png")}
                         title="Ver anotações"
                         color="cian"
                     />
                     <Card
                         href="/error"
                         alt="Export data"
-                        iconSource={require("assets/images/BookMarkIcon_green.png")}
+                        iconSource={require("assets/images/BookMarkIcon.png")}
                         title="Exportar dados"
                         color="cian"
                     />
