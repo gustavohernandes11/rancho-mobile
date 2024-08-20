@@ -27,7 +27,7 @@ export const BatchPageHeaderButtons = ({ batch }: { batch: Batch }) => {
                 onPress={handleDelete}
             />
             <IconButton
-                icon={require("../assets/images/AddCowIcon.png")}
+                icon={require("../../assets/images/AddCowIcon.png")}
                 iconColor={Theme.colors.white}
                 onPress={handleRegisterAnimal}
             />

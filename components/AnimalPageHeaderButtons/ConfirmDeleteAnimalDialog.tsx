@@ -21,7 +21,7 @@ export const ConfirmDeleteAnimalDialog = ({
         <Dialog
             title="Deletar animal?"
             visible={isVisible}
-            content={<DialogContent animalName={animal.name} />}
+            content={<DialogContent animalName={animal && animal.name} />}
             buttons={
                 <DialogButtons
                     animal={animal}

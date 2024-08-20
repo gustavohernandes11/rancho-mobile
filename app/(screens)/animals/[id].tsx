@@ -1,3 +1,4 @@
+import { AnimalAvatar } from "components/AnimalAvatar";
 import { AnimalBanner } from "components/AnimalBanner";
 import { AnnotationBanner } from "components/AnnotationBanner";
 import { BatchBanner } from "components/BatchBanner";
@@ -12,6 +13,7 @@ import { useGlobalStore } from "hooks/useGlobalStore";
 import moment from "moment";
 import { useEffect, useState } from "react";
 import { Icon } from "react-native-paper";
+import { imageServices } from "services/ImageService";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { AnimalStatusOptions, PopulatedAnimal } from "types";
@@ -24,6 +26,7 @@ export default function ViewAnimalDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [animal, setAnimal] = useState<PopulatedAnimal>();
     const [isLoading, setIsLoading] = useState(true);
+    const [animalImage, setAnimalImage] = useState<string | null>(null);
     const animals = useGlobalStore(state => state.animals);
 
     const fetchPopulatedAnimal = async () => {
@@ -41,6 +44,16 @@ export default function ViewAnimalDetailsScreen() {
         fetchPopulatedAnimal();
     }, [animals]);
 
+    const loadImage = async () => {
+        if (animal) {
+            const path = await imageServices.getAnimalImagePath(animal);
+            setAnimalImage(path ? path + "?new=" + new Date() : null);
+        }
+    };
+    useEffect(() => {
+        loadImage();
+    }, [animal]);
+
     const StackScreen = () => (
         <Stack.Screen
             options={{
@@ -56,7 +69,14 @@ export default function ViewAnimalDetailsScreen() {
                 <PageSkeleton />
             ) : (
                 <>
+                    <AnimalAvatar
+                        animal={animal}
+                        animalImage={animalImage}
+                        loadImage={loadImage}
+                    />
+
                     <Heading size="big">{animal?.name}</Heading>
+
                     <Span direction="column">
                         <Heading size="small">Informações gerais</Heading>
                         <Span
@@ -172,6 +192,7 @@ export default function ViewAnimalDetailsScreen() {
                             ))}
                         </Span>
                     ) : null}
+
                     {animal &&
                     animal.annotations &&
                     animal.annotations.length > 0 ? (
