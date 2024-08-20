@@ -1,6 +1,6 @@
 import { FontAwesome } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Icon } from "react-native-paper";
 import SelectDropdown, {
     SelectDropdownProps,
@@ -9,7 +9,7 @@ import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { Item } from "types";
 import { getInputBorderColor } from "utils/getInputBorderColor";
-import { Label } from "./Label";
+import { InputInfo } from "./InputInfo";
 
 const DropdownIcon = () => (
     <FontAwesome style={{ marginRight: 8 }} size={16} name="angle-down" />
@@ -48,10 +48,7 @@ export const Select: React.FC<
 
     return (
         <View style={styles.inputContainer}>
-            {label ? <Label>{label}</Label> : null}
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
+            <InputInfo errorText={errorText} label={label} />
             <SelectDropdown
                 renderDropdownIcon={DropdownIcon}
                 buttonTextStyle={commonStyles.label}

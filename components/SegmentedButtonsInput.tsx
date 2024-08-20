@@ -1,9 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SegmentedButtons } from "react-native-paper";
-import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
-import { Label } from "./Label";
+import { InputInfo } from "./InputInfo";
 
 interface SegmentedButtonsInputProps {
     label?: string;
@@ -26,10 +25,7 @@ const SegmentedButtonsInput: React.FC<SegmentedButtonsInputProps> = ({
 
     return (
         <View style={styles.container}>
-            {label ? <Label>{label}</Label> : null}
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
+            <InputInfo errorText={errorText} label={label} />
             <SegmentedButtons
                 multiSelect
                 value={selectedValues}

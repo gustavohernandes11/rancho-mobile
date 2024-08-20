@@ -1,9 +1,9 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { RadioButton } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
-import { Label } from "./Label";
+import { InputInfo } from "./InputInfo";
 
 interface RadioInputProps {
     label?: string;
@@ -22,10 +22,7 @@ export const RadioInput: React.FC<RadioInputProps> = ({
 }) => {
     return (
         <View style={styles.container}>
-            {label ? <Label>{label}</Label> : null}
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
+            <InputInfo errorText={errorText} label={label} />
             <View style={styles.group}>
                 {options.map((option, index) => (
                     <RadioButton.Item

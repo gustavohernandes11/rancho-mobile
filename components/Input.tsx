@@ -1,13 +1,14 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { TextInput, TextInputProps } from "react-native-paper";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { getInputBorderColor } from "utils/getInputBorderColor";
-import { Label } from "./Label";
+import { InputInfo } from "./InputInfo";
 
 interface InputProps {
     errorText?: string;
+    label?: string;
 }
 
 export const Input: React.FC<InputProps & TextInputProps> = ({
@@ -20,10 +21,7 @@ export const Input: React.FC<InputProps & TextInputProps> = ({
 
     return (
         <View style={styles.inputContainer}>
-            {label ? <Label>{label}</Label> : null}
-            {errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
+            <InputInfo errorText={errorText} label={label} />
             <TextInput
                 mode="outlined"
                 outlineStyle={styles.outline}
