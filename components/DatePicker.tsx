@@ -1,24 +1,25 @@
 import moment from "moment";
 import React, { useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { DatePickerInput } from "react-native-paper-dates";
 import { DatePickerInputProps } from "react-native-paper-dates/lib/typescript/Date/DatePickerInput.shared";
 import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { getInputBorderColor } from "utils/getInputBorderColor";
 import { CheckboxItem } from "./CheckboxItem";
-import { Label } from "./Label";
+import { InputInfo } from "./InputInfo";
 import { Span } from "./Span";
 
 interface DatePickerProps {
     errorText?: string;
+    label?: string;
     showCheckBoxToSelectToday?: boolean;
     onChange: (date?: Date) => void;
     onChangeText: (text?: string) => void;
 }
 
 export const DatePicker: React.FC<
-    DatePickerProps & Omit<DatePickerInputProps, "locale">
+    DatePickerProps & Omit<DatePickerInputProps, "locale" | "label">
 > = ({
     label,
     errorText,
@@ -55,10 +56,7 @@ export const DatePicker: React.FC<
 
     return (
         <View style={styles.inputContainer}>
-            {!!label ? <Label>{label}</Label> : null}
-            {!!errorText ? (
-                <Text style={commonStyles.error}>{errorText}</Text>
-            ) : null}
+            <InputInfo errorText={errorText} label={label} />
             <DatePickerInput
                 disabled={isChecked}
                 iconColor={Theme.colors.darkGray}

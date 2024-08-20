@@ -1,4 +1,5 @@
 import { AnimalTable } from "components/AnimalTable";
+import { BatchPageHeaderButtons } from "components/BatchPageHeaderButtons";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { PageSkeleton } from "components/PageSkeleton";
@@ -12,7 +13,6 @@ import { useEffect, useState } from "react";
 import { Storage } from "services/StorageService";
 import { PopulatedBatch } from "types";
 import { isActive } from "utils/filters";
-import { BatchPageHeaderButtons } from "../../../components/BatchPageHeaderButtons";
 
 export default function ViewBatchDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();

@@ -1,4 +1,5 @@
 import { AnimalTable } from "components/AnimalTable";
+import { AnnotationPageHeaderButtons } from "components/AnnotationPageHeaderButtons";
 import { ContainerView } from "components/ContainerView";
 import { Heading } from "components/Heading";
 import { InfoCard } from "components/InfoCard";
@@ -13,7 +14,6 @@ import { Storage } from "services/StorageService";
 import { Animal, Annotation } from "types";
 import { formatAnnotationType, formatDateToShortPtBR } from "utils/formatters";
 import { valueOrHyphen } from "utils/valueOrHyphen";
-import { AnnotationPageHeaderButtons } from "../../../components/AnnotationPageHeaderButtons";
 
 export default function ViewAnnotationDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();

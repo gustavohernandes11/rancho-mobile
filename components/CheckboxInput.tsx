@@ -11,7 +11,7 @@ interface CheckboxInputProps {
     errorText?: string;
 }
 
-const CheckboxInput: React.FC<CheckboxInputProps> = ({
+export const CheckboxInput: React.FC<CheckboxInputProps> = ({
     label,
     options,
     selectedValues,
@@ -58,5 +58,3 @@ const styles = StyleSheet.create({
         justifyContent: "flex-start",
     },
 });
-
-export default CheckboxInput;
