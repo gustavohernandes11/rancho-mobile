@@ -6,9 +6,9 @@ import { Paragraph } from "components/Paragraph";
 import { MemoProductionChart } from "components/ProductionChart";
 import { Span } from "components/Span";
 import { calendarLocalePtBr } from "config/calendarLocalePtBr";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useFocusEffect, useRouter } from "expo-router";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import DatePicker from "react-native-modern-datepicker";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
@@ -35,10 +35,12 @@ export default function ViewProductionReportsPage() {
         });
     };
 
-    useEffect(() => {
-        getProduction();
-        getMonthDetails();
-    }, [formatMonthToISO(date)]);
+    useFocusEffect(
+        useCallback(() => {
+            getProduction();
+            getMonthDetails();
+        }, [formatMonthToISO(date)])
+    );
 
     const handleShowMonthPicker = () => {
         setShow(prev => !prev);

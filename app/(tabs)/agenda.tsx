@@ -7,10 +7,10 @@ import { DayProductionForm } from "components/DayProductionForm";
 import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
-import { Stack, useRouter } from "expo-router";
+import { Stack, useFocusEffect, useRouter } from "expo-router";
 import { useControlledCalendar } from "hooks/useControlledCalendar";
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { IconButton } from "react-native-paper";
 import { Storage } from "services/StorageService";
 import { Annotation } from "types/Annotation";
@@ -47,9 +47,11 @@ export default function ViewAgendaScreen() {
         );
     };
 
-    useEffect(() => {
-        fetchSelectedDateAnnotations();
-    }, [selectedDateId]);
+    useFocusEffect(
+        useCallback(() => {
+            fetchSelectedDateAnnotations();
+        }, [selectedDateId])
+    );
 
     const monthString = moment(selectedDateId).format("MMMM/YYYY");
     const monthQualityDetailsLabel = `Inserir qualidade do leite em ${monthString}`;
