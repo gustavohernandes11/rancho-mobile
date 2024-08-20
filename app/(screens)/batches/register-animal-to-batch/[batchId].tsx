@@ -3,14 +3,14 @@ import { ContainerView } from "components/ContainerView";
 import { Stack, useLocalSearchParams } from "expo-router";
 
 export default function RegisterAnimalToBatchScreen() {
-    const { batchID } = useLocalSearchParams<{ batchID: string }>();
+    const { batchId } = useLocalSearchParams<{ batchId: string }>();
 
     const StackScreen = () => (
         <Stack.Screen options={{ headerTitle: "Adicionar animal" }} />
     );
     return (
         <ContainerView immediateContent={<StackScreen />}>
-            <AnimalForm initialValues={{ batchID: Number(batchID) }} />
+            <AnimalForm initialValues={{ batchID: Number(batchId) }} />
         </ContainerView>
     );
 }
