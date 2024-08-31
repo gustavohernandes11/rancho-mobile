@@ -1,14 +1,9 @@
 import { RadioInput } from "components/RadioInput";
-import { FormikProps } from "formik";
 import React from "react";
-import { Animal } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { getFieldError } from "utils/getFieldError";
 
-type GenderFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const GenderField: React.FC<GenderFieldProps> = ({ formik }) => {
+export const GenderField: React.FC<AnimalFormField> = ({ formik }) => {
     const options = [
         { label: "Fêmea", value: "F" },
         { label: "Macho", value: "M" },
@@ -16,7 +11,7 @@ export const GenderField: React.FC<GenderFieldProps> = ({ formik }) => {
 
     return (
         <RadioInput
-            label="Gênero*"
+            label="Sexo*"
             value={formik.values.gender}
             onValueChange={value => formik.setFieldValue("gender", value)}
             options={options}

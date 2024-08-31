@@ -1,17 +1,12 @@
 import { Select } from "components/Select";
-import { FormikProps } from "formik";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
-import { Animal } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { filterPossibleMaternity } from "utils/filters";
 import { getFieldError } from "utils/getFieldError";
 import { serializeAnimals } from "utils/serializers";
 
-type MaternityFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const MaternityField: React.FC<MaternityFieldProps> = ({ formik }) => {
+export const MaternityField: React.FC<AnimalFormField> = ({ formik }) => {
     const animals = useGlobalStore(state => state.animals);
 
     return (

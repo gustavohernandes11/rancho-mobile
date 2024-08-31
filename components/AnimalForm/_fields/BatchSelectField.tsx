@@ -1,18 +1,11 @@
 import { Select } from "components/Select";
-import { FormikProps } from "formik";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React, { memo } from "react";
-import { Animal } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { getFieldError } from "utils/getFieldError";
 import { serializeBatches } from "utils/serializers";
 
-type BatchSelectFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const BatchSelectField: React.FC<BatchSelectFieldProps> = ({
-    formik,
-}) => {
+export const BatchSelectField: React.FC<AnimalFormField> = ({ formik }) => {
     const batches = useGlobalStore(state => state.batches);
 
     return (

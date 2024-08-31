@@ -1,14 +1,9 @@
 import { Input } from "components/Input";
-import { FormikProps } from "formik";
 import React from "react";
-import { Animal } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { getFieldError } from "utils/getFieldError";
 
-type CodeFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const CodeField: React.FC<CodeFieldProps> = ({ formik }) => {
+export const CodeField: React.FC<AnimalFormField> = ({ formik }) => {
     return (
         <Input
             label="Código"

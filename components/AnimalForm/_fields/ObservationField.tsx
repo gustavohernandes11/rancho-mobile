@@ -1,16 +1,9 @@
 import { Input } from "components/Input";
-import { FormikProps } from "formik";
 import React from "react";
-import { Animal } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { getFieldError } from "utils/getFieldError";
 
-type ObservationFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const ObservationField: React.FC<ObservationFieldProps> = ({
-    formik,
-}) => {
+export const ObservationField: React.FC<AnimalFormField> = ({ formik }) => {
     return (
         <Input
             label="Observação"

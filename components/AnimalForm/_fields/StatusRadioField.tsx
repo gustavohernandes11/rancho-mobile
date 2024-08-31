@@ -1,16 +1,10 @@
 import { RadioInput } from "components/RadioInput";
-import { FormikProps } from "formik";
 import React from "react";
-import { Animal, AnimalStatusOptions } from "types/Animal";
+import { AnimalStatusOptions } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { getFieldError } from "utils/getFieldError";
 
-type StatusRadioFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const StatusRadioField: React.FC<StatusRadioFieldProps> = ({
-    formik,
-}) => {
+export const StatusRadioField: React.FC<AnimalFormField> = ({ formik }) => {
     const options = [
         { label: "Ativo", value: "active" },
         { label: "Morto", value: "dead" },

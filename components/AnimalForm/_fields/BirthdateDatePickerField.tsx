@@ -1,17 +1,12 @@
 import { DatePicker } from "components/DatePicker";
-import { FormikProps } from "formik";
 import moment from "moment";
 import React, { memo } from "react";
-import { Animal } from "types/Animal";
+import { AnimalFormField } from "types/AnimalFormField";
 import { getFieldError } from "utils/getFieldError";
 
-type BirthdateDatePickerFieldProps = {
-    formik: FormikProps<Animal>;
-};
-
-export const BirthdateDatePickerField: React.FC<
-    BirthdateDatePickerFieldProps
-> = ({ formik }) => {
+export const BirthdateDatePickerField: React.FC<AnimalFormField> = ({
+    formik,
+}) => {
     const handleChangeBirthdate = (date?: Date) => {
         if (moment.isDate(date))
             formik.setFieldValue("birthdate", date!.toISOString());
