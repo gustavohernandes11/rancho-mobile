@@ -45,3 +45,4 @@ android
 notes.txt
 .vs
 coverage
+utils/log.ts
