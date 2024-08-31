@@ -1,6 +1,7 @@
 import { Paragraph } from "components/Paragraph";
+import { useRouter } from "expo-router";
 import { useAnimalsInReview } from "hooks/useAnimalsInReview";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Alert,
     Pressable,
@@ -18,19 +19,30 @@ import { validationSchema } from "./validationSchema";
 
 interface AnimalPreviewBannerProps {
     animal: Animal;
-    onEdit: () => void;
-    onDelete: () => void;
 }
 
 export const AnimalPreviewBanner: React.FC<
     AnimalPreviewBannerProps & ViewProps
-> = ({ animal, onEdit, onDelete, ...props }) => {
+> = ({ animal, ...props }) => {
     const [isEditing, setIsEditing] = useState(false);
     const [name, setName] = useState(animal.name);
-    const setAnimalName = useAnimalsInReview(store => store.setAnimalName);
+    const { removeAnimal, setAnimalName } = useAnimalsInReview();
+    const router = useRouter();
+
+    useEffect(() => {
+        setName(animal.name);
+    }, [animal.name]);
 
     const handleNameChange = async (text: string) => {
         setName(text);
+    };
+
+    const handleEdit = () => {
+        router.push("/animals/edit-in-review/" + animal.id);
+    };
+
+    const handleRemove = () => {
+        removeAnimal(animal.id);
     };
 
     const handleChangeAnimalName = async () => {
@@ -81,12 +93,12 @@ export const AnimalPreviewBanner: React.FC<
                 <IconButton
                     icon="pencil"
                     iconColor={Theme.colors.mediumGray}
-                    onPress={onEdit}
+                    onPress={handleEdit}
                 />
                 <IconButton
                     icon="delete"
                     iconColor={Theme.colors.mediumGray}
-                    onPress={onDelete}
+                    onPress={handleRemove}
                 />
             </View>
         </View>

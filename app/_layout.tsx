@@ -1,4 +1,5 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
+import { AnimalsInReviewProvider } from "contexts/AnimalsInReviewContext";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -38,14 +39,19 @@ moment.locale("pt-br");
 function RootLayoutNav() {
     return (
         <Provider>
-            <Stack>
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                <Stack.Screen
-                    name="(screens)"
-                    options={{ headerShown: false }}
-                />
-            </Stack>
-            <StatusBar style="light" />
+            <AnimalsInReviewProvider>
+                <Stack>
+                    <Stack.Screen
+                        name="(tabs)"
+                        options={{ headerShown: false }}
+                    />
+                    <Stack.Screen
+                        name="(screens)"
+                        options={{ headerShown: false }}
+                    />
+                </Stack>
+                <StatusBar style="light" />
+            </AnimalsInReviewProvider>
         </Provider>
     );
 }

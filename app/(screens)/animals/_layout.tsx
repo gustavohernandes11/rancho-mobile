@@ -5,6 +5,10 @@ export default function CommonPagesLayout() {
     return (
         <Stack screenOptions={screenOptions}>
             <Stack.Screen name="edit" options={{ headerShown: false }} />
+            <Stack.Screen
+                name="edit-in-review"
+                options={{ headerShown: false }}
+            />
         </Stack>
     );
 }
