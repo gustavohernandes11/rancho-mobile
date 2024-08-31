@@ -77,7 +77,7 @@ export default function TabOneScreen() {
                         title="Registrar animal"
                     />
                     <Card
-                        href="/error"
+                        href="/animals/register-multiple-animals"
                         alt="Registrar vários animais"
                         iconSource={require("assets/images/AddCowIcon.png")}
                         title="Registrar vários"

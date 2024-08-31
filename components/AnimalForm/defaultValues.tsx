@@ -11,4 +11,5 @@ export const defaultValues: Animal = {
     paternityID: "",
     observation: "",
     status: "active",
+    quantity: 0,
 } as unknown as Animal;
