@@ -39,7 +39,9 @@ export const Card: React.FC<LinkProps & CardProps> = ({
                         source={iconSource}
                         alt={alt}
                     />
-                    <Text style={styles.title}>{title}</Text>
+                    <Text numberOfLines={2} style={styles.title}>
+                        {title}
+                    </Text>
                 </Span>
             </TouchableRipple>
         </Link>
@@ -52,9 +54,9 @@ const getStyles = (color: ColorOptions) =>
             ...commonStyles.border,
             borderRadius: 4,
             gap: 8,
-            padding: 12,
+            padding: 8,
             flex: 1,
-            flexShrink: 1,
+            height: 113, // trust me
         },
         title: {
             ...commonStyles.text,

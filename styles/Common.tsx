@@ -32,8 +32,8 @@ export const commonStyles = StyleSheet.create({
         resizeMode: "contain",
     },
     smallIcon: {
-        height: 24,
-        width: 24,
+        height: 32,
+        width: 32,
         resizeMode: "contain",
     },
     border: {

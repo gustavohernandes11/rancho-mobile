@@ -49,12 +49,6 @@ export default function TabOneScreen() {
             <Span flexWrap="wrap" paddingY={4} gap={4}>
                 <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
                     <Card
-                        href="/(tabs)/animals"
-                        alt="Rebanho"
-                        iconSource={require("assets/images/CowIcon.png")}
-                        title="Rebanho"
-                    />
-                    <Card
                         href="/(tabs)/batches"
                         alt="Lotes"
                         iconSource={require("assets/images/CowFolderIcon.png")}
@@ -62,14 +56,20 @@ export default function TabOneScreen() {
                         color="blue"
                     />
                     <Card
-                        href="/(tabs)/agenda"
-                        alt="Agenda"
-                        iconSource={require("assets/images/BookIcon.png")}
-                        title="Agenda"
-                        color="cian"
+                        href="/batches/add"
+                        alt="Registrar lote"
+                        iconSource={require("assets/images/FolderPlusIcon.png")}
+                        title="Registrar lote"
+                        color="blue"
                     />
                 </Span>
                 <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
+                    <Card
+                        href="/(tabs)/animals"
+                        alt="Rebanho"
+                        iconSource={require("assets/images/CowIcon.png")}
+                        title="Rebanho"
+                    />
                     <Card
                         href="/animals/add"
                         alt="Registrar animal"
@@ -82,12 +82,21 @@ export default function TabOneScreen() {
                         iconSource={require("assets/images/AddCowIcon.png")}
                         title="Registrar vários"
                     />
+                </Span>
+                <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
                     <Card
-                        href="/batches/add"
-                        alt="Registrar lote"
-                        iconSource={require("assets/images/FolderPlusIcon.png")}
-                        title="Registrar lote"
-                        color="blue"
+                        href="/(tabs)/agenda"
+                        alt="Agenda"
+                        iconSource={require("assets/images/BookIcon.png")}
+                        title="Agenda"
+                        color="cian"
+                    />
+                    <Card
+                        href="/annotations"
+                        alt="Annotations"
+                        iconSource={require("assets/images/BookMarkIcon.png")}
+                        title="Ver anotações"
+                        color="cian"
                     />
                 </Span>
                 <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
@@ -97,13 +106,6 @@ export default function TabOneScreen() {
                         iconSource={require("assets/images/ChartIcon.png")}
                         title="Relatório de produção"
                         color="purple"
-                    />
-                    <Card
-                        href="/annotations"
-                        alt="Annotations"
-                        iconSource={require("assets/images/BookMarkIcon.png")}
-                        title="Ver anotações"
-                        color="cian"
                     />
                     <Card
                         href="/error"
