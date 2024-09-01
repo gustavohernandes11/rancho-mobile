@@ -16,6 +16,7 @@ import { ObservationField } from "./_fields/ObservationField";
 import { PrefixField } from "./_fields/PrefixField";
 import { QuantityField } from "./_fields/QuantityField";
 import { defaultValues } from "./defaultValues";
+import { validateQuantity } from "./validateQuantity.schema";
 import { validationSchema } from "./validation.schema";
 
 const generateAnimals = (quantity: number, common: Animal): Animal[] => {
@@ -44,10 +45,12 @@ export const MultiAnimalForm: React.FC = () => {
         quantity: 0,
     });
 
+    const validationWithQuantity = validationSchema.concat(validateQuantity);
+
     const formik = useFormik({
         initialValues,
         onSubmit,
-        validationSchema,
+        validationSchema: validationWithQuantity,
     });
 
     const navigation = useNavigation();
