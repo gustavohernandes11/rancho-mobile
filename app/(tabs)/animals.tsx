@@ -8,17 +8,43 @@ import { SearchBar } from "components/SearchBar";
 import { SelectionMenu } from "components/SelectionMenu";
 import { Span } from "components/Span";
 import { Stack, useFocusEffect, useRouter } from "expo-router";
+import { useAnimalFiltersStore } from "hooks/useAnimalFiltersStore";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
 import useDebounce from "hooks/useDebounce";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import { useCallback, useEffect, useState } from "react";
 import { IconButton } from "react-native-paper";
-import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
-import { AnimalPreview, AnimalStatusOptions, OrderByOptions } from "types";
+import { AnimalStatusOptions } from "types";
 import { isActive } from "utils/filters";
 
 export default function ViewAnimalsScreen() {
+    const searchText = useAnimalFiltersStore(store => store.searchText);
+    const setSearchText = useAnimalFiltersStore(store => store.setSearchText);
+    const isLoading = useAnimalFiltersStore(store => store.isLoading);
+    const orderBy = useAnimalFiltersStore(store => store.orderBy);
+    const setOrderBy = useAnimalFiltersStore(store => store.setOrderBy);
+    const statusFilter = useAnimalFiltersStore(store => store.statusFilter);
+    const setStatusFilter = useAnimalFiltersStore(
+        store => store.setStatusFilter
+    );
+    const setIsLoading = useAnimalFiltersStore(store => store.setIsLoading);
+    const filterByBatchID = useAnimalFiltersStore(
+        store => store.filterByBatchID
+    );
+    const setFilterByBatchID = useAnimalFiltersStore(
+        store => store.setFilterByBatchID
+    );
+    const filteredAnimals = useAnimalFiltersStore(
+        store => store.filteredAnimals
+    );
+    const fetchFilteredAnimals = useAnimalFiltersStore(
+        store => store.fetchFilteredAnimals
+    );
+    const handleClearAndHideFilters = useAnimalFiltersStore(
+        store => store.handleClearAndHideFilters
+    );
+
     const router = useRouter();
     const animals = useGlobalStore(state => state.animals);
     const batches = useGlobalStore(state => state.batches);
@@ -26,28 +52,7 @@ export default function ViewAnimalsScreen() {
         state => state.isSelectionMode
     );
 
-    const [searchText, setSearchText] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
     const [showFilters, setShowFilters] = useState(false);
-    const [orderBy, setOrderBy] = useState<OrderByOptions>("alfabetic");
-    const [statusFilter, setStatusFilter] = useState<AnimalStatusOptions[]>([
-        "active",
-    ]);
-    const [filterByBatchID, setFilterByBatchID] = useState<
-        number | undefined
-    >();
-    const [filteredAnimals, setFilteredAnimals] = useState<AnimalPreview[]>([]);
-
-    const fetchFilteredAnimals = () => {
-        Storage.listAnimalPreview({
-            orderBy,
-            batchID: filterByBatchID,
-            searchText,
-            status: statusFilter,
-        })
-            .then(animals => setFilteredAnimals(() => animals))
-            .finally(() => setIsLoading(false));
-    };
 
     // when changing filters
     useDebounce(
@@ -70,14 +75,6 @@ export default function ViewAnimalsScreen() {
             fetchFilteredAnimals();
         }, [animals, orderBy, filterByBatchID, searchText, statusFilter])
     );
-
-    const handleClearAndHideFilters = () => {
-        setStatusFilter(["active"]);
-        setFilterByBatchID(undefined);
-        setOrderBy("alfabetic");
-
-        setShowFilters(() => false);
-    };
 
     const hasFilters =
         orderBy !== "alfabetic" ||
