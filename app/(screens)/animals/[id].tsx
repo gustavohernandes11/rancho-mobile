@@ -69,23 +69,30 @@ export default function ViewAnimalDetailsScreen() {
                 <PageSkeleton />
             ) : (
                 <>
-                    <AnimalAvatar
-                        animal={animal}
-                        animalImage={animalImage}
-                        loadImage={loadImage}
-                    />
+                    <Span
+                        direction="column"
+                        align="center"
+                        justify="center"
+                        gap={8}
+                    >
+                        <AnimalAvatar
+                            animal={animal}
+                            animalImage={animalImage}
+                            loadImage={loadImage}
+                        />
+                        <Heading size="big">{animal?.name}</Heading>
+                    </Span>
 
-                    <Heading size="big">{animal?.name}</Heading>
-
-                    <Span direction="column">
+                    <Span direction="column" gap={0}>
                         <Heading size="small">Informações gerais</Heading>
                         <Span
                             align="stretch"
                             justify="space-between"
-                            marginY={0}
+                            marginY={8}
+                            gap={0}
                         >
                             <InfoCard
-                                label="Gênero"
+                                label="Sexo"
                                 title={valueOrHyphen(
                                     animal?.gender === "F" ? "Fêmea" : "Macho"
                                 )}
@@ -121,7 +128,8 @@ export default function ViewAnimalDetailsScreen() {
                             <Span
                                 align="stretch"
                                 justify="space-between"
-                                marginY={0}
+                                marginY={8}
+                                gap={0}
                             >
                                 <InfoCard
                                     label="Idade"

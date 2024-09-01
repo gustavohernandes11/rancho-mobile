@@ -22,10 +22,14 @@ import { validationSchema } from "./validation.schema";
 
 interface AnimalFormProps {
     initialValues?: Partial<Animal>;
+    submitButtonText?: string;
+    onSubmitOverride?: (values: Animal) => void;
 }
 
 export const AnimalForm: React.FC<AnimalFormProps> = ({
     initialValues = defaultValues,
+    onSubmitOverride,
+    submitButtonText,
 }) => {
     let mergedInitialValues: Animal = Object.assign(
         {},
@@ -60,7 +64,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
 
     const formik = useFormik({
         initialValues: mergedInitialValues,
-        onSubmit,
+        onSubmit: onSubmitOverride || onSubmit,
         validationSchema,
     });
     const navigation = useNavigation();
@@ -105,7 +109,7 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
                     onPress={navigation.goBack}
                 />
                 <Button
-                    title="Salvar"
+                    title={submitButtonText || "Salvar"}
                     onPress={formik.isSubmitting ? () => {} : formik.submitForm}
                 />
             </Span>

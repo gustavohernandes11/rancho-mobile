@@ -49,8 +49,8 @@ export const Card: React.FC<LinkProps & CardProps> = ({
 const getStyles = (color: ColorOptions) =>
     StyleSheet.create({
         container: {
+            ...commonStyles.border,
             borderRadius: 4,
-            elevation: 1,
             gap: 8,
             padding: 12,
             flex: 1,

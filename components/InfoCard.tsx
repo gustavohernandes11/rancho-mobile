@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
-import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
@@ -30,7 +29,6 @@ export const InfoCard: React.FC<ViewProps & InfoCardProps> = ({
 
 const styles = StyleSheet.create({
     card: {
-        ...commonStyles.border,
         flex: 1,
         width: "auto",
         gap: 0,
@@ -38,6 +36,6 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         backgroundColor: Theme.colors.white,
         borderRadius: 4,
-        padding: 16,
+        padding: 8,
     },
 });

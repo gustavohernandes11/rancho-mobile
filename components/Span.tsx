@@ -10,8 +10,9 @@ interface SpanProps {
     paddingX?: number;
     padding?: number;
     flexWrap?: "wrap" | "nowrap";
-    marginY?: number;
-    marginX?: number;
+    flexGrow?: 1 | 0;
+    marginY?: number | "auto";
+    marginX?: number | "auto";
     direction?: "row" | "column";
     gap?: number;
 }
@@ -27,6 +28,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
     marginX = 0,
     flexWrap = "wrap",
     direction = "row",
+    flexGrow = 0,
     gap = 8,
     ...props
 }) => {
@@ -44,6 +46,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
                     marginHorizontal: marginX,
                     flexDirection: direction,
                     flexWrap,
+                    flexGrow,
                     gap,
                 },
             ]}
