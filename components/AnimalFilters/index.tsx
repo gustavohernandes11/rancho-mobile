@@ -1,48 +1,48 @@
+import { useAnimalFiltersStore } from "hooks/useAnimalFiltersStore";
+import { useGlobalStore } from "hooks/useGlobalStore";
 import React from "react";
 import { AnimalStatusOptions } from "types/Animal";
-import { Batch } from "types/Batch";
-import { OrderByOptions } from "types/StorageServicesMethods";
 import { Span } from "../Span";
 import { BatchSelect } from "./BatchSelect";
 import { SortBySelect } from "./SortBySelect";
 import { StatusFilterSegmented } from "./StatusFilterSegmented";
 
-interface AnimalFiltersType {
-    statusFilterCheckedOptions: AnimalStatusOptions[];
-    onSelectBatch: (option: any) => void;
-    onSelectOrdering: (option: any) => void;
-    onCheckStatus: (option: any) => void;
-    availableBatches: Batch[];
-    orderBy: OrderByOptions;
-    selectedBatchId?: number;
-}
+export const AnimalFilters = () => {
+    const batches = useGlobalStore(store => store.batches);
+    const orderBy = useAnimalFiltersStore(store => store.orderBy);
+    const setOrderBy = useAnimalFiltersStore(store => store.setOrderBy);
+    const filterByBatchID = useAnimalFiltersStore(
+        store => store.filterByBatchID
+    );
+    const setFilterByBatchID = useAnimalFiltersStore(
+        store => store.setFilterByBatchID
+    );
+    const statusFilter = useAnimalFiltersStore(store => store.statusFilter);
+    const setStatusFilter = useAnimalFiltersStore(
+        store => store.setStatusFilter
+    );
 
-export const AnimalFilters = ({
-    availableBatches,
-    orderBy,
-    selectedBatchId,
-    statusFilterCheckedOptions,
-    onSelectBatch,
-    onSelectOrdering,
-    onCheckStatus,
-}: AnimalFiltersType) => {
     return (
         <Span flexWrap="wrap" marginY={8}>
             <Span>
                 <BatchSelect
-                    availableBatches={availableBatches}
-                    selectedBatchId={selectedBatchId}
-                    onSelectBatch={onSelectBatch}
+                    availableBatches={batches}
+                    selectedBatchId={filterByBatchID}
+                    onSelectBatch={batchItem =>
+                        setFilterByBatchID(batchItem.value)
+                    }
                 />
                 <SortBySelect
                     orderBy={orderBy}
-                    onSelectOrdering={onSelectOrdering}
+                    onSelectOrdering={option => setOrderBy(option.value)}
                 />
             </Span>
             <Span marginY={0}>
                 <StatusFilterSegmented
-                    onCheckStatus={onCheckStatus}
-                    statusFilterCheckedOptions={statusFilterCheckedOptions}
+                    onCheckStatus={(options: AnimalStatusOptions[]) =>
+                        setStatusFilter(options)
+                    }
+                    statusFilterCheckedOptions={statusFilter}
                 />
             </Span>
         </Span>

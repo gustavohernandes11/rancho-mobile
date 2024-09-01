@@ -10,8 +10,9 @@ interface AnimalFiltersState {
     filteredAnimals: AnimalPreview[];
     isLoading: boolean;
     showFilters: boolean;
-    checkActiveFilters: () => boolean;
+    hasFilters: boolean;
     setIsLoading: (value: boolean) => void;
+    updateHasFilters: () => void;
     setSearchText: (text: string) => void;
     setOrderBy: (order: OrderByOptions) => void;
     setStatusFilter: (status: AnimalStatusOptions[]) => void;
@@ -29,19 +30,26 @@ export const useAnimalFiltersStore = create<AnimalFiltersState>((set, get) => ({
     filteredAnimals: [],
     isLoading: true,
     showFilters: false,
+    hasFilters: false, // Initialize hasFilters
 
     setSearchText: text => {
         set(() => ({ searchText: text, isLoading: true }));
+        get().updateHasFilters();
     },
     setIsLoading: value => {
         set(() => ({ isLoading: value }));
     },
     setOrderBy: order => {
         set(() => ({ orderBy: order, isLoading: true }));
+        get().updateHasFilters();
     },
-    setStatusFilter: status => set(() => ({ statusFilter: status })),
+    setStatusFilter: status => {
+        set(() => ({ statusFilter: status }));
+        get().updateHasFilters();
+    },
     setFilterByBatchID: batchID => {
         set(() => ({ filterByBatchID: batchID, isLoading: true }));
+        get().updateHasFilters();
     },
     toggleShowFilters: () =>
         set(state => ({ showFilters: !state.showFilters })),
@@ -66,15 +74,17 @@ export const useAnimalFiltersStore = create<AnimalFiltersState>((set, get) => ({
             showFilters: false,
         }));
         get().fetchFilteredAnimals();
+        get().updateHasFilters();
     },
-    checkActiveFilters: () => {
+    updateHasFilters: () => {
         const { orderBy, filterByBatchID, statusFilter } = get();
 
-        return Boolean(
+        const hasFilters = Boolean(
             orderBy !== "alfabetic" ||
                 filterByBatchID ||
-                statusFilter.length !== 1 ||
-                statusFilter.includes("active")
+                !(statusFilter.length === 1 && statusFilter.includes("active"))
         );
+
+        set(() => ({ hasFilters }));
     },
 }));

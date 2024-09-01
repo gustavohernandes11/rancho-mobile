@@ -1,16 +1,19 @@
+import { useAnimalFiltersStore } from "hooks/useAnimalFiltersStore";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
-import { useGlobalStore } from "hooks/useGlobalStore";
 import React from "react";
 import { IconButton } from "react-native-paper";
 import Theme from "styles/Theme";
 
 export const SelectAllButton = () => {
-    const animals = useGlobalStore(state => state.animals);
+    const filteredAnimals = useAnimalFiltersStore(
+        state => state.filteredAnimals
+    );
     const setSelectedIDs = useAnimalSelectionStore(
         state => state.setSelectedIDs
     );
 
-    const handleSelectAll = () => setSelectedIDs(animals.map(al => al.id));
+    const handleSelectAll = () =>
+        setSelectedIDs(filteredAnimals.map(al => al.id));
     return (
         <IconButton
             iconColor={Theme.colors.white}

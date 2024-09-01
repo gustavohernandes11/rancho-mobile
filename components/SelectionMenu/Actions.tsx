@@ -5,6 +5,7 @@ import { StyleSheet, View } from "react-native";
 import { Tooltip } from "react-native-paper";
 import { showToast } from "utils/showToast";
 import { DeleteAnimalsButton } from "./_iconButtons/DeleteAnimalsButton";
+import { SelectAllButton } from "./_iconButtons/SelectAllButton";
 import { MoreOptionsMenu } from "./MoreOptionsMenu";
 
 export const Actions = () => {
@@ -25,10 +26,9 @@ export const Actions = () => {
             <Tooltip title="Deletar">
                 <DeleteAnimalsButton onSuccess={onSuccess} />
             </Tooltip>
-            {/* TO FIX: this is selecting more items that should
             <Tooltip title="Selecionar todos">
                 <SelectAllButton />
-            </Tooltip> */}
+            </Tooltip>
             <Tooltip title="Mais opções">
                 <MoreOptionsMenu onSuccess={onSuccess} />
             </Tooltip>

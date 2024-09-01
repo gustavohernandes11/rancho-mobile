@@ -15,7 +15,6 @@ import { useGlobalStore } from "hooks/useGlobalStore";
 import { useCallback, useEffect, useState } from "react";
 import { IconButton } from "react-native-paper";
 import Theme from "styles/Theme";
-import { AnimalStatusOptions } from "types";
 import { isActive } from "utils/filters";
 
 export default function ViewAnimalsScreen() {
@@ -23,21 +22,15 @@ export default function ViewAnimalsScreen() {
     const setSearchText = useAnimalFiltersStore(store => store.setSearchText);
     const isLoading = useAnimalFiltersStore(store => store.isLoading);
     const orderBy = useAnimalFiltersStore(store => store.orderBy);
-    const setOrderBy = useAnimalFiltersStore(store => store.setOrderBy);
-    const statusFilter = useAnimalFiltersStore(store => store.statusFilter);
-    const setStatusFilter = useAnimalFiltersStore(
-        store => store.setStatusFilter
-    );
-    const setIsLoading = useAnimalFiltersStore(store => store.setIsLoading);
     const filterByBatchID = useAnimalFiltersStore(
         store => store.filterByBatchID
     );
-    const setFilterByBatchID = useAnimalFiltersStore(
-        store => store.setFilterByBatchID
-    );
+    const statusFilter = useAnimalFiltersStore(store => store.statusFilter);
+    const setIsLoading = useAnimalFiltersStore(store => store.setIsLoading);
     const filteredAnimals = useAnimalFiltersStore(
         store => store.filteredAnimals
     );
+    const hasFilters = useAnimalFiltersStore(store => store.hasFilters);
     const fetchFilteredAnimals = useAnimalFiltersStore(
         store => store.fetchFilteredAnimals
     );
@@ -47,7 +40,6 @@ export default function ViewAnimalsScreen() {
 
     const router = useRouter();
     const animals = useGlobalStore(state => state.animals);
-    const batches = useGlobalStore(state => state.batches);
     const isSelectionMode = useAnimalSelectionStore(
         state => state.isSelectionMode
     );
@@ -75,12 +67,6 @@ export default function ViewAnimalsScreen() {
             fetchFilteredAnimals();
         }, [animals, orderBy, filterByBatchID, searchText, statusFilter])
     );
-
-    const hasFilters =
-        orderBy !== "alfabetic" ||
-        !!filterByBatchID ||
-        statusFilter.length !== 1 ||
-        !statusFilter.includes("active");
 
     const toggleShowFilters = () => setShowFilters(() => !showFilters);
 
@@ -144,18 +130,7 @@ export default function ViewAnimalsScreen() {
                     onPress={toggleShowFilters}
                 />
             </Span>
-            {showFilters ? (
-                <AnimalFilters
-                    availableBatches={batches}
-                    onSelectBatch={option => setFilterByBatchID(option.value)}
-                    statusFilterCheckedOptions={statusFilter}
-                    onCheckStatus={(options: AnimalStatusOptions[]) =>
-                        setStatusFilter(options)
-                    }
-                    orderBy={orderBy}
-                    onSelectOrdering={option => setOrderBy(option.value)}
-                />
-            ) : null}
+            {showFilters ? <AnimalFilters /> : null}
 
             {isLoading ? (
                 <Loading />
