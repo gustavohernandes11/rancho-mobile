@@ -35,7 +35,6 @@ export class ImageServices implements ImageServiceMethods {
             aspect: [1, 1],
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 1,
         });
 
         if (pickerResult.canceled || pickerResult.assets.length === 0) {
@@ -59,7 +58,6 @@ export class ImageServices implements ImageServiceMethods {
             aspect: [1, 1],
             mediaTypes: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            quality: 1,
         });
 
         if (pickerResult.canceled || pickerResult.assets.length === 0) {
