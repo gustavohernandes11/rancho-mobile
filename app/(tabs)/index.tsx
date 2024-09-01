@@ -49,22 +49,6 @@ export default function TabOneScreen() {
             <Span flexWrap="wrap" paddingY={4} gap={4}>
                 <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
                     <Card
-                        href="/(tabs)/batches"
-                        alt="Lotes"
-                        iconSource={require("assets/images/CowFolderIcon.png")}
-                        title="Lotes"
-                        color="blue"
-                    />
-                    <Card
-                        href="/batches/add"
-                        alt="Registrar lote"
-                        iconSource={require("assets/images/FolderPlusIcon.png")}
-                        title="Registrar lote"
-                        color="blue"
-                    />
-                </Span>
-                <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
-                    <Card
                         href="/(tabs)/animals"
                         alt="Rebanho"
                         iconSource={require("assets/images/CowIcon.png")}
@@ -81,6 +65,22 @@ export default function TabOneScreen() {
                         alt="Registrar vários animais"
                         iconSource={require("assets/images/AddCowIcon.png")}
                         title="Registrar vários"
+                    />
+                </Span>
+                <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>
+                    <Card
+                        href="/(tabs)/batches"
+                        alt="Lotes"
+                        iconSource={require("assets/images/CowFolderIcon.png")}
+                        title="Lotes"
+                        color="blue"
+                    />
+                    <Card
+                        href="/batches/add"
+                        alt="Registrar lote"
+                        iconSource={require("assets/images/FolderPlusIcon.png")}
+                        title="Registrar lote"
+                        color="blue"
                     />
                 </Span>
                 <Span direction="row" flexWrap="nowrap" gap={4} marginY={0}>

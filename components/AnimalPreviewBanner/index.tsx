@@ -73,11 +73,7 @@ export const AnimalPreviewBanner: React.FC<
                 />
             ) : (
                 <Pressable
-                    style={{
-                        minHeight: 30,
-                        minWidth: 120,
-                        justifyContent: "center",
-                    }}
+                    style={styles.nameContainer}
                     onPress={() => setIsEditing(true)}
                 >
                     <Paragraph>{name}</Paragraph>
@@ -133,5 +129,10 @@ const styles = StyleSheet.create({
         padding: 0,
         margin: 0,
         fontSize: 16,
+    },
+    nameContainer: {
+        minHeight: 30,
+        minWidth: 120,
+        justifyContent: "center",
     },
 });
