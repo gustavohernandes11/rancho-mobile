@@ -62,7 +62,7 @@ export default function ViewProductionReportsPage() {
     ).length;
     const monthAverage = () => {
         if (producedAmount && countDaysWithAnyProduction) {
-            return producedAmount / countDaysWithAnyProduction;
+            return (producedAmount / countDaysWithAnyProduction).toFixed(2);
         }
         return null;
     };
