@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Image, StyleSheet, View } from "react-native";
+import { imageServices } from "services/ImageService";
 import { commonStyles } from "styles/Common";
 import { Animal } from "types/Animal";
 import { ImageActions } from "./ImageActions";
 
 type AnimalAvatarProps = {
     animal?: Animal;
-    animalImage: string | null;
-    loadImage: () => Promise<void>;
 };
 
-export const AnimalAvatar = ({
-    animal,
-    animalImage,
-    loadImage,
-}: AnimalAvatarProps) => {
+export const AnimalAvatar = ({ animal }: AnimalAvatarProps) => {
+    const [animalImage, setAnimalImage] = useState<string | null>(null);
+
+    const loadImage = async () => {
+        if (animal) {
+            const path = await imageServices.getAnimalImagePath(animal);
+            setAnimalImage(path ? path + "?new=" + new Date() : null);
+        }
+    };
+
+    useEffect(() => {
+        loadImage();
+    }, [animal]);
+
     const placeholder = require("../../assets/images/AnimalPlaceholder.jpg");
     const source = animalImage ? { uri: animalImage } : placeholder;
 

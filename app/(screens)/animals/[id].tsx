@@ -12,8 +12,8 @@ import { Stack, useLocalSearchParams } from "expo-router";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import moment from "moment";
 import { useEffect, useState } from "react";
+import { View } from "react-native";
 import { Icon } from "react-native-paper";
-import { imageServices } from "services/ImageService";
 import { Storage } from "services/StorageService";
 import Theme from "styles/Theme";
 import { AnimalStatusOptions, PopulatedAnimal } from "types";
@@ -26,7 +26,7 @@ export default function ViewAnimalDetailsScreen() {
     const { id } = useLocalSearchParams<{ id: string }>();
     const [animal, setAnimal] = useState<PopulatedAnimal>();
     const [isLoading, setIsLoading] = useState(true);
-    const [animalImage, setAnimalImage] = useState<string | null>(null);
+
     const animals = useGlobalStore(state => state.animals);
 
     const fetchPopulatedAnimal = async () => {
@@ -44,16 +44,6 @@ export default function ViewAnimalDetailsScreen() {
         fetchPopulatedAnimal();
     }, [animals]);
 
-    const loadImage = async () => {
-        if (animal) {
-            const path = await imageServices.getAnimalImagePath(animal);
-            setAnimalImage(path ? path + "?new=" + new Date() : null);
-        }
-    };
-    useEffect(() => {
-        loadImage();
-    }, [animal]);
-
     const StackScreen = () => (
         <Stack.Screen
             options={{
@@ -69,19 +59,16 @@ export default function ViewAnimalDetailsScreen() {
                 <PageSkeleton />
             ) : (
                 <>
-                    <Span
-                        direction="column"
-                        align="center"
-                        justify="center"
-                        gap={8}
+                    <View
+                        style={{
+                            flex: 1,
+                            alignItems: "center",
+                            justifyContent: "center",
+                        }}
                     >
-                        <AnimalAvatar
-                            animal={animal}
-                            animalImage={animalImage}
-                            loadImage={loadImage}
-                        />
+                        <AnimalAvatar animal={animal} />
                         <Heading size="big">{animal?.name}</Heading>
-                    </Span>
+                    </View>
 
                     <Span direction="column" gap={0}>
                         <Heading size="small">Informações gerais</Heading>
