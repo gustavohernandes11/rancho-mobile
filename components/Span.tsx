@@ -30,6 +30,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
     direction = "row",
     flexGrow = 0,
     gap = 8,
+    style: incommingStyle,
     ...props
 }) => {
     return (
@@ -49,6 +50,7 @@ export const Span: React.FC<SpanProps & ViewProps> = ({
                     flexGrow,
                     gap,
                 },
+                incommingStyle,
             ]}
             {...props}
         >
