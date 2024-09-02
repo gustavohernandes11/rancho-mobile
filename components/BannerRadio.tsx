@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         backgroundColor: Theme.colors.lightest,
         borderWidth: 1,
         borderColor: Theme.colors.lightGray,
-        padding: 16,
+        padding: 12,
     },
     right: {
         flex: 1,
@@ -88,6 +88,6 @@ const styles = StyleSheet.create({
     iconSpan: {
         alignItems: "center",
         justifyContent: "center",
-        paddingRight: 16,
+        paddingRight: 12,
     },
 });

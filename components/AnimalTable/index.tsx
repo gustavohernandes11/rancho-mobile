@@ -83,7 +83,6 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
 const styles = StyleSheet.create({
     table: {
         width: Dimensions.get("screen").width - 16,
-        borderRadius: 4,
         overflow: "hidden",
         ...commonStyles.border,
     },

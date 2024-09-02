@@ -43,10 +43,10 @@ const styles = StyleSheet.create({
         position: "relative",
         width: 250,
         height: 250,
+        ...commonStyles.border,
         borderRadius: 8,
         overflow: "hidden",
         marginBottom: 8,
-        ...commonStyles.border,
     },
     image: {
         width: 250,

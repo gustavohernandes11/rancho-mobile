@@ -20,18 +20,7 @@ export const commonStyles = StyleSheet.create({
         fontFamily: Theme.fonts.primaryFamily,
         borderWidth: 1,
     },
-    error: {
-        fontSize: 14,
-        marginBottom: 4,
-        color: Theme.colors.red,
-        fontFamily: Theme.fonts.primaryFamily,
-    },
     icon: {
-        height: 32,
-        width: 32,
-        resizeMode: "contain",
-    },
-    smallIcon: {
         height: 32,
         width: 32,
         resizeMode: "contain",
@@ -39,5 +28,6 @@ export const commonStyles = StyleSheet.create({
     border: {
         borderWidth: 1,
         borderColor: Theme.colors.lightGray,
+        borderRadius: 4,
     },
 });

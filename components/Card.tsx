@@ -34,7 +34,7 @@ export const Card: React.FC<LinkProps & CardProps> = ({
             <TouchableRipple>
                 <Span direction={"column"} flexWrap="nowrap" gap={8}>
                     <Image
-                        style={commonStyles.smallIcon}
+                        style={commonStyles.icon}
                         tintColor={Theme.colors[color]}
                         source={iconSource}
                         alt={alt}
@@ -52,7 +52,6 @@ const getStyles = (color: ColorOptions) =>
     StyleSheet.create({
         container: {
             ...commonStyles.border,
-            borderRadius: 4,
             gap: 8,
             padding: 8,
             flex: 1,

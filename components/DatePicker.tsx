@@ -41,6 +41,7 @@ export const DatePicker: React.FC<
             onChange(today);
             onChangeText(moment(today).format("DD/MM/YYYY"));
         } else {
+            // clear field when uncheck "today" box
             onChange(undefined);
             onChangeText("");
         }
