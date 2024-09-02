@@ -2,6 +2,7 @@ import { Button } from "components/Button";
 import { Span } from "components/Span";
 import { useNavigation, useRouter } from "expo-router";
 import { useFormik } from "formik";
+import { useAlertUnsavedChanges } from "hooks/useAlertUnsavedChanges";
 import { useGlobalStore } from "hooks/useGlobalStore";
 import React from "react";
 import { Alert, View } from "react-native";
@@ -70,6 +71,8 @@ export const AnimalForm: React.FC<AnimalFormProps> = ({
     const navigation = useNavigation();
     const router = useRouter();
     const refreshAll = useGlobalStore(state => state.refreshAll);
+
+    useAlertUnsavedChanges({ formik });
 
     return (
         <View>
