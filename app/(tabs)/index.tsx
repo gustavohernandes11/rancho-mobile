@@ -107,13 +107,14 @@ export default function TabOneScreen() {
                         title="Relatório de produção"
                         color="purple"
                     />
-                    <Card
+                    {/* TO IMPLEMENT */}
+                    {/* <Card
                         href="/error"
                         alt="Export data"
                         iconSource={require("assets/images/BookMarkIcon.png")}
                         title="Exportar dados"
                         color="cian"
-                    />
+                    /> */}
                 </Span>
             </Span>
         </ContainerView>

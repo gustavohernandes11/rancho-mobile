@@ -53,9 +53,11 @@ const getStyles = (color: ColorOptions) =>
         container: {
             ...commonStyles.border,
             gap: 8,
-            padding: 8,
+            paddingHorizontal: 16,
             flex: 1,
-            height: 113, // trust me
+            justifyContent: "center",
+            alignItems: "center",
+            height: 116, // trust me
         },
         title: {
             ...commonStyles.text,
