@@ -23,6 +23,7 @@ export type AnnotationQueryOptions = {
     searchText?: string;
     types?: ("simple" | "death" | "purchase" | "heath care" | "sell")[];
     day?: string;
+    shouldIncludeMonthlyAnnotations?: boolean;
     includesAnimalId?: number;
 };
 

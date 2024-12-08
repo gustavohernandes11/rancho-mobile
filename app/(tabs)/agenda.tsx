@@ -1,9 +1,7 @@
 import { AnnotationBanner } from "components/AnnotationBanner";
 import { Button } from "components/Button";
 import { Calendar } from "components/Calendar";
-import { Card } from "components/Card";
 import { ContainerView } from "components/ContainerView";
-import { DayProductionForm } from "components/DayProductionForm";
 import { Heading } from "components/Heading";
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
@@ -31,6 +29,19 @@ const NewDayAnnotationButton = ({ dateId }: { dateId: string }) => {
     );
 };
 
+const ViewAllAnnotationsButton = () => {
+    const router = useRouter();
+
+    return (
+        <Button
+            title="Ver todas"
+            type="secondary"
+            icon="eye"
+            onPress={() => router.push(`/(screens)/annotations`)}
+        />
+    );
+};
+
 export default function ViewAgendaScreen() {
     const {
         selectedDateId,
@@ -42,22 +53,19 @@ export default function ViewAgendaScreen() {
     const [dayAnnotations, setDayAnnotations] = useState<Annotation[]>([]);
 
     const fetchSelectedDateAnnotations = () => {
-        Storage.listAnnotations({ day: selectedDateId }).then(annotations =>
-            setDayAnnotations(annotations)
-        );
+        Storage.listAnnotations({
+            day: selectedDateId,
+            shouldIncludeMonthlyAnnotations: true,
+        }).then(annotations => setDayAnnotations(annotations));
     };
+
+    const monthString = moment(selectedDateId).format("MMMM/YYYY");
 
     useFocusEffect(
         useCallback(() => {
             fetchSelectedDateAnnotations();
-        }, [selectedDateId])
+        }, [monthString])
     );
-
-    const monthString = moment(selectedDateId).format("MMMM/YYYY");
-    const monthQualityDetailsLabel = `Inserir qualidade do leite em ${monthString}`;
-    const dayInfoLabel = `Informações do dia ${moment(selectedDateId).format(
-        "DD/MM/YYYY"
-    )}`;
 
     return (
         <ContainerView>
@@ -81,11 +89,7 @@ export default function ViewAgendaScreen() {
                 />
             </Span>
             <Span>
-                <Heading size="medium">{dayInfoLabel}</Heading>
-                <DayProductionForm selectedDate={selectedDateId} />
-            </Span>
-            <Span>
-                <Heading size="medium">Anotações do dia</Heading>
+                <Heading size="medium">Anotações nesse mês</Heading>
                 {dayAnnotations && dayAnnotations.length > 0 ? (
                     dayAnnotations.map(annotation => (
                         <AnnotationBanner
@@ -101,39 +105,13 @@ export default function ViewAgendaScreen() {
                 ) : (
                     <Span>
                         <Paragraph secondary>
-                            Não há anotações nesse dia.
+                            Não há anotações nesse mês.
                         </Paragraph>
                     </Span>
                 )}
-                <Span justify="flex-end" marginY={0}>
+                <Span justify="flex-end" paddingY={8}>
+                    <ViewAllAnnotationsButton />
                     <NewDayAnnotationButton dateId={selectedDateId} />
-                </Span>
-            </Span>
-            <Span>
-                <Heading size="medium">Mais ações</Heading>
-                <Span marginY={0}>
-                    <Card
-                        href={"/production/add-month-details/" + selectedDateId}
-                        alt="Production"
-                        iconSource={require("assets/images/ChartIcon.png")}
-                        title={monthQualityDetailsLabel}
-                    />
-                </Span>
-                <Span>
-                    <Card
-                        iconSource={require("assets/images/BookMarkIcon.png")}
-                        alt="Ir para anotações"
-                        href="/annotations"
-                        title="Ver todas as anotações"
-                        color="cian"
-                    />
-                    <Card
-                        href="/production"
-                        alt="Production"
-                        iconSource={require("assets/images/ChartIcon.png")}
-                        title="Relatório de produção"
-                        color="purple"
-                    />
                 </Span>
             </Span>
         </ContainerView>

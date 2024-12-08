@@ -93,8 +93,14 @@ export class AnnotationRepository implements AnnotationRepositoryMethods {
         }
 
         if (queryOptions?.day) {
-            whereClauses.push(`date = ?`);
-            params.push(queryOptions.day);
+            if (queryOptions.shouldIncludeMonthlyAnnotations) {
+                const [year, month] = queryOptions.day.split("-").map(Number);
+                whereClauses.push(`strftime('%Y-%m', date) = ?`);
+                params.push(`${year}-${month.toString().padStart(2, "0")}`);
+            } else {
+                whereClauses.push(`date = ?`);
+                params.push(queryOptions.day);
+            }
         }
 
         if (queryOptions?.includesAnimalId) {
