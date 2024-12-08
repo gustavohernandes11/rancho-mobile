@@ -75,8 +75,8 @@ export default function ViewAnimalsScreen() {
         const filteredCount = filteredAnimals?.length ?? 0;
         const visibleInactiveCount = filteredCount - totalCount;
 
-        let displayMessage = `Exibindo ${filteredCount} animal${
-            filteredCount !== 1 ? "s" : ""
+        let displayMessage = `Exibindo ${filteredCount} anima${
+            filteredCount !== 1 ? "is" : "l"
         }`;
 
         if (visibleInactiveCount > 0) {

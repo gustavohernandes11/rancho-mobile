@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
+import { commonStyles } from "styles/Common";
 import Theme from "styles/Theme";
 import { Heading } from "./Heading";
 import { Paragraph } from "./Paragraph";
@@ -35,6 +36,7 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         alignItems: "flex-start",
         backgroundColor: Theme.colors.white,
+        ...commonStyles.border,
         borderRadius: 4,
         padding: 8,
     },

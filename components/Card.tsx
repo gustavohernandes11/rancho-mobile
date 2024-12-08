@@ -35,7 +35,7 @@ export const Card: React.FC<LinkProps & CardProps> = ({
                 <Span direction={"column"} flexWrap="nowrap" gap={8}>
                     <Image
                         style={commonStyles.icon}
-                        tintColor={Theme.colors[color]}
+                        tintColor={Theme.colors.white}
                         source={iconSource}
                         alt={alt}
                     />
@@ -58,11 +58,12 @@ const getStyles = (color: ColorOptions) =>
             justifyContent: "center",
             alignItems: "center",
             height: 116, // trust me
+            backgroundColor: Theme.colors[color],
         },
         title: {
             ...commonStyles.text,
             fontSize: 16,
-            color: Theme.colors[color],
+            color: Theme.colors.white,
             marginBottom: 0,
         },
     });

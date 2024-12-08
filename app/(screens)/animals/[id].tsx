@@ -69,15 +69,9 @@ export default function ViewAnimalDetailsScreen() {
                         <AnimalAvatar animal={animal} />
                         <Heading size="big">{animal?.name}</Heading>
                     </View>
-
                     <Span direction="column" gap={0}>
                         <Heading size="small">Informações gerais</Heading>
-                        <Span
-                            align="stretch"
-                            justify="space-between"
-                            marginY={8}
-                            gap={0}
-                        >
+                        <Span align="stretch" justify="space-between" gap={4}>
                             <InfoCard
                                 label="Sexo"
                                 title={valueOrHyphen(
@@ -115,8 +109,9 @@ export default function ViewAnimalDetailsScreen() {
                             <Span
                                 align="stretch"
                                 justify="space-between"
-                                marginY={8}
-                                gap={0}
+                                paddingY={4}
+                                marginY={0}
+                                gap={4}
                             >
                                 <InfoCard
                                     label="Idade"
