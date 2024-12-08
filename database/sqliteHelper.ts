@@ -94,8 +94,10 @@ export class SqliteHelper {
             code TEXT,
             paternityID INTEGER REFERENCES Animals(id),
             maternityID INTEGER REFERENCES Animals(id),
-            observation TEXT
-			);`;
+            observation TEXT,
+            status TEXT
+			);
+        `;
 
         await this.execute(query, []);
     };
