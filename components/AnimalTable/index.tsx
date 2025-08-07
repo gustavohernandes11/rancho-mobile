@@ -72,10 +72,15 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
                 data={animals}
                 indicatorStyle="white"
                 keyExtractor={keyExtractor}
-                extraData={[selectedIDs.length]}
+                getItemLayout={(_, index) => ({
+                    length: 50,
+                    offset: 50 * index,
+                    index,
+                })}
                 renderItem={renderItem}
                 onEndReachedThreshold={0.25}
-                maxToRenderPerBatch={10}
+                maxToRenderPerBatch={5}
+                initialNumToRender={15}
                 ListHeaderComponent={renderHeader}
                 ListEmptyComponent={renderEmptyList}
                 scrollEnabled={false}
