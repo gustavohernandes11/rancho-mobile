@@ -77,7 +77,7 @@ export default function ViewAnimalsScreen() {
 
         let displayMessage = `Exibindo ${filteredCount} anima${
             filteredCount !== 1 ? "is" : "l"
-        }`;
+        }.`;
 
         if (visibleInactiveCount > 0) {
             displayMessage += ` (incluindo ${visibleInactiveCount} inativo${
@@ -139,6 +139,11 @@ export default function ViewAnimalsScreen() {
                     {isSelectionMode ? <SelectionMenu /> : null}
                     <Span>
                         <Paragraph secondary>{getDisplayInfo()}</Paragraph>
+                        {!isSelectionMode ? (
+                            <Paragraph secondary>
+                                Toque e segure um animal para selecionar.
+                            </Paragraph>
+                        ) : null}
                         <AnimalTable animals={filteredAnimals} />
                     </Span>
                 </Span>

@@ -14,11 +14,14 @@ interface RowProps {
     isChecked: boolean;
     showCheckbox: boolean;
     showAnimalBatch: boolean;
+    onLongPress?: () => void;
+    isSelectionMode: boolean;
 }
 
 const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
     return (
         prevProps.isChecked === nextProps.isChecked &&
+        prevProps.isSelectionMode === nextProps.isSelectionMode &&
         prevProps.animal.name === nextProps.animal.name &&
         prevProps.animal?.birthdate === nextProps.animal?.birthdate &&
         prevProps.animal?.batchID === nextProps.animal?.batchID
@@ -26,7 +29,14 @@ const isEqual = (prevProps: RowProps, nextProps: RowProps) => {
 };
 
 export const Row: React.FC<RowProps> = memo(
-    ({ animal, isChecked = false, onCheck, showCheckbox, showAnimalBatch }) => {
+    ({
+        animal,
+        isChecked = false,
+        onCheck,
+        onLongPress,
+        showCheckbox,
+        showAnimalBatch,
+    }) => {
         return (
             <Link
                 href={{
@@ -36,7 +46,10 @@ export const Row: React.FC<RowProps> = memo(
                 key={animal.id}
                 asChild
             >
-                <TouchableRipple style={isChecked ? styles.checked : null}>
+                <TouchableRipple
+                    style={isChecked ? styles.checked : null}
+                    onLongPress={onLongPress}
+                >
                     <DataTable.Row style={styles.row}>
                         <Cell flex={5}>
                             {getGenderIcon(animal.gender)}

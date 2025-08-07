@@ -10,13 +10,13 @@ import { Row } from "./Row";
 
 type AnimalTableProps = {
     animals: AnimalPreview[];
-    showCheckbox?: boolean;
+    alwaysShowCheckbox?: boolean;
     showAnimalBatch?: boolean;
 };
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
     animals,
-    showCheckbox = true,
+    alwaysShowCheckbox = false,
     showAnimalBatch = true,
 }) => {
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
@@ -42,15 +42,20 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     const renderItem = ({ item }: { item: AnimalPreview }) => (
         <Row
             showAnimalBatch={showAnimalBatch}
-            showCheckbox={showCheckbox}
+            showCheckbox={isSelectionMode || alwaysShowCheckbox}
+            isSelectionMode={isSelectionMode}
             isChecked={selectedIDs.includes(item.id)}
             onCheck={() => handleCheck(item.id)}
+            onLongPress={() => handleCheck(item.id)}
             animal={item}
         />
     );
 
     const renderHeader = () => (
-        <Header showAnimalBatch={showAnimalBatch} showCheckbox={showCheckbox} />
+        <Header
+            showAnimalBatch={showAnimalBatch}
+            showCheckbox={isSelectionMode}
+        />
     );
 
     const renderEmptyList = () => (
