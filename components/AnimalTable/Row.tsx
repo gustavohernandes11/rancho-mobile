@@ -1,3 +1,4 @@
+import { ZoomAnimatedView } from "components/ZoomAnimatedView";
 import { Link } from "expo-router";
 import React, { memo } from "react";
 import { StyleSheet } from "react-native";
@@ -66,14 +67,24 @@ export const Row: React.FC<RowProps> = memo(
                                 : ""}
                         </Cell>
                         {showCheckbox ? (
-                            <Cell flex={1}>
-                                <Checkbox
-                                    color={Theme.colors.primary}
-                                    uncheckedColor={Theme.colors.mediumGray}
-                                    status={isChecked ? "checked" : "unchecked"}
-                                    onPress={onCheck}
-                                />
-                            </Cell>
+                            <ZoomAnimatedView
+                                style={{
+                                    display: "flex",
+                                    alignItems: "flex-end",
+                                    justifyContent: "center",
+                                }}
+                            >
+                                <Cell flex={1}>
+                                    <Checkbox
+                                        color={Theme.colors.primary}
+                                        uncheckedColor={Theme.colors.mediumGray}
+                                        status={
+                                            isChecked ? "checked" : "unchecked"
+                                        }
+                                        onPress={onCheck}
+                                    />
+                                </Cell>
+                            </ZoomAnimatedView>
                         ) : null}
                     </DataTable.Row>
                 </TouchableRipple>

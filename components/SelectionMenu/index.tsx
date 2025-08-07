@@ -1,7 +1,8 @@
 import { Paragraph } from "components/Paragraph";
 import { Span } from "components/Span";
+import { ZoomAnimatedView } from "components/ZoomAnimatedView";
 import { useAnimalSelectionStore } from "hooks/useAnimalSelectionStore";
-import { StyleSheet, View, ViewProps } from "react-native";
+import { StyleSheet, ViewProps } from "react-native";
 import Theme from "styles/Theme";
 import { Actions } from "./Actions";
 import { CloseSelectionButton } from "./_iconButtons/CloseSelectionButton";
@@ -21,7 +22,7 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
     const styles = getStyles(showActions);
 
     return (
-        <View style={styles.container} {...props}>
+        <ZoomAnimatedView style={styles.container} {...props}>
             <Span align="center" justify="space-between" marginY={0}>
                 {showCloseButton ? <CloseSelectionButton /> : null}
                 <Paragraph color="white">
@@ -29,7 +30,7 @@ export const SelectionMenu: React.FC<SelectionMenuProps & ViewProps> = ({
                 </Paragraph>
                 {showActions ? <Actions /> : null}
             </Span>
-        </View>
+        </ZoomAnimatedView>
     );
 };
 
@@ -39,7 +40,6 @@ const getStyles = (showActions: boolean) =>
             flex: 1,
             borderRadius: 4,
             backgroundColor: Theme.colors.primary,
-            padding: 8,
-            ...(!showActions && { padding: 16 }),
+            padding: showActions ? 8 : 16,
         },
     });

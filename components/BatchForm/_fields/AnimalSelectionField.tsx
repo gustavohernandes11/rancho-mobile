@@ -18,7 +18,11 @@ export const AnimalSelectionField: React.FC<AnimalSelectionFieldProps> = ({
             title={`${selectedIDs.length} selecionado(s)`}
             label="Selecione os animais (você pode editar isso depois)"
         >
-            {animals ? <AnimalTable animals={animals} /> : <Loading />}
+            {animals ? (
+                <AnimalTable alwaysShowCheckbox={true} animals={animals} />
+            ) : (
+                <Loading />
+            )}
         </ListAccordion>
     );
 };
