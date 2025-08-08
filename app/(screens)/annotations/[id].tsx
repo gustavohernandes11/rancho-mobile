@@ -127,7 +127,8 @@ export default function ViewAnnotationDetailsScreen() {
                             <Span>
                                 <AnimalTable
                                     animals={relatedAnimals || []}
-                                    showCheckbox={false}
+                                    alwaysShowCheckbox={false}
+                                    allowSelection={false}
                                 />
                             </Span>
                         </Span>

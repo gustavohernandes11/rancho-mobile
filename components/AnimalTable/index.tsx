@@ -12,11 +12,13 @@ type AnimalTableProps = {
     animals: AnimalPreview[];
     alwaysShowCheckbox?: boolean;
     showAnimalBatch?: boolean;
+    allowSelection?: boolean;
 };
 
 export const AnimalTable: React.FC<AnimalTableProps> = ({
     animals,
     alwaysShowCheckbox = false,
+    allowSelection = true,
     showAnimalBatch = true,
 }) => {
     const selectedIDs = useAnimalSelectionStore(state => state.selectedIDs);
@@ -31,10 +33,12 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     useClearSelectionOnHardwareBack();
 
     const handleCheck = (id: number) => {
-        toggleCheckID(id);
+        if (!allowSelection) {
+            toggleCheckID(id);
 
-        if (!isSelectionMode || !!selectedIDs) {
-            setIsSelectionMode(true);
+            if (!isSelectionMode || !!selectedIDs) {
+                setIsSelectionMode(true);
+            }
         }
     };
 
