@@ -74,7 +74,7 @@ export default function ViewBatchDetailsScreen() {
         clearSelection();
     };
 
-    const getAnimalsHeading = () => {
+    const countAnimals = () => {
         if (!batch) return "Vazio";
         const animalCount = batch.animals.filter(isActive).length;
         return `${animalCount > 0 ? `${animalCount}` : "Vazio"}`;
@@ -102,33 +102,22 @@ export default function ViewBatchDetailsScreen() {
                 <PageSkeleton />
             ) : (
                 <>
-                    <Span
-                        direction="row"
-                        justify="space-between"
-                        align="center"
-                        marginY={0}
-                        gap={0}
-                    >
-                        <Span align="flex-end" marginY={0}>
-                            <Paragraph>{getAnimalsHeading()}</Paragraph>
+                    <Span direction="column" gap={0}>
+                        <Span marginY={0}>
+                            <Paragraph>{countAnimals()}</Paragraph>
                             <Icon
                                 size={20}
                                 source="cow"
                                 color={Theme.colors.mediumGray}
                             />
                         </Span>
-                        <Span direction="column" marginX={0}>
-                            <Heading size="big">{batch?.name}</Heading>
-                            {batch?.description && (
-                                <Paragraph secondary>
-                                    {batch.description}
-                                </Paragraph>
-                            )}
-                        </Span>
+                        <Heading size="big">{batch?.name}</Heading>
+                        {batch?.description && (
+                            <Paragraph secondary>{batch.description}</Paragraph>
+                        )}
                     </Span>
 
                     <Span
-                        direction="row"
                         justify="space-between"
                         align="center"
                         marginY={0}
@@ -154,7 +143,7 @@ export default function ViewBatchDetailsScreen() {
                         />
                     </Span>
 
-                    <Span direction="column" marginX={0} padding={0}>
+                    <Span direction="column" padding={0}>
                         {isSelectionMode ? <SelectionMenu /> : null}
                         <AnimalTable
                             showAnimalBatch={false}

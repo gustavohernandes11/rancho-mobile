@@ -5,5 +5,5 @@ export const validationSchema = Yup.object({
         .min(3, "Nome muito curto!")
         .max(45, "Nome muito longo!")
         .required("Campo obrigatório"),
-    description: Yup.string().max(256, "Descrição muito longa!").nullable(),
+    description: Yup.string().max(100, "Descrição muito longa!").nullable(),
 });

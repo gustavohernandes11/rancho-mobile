@@ -33,7 +33,7 @@ export const AnimalTable: React.FC<AnimalTableProps> = ({
     useClearSelectionOnHardwareBack();
 
     const handleCheck = (id: number) => {
-        if (!allowSelection) {
+        if (allowSelection) {
             toggleCheckID(id);
 
             if (!isSelectionMode || !!selectedIDs) {

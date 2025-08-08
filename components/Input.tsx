@@ -52,7 +52,7 @@ const getStyles = ({
         },
         input: {
             ...commonStyles.inputAspect,
-            height: multiline ? 100 : 50,
+            height: multiline ? undefined : 50,
             borderWidth: 0,
         },
         outline: {

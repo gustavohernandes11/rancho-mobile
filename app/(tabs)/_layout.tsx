@@ -41,7 +41,6 @@ export default function TabLayout() {
 
                 tabBarStyle: {
                     backgroundColor: Theme.colors.primary,
-                    height: 75,
                 },
                 tabBarActiveBackgroundColor: Theme.colors.primary,
                 tabBarInactiveBackgroundColor: Theme.colors.lightest,

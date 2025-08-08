@@ -18,6 +18,5 @@ export const DescriptionField: React.FC<DescriptionFieldProps> = ({
             formik.setFieldValue("description", text.trimStart())
         }
         errorText={getFieldError("description", formik)}
-        multiline={true}
     />
 );
