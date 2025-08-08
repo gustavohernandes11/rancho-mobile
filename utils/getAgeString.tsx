@@ -1,28 +1,31 @@
 import moment from "moment";
 
 export const getAgeString = (isoString: string): string => {
-    const duration = moment.duration(moment().diff(moment(isoString)));
+    const start = moment(isoString);
+    const now = moment();
 
-    const years = duration.years();
-    const months = duration.months();
-    const days = duration.days();
+    const years = now.diff(start, "years");
+    start.add(years, "years");
+    const months = now.diff(start, "months");
+    start.add(months, "months");
+    const days = now.diff(start, "days");
 
     if (years === 0) {
         if (months === 0) {
-            if (days === 1) {
-                return `${days} dia`;
-            }
-            return `${days} dias`;
+            return days === 1 ? `${days} dia` : `${days} dias`;
         } else {
-            if (months === 1) return `${months} mês`;
-            return `${months} meses`;
+            if (months === 1) {
+                return days > 0
+                    ? `${months} mês e ${days} ${days === 1 ? "dia" : "dias"}`
+                    : `${months} mês`;
+            }
+            return days > 0
+                ? `${months} meses e ${days} ${days === 1 ? "dia" : "dias"}`
+                : `${months} meses`;
         }
     } else {
         if (months === 0) {
-            if (years === 1) {
-                return `${years} ano`;
-            }
-            return `${years} anos`;
+            return years === 1 ? `${years} ano` : `${years} anos`;
         } else {
             if (years === 1 && months === 1) {
                 return `${years} ano e ${months} mês`;
