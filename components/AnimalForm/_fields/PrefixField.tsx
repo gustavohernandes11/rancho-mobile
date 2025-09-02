@@ -6,9 +6,9 @@ import { getFieldError } from "utils/getFieldError";
 export const PrefixField: React.FC<AnimalFormField> = ({ formik }) => {
     return (
         <Input
-            label="Prefixo/Nome padrão*"
+            label="Prefixo (ou nome padrão)"
             value={formik.values.name}
-            placeholder="Exemplo: Novilha X"
+            placeholder="Exemplo: Novilha ..."
             onChangeText={text => formik.setFieldValue("name", text)}
             errorText={getFieldError("name", formik)}
         />

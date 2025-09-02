@@ -50,6 +50,7 @@ export const getButtonBackgroundColor = (type: ButtonTypes) => {
     if (type === "primary") {
         return Theme.colors.primary;
     } else if (type === "danger") return Theme.colors.red;
+    else if (type === "disabled") return Theme.colors.lightGray;
     else {
         return "transparent";
     }
@@ -57,6 +58,7 @@ export const getButtonBackgroundColor = (type: ButtonTypes) => {
 
 export const getButtonBorderColor = (type: ButtonTypes) => {
     if (type === "primary" || type === "light") return "transparent";
+    else if (type === "disabled") return Theme.colors.lightGray;
     else if (type === "light-danger" || type === "danger")
         return Theme.colors.red;
     else return Theme.colors.primary;
@@ -64,6 +66,7 @@ export const getButtonBorderColor = (type: ButtonTypes) => {
 
 export const getButtonTextColor = (type: ButtonTypes) => {
     if (type === "light-danger") return Theme.colors.red;
+    else if (type === "disabled") return Theme.colors.mediumGray;
     else if (type === "primary" || type === "danger") return Theme.colors.white;
     else return Theme.colors.primary;
 };

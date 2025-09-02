@@ -3,4 +3,5 @@ export type ButtonTypes =
     | "secondary"
     | "light"
     | "light-danger"
-    | "danger";
+    | "danger"
+    | "disabled";

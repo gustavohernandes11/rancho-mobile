@@ -64,7 +64,8 @@ export const MultiAnimalForm: React.FC = () => {
             <Span gap={0}>
                 <Heading>Informações em comum</Heading>
                 <Paragraph secondary>
-                    Esses dados serão aplicados para todos os animais
+                    Esses dados opcionais são aplicados para todos os animais,
+                    mas você pode editar depois.
                 </Paragraph>
             </Span>
             <Span>

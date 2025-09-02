@@ -1,4 +1,4 @@
-import { AnimalPreviewBanner } from "components/AnimalPreviewBanner";
+import { AnimalPreviewEditBanner } from "components/AnimalPreviewEditBanner";
 import { Button } from "components/Button";
 import { ContainerView } from "components/ContainerView";
 import { Loading } from "components/Loading";
@@ -16,7 +16,7 @@ export default function VerifyAnimals() {
     const StackScreen = () => (
         <Stack.Screen options={{ headerTitle: "Verifique seus animais" }} />
     );
-    const { animals, clear } = useAnimalsInReview();
+    const { animals, hasErrors, clear } = useAnimalsInReview();
 
     const refreshAll = useGlobalStore(store => store.refreshAll);
     const [isLoading, setIsLoading] = useState(false);
@@ -51,12 +51,12 @@ export default function VerifyAnimals() {
                 <>
                     <Span gap={0}>
                         <Paragraph secondary>
-                            Clique sobre o nome para uma edição rápida
+                            Clique sobre o nome para uma edição rápida.
                         </Paragraph>
                     </Span>
                     <Span gap={4} flexWrap="wrap" direction="column">
                         {animals.map(al => (
-                            <AnimalPreviewBanner key={al.id} animal={al} />
+                            <AnimalPreviewEditBanner key={al.id} animal={al} />
                         ))}
                     </Span>
                     <Span justify="flex-end">
@@ -67,6 +67,8 @@ export default function VerifyAnimals() {
                         />
                         <Button
                             title="Adicionar todos"
+                            type={hasErrors ? "disabled" : "primary"}
+                            disabled={hasErrors}
                             onPress={handleAddAnimals}
                         />
                     </Span>

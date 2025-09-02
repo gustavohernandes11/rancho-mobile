@@ -11,7 +11,7 @@ export const GenderField: React.FC<AnimalFormField> = ({ formik }) => {
 
     return (
         <RadioInput
-            label="Sexo*"
+            label="Sexo"
             value={formik.values.gender}
             onValueChange={value => formik.setFieldValue("gender", value)}
             options={options}

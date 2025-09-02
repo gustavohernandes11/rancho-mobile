@@ -5,8 +5,8 @@ export const validationSchema = Yup.object({
     name: Yup.string()
         .min(3, "Nome muito curto!")
         .max(45, "Nome muito longo!")
-        .required("Campo obrigatório"),
-    gender: Yup.string().oneOf(["F", "M"]).required("Campo obrigatório"),
+        .nullable(),
+    gender: Yup.string().nullable(),
     birthdate: Yup.string()
         .test(
             "is-a-future-date",

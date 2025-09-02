@@ -3,8 +3,10 @@ import { Animal } from "types";
 
 export interface AnimalsInReviewContextType {
     animals: Animal[];
+    hasErrors: boolean;
     setAnimals: (animals: Animal[]) => void;
     setAnimalName: (id: number, newName: string) => void;
+    setAnimalGender: (id: number, newName: "F" | "M") => void;
     updateAnimal: (animal: Animal) => void;
     getAnimal: (id: number) => Animal | null;
     removeAnimal: (id: number) => void;
@@ -34,6 +36,20 @@ export const AnimalsInReviewProvider = ({
         );
     };
 
+    const setAnimalGender = (id: number, newGender: "F" | "M") => {
+        setAnimalsState(currentAnimals =>
+            currentAnimals.map(animal =>
+                animal.id === id ? { ...animal, gender: newGender } : animal
+            )
+        );
+    };
+
+    const hasErrors = animals.some(animal => {
+        if (!animal.name || animal.name.trim().length < 3) return true;
+        if (!animal.gender) return true;
+        return false;
+    });
+
     const updateAnimal = (toUpdateAnimal: Animal) => {
         setAnimalsState(currentAnimals =>
             currentAnimals.map(animal =>
@@ -62,10 +78,12 @@ export const AnimalsInReviewProvider = ({
                 animals,
                 setAnimals,
                 setAnimalName,
+                setAnimalGender,
                 updateAnimal,
                 getAnimal,
                 removeAnimal,
                 clear,
+                hasErrors,
             }}
         >
             {children}
